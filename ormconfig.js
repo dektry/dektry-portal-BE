@@ -6,11 +6,11 @@ module.exports = {
   password: 'admin',
   database: 'check',
   synchronize: true,
-  autoLoadEntities: true,
-  // migrationsTableName: 'custom_migration_table',
-  // migrations: ['./migration/*.ts'],
-  // cli: {
-  //   migrationsDir: 'migration',
-  // },
-  // migrationsRun: true,
+  entities: ['dist/**/*.entity.js'],
+  migrationsTableName: 'migration',
+  migrations: ['dist/migration/*.js'],
+  cli: {
+    migrationsDir: 'src/migration',
+  },
+  migrationsRun: true,
 };

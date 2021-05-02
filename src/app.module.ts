@@ -3,30 +3,13 @@ import { validate, configuration } from './config/configuration';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Permissions1619948477258 } from './migration/1619948477258-Permissions';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { from } from 'rxjs';
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'admin',
-      database: 'check',
-      synchronize: true,
-      autoLoadEntities: true,
-      migrationsTableName: 'custom_migration_table',
-      migrations: ['./migration/*.ts'],
-      cli: {
-        migrationsDir: 'migration',
-      },
-      migrationsRun: true,
-    }),
-    UsersModule,
-  ],
+  imports: [TypeOrmModule.forRoot(), UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

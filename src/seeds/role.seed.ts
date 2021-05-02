@@ -1,5 +1,6 @@
 export const roleSeed = [
   {
-    role_name: 'admin',
+    roleName: 'admin',
+    permission: [1, 2, 3],
   },
 ];
