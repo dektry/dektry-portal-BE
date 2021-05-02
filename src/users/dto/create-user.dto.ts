@@ -1,5 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
-import { role } from '../../role/entity/role.entity';
+import { RoleEntity } from '../entity/role.entity';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -15,5 +15,5 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  role: role[];
+  role: RoleEntity[];
 }

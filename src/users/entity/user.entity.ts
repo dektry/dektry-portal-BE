@@ -2,14 +2,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  JoinTable,
-  ManyToMany,
+  ManyToOne,
   BaseEntity,
+  JoinColumn,
 } from 'typeorm';
-import { role } from '../../role/entity/role.entity';
+import { RoleEntity } from './role.entity';
 
-@Entity()
-export class Users extends BaseEntity {
+@Entity({ name: 'users' })
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,7 +25,7 @@ export class Users extends BaseEntity {
   @Column()
   password: string;
 
-  @ManyToMany(() => role, (role) => role, { cascade: true })
-  @JoinTable()
-  role: role[];
+  @ManyToOne(() => RoleEntity)
+  @JoinColumn({ name: 'role' })
+  role: RoleEntity[];
 }

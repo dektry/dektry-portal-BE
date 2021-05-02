@@ -7,9 +7,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { PermissionModule } from './permission/permission.module';
-import { RoleModule } from './role/role.module';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,13 +16,16 @@ import { RoleModule } from './role/role.module';
       username: 'postgres',
       password: 'admin',
       database: 'check',
-      migrations: ['migrations/*.ts'],
       synchronize: true,
       autoLoadEntities: true,
+      migrationsTableName: 'custom_migration_table',
+      migrations: ['./migration/*.ts'],
+      cli: {
+        migrationsDir: 'migration',
+      },
+      migrationsRun: true,
     }),
     UsersModule,
-    PermissionModule,
-    RoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

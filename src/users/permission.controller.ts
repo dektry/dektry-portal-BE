@@ -7,22 +7,24 @@ import {
   Post,
 } from '@nestjs/common';
 import { PermissionService } from './permission.service';
-import { permission } from './entity/permission.entity';
-import { CreatePermissionDto } from './dto/create-permission.dto';
+import { PermissionEntity } from '../users/entity/permission.entity';
+import { CreatePermissionDto } from '../users/dto/create-permission.dto';
 
 @Controller('permission')
 export class PermissionController {
   constructor(private PermissionService: PermissionService) {}
 
   @Get('/:id')
-  getUserById(@Param('id', ParseIntPipe) id: number): Promise<permission> {
+  getUserById(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<PermissionEntity> {
     return this.PermissionService.getPermissionById(id);
   }
 
   @Post()
   create(
     @Body() CreatePermissionDto: CreatePermissionDto,
-  ): Promise<permission> {
+  ): Promise<PermissionEntity> {
     return this.PermissionService.createPermission(CreatePermissionDto);
   }
 }
