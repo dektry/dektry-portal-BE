@@ -6,7 +6,7 @@ export const permissionSeed = [
     permission_type: 'adminEdit',
   },
   {
-    permission_type: 'usersEdit',
+    permission_type: 'usersCreat',
   },
   {
     permission_type: 'articlesRead',
