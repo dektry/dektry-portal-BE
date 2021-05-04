@@ -23,6 +23,12 @@ export class UsersService {
     return found;
   }
 
+  async findByEmail(email) {
+    return await this.usersRepository.findOne({
+      email,
+    });
+  }
+
   async createUser(newUserProps: CreateUserDto): Promise<UserEntity> {
     const { firstName, lastName, email, password, role } = newUserProps;
     const newUser = this.usersRepository.create({
