@@ -6,9 +6,9 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { RoleService } from './role.service';
-import { RoleEntity } from '../users/entity/role.entity';
-import { CreateRoleDto } from '../users/dto/create-role.dto';
+import { RoleService } from '../services/role.service';
+import { RoleEntity } from '../entity/role.entity';
+import { CreateRoleDto } from '../dto/create-role.dto';
 
 @Controller('role')
 export class RoleController {

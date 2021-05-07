@@ -6,9 +6,9 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { PermissionService } from './permission.service';
-import { PermissionEntity } from '../users/entity/permission.entity';
-import { CreatePermissionDto } from '../users/dto/create-permission.dto';
+import { PermissionService } from '../services/permission.service';
+import { PermissionEntity } from '../entity/permission.entity';
+import { CreatePermissionDto } from '../dto/create-permission.dto';
 
 @Controller('permission')
 export class PermissionController {

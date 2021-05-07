@@ -5,17 +5,23 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UserEntity } from './entity/user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { DeleteUserDto } from './dto/delete-user.dto';
+import { UsersService } from '../services/users.service';
+import { UserEntity } from '../entity/user.entity';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { DeleteUserDto } from '../dto/delete-user.dto';
+import { Roles } from '../../decorators/role.decorator';
+import { Role } from '../../enums/role.enum';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Sudo)
   @Get('/:id')
   getUserById(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
     return this.UsersService.getUserById(id);

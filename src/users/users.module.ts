@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
+import { UsersController } from './controllers/users.controller';
+import { UsersService } from './services/users.service';
 import { usersRepository } from './repositories/users.repository';
-import { RoleService } from './role.service';
-import { PermissionService } from './permission.service';
-import { RoleController } from './role.controller';
-import { PermissionController } from './permission.controller';
+import { RoleService } from './services/role.service';
+import { PermissionService } from './services/permission.service';
+import { RoleController } from './controllers/role.controller';
+import { PermissionController } from './controllers/permission.controller';
 import { roleRepository } from './repositories/role.repository';
 import { permissionRepository } from './repositories/permission.repository';
 
