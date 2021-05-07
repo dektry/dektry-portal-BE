@@ -14,6 +14,7 @@ export class AuthController {
     const jwt = await this.authService.login(req.user);
     response.cookie('jwt', jwt.access_token, { httpOnly: true });
     response.cookie('role', jwt.role, { httpOnly: true });
+    response.cookie('id', jwt.id, { httpOnly: true });
     return {
       user: req.user,
     };
@@ -22,7 +23,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('/profile')
   getProfile(@Req() request: Request) {
-    const user = request.user;
-    return user;
+    const currentUser = request.cookies;
+    return currentUser;
   }
 }
