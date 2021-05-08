@@ -8,10 +8,6 @@ async function bootstrap() {
   await dotEnv.config();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(cookieParser());
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-  });
   await app.listen(3000);
 }
 bootstrap();
