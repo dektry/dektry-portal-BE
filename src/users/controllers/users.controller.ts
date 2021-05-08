@@ -20,6 +20,11 @@ import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
+  @Get()
+  getAll(): Promise<UserEntity[]> {
+    return this.UsersService.getAll();
+  }
+
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Sudo)
   @Get('/:id')

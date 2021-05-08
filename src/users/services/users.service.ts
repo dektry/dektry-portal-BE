@@ -13,6 +13,10 @@ export class UsersService {
     private usersRepository: usersRepository,
   ) {}
 
+  async getAll() {
+    return await this.usersRepository.find();
+  }
+
   async getUserById(id: number): Promise<UserEntity> {
     const found = await this.usersRepository.findOne(id);
 
