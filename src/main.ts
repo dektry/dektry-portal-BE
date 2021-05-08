@@ -7,7 +7,6 @@ import dotEnv = require('dotenv');
 async function bootstrap() {
   await dotEnv.config();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  app.setGlobalPrefix('api');
   app.use(cookieParser());
   app.enableCors({
     origin: 'http://localhost:3000',
