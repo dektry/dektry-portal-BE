@@ -14,9 +14,42 @@ export class UsersService {
   ) {}
 
   async getAll() {
-    return await this.usersRepository.find({
-      relations: ['role', 'role.permission'],
-    });
+    const allUsers = await this.usersRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.role', 'role')
+      .leftJoinAndSelect('role.permission', 'permission')
+      .select(['user', 'role.roleName', 'permission'])
+      .getRawMany();
+    const groupUsers = (allUsers, key) => {
+      const groupedUsers: any = Object.values(
+        allUsers.reduce(
+          (result, user) => ({
+            ...result,
+            [user[key]]: {
+              id: user.user_id,
+              firstName: user.user_firstName,
+              lastName: user.user_lastName,
+              email: user.user_email,
+              password: user.user_password,
+              role: user.role_roleName,
+              // permissions: [
+              //   ...(result[user[key]]?.permissions || []),
+              //   {
+              //     permission: user.permission_permission_type,
+              //     R: user.permission_R,
+              //     W: user.permission_W,
+              //   },
+              // ],
+            },
+          }),
+          {},
+        ),
+      );
+      return groupedUsers;
+    };
+
+    const users = groupUsers(allUsers, 'user_id');
+    return users;
   }
 
   async getUserById(id: number): Promise<UserEntity> {
@@ -49,13 +82,13 @@ export class UsersService {
     return this.usersRepository.save(newUser);
   }
 
-  async updateUser(newUserProps: UpdateUserDto): Promise<string> {
+  async updateUser(newUserProps: UpdateUserDto): Promise<any> {
     const { id, ...updatedProps } = newUserProps;
     const result = await this.usersRepository.update({ id }, updatedProps);
     if (!result.affected) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    return 'User updated!';
+    return result;
   }
 
   async deleteUser(userProps: DeleteUserDto): Promise<string> {

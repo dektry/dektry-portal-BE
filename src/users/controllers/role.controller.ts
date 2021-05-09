@@ -14,6 +14,11 @@ import { CreateRoleDto } from '../dto/create-role.dto';
 export class RoleController {
   constructor(private RoleService: RoleService) {}
 
+  @Get()
+  getAll(): Promise<RoleEntity[]> {
+    return this.RoleService.getAll();
+  }
+
   @Get('/:id')
   getUserById(@Param('id', ParseIntPipe) id: number): Promise<RoleEntity> {
     return this.RoleService.getRoleById(id);

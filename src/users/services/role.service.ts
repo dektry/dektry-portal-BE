@@ -14,6 +14,13 @@ export class RoleService {
     private permissionRepository: permissionRepository,
   ) {}
 
+  async getAll(): Promise<RoleEntity[]> {
+    const allRoles = await this.roleRepository
+      .createQueryBuilder('role')
+      .getRawMany();
+    return allRoles;
+  }
+
   async getRoleById(id: number): Promise<RoleEntity> {
     const found = await this.roleRepository.findOne(id);
 

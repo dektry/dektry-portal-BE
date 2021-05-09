@@ -1,17 +1,12 @@
 export const permissionSeed = [
   {
-    permission_type: 'usersEdit',
+    permission_type: 'users',
+    R: true,
+    W: false,
   },
   {
-    permission_type: 'adminEdit',
-  },
-  {
-    permission_type: 'usersCreat',
-  },
-  {
-    permission_type: 'articlesRead',
-  },
-  {
-    permission_type: 'articlesWrite',
+    permission_type: 'users',
+    R: true,
+    W: true,
   },
 ];

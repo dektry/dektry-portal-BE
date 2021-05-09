@@ -1,14 +1,14 @@
 export const roleSeed = [
   {
     roleName: 'sudo',
-    permission: [1, 2, 3, 4, 5],
+    permission: [2],
   },
   {
     roleName: 'user',
-    permission: [4],
+    permission: [1],
   },
   {
     roleName: 'admin',
-    permission: [1],
+    permission: [],
   },
 ];

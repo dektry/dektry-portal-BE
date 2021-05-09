@@ -7,4 +7,10 @@ export class PermissionEntity extends BaseEntity {
 
   @Column()
   permission_type: string;
+
+  @Column()
+  R: boolean;
+
+  @Column()
+  W: boolean;
 }

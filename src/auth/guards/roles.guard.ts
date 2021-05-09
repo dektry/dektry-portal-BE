@@ -18,7 +18,6 @@ export class RolesGuard implements CanActivate {
     const {
       cookies: { role },
     } = context.switchToHttp().getRequest();
-    console.log(role);
     const currentRole = role;
     return requiredRoles.some((role) => currentRole.includes(role));
   }
