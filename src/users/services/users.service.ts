@@ -32,14 +32,6 @@ export class UsersService {
               email: user.user_email,
               password: user.user_password,
               role: user.role_roleName,
-              // permissions: [
-              //   ...(result[user[key]]?.permissions || []),
-              //   {
-              //     permission: user.permission_permission_type,
-              //     R: user.permission_R,
-              //     W: user.permission_W,
-              //   },
-              // ],
             },
           }),
           {},
@@ -91,12 +83,12 @@ export class UsersService {
     return result;
   }
 
-  async deleteUser(userProps: DeleteUserDto): Promise<string> {
+  async deleteUser(userProps: DeleteUserDto): Promise<any> {
     const { id } = userProps;
     const result = await this.usersRepository.delete(id);
     if (!result.affected) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    return 'User deleted!';
+    return result;
   }
 }
