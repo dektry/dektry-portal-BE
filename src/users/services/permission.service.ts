@@ -24,7 +24,7 @@ export class PermissionService {
   async createPermission(
     pemissionProps: CreatePermissionDto,
   ): Promise<PermissionEntity> {
-    const { permission_type } = pemissionProps;
-    return this.permissionRepository.save({ permission_type });
+    const { permission } = pemissionProps;
+    return this.permissionRepository.save({ permission });
   }
 }

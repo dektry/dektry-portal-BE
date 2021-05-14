@@ -1,16 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import { Entity, PrimaryColumn, BaseEntity } from 'typeorm';
 
-@Entity({ name: 'permission' })
+@Entity({ name: 'permissions' })
 export class PermissionEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  permission_type: string;
-
-  @Column()
-  R: boolean;
-
-  @Column()
-  W: boolean;
+  @PrimaryColumn()
+  permission: string;
 }

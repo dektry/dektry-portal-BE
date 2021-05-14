@@ -1,7 +1,6 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
-  Column,
+  PrimaryColumn,
   BaseEntity,
   ManyToMany,
   JoinTable,
@@ -10,15 +9,20 @@ import { PermissionEntity } from './permission.entity';
 
 @Entity({ name: 'role' })
 export class RoleEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+  @PrimaryColumn()
   roleName: string;
 
   @ManyToMany(() => PermissionEntity)
   @JoinTable({
     name: 'role_permissions',
+    joinColumn: {
+      name: 'role',
+      referencedColumnName: 'roleName',
+    },
+    inverseJoinColumn: {
+      name: 'permission',
+      referencedColumnName: 'permission',
+    },
   })
   permission: PermissionEntity[];
 }
