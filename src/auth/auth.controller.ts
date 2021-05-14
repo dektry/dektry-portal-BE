@@ -12,9 +12,7 @@ export class AuthController {
   @Post('/login')
   async login(@Req() req, @Res({ passthrough: true }) response: Response) {
     const jwt = await this.authService.login(req.user);
-    response.cookie('jwt', jwt.access_token, { httpOnly: true });
-    response.cookie('role', jwt.role, { httpOnly: true });
-    response.cookie('id', jwt.id, { httpOnly: true });
+    response.cookie('jwt', jwt.access_token);
     return {
       user: req.user,
     };
@@ -23,7 +21,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('/profile')
   getProfile(@Req() request: Request) {
-    const currentUser = request.cookies;
+    const currentUser = request.user;
     return currentUser;
   }
 }

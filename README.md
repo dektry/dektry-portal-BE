@@ -22,7 +22,7 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Database schema 
+## Database schema
 
 [**Schema**](https://dbdiagram.io/d/6087c0fab29a09603d124dc9) of current database.
 
@@ -58,16 +58,8 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Guars
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- [**LocalAuthGuard**](http://www.passportjs.org/packages/passport-local/) - this is the guard, which provides passport local authentication strategy. This strategy authenticates users using a username and password. The strategy requires a `verify` callback, which accepts these credentials. After authentification on `/login` user get JWT token, which sets in cookies.
+- [**JwtAuthGuard**](http://www.passportjs.org/packages/passport-jwt/) - this is the guard, which provides passport JWT authentication strategy. This strategy authenticates users using a JWT from cookies.
+- [**RolesGuard**](https://docs.nestjs.com/security/authorization) - this is the guard, which gives access, depending on the user's role. Used in conjunction with a @Roles decorator.
