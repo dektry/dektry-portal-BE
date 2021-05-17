@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
@@ -17,7 +17,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
 
 describe('PermissionService', () => {
   let service: PermissionService;
-  let rolesRepository: MockRepository;
+  let permissionsRepository: MockRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +32,7 @@ describe('PermissionService', () => {
     }).compile();
 
     service = module.get<PermissionService>(PermissionService);
-    rolesRepository = module.get<MockRepository>(
+    permissionsRepository = module.get<MockRepository>(
       getRepositoryToken(permissionRepository),
     );
   });
@@ -47,7 +47,7 @@ describe('PermissionService', () => {
         const permissionId = 1;
         const expectedPermission = {};
 
-        rolesRepository.findOne.mockReturnValue(expectedPermission);
+        permissionsRepository.findOne.mockReturnValue(expectedPermission);
         const user = await service.getPermissionById(permissionId);
         expect(user).toEqual(expectedPermission);
       });
@@ -56,7 +56,7 @@ describe('PermissionService', () => {
     describe('otherwise', () => {
       it('should throw the "NotFoundException"', async () => {
         const permissionId = 1;
-        rolesRepository.findOne.mockReturnValue(undefined);
+        permissionsRepository.findOne.mockReturnValue(undefined);
 
         try {
           await service.getPermissionById(permissionId);
@@ -65,6 +65,40 @@ describe('PermissionService', () => {
           expect(err.message).toEqual(
             `Permission with ID "${permissionId}" not found`,
           );
+        }
+      });
+    });
+  });
+
+  describe('create new Permission', () => {
+    describe('when all fields passed correctly', () => {
+      it('should return the object with new Permission', async () => {
+        const newPermission = {
+          permission_type: 'users',
+          R: true,
+          W: true,
+        };
+
+        permissionsRepository.create.mockReturnValue(newPermission);
+        permissionsRepository.save.mockReturnValue(newPermission);
+        const permission = await service.createPermission(newPermission);
+        expect(permission).toEqual(newPermission);
+      });
+    });
+
+    describe('otherwise', () => {
+      it('should throw the "BadRequestException"', async () => {
+        const newPermission = {
+          permission_type: '',
+          R: 'true',
+          W: 1,
+        };
+        permissionsRepository.create.mockReturnValue(newPermission);
+        permissionsRepository.save.mockReturnValue(newPermission);
+        try {
+          await service.createPermission(newPermission);
+        } catch (err) {
+          expect(err).toBeInstanceOf(BadRequestException);
         }
       });
     });
