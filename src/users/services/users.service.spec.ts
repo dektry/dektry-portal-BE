@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
@@ -13,6 +13,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   find: jest.fn(),
   update: jest.fn(),
   delete: jest.fn(),
+  save: jest.fn(),
 });
 
 describe('UsersService', () => {
@@ -93,6 +94,44 @@ describe('UsersService', () => {
           await service.findByEmail(userEmail);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
+        }
+      });
+    });
+  });
+
+  describe('create new user', () => {
+    describe('when all fields passed correctly', () => {
+      it('should return the object with new user', async () => {
+        const newUser = {
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOftheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+        };
+
+        userRepository.create.mockReturnValue(newUser);
+        userRepository.save.mockReturnValue(newUser);
+        const user = await service.createUser(newUser);
+        expect(user).toEqual(newUser);
+      });
+    });
+
+    describe('otherwise', () => {
+      it('should throw the "BadRequestException"', async () => {
+        const newUser = {
+          firstName: '',
+          lastName: '',
+          password: '',
+          email: '',
+          role: RoleEntity['user'],
+        };
+        userRepository.create.mockReturnValue(newUser);
+        userRepository.save.mockReturnValue(newUser);
+        try {
+          await service.createUser(newUser);
+        } catch (err) {
+          expect(err).toBeInstanceOf(BadRequestException);
         }
       });
     });
