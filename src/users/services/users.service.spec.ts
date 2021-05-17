@@ -8,12 +8,12 @@ import { usersRepository } from '../repositories/users.repository';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
+  find: jest.fn(),
   findOne: jest.fn(),
   create: jest.fn(),
-  find: jest.fn(),
+  save: jest.fn(),
   update: jest.fn(),
   delete: jest.fn(),
-  save: jest.fn(),
 });
 
 describe('UsersService', () => {
@@ -46,7 +46,7 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('findById', () => {
+  describe('find User by ID', () => {
     describe('when user with ID exists', () => {
       it('should return the user object', async () => {
         const userId = 1;
@@ -73,7 +73,7 @@ describe('UsersService', () => {
     });
   });
 
-  describe('findByEmail', () => {
+  describe('find User by Email', () => {
     describe('when user with Email exists', () => {
       it('should return the user object', async () => {
         const userEmail = 'dm.homza@gmail.com';
