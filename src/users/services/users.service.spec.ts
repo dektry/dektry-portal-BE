@@ -136,4 +136,41 @@ describe('UsersService', () => {
       });
     });
   });
+
+  describe('update User', () => {
+    describe('when the User with ID exists', () => {
+      it('should return the object with updated User', async () => {
+        const userId = 1;
+        const expectedUser = {};
+
+        userRepository.findOne.mockReturnValue(expectedUser);
+        const user = await service.getUserById(userId);
+
+        const fieldsToUpdate = {
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+        };
+
+        user.firstName = fieldsToUpdate.firstName;
+        user.lastName = fieldsToUpdate.lastName;
+
+        expect(user.firstName).toEqual(fieldsToUpdate.firstName);
+        expect(user.lastName).toEqual(fieldsToUpdate.lastName);
+      });
+    });
+
+    describe('otherwise', () => {
+      it('should throw the "NotFoundException"', async () => {
+        const userId = 1;
+        userRepository.findOne.mockReturnValue(undefined);
+
+        try {
+          await service.getUserById(userId);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+        }
+      });
+    });
+  });
 });
