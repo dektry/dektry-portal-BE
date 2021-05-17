@@ -45,7 +45,7 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('findOne', () => {
+  describe('findById', () => {
     describe('when user with ID exists', () => {
       it('should return the user object', async () => {
         const userId = 1;
@@ -64,6 +64,33 @@ describe('UsersService', () => {
 
         try {
           await service.getUserById(userId);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+        }
+      });
+    });
+  });
+
+  describe('findByEmail', () => {
+    describe('when user with Email exists', () => {
+      it('should return the user object', async () => {
+        const userEmail = 'dm.homza@gmail.com';
+        const expectedUser = {};
+
+        userRepository.findOne.mockReturnValue(expectedUser);
+        const user = await service.findByEmail(userEmail);
+        expect(user).toEqual(expectedUser);
+      });
+    });
+
+    describe('otherwise', () => {
+      it('should throw the "NotFoundException"', async () => {
+        const userEmail = 'dm.homza@gmail.com';
+        userRepository.findOne.mockReturnValue(undefined);
+
+        try {
+          await service.findByEmail(userEmail);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
