@@ -24,8 +24,8 @@ export class RoleController {
     return this.RoleService.getRoleById(id);
   }
 
-  @Post()
-  create(@Body() createUserDto: CreateRoleDto): Promise<RoleEntity> {
-    return this.RoleService.createRole(createUserDto);
-  }
+  // @Post()
+  // create(@Body() createUserDto: CreateRoleDto): Promise<RoleEntity> {
+  //   return this.RoleService.createRole(createUserDto);
+  // }
 }

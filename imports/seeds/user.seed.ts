@@ -4,20 +4,20 @@ export const userSeed = [
     lastName: 'Homza',
     email: 'dm.homza@gmail.com',
     password: 'qwertasdfg',
-    role: 1,
+    role: 'sudo',
   },
   {
     firstName: 'Veronika',
     lastName: 'Moseichik',
     email: 'moseikus@gmail.com',
     password: 'qwertasdfg',
-    role: 2,
+    role: 'admin',
   },
   {
     firstName: 'Eugenuiy',
     lastName: 'Lazarev',
     email: 'laraz@gmail.com',
     password: 'qwertasdfg',
-    role: 3,
+    role: 'user',
   },
 ];

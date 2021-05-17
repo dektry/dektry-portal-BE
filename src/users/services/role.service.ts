@@ -31,17 +31,17 @@ export class RoleService {
     return found;
   }
 
-  async createRole(roleProps: CreateRoleDto): Promise<RoleEntity> {
-    const { roleName, permission } = roleProps;
-    let permissions = [];
-    for (const item of permission) {
-      const newPermission = await this.permissionRepository.findOne(item);
-      permissions = [...permissions, newPermission];
-    }
-    const newRoleEntity = this.roleRepository.create({
-      roleName,
-      permission: permissions,
-    });
-    return this.roleRepository.save(newRoleEntity);
-  }
+  // async createRole(roleProps: CreateRoleDto): Promise<RoleEntity> {
+  //   // const { roleName, permission } = roleProps;
+  //   // let permissions = [];
+  //   // for (const item of permission) {
+  //   //   const newPermission = await this.permissionRepository.findOne(item);
+  //   //   permissions = [...permissions, newPermission];
+  //   // }
+  //   // const newRoleEntity = this.roleRepository.create({
+  //   //   roleName,
+  //   //   permission: permissions,
+  //   // });
+  //   // return this.roleRepository.save(newRoleEntity);
+  // }
 }
