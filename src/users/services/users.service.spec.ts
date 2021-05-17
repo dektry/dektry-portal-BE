@@ -29,10 +29,10 @@ describe('UsersService', () => {
           provide: getRepositoryToken(usersRepository),
           useValue: createMockRepository(),
         },
-        // {
-        //   provide: getRepositoryToken(RoleEntity),
-        //   useValue: createMockRepository(),
-        // },
+        {
+          provide: getRepositoryToken(RoleEntity),
+          useValue: createMockRepository(),
+        },
       ],
     }).compile();
 
@@ -156,6 +156,42 @@ describe('UsersService', () => {
 
         expect(user.firstName).toEqual(fieldsToUpdate.firstName);
         expect(user.lastName).toEqual(fieldsToUpdate.lastName);
+      });
+    });
+
+    describe('otherwise', () => {
+      it('should throw the "NotFoundException"', async () => {
+        const userId = 1;
+        userRepository.findOne.mockReturnValue(undefined);
+
+        try {
+          await service.getUserById(userId);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+        }
+      });
+    });
+  });
+
+  describe('delete User', () => {
+    describe('when the User with ID exists', () => {
+      it('should delete User', async () => {
+        userRepository.delete.mockResolvedValue(1);
+        expect(userRepository.delete).not.toHaveBeenCalled();
+        await userRepository.delete(1);
+        expect(userRepository.delete).toHaveBeenCalledWith(1);
+      });
+
+      it('should delete User and should throw the "NotFoundException" after GET method', async () => {
+        const userId = 1;
+        await userRepository.delete(userId);
+        try {
+          await service.getUserById(userId);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+        }
       });
     });
 
