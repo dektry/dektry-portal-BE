@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePermissionDto } from '../dto/create-permission.dto';
 import { PermissionEntity } from '../entity/permission.entity';
@@ -10,20 +10,10 @@ export class PermissionService {
     private permissionRepository: permissionRepository,
   ) {}
 
-  async getPermissionById(id: number): Promise<PermissionEntity> {
-    const found = await this.permissionRepository.findOne(id);
-
-    if (!found) {
-      throw new NotFoundException(`Permission with ID "${id}" not found`);
-    }
-
-    return found;
+  async createPermission(
+    pemissionProps: CreatePermissionDto,
+  ): Promise<PermissionEntity> {
+    const { permission } = pemissionProps;
+    return this.permissionRepository.save({ name: permission });
   }
-
-  // async createPermission(
-  //   pemissionProps: CreatePermissionDto,
-  // ): Promise<PermissionEntity> {
-  //   const { permission } = pemissionProps;
-  //   return this.permissionRepository.save({ permission });
-  // }
 }

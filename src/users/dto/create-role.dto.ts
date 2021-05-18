@@ -3,8 +3,8 @@ import { PermissionEntity } from '../entity/permission.entity';
 
 export class CreateRoleDto {
   @IsNotEmpty()
-  roleName: string;
+  name: string;
 
   @IsNotEmpty()
-  permission: PermissionEntity[];
+  permissions: string[];
 }

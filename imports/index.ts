@@ -15,7 +15,6 @@ const importData = async () => {
       await importRoles();
       break;
     case 'users':
-      await importPermissions();
       await importRoles();
       break;
     default:
