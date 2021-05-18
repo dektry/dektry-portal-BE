@@ -1,7 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
-import { RoleEntity } from '../entity/role.entity';
 
-export class CreateUserDto {
+export class UserDto {
   @IsNotEmpty()
   firstName: string;
 
@@ -15,5 +14,5 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  role: RoleEntity[];
+  role: string;
 }

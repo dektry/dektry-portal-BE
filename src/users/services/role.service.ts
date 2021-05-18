@@ -15,9 +15,7 @@ export class RoleService {
   ) {}
 
   async getAll(): Promise<RoleEntity[]> {
-    const allRoles = await this.roleRepository
-      .createQueryBuilder('role')
-      .getRawMany();
+    const allRoles = await this.roleRepository.find();
     return allRoles;
   }
 
