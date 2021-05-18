@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
@@ -47,7 +51,7 @@ export class UsersService {
       email,
     });
     if (isExist) {
-      throw new NotFoundException('User is already exist!');
+      throw new ConflictException('User is already exist!');
     } else {
       const newUserRole = await this.roleRepository.findOne({ name: role });
       if (!newUserRole) {
@@ -68,7 +72,7 @@ export class UsersService {
     const { role, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne({ name: role });
     if (!newUserRole) {
-      throw new NotFoundException(`Role ${role} is incorrect!`);
+      throw new ConflictException(`Role ${role} is incorrect!`);
     }
     try {
       const result = await this.usersRepository.update(
