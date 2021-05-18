@@ -1,17 +1,17 @@
 export const permissionSeed = [
   {
-    permission: 'deleteUsers',
+    name: 'deleteUsers',
   },
   {
-    permission: 'createUser',
+    name: 'createUser',
   },
   {
-    permission: 'getUser',
+    name: 'getUser',
   },
   {
-    permission: 'getAllUsers',
+    name: 'getAllUsers',
   },
   {
-    permission: 'updateUser',
+    name: 'updateUser',
   },
 ];

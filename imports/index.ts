@@ -1,15 +1,22 @@
-import importPermissions from './permissions.import';
 import importRoles from './roles.import';
+import importPermissions from './permissions.import';
+import importUsers from './users.import';
+
 const importData = async () => {
   const target = process.argv[2];
   switch (target) {
     case 'all':
       await importPermissions();
       await importRoles();
+      await importUsers();
       break;
-
-    case 'permissions':
+    case 'roles':
       await importPermissions();
+      await importRoles();
+      break;
+    case 'users':
+      await importPermissions();
+      await importRoles();
       break;
     default:
       console.log(`No import function found for ${target}`);
