@@ -7,6 +7,13 @@ export const roleSeed = [
       'getUser',
       'getAllUsers',
       'updateUser',
+      'getAllRoles',
+      'getRoleByName',
+      'createRole',
+      'updateRole',
+      'deleteRole',
+      'getPermissionByName',
+      'createPermission',
     ],
   },
   {

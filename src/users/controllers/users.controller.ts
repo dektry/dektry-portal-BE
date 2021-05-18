@@ -3,27 +3,24 @@ import {
   Body,
   Get,
   Param,
-  ParseIntPipe,
   Post,
   UseGuards,
-  Req,
   Put,
   Delete,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
 import { UserDto } from '../dto/user.dto';
-import { Roles } from '../../decorators/role.decorator';
-import { Role } from '../../enums/role.enum';
+import { Permission } from '../../decorators/permission.decorator';
+import { Permissions } from '../../enums/permissions.enum';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../auth/guards/roles.guard';
+import { PermissionGuard } from '../../auth/guards/permission.guard';
 @Controller('users')
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.getAllUsers)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
   getAll(): Promise<UserEntity[]> {
     return this.UsersService.getAll();
@@ -35,15 +32,15 @@ export class UsersController {
     return this.UsersService.getUserById(id);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.createUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
   createUser(@Body() userProps: UserDto): Promise<UserEntity> {
     return this.UsersService.createUser(userProps);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.updateUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
   updateUser(
     @Param('id') id: string,
@@ -52,8 +49,8 @@ export class UsersController {
     return this.UsersService.updateUser(id, userProps);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.deleteUsers)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
   deleteUser(@Param('id') id: string): Promise<string> {
     return this.UsersService.deleteUser(id);

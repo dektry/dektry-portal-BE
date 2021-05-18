@@ -13,7 +13,6 @@ export class AuthService {
     const user = await this.usersService.findByEmail(email);
     if (user.password === pass) {
       const { password, ...result } = user;
-
       return result;
     }
     return null;
@@ -24,6 +23,7 @@ export class AuthService {
       username: user.username,
       sub: user.id,
       role: user.role.name,
+      user,
     };
     return {
       access_token: this.jwtService.sign(payload),

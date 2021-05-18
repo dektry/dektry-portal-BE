@@ -14,4 +14,25 @@ export const permissionSeed = [
   {
     name: 'updateUser',
   },
+  {
+    name: 'getAllRoles',
+  },
+  {
+    name: 'getRoleByName',
+  },
+  {
+    name: 'createRole',
+  },
+  {
+    name: 'updateRole',
+  },
+  {
+    name: 'deleteRole',
+  },
+  {
+    name: 'getPermissionByName',
+  },
+  {
+    name: 'createPermission',
+  },
 ];
