@@ -41,19 +41,19 @@ describe('PermissionService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('find User by ID', () => {
-    describe('when user with ID exists', () => {
+  describe('find Permission by ID', () => {
+    describe('when Permission with ID exists', () => {
       it('should return the user object', async () => {
         const permissionId = 1;
         const expectedPermission = {};
 
         permissionsRepository.findOne.mockReturnValue(expectedPermission);
-        const user = await service.getPermissionById(permissionId);
-        expect(user).toEqual(expectedPermission);
+        const permission = await service.getPermissionById(permissionId);
+        expect(permission).toEqual(expectedPermission);
       });
     });
 
-    describe('otherwise', () => {
+    describe('when Permission with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const permissionId = 1;
         permissionsRepository.findOne.mockReturnValue(undefined);
@@ -86,7 +86,7 @@ describe('PermissionService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when fields are not valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newPermission = {
           permission_type: '',

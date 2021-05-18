@@ -58,7 +58,7 @@ describe('UsersService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when user with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const userId = 1;
         userRepository.findOne.mockReturnValue(undefined);
@@ -85,7 +85,7 @@ describe('UsersService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when user with Email DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const userEmail = 'dm.homza@gmail.com';
         userRepository.findOne.mockReturnValue(undefined);
@@ -117,7 +117,7 @@ describe('UsersService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when fields are not valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newUser = {
           firstName: '',
@@ -159,7 +159,7 @@ describe('UsersService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const userId = 1;
         userRepository.findOne.mockReturnValue(undefined);
@@ -195,7 +195,7 @@ describe('UsersService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const userId = 1;
         userRepository.findOne.mockReturnValue(undefined);

@@ -64,7 +64,7 @@ describe('RoleService', () => {
       });
     });
 
-    describe('otherwise', () => {
+    describe('when Role with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const roleId = 1;
         rolesRepository.findOne.mockReturnValue(undefined);
