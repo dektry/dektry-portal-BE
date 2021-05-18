@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
@@ -41,42 +41,11 @@ describe('PermissionService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('find Permission by ID', () => {
-    describe('when Permission with ID exists', () => {
-      it('should return the user object', async () => {
-        const permissionId = 1;
-        const expectedPermission = {};
-
-        permissionsRepository.findOne.mockReturnValue(expectedPermission);
-        const permission = await service.getPermissionById(permissionId);
-        expect(permission).toEqual(expectedPermission);
-      });
-    });
-
-    describe('when Permission with ID DOES NOT exist', () => {
-      it('should throw the "NotFoundException"', async () => {
-        const permissionId = 1;
-        permissionsRepository.findOne.mockReturnValue(undefined);
-
-        try {
-          await service.getPermissionById(permissionId);
-        } catch (err) {
-          expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(
-            `Permission with ID "${permissionId}" not found`,
-          );
-        }
-      });
-    });
-  });
-
   describe('create new Permission', () => {
     describe('when all fields passed correctly', () => {
       it('should return the object with new Permission', async () => {
         const newPermission = {
-          permission_type: 'users',
-          R: true,
-          W: true,
+          permission: 'users',
         };
 
         permissionsRepository.create.mockReturnValue(newPermission);
@@ -89,9 +58,7 @@ describe('PermissionService', () => {
     describe('when fields are not valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newPermission = {
-          permission_type: '',
-          R: 'true',
-          W: 1,
+          permission: '',
         };
         permissionsRepository.create.mockReturnValue(newPermission);
         permissionsRepository.save.mockReturnValue(newPermission);
