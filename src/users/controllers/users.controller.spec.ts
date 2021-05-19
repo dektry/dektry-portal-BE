@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { usersRepository } from '../repositories/users.repository';
 import { UsersService } from '../services/users.service';
@@ -44,6 +45,25 @@ describe('UsersController', () => {
     it('should get the list of users', async () => {
       const users = await controller.getAll();
       expect(users).toEqual([testUser]);
+    });
+  });
+
+  describe('get User by ID', () => {
+    describe('when user with ID exists', () => {
+      it('should get the user matching the id', async () => {
+        const user = await controller.getUserById(1);
+        expect(user).toEqual(testUser);
+      });
+    });
+
+    describe('when user with ID DOES NOT exists', () => {
+      it('should throw the "NotFoundException"', async () => {
+        try {
+          await controller.getUserById(10);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+        }
+      });
     });
   });
 });
