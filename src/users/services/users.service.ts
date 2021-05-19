@@ -83,15 +83,12 @@ export class UsersService {
     return result;
   }
 
-  async deleteUser(id): Promise<any> {
-    try {
-      const result = await this.usersRepository.delete(id);
-      if (!result.affected) {
-        throw new NotFoundException(`User with ID '${id}' not found`);
-      }
-      return result;
-    } catch (error) {
-      return error;
+  async deleteUser(userProps: DeleteUserDto): Promise<any> {
+    const { id } = userProps;
+    const result = await this.usersRepository.delete(id);
+    if (!result.affected) {
+      throw new NotFoundException(`User with ID '${id}' not found`);
     }
+    return result;
   }
 }

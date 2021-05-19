@@ -6,7 +6,7 @@ import { UsersService } from '../services/users.service';
 import { UsersController } from './users.controller';
 
 const testUser = {
-  id: '1',
+  id: 1,
   firstName: 'Zheniya',
   lastName: 'Best Dev Ever',
   password: 'bestOfTheBest',
@@ -123,7 +123,7 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.deleteUser('100');
+          await controller.getUserById(1);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
@@ -134,15 +134,18 @@ describe('UsersController', () => {
   describe('delete User', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and delete it', async () => {
-        const user = await controller.deleteUser('1');
-        expect(user).toEqual(testUser.id);
+        const user = await controller.getUserById(testUser.id);
+        const dto = { id: testUser.id };
+        const userToDelete = await controller.deleteUser(dto);
+        expect(user.id).toEqual(userToDelete);
       });
     });
 
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.deleteUser('100');
+          const dto = { id: 100 };
+          await controller.deleteUser(dto);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
