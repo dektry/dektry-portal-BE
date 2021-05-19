@@ -26,6 +26,10 @@
 
 [**Schema**](https://dbdiagram.io/d/6087c0fab29a09603d124dc9) of current database.
 
+## Postman requests
+
+The `postman` folder contains a file with traditional RBAC requests for postman.
+
 ## Installation
 
 ```bash
