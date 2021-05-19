@@ -7,6 +7,7 @@ import {
   Post,
   UseGuards,
   Req,
+  Delete,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 import { UsersService } from '../services/users.service';
@@ -51,8 +52,8 @@ export class UsersController {
 
   @Roles(Role.Sudo, Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('/delete')
-  deleteUser(@Body() userId: DeleteUserDto): Promise<string> {
-    return this.UsersService.deleteUser(userId);
+  @Delete('/:id')
+  deleteUser(@Param('id') id: string): Promise<string> {
+    return this.UsersService.deleteUser(id);
   }
 }

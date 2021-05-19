@@ -66,37 +66,56 @@ describe('UsersController', () => {
         }
       });
     });
+  });
 
-    describe('create new User', () => {
-      describe('if fields are valid', () => {
-        it('should return the object with a new User', async () => {
-          const newUser = await controller.createUser({
-            firstName: 'Zheniya',
-            lastName: 'Best Dev Ever',
-            password: 'bestOfTheBest',
-            email: 'test@test.com',
-            role: RoleEntity['user'],
-          });
-          expect(newUser).toEqual(testUser);
+  describe('create new User', () => {
+    describe('if fields are valid', () => {
+      it('should return the object with a new User', async () => {
+        const newUser = await controller.createUser({
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOfTheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
         });
+        expect(newUser).toEqual(testUser);
       });
+    });
 
-      describe('if fields are NOT valid', () => {
-        it('should throw the "BadRequestException"', async () => {
-          const newUser = {
-            firstName: '',
-            lastName: '',
-            password: '',
-            email: '',
-            role: RoleEntity['user'],
-          };
+    describe('if fields are NOT valid', () => {
+      it('should throw the "BadRequestException"', async () => {
+        const newUser = {
+          firstName: '',
+          lastName: '',
+          password: '',
+          email: '',
+          role: RoleEntity['user'],
+        };
 
-          try {
-            await controller.createUser(newUser);
-          } catch (err) {
-            expect(err).toBeInstanceOf(BadRequestException);
-          }
-        });
+        try {
+          await controller.createUser(newUser);
+        } catch (err) {
+          expect(err).toBeInstanceOf(BadRequestException);
+        }
+      });
+    });
+  });
+
+  describe('delete User', () => {
+    describe('when user with ID exists', () => {
+      it('should get the user matching the id and delete it', async () => {
+        const user = await controller.deleteUser('1');
+        expect(user).toEqual(testUser.id);
+      });
+    });
+
+    describe('when user with ID DOES NOT exists', () => {
+      it('should throw the "NotFoundException"', async () => {
+        try {
+          await controller.deleteUser('100');
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+        }
       });
     });
   });
