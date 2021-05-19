@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { permissionRepository } from '../repositories/permission.repository';
 import { roleRepository } from '../repositories/role.repository';
@@ -55,6 +55,33 @@ describe('RoleController', () => {
           await controller.getRoleById(10);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
+        }
+      });
+    });
+  });
+
+  describe('create new Role', () => {
+    describe('if fields are valid', () => {
+      it('should return the object with a new Role', async () => {
+        const newRole = await controller.create({
+          name: 'Test role',
+          permissions: ['user'],
+        });
+        expect(newRole).toEqual(testRole);
+      });
+    });
+
+    describe('if fields are NOT valid', () => {
+      it('should throw the "BadRequestException"', async () => {
+        const newRole = {
+          name: '',
+          permissions: [''],
+        };
+
+        try {
+          await controller.create(newRole);
+        } catch (err) {
+          expect(err).toBeInstanceOf(BadRequestException);
         }
       });
     });
