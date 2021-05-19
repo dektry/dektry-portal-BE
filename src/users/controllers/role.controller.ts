@@ -8,6 +8,7 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { RoleService } from '../services/role.service';
 import { RoleEntity } from '../entity/role.entity';
 import { Permission } from '../../decorators/permission.decorator';

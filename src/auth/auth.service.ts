@@ -12,6 +12,7 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
     if (user.password === pass) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
     }
@@ -20,10 +21,7 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      username: user.username,
-      sub: user.id,
-      role: user.role.name,
-      user,
+      ...user,
     };
     return {
       access_token: this.jwtService.sign(payload),

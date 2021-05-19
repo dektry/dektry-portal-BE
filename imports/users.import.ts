@@ -27,7 +27,7 @@ const importUsers = async () => {
     }
   }
   await connection.getRepository(UserEntity).save(newUsers);
-
+  console.log('Users is updated!');
   await connection.close();
 };
 

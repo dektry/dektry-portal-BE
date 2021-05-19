@@ -23,7 +23,7 @@ const importRoles = async () => {
       console.log(`Role ${role.name} added!`);
     }
   }
-
+  console.log('Roles is updated!');
   await connection.close();
 };
 

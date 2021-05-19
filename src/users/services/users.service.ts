@@ -6,7 +6,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { usersRepository } from '../repositories/users.repository';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { roleRepository } from '../repositories/role.repository';
 
 @Injectable()

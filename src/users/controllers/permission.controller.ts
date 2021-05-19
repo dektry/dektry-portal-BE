@@ -1,4 +1,5 @@
 import { Controller, Body, Post, UseGuards, Get, Param } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { PermissionService } from '../services/permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
 import { Permission } from '../../decorators/permission.decorator';

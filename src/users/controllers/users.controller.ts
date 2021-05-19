@@ -8,6 +8,7 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
 import { UserDto } from '../dto/user.dto';

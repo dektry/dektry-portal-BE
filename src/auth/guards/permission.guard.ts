@@ -2,7 +2,6 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Permissions } from '../../enums/permissions.enum';
 import { PERMISSIONS_KEY } from '../../decorators/permission.decorator';
-import { RoleService } from '../../users/services/role.service';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
@@ -15,7 +14,7 @@ export class PermissionGuard implements CanActivate {
     )[0];
     const { user } = context.switchToHttp().getRequest();
     const currentPermissions = [];
-    for (const permission of user.user.role.permissions) {
+    for (const permission of user.role.permissions) {
       currentPermissions.push(permission.name);
     }
     if (!requiredPermission) {

@@ -2,7 +2,7 @@ import { Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 
-const extrctJwtFromCookies = function (req) {
+const extractJwtFromCookies = function (req) {
   let token = null;
   if (req && req.cookies) {
     token = req.cookies['jwt'];
@@ -13,7 +13,7 @@ const extrctJwtFromCookies = function (req) {
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
-      jwtFromRequest: extrctJwtFromCookies,
+      jwtFromRequest: extractJwtFromCookies,
       ignoreExpiration: false,
       secretOrKey: process.env.JWT_KEY,
     });

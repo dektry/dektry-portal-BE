@@ -9,34 +9,6 @@
 			"name": "Login",
 			"item": [
 				{
-					"name": "Login sudo",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"dm.homza@gmail.com\",\r\n    \"password\": \"qwertasdfg\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/auth/login",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Login user",
 					"request": {
 						"method": "POST",
@@ -72,6 +44,34 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"username\": \"moseikus@gmail.com\",\r\n    \"password\": \"qwertasdfg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login sudo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"dm.homza@gmail.com\",\r\n    \"password\": \"qwertasdfg\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -202,33 +202,6 @@
 							"path": [
 								"auth",
 								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create permission",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"permission\": \"check\"\r\n  }\r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/permission",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"permission"
 							]
 						}
 					},
