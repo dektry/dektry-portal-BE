@@ -14,9 +14,7 @@ export class PermissionController {
   @Roles(Role.Sudo, Role.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
-  create(
-    @Body() CreatePermissionDto: CreatePermissionDto,
-  ): Promise<PermissionEntity> {
+  create(@Body() CreatePermissionDto): Promise<PermissionEntity> {
     return this.PermissionService.createPermission(CreatePermissionDto);
   }
 }

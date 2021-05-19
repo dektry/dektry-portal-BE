@@ -20,7 +20,7 @@ export class RoleController {
   }
 
   @Get('/:id')
-  getUserById(@Param('id', ParseIntPipe) id: number): Promise<RoleEntity> {
+  getRoleById(@Param('id', ParseIntPipe) id: number): Promise<RoleEntity> {
     return this.RoleService.getRoleById(id);
   }
 
