@@ -1,5 +1,6 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { UsersService } from '../services/users.service';
 import { UsersController } from './users.controller';
@@ -63,6 +64,39 @@ describe('UsersController', () => {
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
+      });
+    });
+
+    describe('create new User', () => {
+      describe('if fields are valid', () => {
+        it('should return the object with a new User', async () => {
+          const newUser = await controller.createUser({
+            firstName: 'Zheniya',
+            lastName: 'Best Dev Ever',
+            password: 'bestOfTheBest',
+            email: 'test@test.com',
+            role: RoleEntity['user'],
+          });
+          expect(newUser).toEqual(testUser);
+        });
+      });
+
+      describe('if fields are NOT valid', () => {
+        it('should throw the "BadRequestException"', async () => {
+          const newUser = {
+            firstName: '',
+            lastName: '',
+            password: '',
+            email: '',
+            role: RoleEntity['user'],
+          };
+
+          try {
+            await controller.createUser(newUser);
+          } catch (err) {
+            expect(err).toBeInstanceOf(BadRequestException);
+          }
+        });
       });
     });
   });
