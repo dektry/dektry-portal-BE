@@ -32,6 +32,19 @@
 $ npm install
 ```
 
+## Import data
+
+```bash
+# Import all data
+$ npm run import:all
+
+# Import roles and permissions
+$ npm run import:roles
+
+# Import Users. Possible only after importing roles..
+$ npm run import:users
+```
+
 ## Running the app
 
 ```bash
