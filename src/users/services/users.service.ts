@@ -6,10 +6,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { usersRepository } from '../repositories/users.repository';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { roleRepository } from '../repositories/role.repository';
+import { resultResponse } from '../user.intrfaces';
 
 @Injectable()
 export class UsersService {
@@ -35,11 +34,10 @@ export class UsersService {
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-
     return found;
   }
 
-  async findByEmail(email) {
+  async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({
       where: { email },
       relations: ['role', 'role.permissions'],
@@ -53,9 +51,9 @@ export class UsersService {
       email,
     });
     if (isExist) {
-      throw new ConflictException('User is already exist!');
+      throw new ConflictException('User with this email is already exist!');
     } else {
-      const newUserRole = await this.roleRepository.findOne({ name: role });
+      const newUserRole = await this.roleRepository.findOne(role);
       if (!newUserRole) {
         throw new NotFoundException(`Role ${role} is incorrect!`);
       }
@@ -70,9 +68,9 @@ export class UsersService {
     }
   }
 
-  async updateUser(id: string, newUserProps: UserDto): Promise<any> {
+  async updateUser(id: string, newUserProps: UserDto): Promise<resultResponse> {
     const { role, ...updatedProps } = newUserProps;
-    const newUserRole = await this.roleRepository.findOne({ name: role });
+    const newUserRole = await this.roleRepository.findOne(role);
     if (!newUserRole) {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
@@ -90,7 +88,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id): Promise<any> {
+  async deleteUser(id): Promise<resultResponse> {
     try {
       const result = await this.usersRepository.delete(id);
       if (!result.affected) {

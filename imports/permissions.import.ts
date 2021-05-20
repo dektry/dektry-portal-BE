@@ -4,22 +4,28 @@ import { permissionSeed } from './seeds/permission.seed';
 
 const importPermissions = async () => {
   const connection: Connection = await createConnection('data-import');
-  for (const permission of permissionSeed) {
-    const currentPermissionIsExist = await connection
-      .getRepository(PermissionEntity)
-      .findOne({ name: permission.name });
-    if (currentPermissionIsExist) {
-      console.log(`Permission ${permission.name} is already exist!`);
+  const currentPermissions = await connection
+    .getRepository(PermissionEntity)
+    .find();
+  const nonExistPermissions = permissionSeed.filter((permission) => {
+    const check = currentPermissions.filter((existPermission) => {
+      return permission.name === existPermission.name;
+    }).length;
+    if (check === 0) {
+      return true;
     } else {
-      await connection
-        .getRepository(PermissionEntity)
-        .save(
-          await connection.getRepository(PermissionEntity).create(permission),
-        );
-      console.log(`Permission ${permission.name} added!`);
+      console.log(`Permission ${permission.name} is already exist!`);
+      return false;
     }
-  }
-  console.log('Permissions is updated!');
+  });
+  const createdPermissions = await connection
+    .getRepository(PermissionEntity)
+    .save(
+      nonExistPermissions.map((permission) => {
+        return connection.getRepository(PermissionEntity).create(permission);
+      }),
+    );
+  console.log(`Added ${createdPermissions.length} new permissions!`);
   await connection.close();
 };
 

@@ -8,13 +8,13 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { RoleService } from '../services/role.service';
 import { RoleEntity } from '../entity/role.entity';
-import { Permission } from '../../decorators/permission.decorator';
-import { Permissions } from '../../enums/permissions.enum';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { PermissionGuard } from '../../auth/guards/permission.guard';
+import { Permission } from 'src/decorators/permission.decorator';
+import { Permissions } from 'src/enums/permissions.enum';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionGuard } from 'src/auth/guards/permission.guard';
+import { resultResponse } from '../user.intrfaces';
 
 @Controller('roles')
 export class RoleController {
@@ -30,7 +30,7 @@ export class RoleController {
   @Permission(Permissions.getRoleByName)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get('/:name')
-  getUserById(@Param('name') name: string): Promise<RoleEntity> {
+  getRoleByName(@Param('name') name: string): Promise<RoleEntity> {
     return this.RoleService.getRoleByName(name);
   }
 
@@ -44,14 +44,14 @@ export class RoleController {
   @Permission(Permissions.updateRole)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
-  updateRole(@Param('id') id: string, @Body() roleProps): Promise<string> {
+  updateRole(@Param('id') id: string, @Body() roleProps): Promise<RoleEntity> {
     return this.RoleService.updateRole(id, roleProps);
   }
 
   @Permission(Permissions.deleteRole)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
-  deleteUser(@Param('id') id: string): Promise<string> {
+  deleteUser(@Param('id') id: string): Promise<resultResponse> {
     return this.RoleService.deleteRole(id);
   }
 }

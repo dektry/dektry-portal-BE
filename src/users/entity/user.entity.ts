@@ -13,16 +13,16 @@ export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ length: 20 })
   firstName: string;
 
-  @Column()
+  @Column({ length: 20 })
   lastName: string;
 
-  @Column()
+  @Column({ unique: true, length: 40 })
   email: string;
 
-  @Column()
+  @Column({ length: 255 })
   password: string;
 
   @ManyToOne(() => RoleEntity)
