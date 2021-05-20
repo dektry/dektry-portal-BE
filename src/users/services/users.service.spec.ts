@@ -231,13 +231,32 @@ describe('UsersService', () => {
       // });
 
       it('should delete User and should throw the "NotFoundException" after GET method', async () => {
-        const userId = 1;
-        await userRepository.delete(userId);
+        const newUser = {
+          id: 1,
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOftheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+          affected: true,
+        };
+
+        userRepository.create.mockReturnValue(newUser);
+        userRepository.save.mockReturnValue(newUser);
+        const user = await service.createUser(newUser);
+
+        userRepository.delete.mockReturnValue(user);
+
+        const dto = {
+          id: newUser.id,
+        };
+
+        await service.deleteUser(dto);
         try {
-          await service.getUserById(userId);
+          await service.getUserById(dto.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          expect(err.message).toEqual(`User with ID '${dto.id}' not found`);
         }
       });
     });
