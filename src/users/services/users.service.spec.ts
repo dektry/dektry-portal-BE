@@ -19,7 +19,7 @@ type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testUser),
-  find: jest.fn().mockResolvedValue([testUser]),
+  createQueryBuilder: jest.fn(),
   findOne: jest.fn().mockResolvedValue(testUser),
   update: jest.fn().mockResolvedValue(testUser),
   delete: jest.fn().mockResolvedValue(true),
@@ -55,14 +55,28 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  // describe('get all users', () => {
-  //   it('should return the array of users', async () => {
-  //     const expectedUsers = [testUser];
-  //     userRepository.find.mockReturnValue(expectedUsers);
-  //     const users = await service.getAll();
-  //     expect(users.length).toBe(1);
-  //   });
-  // });
+  describe('get all users', () => {
+    it('should return the array of users', async () => {
+      let createQueryBuilder: any = {
+        leftJoinAndSelect: () => createQueryBuilder,
+      };
+
+      createQueryBuilder = {
+        ...createQueryBuilder,
+        leftJoinAndSelectе: () => createQueryBuilder,
+        select: () => createQueryBuilder,
+        getRawMany: () => [],
+        //getRawMany: () => [testUser],
+      };
+
+      jest
+        .spyOn(userRepository, 'createQueryBuilder')
+        .mockImplementation(() => createQueryBuilder);
+
+      await expect(service.getAll()).resolves.toEqual([]);
+      //await expect(service.getAll()).resolves.toEqual([testUser]);
+    });
+  });
 
   describe('find User by ID', () => {
     describe('when user with ID exists', () => {

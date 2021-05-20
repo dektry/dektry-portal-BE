@@ -16,7 +16,7 @@ const testRole = {
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
-  find: jest.fn(),
+  createQueryBuilder: jest.fn(),
   findOne: jest.fn(),
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testRole),
@@ -24,7 +24,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
 
 describe('RoleService', () => {
   let service: RoleService;
-  let permService: PermissionService;
+  let permissionsService: PermissionService;
   let rolesRepository: MockRepository;
   let permissionsRepository: MockRepository;
 
@@ -46,7 +46,7 @@ describe('RoleService', () => {
     }).compile();
 
     service = module.get<RoleService>(RoleService);
-    permService = module.get<PermissionService>(PermissionService);
+    permissionsService = module.get<PermissionService>(PermissionService);
     rolesRepository = module.get<MockRepository>(
       getRepositoryToken(roleRepository),
     );
@@ -57,6 +57,20 @@ describe('RoleService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('get all roles', () => {
+    it('should return the array of users', async () => {
+      const createQueryBuilder: any = {
+        getRawMany: () => [testRole],
+      };
+
+      jest
+        .spyOn(rolesRepository, 'createQueryBuilder')
+        .mockImplementation(() => createQueryBuilder);
+
+      await expect(service.getAll()).resolves.toEqual([testRole]);
+    });
   });
 
   describe('find Role by ID', () => {
@@ -87,34 +101,29 @@ describe('RoleService', () => {
   });
 
   describe('create new Role', () => {
-    describe('when all fields passed correctly', () => {
-      it('should return the object with new Role', async () => {
-        // rolesRepository.create.mockReturnValue(testRole);
-        // rolesRepository.save.mockReturnValue(testRole);
-        // const user = await service.createRole(testRole);
-        // expect(user).toEqual(testRole);
+    it('should return the object with new Role', async () => {
+      let expectedPermission = [];
 
-        let expectedPermission = [];
+      const newPermission = {
+        permission: 'users',
+      };
 
-        const newPermission = {
-          permission: 'users',
-        };
+      permissionsRepository.create.mockReturnValue(newPermission);
+      permissionsRepository.save.mockReturnValue(newPermission);
+      const permission = await permissionsService.createPermission(
+        newPermission,
+      );
 
-        permissionsRepository.create.mockReturnValue(newPermission);
-        permissionsRepository.save.mockReturnValue(newPermission);
-        const permission = await permService.createPermission(newPermission);
+      expectedPermission = [{ ...permission }];
+      const newRole = {
+        name: 'user',
+        permissions: expectedPermission,
+      };
 
-        expectedPermission = [{ ...permission }];
-        const newRole = {
-          name: 'user',
-          permissions: expectedPermission,
-        };
-
-        rolesRepository.create.mockReturnValue(newRole);
-        rolesRepository.save.mockReturnValue(newRole);
-        const role = await service.createRole(newRole);
-        expect(role).toEqual(newRole);
-      });
+      rolesRepository.create.mockReturnValue(newRole);
+      rolesRepository.save.mockReturnValue(newRole);
+      const role = await service.createRole(newRole);
+      expect(role).toEqual(newRole);
     });
   });
 });
