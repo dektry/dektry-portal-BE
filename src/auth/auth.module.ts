@@ -5,7 +5,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from 'users/users.module';
 import dotEnv = require('dotenv');
 
 dotEnv.config();

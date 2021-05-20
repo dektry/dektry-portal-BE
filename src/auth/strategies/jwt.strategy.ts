@@ -1,7 +1,7 @@
 import { Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { requestUser } from '../auth.interfaces';
+import { RequestUser } from '../auth.interfaces';
 
 const extractJwtFromCookies = (req) => {
   let token = null;
@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: requestUser) {
+  async validate(payload: RequestUser) {
     return { ...payload };
   }
 }

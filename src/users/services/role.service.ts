@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoleEntity } from '../entity/role.entity';
-import { roleRepository } from 'src/users/repositories/role.repository';
+import { roleRepository } from 'users/repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
-import { resultResponse } from '../user.intrfaces';
 import { PermissionEntity } from '../entity/permission.entity';
+import { DeleteResult } from 'typeorm';
 
-interface roleProps {
+interface RoleProps {
   name: string;
   permissions: string[];
 }
@@ -39,7 +39,7 @@ export class RoleService {
     return found;
   }
 
-  async createRole(roleProps: roleProps): Promise<RoleEntity> {
+  async createRole(roleProps: RoleProps): Promise<RoleEntity> {
     const { name, permissions } = roleProps;
     if (!permissions) {
       throw new ConflictException(`Please add permissions!`);
@@ -53,29 +53,27 @@ export class RoleService {
     if (isExist) {
       throw new ConflictException(`Role '${name}' is already exist!`);
     }
-    const existPermissions: PermissionEntity[] =
+    const allExistPermissions: PermissionEntity[] =
       await this.permissionRepository.find();
-    const permissionsEntity = permissions.map((newRolePermission) => {
-      const permissionEntity: PermissionEntity = existPermissions.find(
+    const updatedPermissionsEntity = permissions.map((newRolePermission) => {
+      const existPermission: PermissionEntity = allExistPermissions.find(
         (existPermission) => {
           return existPermission.name === newRolePermission;
         },
       );
-      if (!permissionEntity) {
-        throw new NotFoundException(
-          `Permission '${newRolePermission}' not found`,
-        );
-      }
-      return permissionEntity;
+      return existPermission;
     });
+    if (updatedPermissionsEntity.includes(undefined)) {
+      throw new NotFoundException(`Permissions is invalid!`);
+    }
     const newRoleEntity = this.roleRepository.create({
       name,
-      permissions: permissionsEntity,
+      permissions: updatedPermissionsEntity,
     });
     return this.roleRepository.save(newRoleEntity);
   }
 
-  async updateRole(id: string, newRoleProps: roleProps): Promise<RoleEntity> {
+  async updateRole(id: string, newRoleProps: RoleProps): Promise<RoleEntity> {
     const { name, permissions } = newRoleProps;
     const role = await this.roleRepository.findOne(id);
     if (!permissions) {
@@ -87,32 +85,29 @@ export class RoleService {
     if (!role) {
       throw new NotFoundException(`Role with ID ${id} not found`);
     }
-    const existPermissions: PermissionEntity[] =
+    const allExistPermissions: PermissionEntity[] =
       await this.permissionRepository.find();
-    const permissionsEntity: PermissionEntity[] = permissions.map(
-      (newRolePermission) => {
-        const rolePermission: PermissionEntity = existPermissions.find(
-          (existPermission) => {
-            return existPermission.name === newRolePermission;
-          },
-        );
-        if (!rolePermission) {
-          throw new NotFoundException(
-            `Permission '${newRolePermission}' not found`,
-          );
-        }
-        return rolePermission;
-      },
-    );
+    const updatedPermissionsEntity = permissions.map((newRolePermission) => {
+      const existPermission: PermissionEntity = allExistPermissions.find(
+        (existPermission) => {
+          return existPermission.name === newRolePermission;
+        },
+      );
+      return existPermission;
+    });
+    if (updatedPermissionsEntity.includes(undefined)) {
+      throw new NotFoundException(`Permissions is invalid!`);
+    }
+
     const result = await this.roleRepository.save({
-      name,
-      permissions: permissionsEntity,
       ...role,
+      name,
+      permissions: updatedPermissionsEntity,
     });
     return result;
   }
 
-  async deleteRole(id: string): Promise<resultResponse> {
+  async deleteRole(id: string): Promise<DeleteResult> {
     try {
       const result = await this.roleRepository.delete(id);
       if (!result.affected) {

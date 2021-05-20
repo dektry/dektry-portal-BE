@@ -18,7 +18,7 @@ module.exports = [
     migrationsTableName: '__migrations',
     migrations: ['dist/src/migration/*.js'],
     cli: {
-      migrationsDir: 'src/migration',
+      migrationsDir: './migration',
     },
   },
   {

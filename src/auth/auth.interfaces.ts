@@ -1,6 +1,6 @@
-import { RoleEntity } from 'src/users/entity/role.entity';
+import { RoleEntity } from 'users/entity/role.entity';
 
-export interface requestUser {
+export interface RequestUser {
   firstName: string;
   lastName: string;
   email: string;

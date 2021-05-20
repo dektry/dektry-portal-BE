@@ -11,11 +11,11 @@ import {
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
 import { UserDto } from '../dto/user.dto';
-import { Permission } from 'src/decorators/permission.decorator';
-import { Permissions } from 'src/enums/permissions.enum';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'src/auth/guards/permission.guard';
-import { resultResponse } from '../user.intrfaces';
+import { Permission } from 'decorators/permission.decorator';
+import { Permissions } from 'enums/permissions.enum';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { PermissionGuard } from 'auth/guards/permission.guard';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Controller('users')
 export class UsersController {
@@ -47,14 +47,14 @@ export class UsersController {
   updateUser(
     @Param('id') id: string,
     @Body() userProps: UserDto,
-  ): Promise<resultResponse> {
+  ): Promise<UpdateResult> {
     return this.UsersService.updateUser(id, userProps);
   }
 
   @Permission(Permissions.deleteUsers)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
-  deleteUser(@Param('id') id: string): Promise<resultResponse> {
+  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
     return this.UsersService.deleteUser(id);
   }
 }

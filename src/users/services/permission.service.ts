@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionEntity } from '../entity/permission.entity';
 import { permissionRepository } from '../repositories/permission.repository';
 
-interface permissionProps {
+interface PermissionProps {
   name: string;
 }
 
@@ -15,7 +15,7 @@ export class PermissionService {
   ) {}
 
   async createPermission(
-    pemissionProps: permissionProps,
+    pemissionProps: PermissionProps,
   ): Promise<PermissionEntity> {
     const { name } = pemissionProps;
     if (!name) {

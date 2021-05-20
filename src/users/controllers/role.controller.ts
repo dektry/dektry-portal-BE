@@ -10,12 +10,11 @@ import {
 } from '@nestjs/common';
 import { RoleService } from '../services/role.service';
 import { RoleEntity } from '../entity/role.entity';
-import { Permission } from 'src/decorators/permission.decorator';
-import { Permissions } from 'src/enums/permissions.enum';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'src/auth/guards/permission.guard';
-import { resultResponse } from '../user.intrfaces';
-
+import { Permission } from 'decorators/permission.decorator';
+import { Permissions } from 'enums/permissions.enum';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { PermissionGuard } from 'auth/guards/permission.guard';
+import { DeleteResult } from 'typeorm';
 @Controller('roles')
 export class RoleController {
   constructor(private RoleService: RoleService) {}
@@ -51,7 +50,7 @@ export class RoleController {
   @Permission(Permissions.deleteRole)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
-  deleteUser(@Param('id') id: string): Promise<resultResponse> {
+  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
     return this.RoleService.deleteRole(id);
   }
 }

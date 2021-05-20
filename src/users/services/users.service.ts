@@ -8,7 +8,7 @@ import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { roleRepository } from '../repositories/role.repository';
-import { resultResponse } from '../user.intrfaces';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -68,7 +68,7 @@ export class UsersService {
     }
   }
 
-  async updateUser(id: string, newUserProps: UserDto): Promise<resultResponse> {
+  async updateUser(id: string, newUserProps: UserDto): Promise<UpdateResult> {
     const { role, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
     if (!newUserRole) {
@@ -88,7 +88,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id): Promise<resultResponse> {
+  async deleteUser(id): Promise<DeleteResult> {
     try {
       const result = await this.usersRepository.delete(id);
       if (!result.affected) {

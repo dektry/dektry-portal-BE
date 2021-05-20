@@ -1,10 +1,10 @@
 import { Controller, Body, Post, UseGuards, Get, Param } from '@nestjs/common';
 import { PermissionService } from '../services/permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
-import { Permission } from 'src/decorators/permission.decorator';
-import { Permissions } from 'src/enums/permissions.enum';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'src/auth/guards/permission.guard';
+import { Permission } from 'decorators/permission.decorator';
+import { Permissions } from 'enums/permissions.enum';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { PermissionGuard } from 'auth/guards/permission.guard';
 
 @Controller('permissions')
 export class PermissionController {
