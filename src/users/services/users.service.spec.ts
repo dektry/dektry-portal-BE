@@ -5,6 +5,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
+
 const testUser = {
   id: '1',
   firstName: 'Zheniya',
@@ -223,13 +224,6 @@ describe('UsersService', () => {
 
   describe('delete User', () => {
     describe('when the User with ID exists', () => {
-      // it('should delete User', async () => {
-      //   userRepository.delete.mockResolvedValue(1);
-      //   expect(userRepository.delete).not.toHaveBeenCalled();
-      //   await userRepository.delete(1);
-      //   expect(userRepository.delete).toHaveBeenCalledWith(1);
-      // });
-
       it('should delete User and should throw the "NotFoundException" after GET method', async () => {
         const newUser = {
           id: 1,
@@ -263,14 +257,24 @@ describe('UsersService', () => {
 
     describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
-        const userId = 1;
-        userRepository.findOne.mockReturnValue(undefined);
+        const testUser = {
+          id: 1,
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOfTheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+        };
+
+        const dto = {
+          id: testUser.id,
+        };
 
         try {
-          await service.getUserById(userId);
+          await service.deleteUser(dto);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          expect(err.message).toEqual(`User with ID '${dto.id}' not found`);
         }
       });
     });
