@@ -6,18 +6,27 @@ import { roleRepository } from '../repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
 import { NotFoundException } from '@nestjs/common';
 import { PermissionService } from './permission.service';
+import { PermissionEntity } from '../entity/permission.entity';
+
+const testRole = {
+  id: '1',
+  name: 'user',
+  permissions: PermissionEntity['user'],
+};
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   find: jest.fn(),
   findOne: jest.fn(),
-  create: jest.fn(),
   save: jest.fn(),
+  create: jest.fn().mockReturnValue(testRole),
 });
 
 describe('RoleService', () => {
   let service: RoleService;
+  let permService: PermissionService;
   let rolesRepository: MockRepository;
+  let permissionsRepository: MockRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -37,8 +46,12 @@ describe('RoleService', () => {
     }).compile();
 
     service = module.get<RoleService>(RoleService);
+    permService = module.get<PermissionService>(PermissionService);
     rolesRepository = module.get<MockRepository>(
       getRepositoryToken(roleRepository),
+    );
+    permissionsRepository = module.get<MockRepository>(
+      getRepositoryToken(permissionRepository),
     );
   });
 
@@ -69,6 +82,38 @@ describe('RoleService', () => {
           expect(err).toBeInstanceOf(NotFoundException);
           expect(err.message).toEqual(`Role with ID "${roleId}" not found`);
         }
+      });
+    });
+  });
+
+  describe('create new Role', () => {
+    describe('when all fields passed correctly', () => {
+      it('should return the object with new Role', async () => {
+        // rolesRepository.create.mockReturnValue(testRole);
+        // rolesRepository.save.mockReturnValue(testRole);
+        // const user = await service.createRole(testRole);
+        // expect(user).toEqual(testRole);
+
+        let expectedPermission = [];
+
+        const newPermission = {
+          permission: 'users',
+        };
+
+        permissionsRepository.create.mockReturnValue(newPermission);
+        permissionsRepository.save.mockReturnValue(newPermission);
+        const permission = await permService.createPermission(newPermission);
+
+        expectedPermission = [{ ...permission }];
+        const newRole = {
+          name: 'user',
+          permissions: expectedPermission,
+        };
+
+        rolesRepository.create.mockReturnValue(newRole);
+        rolesRepository.save.mockReturnValue(newRole);
+        const role = await service.createRole(newRole);
+        expect(role).toEqual(newRole);
       });
     });
   });

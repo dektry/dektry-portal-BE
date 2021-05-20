@@ -17,17 +17,11 @@ const testUser = {
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
-  // find: jest.fn(() => [testUser]),
-  // findOne: jest.fn(),
-  // create: jest.fn(),
-  // save: jest.fn(),
-  // update: jest.fn(),
-  // delete: jest.fn(),
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testUser),
   find: jest.fn().mockResolvedValue([testUser]),
   findOne: jest.fn().mockResolvedValue(testUser),
-  update: jest.fn().mockResolvedValue({ ...testUser, id: 1 }),
+  update: jest.fn().mockResolvedValue(testUser),
   delete: jest.fn().mockResolvedValue(true),
 });
 
@@ -63,10 +57,10 @@ describe('UsersService', () => {
 
   // describe('get all users', () => {
   //   it('should return the array of users', async () => {
-  //     const expectedUsers = [];
+  //     const expectedUsers = [testUser];
   //     userRepository.find.mockReturnValue(expectedUsers);
   //     const users = await service.getAll();
-  //     expect(users.length).toBe(3);
+  //     expect(users.length).toBe(1);
   //   });
   // });
 
@@ -161,25 +155,6 @@ describe('UsersService', () => {
     });
   });
 
-  // describe('updateOne', () => {
-  //   it('should call the update method', async () => {
-  //     const userId = 1;
-  //     const user = await service.getUserById(userId);
-
-  //     const fieldsToUpdate = {
-  //       id: user.id,
-  //       firstName: 'Gabbi',
-  //       lastName: 'Lalala',
-  //     };
-
-  //     user.firstName = fieldsToUpdate.firstName;
-  //     user.lastName = fieldsToUpdate.lastName;
-
-  //     const newUser = await service.updateUser(fieldsToUpdate);
-  //     expect(user).toEqual(newUser);
-  //   });
-  // });
-
   describe('update User', () => {
     describe('when the User with ID exists', () => {
       it('should return the object with updated User', async () => {
@@ -224,6 +199,13 @@ describe('UsersService', () => {
 
   describe('delete User', () => {
     describe('when the User with ID exists', () => {
+      it('should delete User', async () => {
+        userRepository.delete.mockResolvedValue(1);
+        expect(userRepository.delete).not.toHaveBeenCalled();
+        await userRepository.delete(1);
+        expect(userRepository.delete).toHaveBeenCalledWith(1);
+      });
+
       it('should delete User and should throw the "NotFoundException" after GET method', async () => {
         const newUser = {
           id: 1,
