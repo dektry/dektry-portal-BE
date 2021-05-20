@@ -34,14 +34,14 @@ export class UsersController {
     return this.UsersService.getUserById(id);
   }
 
-  @Permission(Permissions.createUser)
+  @Permission(Permissions.createUser, Permissions.updateUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
   createUser(@Body() userProps: UserDto): Promise<UserEntity> {
     return this.UsersService.createUser(userProps);
   }
 
-  @Permission(Permissions.updateUser)
+  @Permission(Permissions.createUser, Permissions.updateUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
   updateUser(

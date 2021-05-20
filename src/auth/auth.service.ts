@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'users/services/users.service';
 import { RequestUser } from './auth.interfaces';
-import _ = require('lodash');
+import { omit } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<RequestUser> {
     const user = await this.usersService.findByEmail(email);
     if (user.password === pass) {
-      const result = _.omit(user, ['password']);
+      const result = omit(user, ['password']);
       return result;
     }
     return null;

@@ -2,7 +2,7 @@ import { createConnection, Connection } from 'typeorm';
 import { UserEntity } from '../src/users/entity/user.entity';
 import { RoleEntity } from '../src/users/entity/role.entity';
 import { userSeed } from './seeds/user.seed';
-import _ = require('lodash');
+import { difference } from 'lodash';
 
 const importUsers = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -16,7 +16,7 @@ const importUsers = async () => {
     return !isUserExist;
   });
 
-  const alreadyExistedNewUsers = _.difference(userSeed, newUsers);
+  const alreadyExistedNewUsers = difference(userSeed, newUsers);
   alreadyExistedNewUsers.forEach((element) => {
     console.log(`Users '${element.email}' is already exist!`);
   });

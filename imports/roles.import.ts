@@ -2,7 +2,7 @@ import { createConnection, Connection } from 'typeorm';
 import { RoleEntity } from '../src/users/entity/role.entity';
 import { PermissionEntity } from '../src/users/entity/permission.entity';
 import { roleSeed } from './seeds/role.seed';
-import _ = require('lodash');
+import { difference } from 'lodash';
 
 const importRoles = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -18,7 +18,7 @@ const importRoles = async () => {
     );
     return !isRoleExist;
   });
-  const alreadyExistedNewRoles = _.difference(roleSeed, newRoles);
+  const alreadyExistedNewRoles = difference(roleSeed, newRoles);
   alreadyExistedNewRoles.forEach((element) => {
     console.log(`Role '${element.name}' is already exist!`);
   });

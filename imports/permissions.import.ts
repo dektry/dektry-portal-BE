@@ -1,7 +1,7 @@
 import { createConnection, Connection } from 'typeorm';
 import { PermissionEntity } from '../src/users/entity/permission.entity';
 import { permissionSeed } from './seeds/permission.seed';
-import _ = require('lodash');
+import { difference } from 'lodash';
 
 const importPermissions = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -15,7 +15,7 @@ const importPermissions = async () => {
     );
     return !isPermissionExist;
   });
-  const alreadyExistedNewPermissions = _.difference(
+  const alreadyExistedNewPermissions = difference(
     permissionSeed,
     newPermissions,
   );
