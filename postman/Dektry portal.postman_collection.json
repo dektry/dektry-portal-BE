@@ -98,6 +98,93 @@
 			"name": "Users",
 			"item": [
 				{
+					"name": "avatars",
+					"item": [
+						{
+							"name": "Upload any user avatar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/D:/Фото/Личное/qot3GhIZeVQ3.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/users/upload-avatar/0d916090-4407-4f21-b053-ae9d9b5b998d",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"upload-avatar",
+										"0d916090-4407-4f21-b053-ae9d9b5b998d"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload own avatar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/D:/Фото/Личное/qot3GhIZeVQ3.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/users/upload-avatar",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"upload-avatar"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Get user by id",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -121,14 +208,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/153ca87e-c7ca-4299-9e24-da67ba4af8a8",
+							"raw": "localhost:3000/users/0d916090-4407-4f21-b053-ae9d9b5b998d",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"users",
-								"153ca87e-c7ca-4299-9e24-da67ba4af8a8"
+								"0d916090-4407-4f21-b053-ae9d9b5b998d"
 							]
 						}
 					},

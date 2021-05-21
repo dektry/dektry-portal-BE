@@ -25,6 +25,9 @@ export class UserEntity extends BaseEntity {
   @Column({ length: 255 })
   password: string;
 
+  @Column({ length: 255, default: 'default_admin.png' })
+  avatarFileName: string;
+
   @ManyToOne(() => RoleEntity)
   @JoinColumn({ name: 'role' })
   role: RoleEntity;

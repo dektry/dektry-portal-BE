@@ -2,11 +2,15 @@ import {
   Controller,
   Body,
   Get,
+  Req,
+  Res,
   Param,
   Post,
   UseGuards,
   Put,
   Delete,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
@@ -16,6 +20,9 @@ import { Permissions } from 'enums/permissions.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { uploadAvatarConfiguration } from '../multer.configuration';
 
 @Controller('users')
 export class UsersController {
@@ -56,5 +63,26 @@ export class UsersController {
   @Delete('/:id')
   deleteUser(@Param('id') id: string): Promise<DeleteResult> {
     return this.UsersService.deleteUser(id);
+  }
+
+  @Permission(Permissions.createUser, Permissions.updateUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseInterceptors(FileInterceptor('avatar', uploadAvatarConfiguration))
+  @Post('upload-avatar/:id')
+  uploadAvatar(@Param('id') id, @UploadedFile() file: Express.Multer.File) {
+    return this.UsersService.saveUserAvatar(id, file);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('avatar', uploadAvatarConfiguration))
+  @Post('upload-avatar')
+  uploadOwnAvatar(@Req() request, @UploadedFile() file: Express.Multer.File) {
+    return this.UsersService.saveUserAvatar(request.user.id, file);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('avatars/:id')
+  getUserAvatar(@Param('id') id, @Res() res) {
+    return this.UsersService.getUserAvatar(id, res);
   }
 }

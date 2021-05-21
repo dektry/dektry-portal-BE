@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   async getUserById(id: string): Promise<UserEntity> {
-    const found = await this.usersRepository.findOne({
+    const found = await this.usersRepository.findOne(id, {
       relations: ['role', 'role.permissions'],
     });
 
@@ -95,6 +95,26 @@ export class UsersService {
         throw new NotFoundException(`User with ID '${id}' not found`);
       }
       return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async saveUserAvatar(id, file) {
+    const result = await this.usersRepository.update(
+      { id },
+      { avatarFileName: file.filename },
+    );
+    return result;
+  }
+
+  async getUserAvatar(id, res) {
+    try {
+      const user = await this.usersRepository.findOne({ id });
+      if (!user) {
+        throw new NotFoundException(`User with ID '${id}' not found`);
+      }
+      return res.sendFile(user.avatarFileName, { root: 'upload/img/avatars' });
     } catch (error) {
       return error;
     }
