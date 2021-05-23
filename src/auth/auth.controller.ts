@@ -15,6 +15,7 @@ export class AuthController {
     response.cookie('jwt', jwt.access_token);
     return {
       user: req.user,
+      jwt: jwt,
     };
   }
 
