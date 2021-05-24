@@ -9,6 +9,9 @@ import { RoleController } from './controllers/role.controller';
 import { PermissionController } from './controllers/permission.controller';
 import { roleRepository } from './repositories/role.repository';
 import { permissionRepository } from './repositories/permission.repository';
+import { PositionController } from './controllers/position.controller';
+import { PositionService } from './services/position.service';
+import { positionRepository } from './repositories/position.repository';
 
 @Module({
   imports: [
@@ -16,10 +19,16 @@ import { permissionRepository } from './repositories/permission.repository';
       usersRepository,
       roleRepository,
       permissionRepository,
+      positionRepository,
     ]),
   ],
-  providers: [UsersService, RoleService, PermissionService],
-  controllers: [UsersController, RoleController, PermissionController],
+  providers: [UsersService, RoleService, PermissionService, PositionService],
+  controllers: [
+    UsersController,
+    RoleController,
+    PermissionController,
+    PositionController,
+  ],
   exports: [UsersService],
 })
 export class UsersModule {}

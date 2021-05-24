@@ -5,6 +5,9 @@ export const userSeed = [
     email: 'dm.homza@gmail.com',
     password: 'qwertasdfg',
     role: 'sudo',
+    isActive: true,
+    birthday: '2011-01-23T22:15:51.000Z',
+    position: 'Full stack trainee',
   },
   {
     firstName: 'Veronika',
@@ -12,6 +15,9 @@ export const userSeed = [
     email: 'moseikus@gmail.com',
     password: 'qwertasdfg',
     role: 'admin',
+    isActive: true,
+    birthday: '2011-01-23T22:15:51.000Z',
+    position: 'Back-end trainee',
   },
   {
     firstName: 'Eugenuiy',
@@ -19,5 +25,8 @@ export const userSeed = [
     email: 'laraz@gmail.com',
     password: 'qwertasdfg',
     role: 'user',
+    isActive: true,
+    birthday: '2011-01-23T22:15:51.000Z',
+    position: 'Swift developer',
   },
 ];

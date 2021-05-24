@@ -1,6 +1,7 @@
 import { createConnection, Connection } from 'typeorm';
 import { UserEntity } from '../src/users/entity/user.entity';
 import { RoleEntity } from '../src/users/entity/role.entity';
+import { PositionEntity } from '../src/users/entity/position.entity';
 import { userSeed } from './seeds/user.seed';
 import { difference } from 'lodash';
 
@@ -8,6 +9,7 @@ const importUsers = async () => {
   const connection: Connection = await createConnection('data-import');
   const allExistUsers = await connection.getRepository(UserEntity).find();
   const existRoles = await connection.getRepository(RoleEntity).find();
+  const existPositions = await connection.getRepository(PositionEntity).find();
 
   const newUsers = userSeed.filter((newUser) => {
     const isUserExist = allExistUsers.some(
@@ -22,24 +24,32 @@ const importUsers = async () => {
   });
 
   const newUsersWithRelations = newUsers.map((user) => {
-    const newRole = existRoles.find((existRole) => {
+    const newUserRole = existRoles.find((existRole) => {
       return existRole.name === user.role;
     });
-    return { ...user, role: newRole };
+    const newUserPosition = existPositions.find((existPosition) => {
+      return existPosition.name === user.position;
+    });
+    return { ...user, role: newUserRole, position: newUserPosition };
   });
 
   newUsersWithRelations.forEach((user) => {
     if (!user.role) {
       throw new Error(`Role '${user.role}' of '${user.email}' is not exist!`);
     }
+    if (!user.position) {
+      throw new Error(
+        `Position '${user.position}' of '${user.email}' is not exist!`,
+      );
+    }
   });
 
-  const createdRoles = await connection.getRepository(UserEntity).save(
+  const createdUsers = await connection.getRepository(UserEntity).save(
     newUsersWithRelations.map((user) => {
       return connection.getRepository(UserEntity).create(user);
     }),
   );
-  console.log(`Added ${createdRoles.length} new users!`);
+  console.log(`Added ${createdUsers.length} new users!`);
   await connection.close();
 };
 

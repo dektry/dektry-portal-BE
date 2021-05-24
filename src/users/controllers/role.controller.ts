@@ -15,6 +15,11 @@ import { Permissions } from 'enums/permissions.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
+
+interface RoleProps {
+  name: string;
+  permissions: string[];
+}
 @Controller('roles')
 export class RoleController {
   constructor(private RoleService: RoleService) {}
@@ -36,14 +41,17 @@ export class RoleController {
   @Permission(Permissions.createRole)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
-  create(@Body() createUserDto): Promise<RoleEntity> {
-    return this.RoleService.createRole(createUserDto);
+  create(@Body() roleProps: RoleProps): Promise<RoleEntity> {
+    return this.RoleService.createRole(roleProps);
   }
 
   @Permission(Permissions.updateRole)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
-  updateRole(@Param('id') id: string, @Body() roleProps): Promise<RoleEntity> {
+  updateRole(
+    @Param('id') id: string,
+    @Body() roleProps: RoleProps,
+  ): Promise<RoleEntity> {
     return this.RoleService.updateRole(id, roleProps);
   }
 

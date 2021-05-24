@@ -35,4 +35,16 @@ export const permissionSeed = [
   {
     name: 'CREATE_PERMISSION',
   },
+  {
+    name: 'CREATE_POSITION',
+  },
+  {
+    name: 'GET_ALL_POSITIONS',
+  },
+  {
+    name: 'UPDATE_POSITION',
+  },
+  {
+    name: 'DELETE_POSITION',
+  },
 ];

@@ -14,6 +14,10 @@ export const roleSeed = [
       'DELETE_ROLE',
       'GET_PERMISSION_BY_NAME',
       'CREATE_PERMISSION',
+      'CREATE_POSITION',
+      'UPDATE_POSITION',
+      'DELETE_POSITION',
+      'GET_ALL_POSITIONS',
     ],
   },
   {

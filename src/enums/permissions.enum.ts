@@ -11,4 +11,8 @@ export enum Permissions {
   deleteRole = 'DELETE_ROLE',
   getPermissionByName = 'GET_PERMISSION_BY_NAME',
   createPermission = 'CREATE_PERMISSION',
+  getAllPositions = 'GET_ALL_POSITIONS',
+  createPosition = 'CREATE_POSITION',
+  updatePosition = 'UPDATE_POSITION',
+  deletePosition = 'DELETE_POSITION',
 }
