@@ -8,6 +8,7 @@ import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { roleRepository } from '../repositories/role.repository';
+import { positionRepository } from '../repositories/position.repository';
 import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
@@ -17,18 +18,20 @@ export class UsersService {
     private usersRepository: usersRepository,
     @InjectRepository(roleRepository)
     private roleRepository: roleRepository,
+    @InjectRepository(positionRepository)
+    private positionRepository: positionRepository,
   ) {}
 
   async getAll() {
     const allUsers = await this.usersRepository.find({
-      relations: ['role', 'role.permissions'],
+      relations: ['role', 'role.permissions', 'position'],
     });
     return allUsers;
   }
 
   async getUserById(id: string): Promise<UserEntity> {
     const found = await this.usersRepository.findOne(id, {
-      relations: ['role', 'role.permissions'],
+      relations: ['role', 'role.permissions', 'position'],
     });
 
     if (!found) {
@@ -40,13 +43,13 @@ export class UsersService {
   async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({
       where: { email },
-      relations: ['role', 'role.permissions'],
+      relations: ['role', 'role.permissions', 'position'],
     });
     return currentUser;
   }
 
   async createUser(newUserProps: UserDto): Promise<UserEntity> {
-    const { firstName, lastName, email, password, role } = newUserProps;
+    const { email, role, position, ...otherProps } = newUserProps;
     const isExist = await this.usersRepository.findOne({
       email,
     });
@@ -54,30 +57,37 @@ export class UsersService {
       throw new ConflictException('User with this email is already exist!');
     } else {
       const newUserRole = await this.roleRepository.findOne(role);
+      const newUserPosition = await this.positionRepository.findOne(position);
       if (!newUserRole) {
         throw new NotFoundException(`Role ${role} is incorrect!`);
       }
+      if (!newUserPosition) {
+        throw new NotFoundException(`Position ${position} is incorrect!`);
+      }
       const newUser = await this.usersRepository.create({
-        firstName,
-        lastName,
-        password,
+        ...otherProps,
         email,
         role: newUserRole,
+        position: newUserPosition,
       });
       return this.usersRepository.save(newUser);
     }
   }
 
   async updateUser(id: string, newUserProps: UserDto): Promise<UpdateResult> {
-    const { role, ...updatedProps } = newUserProps;
+    const { role, position, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
+    const newUserPosition = await this.positionRepository.findOne(position);
     if (!newUserRole) {
       throw new ConflictException(`Role ${role} is incorrect!`);
+    }
+    if (!newUserPosition) {
+      throw new NotFoundException(`Position ${position} is incorrect!`);
     }
     try {
       const result = await this.usersRepository.update(
         { id },
-        { role: newUserRole, ...updatedProps },
+        { role: newUserRole, position: newUserPosition, ...updatedProps },
       );
       if (!result.affected) {
         throw new NotFoundException(`User with ID '${id}' not found`);

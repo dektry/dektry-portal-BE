@@ -91,6 +91,15 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "JWT Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
 				}
 			]
 		},
@@ -301,7 +310,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"p3@kd.fk\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"4eefb6ee-4474-4391-b913-ca37056c4b69\"\r\n  }\r\n",
+							"raw": "{\r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"p3@kd.fk\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"71c685d0-ffc4-4388-a3a7-fcba8896eaad\",\r\n    \"position\": \"c6521d1b-fc96-4f36-a980-b9a4d59baec6\",\r\n    \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n    \"isActive\": true\r\n  }\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -328,7 +337,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"post@m2a2n.as\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"3d2e54a3-5f25-41ce-9aab-aebc7a2534b8\"\r\n}\r\n",
+							"raw": "{   \r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"post@m2a2n.as\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"71c685d0-ffc4-4388-a3a7-fcba8896eaad\",\r\n    \"position\": \"c6521d1b-fc96-4f36-a980-b9a4d59baec6\",\r\n        \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n            \"isActive\": true\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -336,14 +345,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/ae623038-9799-41c8-8d55-3758e6d0a27c",
+							"raw": "localhost:3000/users/2bcdee2e-3b52-4618-ad08-a84a92c41d18",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"users",
-								"ae623038-9799-41c8-8d55-3758e6d0a27c"
+								"2bcdee2e-3b52-4618-ad08-a84a92c41d18"
 							]
 						}
 					},
@@ -548,6 +557,112 @@
 							"path": [
 								"roles",
 								"3478f7ad-11cd-4a9a-ab5f-3a32c837ce39"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Positions",
+			"item": [
+				{
+					"name": "Get all positions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/positions",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"positions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create position",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"slave\",\r\n   \"duties\": \"\",\r\n   \"requirements\": \"\",\r\n   \"salaryMinLimit\": 1,\r\n   \"salaryMaxLimit\": 10\r\n  }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/positions",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"positions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update position (change req param)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n   \"salaryMinLimit\": 1,\r\n   \"salaryMaxLimit\": 1000 \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/positions/28e922b6-eac6-4e84-82d0-bd12e7da6f7c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"positions",
+								"28e922b6-eac6-4e84-82d0-bd12e7da6f7c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete position",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/positions/28e922b6-eac6-4e84-82d0-bd12e7da6f7c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"positions",
+								"28e922b6-eac6-4e84-82d0-bd12e7da6f7c"
 							]
 						}
 					},

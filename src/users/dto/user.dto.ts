@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, Length } from 'class-validator';
 import { RoleEntity } from '../entity/role.entity';
+import { PositionEntity } from '../entity/position.entity';
 
 export class UserDto {
   @IsNotEmpty()
@@ -21,4 +22,13 @@ export class UserDto {
 
   @IsNotEmpty()
   role: RoleEntity;
+
+  @IsNotEmpty()
+  isActive: boolean;
+
+  @IsNotEmpty()
+  birthday: Date;
+
+  @IsNotEmpty()
+  position: PositionEntity;
 }
