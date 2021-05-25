@@ -669,6 +669,104 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Carrers",
+			"item": [
+				{
+					"name": "Gat by user id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/careers/ef5944cf-fdc8-486a-bc65-120c4c85536d",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"careers",
+								"ef5944cf-fdc8-486a-bc65-120c4c85536d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"user\": \"ef5944cf-fdc8-486a-bc65-120c4c85536d\",\r\n    \"salary\": 100,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": null,\r\n    \"position\": \"78a00045-0257-4a26-af08-da03cb96b65a\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/careers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"careers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\r\n    \"user\": \"ef5944cf-fdc8-486a-bc65-120c4c85536d\",\r\n    \"salary\": 10000,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": null,\r\n    \"position\": \"78a00045-0257-4a26-af08-da03cb96b65a\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/careers/caa2d5e8-8289-4de3-b63b-19165b0cc01c",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"careers",
+								"caa2d5e8-8289-4de3-b63b-19165b0cc01c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/careers/eec8a854-3088-4344-8acd-f8de8e6efef7",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"careers",
+								"eec8a854-3088-4344-8acd-f8de8e6efef7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

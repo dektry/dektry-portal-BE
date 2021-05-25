@@ -49,9 +49,9 @@ export class CareerController {
   @Put('/:id')
   updateRole(
     @Param('id') id: string,
-    @Body() positionProps: CareerProps,
+    @Body() careerProps: CareerProps,
   ): Promise<CareerEntity> {
-    return this.CareerService.updateCareer(id, positionProps);
+    return this.CareerService.updateCareer(id, careerProps);
   }
 
   @Permission(Permissions.deletePosition)

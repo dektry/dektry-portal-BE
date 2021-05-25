@@ -42,7 +42,6 @@ export class CareerService {
     newCareerProps: CareerProps,
   ): Promise<CareerEntity> {
     const career = await this.careerRepository.findOne(id);
-
     const result = await this.careerRepository.save({
       ...career,
       ...newCareerProps,
