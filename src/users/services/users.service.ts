@@ -24,14 +24,14 @@ export class UsersService {
 
   async getAll() {
     const allUsers = await this.usersRepository.find({
-      relations: ['role', 'role.permissions', 'position'],
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
     });
     return allUsers;
   }
 
   async getUserById(id: string): Promise<UserEntity> {
     const found = await this.usersRepository.findOne(id, {
-      relations: ['role', 'role.permissions', 'position'],
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
     });
 
     if (!found) {
@@ -43,7 +43,7 @@ export class UsersService {
   async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({
       where: { email },
-      relations: ['role', 'role.permissions', 'position'],
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
     });
     return currentUser;
   }
@@ -68,7 +68,6 @@ export class UsersService {
         ...otherProps,
         email,
         role: newUserRole,
-        position: newUserPosition,
       });
       return this.usersRepository.save(newUser);
     }
@@ -87,7 +86,7 @@ export class UsersService {
     try {
       const result = await this.usersRepository.update(
         { id },
-        { role: newUserRole, position: newUserPosition, ...updatedProps },
+        { role: newUserRole, ...updatedProps },
       );
       if (!result.affected) {
         throw new NotFoundException(`User with ID '${id}' not found`);

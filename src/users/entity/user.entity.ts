@@ -5,9 +5,10 @@ import {
   ManyToOne,
   BaseEntity,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { RoleEntity } from './role.entity';
-import { PositionEntity } from './position.entity';
+import { CareerEntity } from './career.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -39,7 +40,7 @@ export class UserEntity extends BaseEntity {
   @JoinColumn({ name: 'role' })
   role: RoleEntity;
 
-  @ManyToOne(() => PositionEntity)
-  @JoinColumn({ name: 'job_position' })
-  position: PositionEntity;
+  @OneToMany(() => CareerEntity, (career) => career.user)
+  @JoinColumn({ name: 'career' })
+  career: CareerEntity[];
 }

@@ -8,7 +8,9 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
-import { PositionService } from 'users/services/position.service';
+import { CareerService } from 'users/services/career.service';
+import { CareerEntity } from 'users/entity/career.entity';
+import { UserEntity } from 'users/entity/user.entity';
 import { PositionEntity } from 'users/entity/position.entity';
 import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
@@ -16,30 +18,30 @@ import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
 
-export interface PositionProps {
-  name: string;
-  duties: string;
-  requirements: string;
-  salaryMinLimit: number;
-  salaryMaxLimit: number;
+export interface CareerProps {
+  user: UserEntity;
+  salary: number;
+  from: Date;
+  to: Date;
+  position: PositionEntity;
 }
 
-@Controller('positions')
-export class PositionController {
-  constructor(private PositionService: PositionService) {}
+@Controller('careers')
+export class CareerController {
+  constructor(private CareerService: CareerService) {}
 
   @Permission(Permissions.getAllPositions)
   @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Get()
-  getAll(): Promise<PositionEntity[]> {
-    return this.PositionService.getAll();
+  @Get('/:id')
+  getByUser(@Param('id') id: string): Promise<CareerEntity[]> {
+    return this.CareerService.getByUser(id);
   }
 
   @Permission(Permissions.createPosition, Permissions.updatePosition)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
-  create(@Body() positionProps: PositionProps): Promise<PositionEntity> {
-    return this.PositionService.createPosition(positionProps);
+  create(@Body() careerProps: CareerProps): Promise<CareerEntity> {
+    return this.CareerService.createCareer(careerProps);
   }
 
   @Permission(Permissions.createPosition, Permissions.updatePosition)
@@ -47,15 +49,15 @@ export class PositionController {
   @Put('/:id')
   updateRole(
     @Param('id') id: string,
-    @Body() positionProps: PositionProps,
-  ): Promise<PositionEntity> {
-    return this.PositionService.updatePosition(id, positionProps);
+    @Body() positionProps: CareerProps,
+  ): Promise<CareerEntity> {
+    return this.CareerService.updateCareer(id, positionProps);
   }
 
   @Permission(Permissions.deletePosition)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
   deleteUser(@Param('id') id: string): Promise<DeleteResult> {
-    return this.PositionService.deletePosition(id);
+    return this.CareerService.deleteCareer(id);
   }
 }
