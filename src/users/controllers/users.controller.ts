@@ -19,7 +19,7 @@ import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { uploadAvatarConfiguration } from '../multer.configuration';
@@ -54,7 +54,7 @@ export class UsersController {
   updateUser(
     @Param('id') id: string,
     @Body() userProps: UserDto,
-  ): Promise<UpdateResult> {
+  ): Promise<UserEntity> {
     return this.UsersService.updateUser(id, userProps);
   }
 
@@ -80,9 +80,8 @@ export class UsersController {
     return this.UsersService.saveUserAvatar(request.user.id, file);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('avatars/:id')
-  getUserAvatar(@Param('id') id, @Res() res) {
-    return this.UsersService.getUserAvatar(id, res);
+  @Get('avatars/:fileName')
+  getUserAvatar(@Param('fileName') fileName, @Res() res) {
+    return this.UsersService.getUserAvatar(fileName, res);
   }
 }

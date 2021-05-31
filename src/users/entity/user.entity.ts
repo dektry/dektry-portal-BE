@@ -40,7 +40,9 @@ export class UserEntity extends BaseEntity {
   @JoinColumn({ name: 'role' })
   role: RoleEntity;
 
-  @OneToMany(() => CareerEntity, (career) => career.user)
-  @JoinColumn({ name: 'career' })
+  @OneToMany(() => CareerEntity, (career) => career.user, {
+    cascade: true,
+  })
+  @JoinColumn()
   career: CareerEntity[];
 }

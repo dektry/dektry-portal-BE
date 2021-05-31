@@ -9,7 +9,8 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { roleRepository } from '../repositories/role.repository';
 import { positionRepository } from '../repositories/position.repository';
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult } from 'typeorm';
+import * as fs from 'fs';
 
 @Injectable()
 export class UsersService {
@@ -49,7 +50,7 @@ export class UsersService {
   }
 
   async createUser(newUserProps: UserDto): Promise<UserEntity> {
-    const { email, role, position, ...otherProps } = newUserProps;
+    const { email, role, ...otherProps } = newUserProps;
     const isExist = await this.usersRepository.findOne({
       email,
     });
@@ -57,12 +58,8 @@ export class UsersService {
       throw new ConflictException('User with this email is already exist!');
     } else {
       const newUserRole = await this.roleRepository.findOne(role);
-      const newUserPosition = await this.positionRepository.findOne(position);
       if (!newUserRole) {
         throw new NotFoundException(`Role ${role} is incorrect!`);
-      }
-      if (!newUserPosition) {
-        throw new NotFoundException(`Position ${position} is incorrect!`);
       }
       const newUser = await this.usersRepository.create({
         ...otherProps,
@@ -73,24 +70,17 @@ export class UsersService {
     }
   }
 
-  async updateUser(id: string, newUserProps: UserDto): Promise<UpdateResult> {
-    const { role, position, ...updatedProps } = newUserProps;
+  async updateUser(id: string, newUserProps: UserDto): Promise<UserEntity> {
+    const { role, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
-    const newUserPosition = await this.positionRepository.findOne(position);
     if (!newUserRole) {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
-    if (!newUserPosition) {
-      throw new NotFoundException(`Position ${position} is incorrect!`);
-    }
     try {
-      const result = await this.usersRepository.update(
-        { id },
-        { role: newUserRole, ...updatedProps },
-      );
-      if (!result.affected) {
-        throw new NotFoundException(`User with ID '${id}' not found`);
-      }
+      const result = await this.usersRepository.save({
+        role: newUserRole,
+        ...updatedProps,
+      });
       return result;
     } catch (error) {
       return error;
@@ -110,20 +100,25 @@ export class UsersService {
   }
 
   async saveUserAvatar(id, file) {
-    const result = await this.usersRepository.update(
+    const { avatarFileName } = await this.usersRepository.findOne(id);
+    if (avatarFileName !== 'default_admin.png') {
+      fs.unlink(`upload/img/avatars/${avatarFileName}`, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    await this.usersRepository.update(
       { id },
       { avatarFileName: file.filename },
     );
-    return result;
+    return file.filename;
   }
 
-  async getUserAvatar(id, res) {
+  async getUserAvatar(fileName, res) {
     try {
-      const user = await this.usersRepository.findOne({ id });
-      if (!user) {
-        throw new NotFoundException(`User with ID '${id}' not found`);
-      }
-      return res.sendFile(user.avatarFileName, { root: 'upload/img/avatars' });
+      return res.sendFile(fileName, { root: 'upload/img/avatars' });
     } catch (error) {
       return error;
     }

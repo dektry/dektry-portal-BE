@@ -27,20 +27,12 @@ const importUsers = async () => {
     const newUserRole = existRoles.find((existRole) => {
       return existRole.name === user.role;
     });
-    const newUserPosition = existPositions.find((existPosition) => {
-      return existPosition.name === user.position;
-    });
-    return { ...user, role: newUserRole, position: newUserPosition };
+    return { ...user, role: newUserRole };
   });
 
   newUsersWithRelations.forEach((user) => {
     if (!user.role) {
       throw new Error(`Role '${user.role}' of '${user.email}' is not exist!`);
-    }
-    if (!user.position) {
-      throw new Error(
-        `Position '${user.position}' of '${user.email}' is not exist!`,
-      );
     }
   });
 
