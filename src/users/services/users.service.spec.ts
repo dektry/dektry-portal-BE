@@ -6,14 +6,23 @@ import { UsersService } from './users.service';
 import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
 
+const testUser = {
+  id: '1',
+  firstName: 'Zheniya',
+  lastName: 'Best Dev Ever',
+  password: 'bestOfTheBest',
+  email: 'test@test.com',
+  role: RoleEntity['user'],
+};
+
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
-  find: jest.fn(),
-  findOne: jest.fn(),
-  create: jest.fn(),
   save: jest.fn(),
-  update: jest.fn(),
-  delete: jest.fn(),
+  create: jest.fn().mockReturnValue(testUser),
+  createQueryBuilder: jest.fn(),
+  findOne: jest.fn().mockResolvedValue(testUser),
+  update: jest.fn().mockResolvedValue(testUser),
+  delete: jest.fn().mockResolvedValue(true),
 });
 
 describe('UsersService', () => {
@@ -44,6 +53,29 @@ describe('UsersService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  describe('get all users', () => {
+    it('should return the array of users', async () => {
+      let createQueryBuilder: any = {
+        leftJoinAndSelect: () => createQueryBuilder,
+      };
+
+      createQueryBuilder = {
+        ...createQueryBuilder,
+        leftJoinAndSelectе: () => createQueryBuilder,
+        select: () => createQueryBuilder,
+        getRawMany: () => [],
+        //getRawMany: () => [testUser],
+      };
+
+      jest
+        .spyOn(userRepository, 'createQueryBuilder')
+        .mockImplementation(() => createQueryBuilder);
+
+      await expect(service.getAll()).resolves.toEqual([]);
+      //await expect(service.getAll()).resolves.toEqual([testUser]);
+    });
   });
 
   describe('find User by ID', () => {
@@ -140,35 +172,40 @@ describe('UsersService', () => {
   describe('update User', () => {
     describe('when the User with ID exists', () => {
       it('should return the object with updated User', async () => {
-        const userId = 1;
-        const expectedUser = {};
-
-        userRepository.findOne.mockReturnValue(expectedUser);
-        const user = await service.getUserById(userId);
-
-        const fieldsToUpdate = {
+        const newUser = {
+          id: 1,
           firstName: 'Zheniya',
           lastName: 'Best Dev Ever',
+          password: 'bestOftheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+          affected: true,
         };
 
-        user.firstName = fieldsToUpdate.firstName;
-        user.lastName = fieldsToUpdate.lastName;
+        userRepository.create.mockReturnValue(newUser);
+        userRepository.save.mockReturnValue(newUser);
+        const user = await service.createUser(newUser);
 
-        expect(user.firstName).toEqual(fieldsToUpdate.firstName);
-        expect(user.lastName).toEqual(fieldsToUpdate.lastName);
+        const updatedUserName = 'Gabbi';
+
+        user.firstName = updatedUserName;
+
+        userRepository.update.mockReturnValue(user);
+        const updatedUser = await service.updateUser(user);
+
+        expect(updatedUser.firstName).toBe(updatedUserName);
       });
     });
 
     describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
-        const userId = 1;
-        userRepository.findOne.mockReturnValue(undefined);
-
         try {
-          await service.getUserById(userId);
+          await service.updateUser(testUser);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          expect(err.message).toEqual(
+            `User with ID '${testUser.id}' not found`,
+          );
         }
       });
     });
@@ -184,27 +221,56 @@ describe('UsersService', () => {
       });
 
       it('should delete User and should throw the "NotFoundException" after GET method', async () => {
-        const userId = 1;
-        await userRepository.delete(userId);
+        const newUser = {
+          id: 1,
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOftheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+          affected: true,
+        };
+
+        userRepository.create.mockReturnValue(newUser);
+        userRepository.save.mockReturnValue(newUser);
+        const user = await service.createUser(newUser);
+
+        userRepository.delete.mockReturnValue(user);
+
+        const dto = {
+          id: newUser.id,
+        };
+
+        await service.deleteUser(dto);
         try {
-          await service.getUserById(userId);
+          await service.getUserById(dto.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          expect(err.message).toEqual(`User with ID '${dto.id}' not found`);
         }
       });
     });
 
     describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
-        const userId = 1;
-        userRepository.findOne.mockReturnValue(undefined);
+        const testUser = {
+          id: 1,
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOfTheBest',
+          email: 'test@test.com',
+          role: RoleEntity['user'],
+        };
+
+        const dto = {
+          id: testUser.id,
+        };
 
         try {
-          await service.getUserById(userId);
+          await service.deleteUser(dto);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          expect(err.message).toEqual(`User with ID '${dto.id}' not found`);
         }
       });
     });
