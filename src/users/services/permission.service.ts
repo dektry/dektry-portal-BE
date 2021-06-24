@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionEntity } from '../entity/permission.entity';
 import { permissionRepository } from '../repositories/permission.repository';
@@ -15,11 +19,11 @@ export class PermissionService {
   ) {}
 
   async createPermission(
-    pemissionProps: PermissionProps,
+    permissionProps: PermissionProps,
   ): Promise<PermissionEntity> {
-    const { name } = pemissionProps;
+    const { name } = permissionProps;
     if (!name) {
-      throw new NotFoundException(`Please, send coorect permission name!`);
+      throw new BadRequestException(`Please, send correct permission name!`);
     }
     return this.permissionRepository.save({ name });
   }
