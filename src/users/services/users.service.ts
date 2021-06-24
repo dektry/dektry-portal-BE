@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
+import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
 import { positionRepository } from '../repositories/position.repository';
 import { DeleteResult } from 'typeorm';
@@ -19,8 +20,8 @@ export class UsersService {
     private usersRepository: usersRepository,
     @InjectRepository(roleRepository)
     private roleRepository: roleRepository,
-    @InjectRepository(positionRepository)
-    private positionRepository: positionRepository,
+    @InjectRepository(careerRepository)
+    private careerRepository: careerRepository,
   ) {}
 
   async getAll() {
@@ -87,7 +88,12 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id): Promise<DeleteResult> {
+  async deleteUser(id): Promise<any> {
+    const allCareers = await this.careerRepository.find({
+      where: { user: id },
+      relations: ['user', 'position'],
+    });
+    await this.careerRepository.remove(allCareers);
     try {
       const result = await this.usersRepository.delete(id);
       if (!result.affected) {

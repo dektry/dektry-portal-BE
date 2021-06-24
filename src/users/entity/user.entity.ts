@@ -42,6 +42,7 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => CareerEntity, (career) => career.user, {
     cascade: true,
+    onDelete: 'SET NULL',
   })
   @JoinColumn()
   career: CareerEntity[];
