@@ -23,7 +23,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/auth/login",
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -97,7 +98,17 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "localhost:3000/auth/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
 					},
 					"response": []
 				}
@@ -120,12 +131,12 @@
 										{
 											"key": "avatar",
 											"type": "file",
-											"src": "/D:/Фото/Личное/qot3GhIZeVQ3.jpg"
+											"src": "/E:/Viber/0-02-0a-99ac90f50611b44f7c2d67b9d4225a835215b7a25f8e4e2a5a290baea3330b6c_56d65c6e.jpg"
 										}
 									]
 								},
 								"url": {
-									"raw": "localhost:3000/users/upload-avatar/0d916090-4407-4f21-b053-ae9d9b5b998d",
+									"raw": "localhost:3000/users/upload-avatar/87f3523c-5ef9-42fa-beba-d9e66fa5fec4",
 									"host": [
 										"localhost"
 									],
@@ -133,7 +144,7 @@
 									"path": [
 										"users",
 										"upload-avatar",
-										"0d916090-4407-4f21-b053-ae9d9b5b998d"
+										"87f3523c-5ef9-42fa-beba-d9e66fa5fec4"
 									],
 									"query": [
 										{
@@ -181,15 +192,6 @@
 								}
 							},
 							"response": []
-						},
-						{
-							"name": "New Request",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": null
-							},
-							"response": []
 						}
 					]
 				},
@@ -217,14 +219,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/0d916090-4407-4f21-b053-ae9d9b5b998d",
+							"raw": "localhost:3000/users/2520ab4f-baed-42ed-a9cd-72b7d63fca9e",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"users",
-								"0d916090-4407-4f21-b053-ae9d9b5b998d"
+								"2520ab4f-baed-42ed-a9cd-72b7d63fca9e"
 							]
 						}
 					},
@@ -310,7 +312,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"p3@kd.fk\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"71c685d0-ffc4-4388-a3a7-fcba8896eaad\",\r\n    \"position\": \"c6521d1b-fc96-4f36-a980-b9a4d59baec6\",\r\n    \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n    \"isActive\": true\r\n  }\r\n",
+							"raw": "{\r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"p3@kd.fk\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"346d9496-e91c-4460-866b-6a4a030056f9\",\r\n    \"position\": \"c6521d1b-fc96-4f36-a980-b9a4d59baec6\",\r\n    \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n    \"isActive\": true, \r\n    \"career\": []\r\n  }\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -337,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"post@m2a2n.as\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"71c685d0-ffc4-4388-a3a7-fcba8896eaad\",\r\n    \"position\": \"c6521d1b-fc96-4f36-a980-b9a4d59baec6\",\r\n        \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n            \"isActive\": true\r\n}\r\n",
+							"raw": "{  \r\n    \"firstName\": \"Post\",\r\n    \"lastName\": \"Man\",\r\n    \"email\": \"JG@gmail.aa\",\r\n    \"password\": \"qwertasdfg\",\r\n    \"role\": \"7474a856-cd41-4e8c-a639-0ec65a47b432\",\r\n    \"birthday\": \"2011-01-23T22:15:51.000Z\",\r\n    \"isActive\": true,\r\n    \"career\":   []\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,14 +347,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/2bcdee2e-3b52-4618-ad08-a84a92c41d18",
+							"raw": "localhost:3000/users/270a4dfa-f2f9-4dec-8bc6-e71e79926db8",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"users",
-								"2bcdee2e-3b52-4618-ad08-a84a92c41d18"
+								"270a4dfa-f2f9-4dec-8bc6-e71e79926db8"
 							]
 						}
 					},
@@ -373,14 +375,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/users/ae623038-9799-41c8-8d55-3758e6d0a27c",
+							"raw": "localhost:3000/users/4b1cef36-0b1a-40a7-8278-91390e6b5661",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"users",
-								"ae623038-9799-41c8-8d55-3758e6d0a27c"
+								"4b1cef36-0b1a-40a7-8278-91390e6b5661"
 							]
 						}
 					},
@@ -391,6 +393,24 @@
 		{
 			"name": "Permissions",
 			"item": [
+				{
+					"name": "Get all permissions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/permissions",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Get by name",
 					"request": {
@@ -486,7 +506,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"name\": \"sss\",\r\n   \"permissions\": [\"CREATE_USER\", \"GET_ALL_USERS\"]\r\n  }\r\n",
+							"raw": "{\r\n   \"name\": \"New role\",\r\n   \"permissions\": [\"CREATE_USER\", \"GET_ALL_USERS\"]\r\n  }\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -521,14 +541,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/roles/c51a0829-bbae-405c-94af-d79e012aa35f",
+							"raw": "localhost:3000/roles/dd6e7297-6a48-4c1a-957c-1538d9c38b92",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"roles",
-								"c51a0829-bbae-405c-94af-d79e012aa35f"
+								"dd6e7297-6a48-4c1a-957c-1538d9c38b92"
 							]
 						}
 					},
@@ -549,14 +569,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/roles/3478f7ad-11cd-4a9a-ab5f-3a32c837ce39",
+							"raw": "localhost:3000/roles/79788051-179e-405e-be15-c8c4545ad5e3",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"roles",
-								"3478f7ad-11cd-4a9a-ab5f-3a32c837ce39"
+								"79788051-179e-405e-be15-c8c4545ad5e3"
 							]
 						}
 					},
@@ -619,7 +639,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n   \"salaryMinLimit\": 1,\r\n   \"salaryMaxLimit\": 1000 \r\n}\r\n",
+							"raw": "{   \r\n   \"salaryMinLimit\": 1,\r\n   \"salaryMaxLimit\": 1 \r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -627,14 +647,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/positions/28e922b6-eac6-4e84-82d0-bd12e7da6f7c",
+							"raw": "localhost:3000/positions/8e7b162b-3b9b-4d6b-a67c-b02130de52d8",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"positions",
-								"28e922b6-eac6-4e84-82d0-bd12e7da6f7c"
+								"8e7b162b-3b9b-4d6b-a67c-b02130de52d8"
 							]
 						}
 					},
@@ -655,14 +675,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/positions/28e922b6-eac6-4e84-82d0-bd12e7da6f7c",
+							"raw": "localhost:3000/positions/8e7b162b-3b9b-4d6b-a67c-b02130de52d8",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"positions",
-								"28e922b6-eac6-4e84-82d0-bd12e7da6f7c"
+								"8e7b162b-3b9b-4d6b-a67c-b02130de52d8"
 							]
 						}
 					},
@@ -679,14 +699,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/careers/ef5944cf-fdc8-486a-bc65-120c4c85536d",
+							"raw": "localhost:3000/careers/d5d36322-a633-4fc3-833c-c166719fc9a2",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"careers",
-								"ef5944cf-fdc8-486a-bc65-120c4c85536d"
+								"d5d36322-a633-4fc3-833c-c166719fc9a2"
 							]
 						}
 					},
@@ -699,7 +719,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"user\": \"ef5944cf-fdc8-486a-bc65-120c4c85536d\",\r\n    \"salary\": 100,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": null,\r\n    \"position\": \"78a00045-0257-4a26-af08-da03cb96b65a\"\r\n  }",
+							"raw": "  {\r\n    \"user\": \"ae22e950-c8a5-4e68-a09f-2b814eb2f4a1\",\r\n    \"salary\": 1000,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": null,\r\n    \"position\": \"57ab6a0e-ecb8-4af1-b9a5-ab8914c90bf2\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -726,7 +746,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "  {\r\n    \"user\": \"ef5944cf-fdc8-486a-bc65-120c4c85536d\",\r\n    \"salary\": 10000,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": null,\r\n    \"position\": \"78a00045-0257-4a26-af08-da03cb96b65a\"\r\n  }",
+							"raw": "  {\r\n    \"user\": \"ae22e950-c8a5-4e68-a09f-2b814eb2f4a1\",\r\n    \"salary\": 10032100,\r\n    \"from\": \"2012-01-23T22:15:51.000Z\",\r\n    \"to\": \"2015-01-23T22:15:51.000Z\",\r\n    \"position\": \"57ab6a0e-ecb8-4af1-b9a5-ab8914c90bf2\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -734,14 +754,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/careers/caa2d5e8-8289-4de3-b63b-19165b0cc01c",
+							"raw": "localhost:3000/careers/a01d18e8-871f-480c-aff5-cf9516433a48",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"careers",
-								"caa2d5e8-8289-4de3-b63b-19165b0cc01c"
+								"a01d18e8-871f-480c-aff5-cf9516433a48"
 							]
 						}
 					},
@@ -753,14 +773,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/careers/eec8a854-3088-4344-8acd-f8de8e6efef7",
+							"raw": "localhost:3000/careers/b4921df6-63b0-4a44-b08f-fdb7bf5368aa",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"careers",
-								"eec8a854-3088-4344-8acd-f8de8e6efef7"
+								"b4921df6-63b0-4a44-b08f-fdb7bf5368aa"
 							]
 						}
 					},

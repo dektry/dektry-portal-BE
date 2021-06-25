@@ -12,6 +12,13 @@ export class PermissionController {
 
   @Permission(Permissions.getPermissionByName)
   @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Get()
+  getAll(): Promise<PermissionEntity[]> {
+    return this.PermissionService.getAll();
+  }
+
+  @Permission(Permissions.getPermissionByName)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get('/:name')
   getByName(@Param('name') name: string): Promise<PermissionEntity> {
     return this.PermissionService.getByName(name);
