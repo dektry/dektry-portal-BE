@@ -9,6 +9,8 @@ import { roleRepository } from 'users/repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
 import { PermissionEntity } from '../entity/permission.entity';
 import { DeleteResult } from 'typeorm';
+import { usersRepository } from '../repositories/users.repository';
+import { UserEntity } from 'users/entity/user.entity';
 
 interface RoleProps {
   name: string;
@@ -22,6 +24,8 @@ export class RoleService {
     private roleRepository: roleRepository,
     @InjectRepository(permissionRepository)
     private permissionRepository: permissionRepository,
+    @InjectRepository(usersRepository)
+    private usersRepository: usersRepository,
   ) {}
 
   async getAll(): Promise<RoleEntity[]> {
@@ -32,7 +36,10 @@ export class RoleService {
   }
 
   async getRoleByName(name: string): Promise<RoleEntity> {
-    const found = await this.roleRepository.findOne({ name });
+    const found = await this.roleRepository.findOne({
+      where: { name },
+      relations: ['permissions'],
+    });
     if (!found) {
       throw new NotFoundException(`Role '${name}' not found`);
     }
@@ -53,8 +60,7 @@ export class RoleService {
     if (isExist) {
       throw new ConflictException(`Role '${name}' is already exist!`);
     }
-    const allExistPermissions: PermissionEntity[] =
-      await this.permissionRepository.find();
+    const allExistPermissions: PermissionEntity[] = await this.permissionRepository.find();
     const updatedPermissionsEntity = permissions.map((newRolePermission) => {
       const existPermission: PermissionEntity = allExistPermissions.find(
         (existPermission) => {
@@ -85,8 +91,7 @@ export class RoleService {
     if (!role) {
       throw new NotFoundException(`Role with ID ${id} not found`);
     }
-    const allExistPermissions: PermissionEntity[] =
-      await this.permissionRepository.find();
+    const allExistPermissions: PermissionEntity[] = await this.permissionRepository.find();
     const updatedPermissionsEntity = permissions.map((newRolePermission) => {
       const existPermission: PermissionEntity = allExistPermissions.find(
         (existPermission) => {
@@ -109,6 +114,29 @@ export class RoleService {
 
   async deleteRole(id: string): Promise<DeleteResult> {
     try {
+      const allUsersWithUserThisRole: UserEntity[] = await this.usersRepository.find(
+        {
+          where: { role: id },
+        },
+      );
+      const userRole: RoleEntity = await this.roleRepository.findOne({
+        name: 'user',
+      });
+      const sudoRole: RoleEntity = await this.roleRepository.findOne({
+        name: 'sudo',
+      });
+      if (sudoRole.id === id) {
+        throw new ConflictException(`You can't remove sudo role!`);
+      }
+      if (userRole.id === id) {
+        throw new ConflictException(`You can't remove user's role!`);
+      }
+      const changedUsers: UserEntity[] = allUsersWithUserThisRole.map(
+        (user) => {
+          return this.usersRepository.create({ ...user, role: userRole });
+        },
+      );
+      await this.usersRepository.save(changedUsers);
       const result = await this.roleRepository.delete(id);
       if (!result.affected) {
         throw new NotFoundException(`Role with ID '${id}' not found`);

@@ -9,7 +9,6 @@ const importUsers = async () => {
   const connection: Connection = await createConnection('data-import');
   const allExistUsers = await connection.getRepository(UserEntity).find();
   const existRoles = await connection.getRepository(RoleEntity).find();
-  const existPositions = await connection.getRepository(PositionEntity).find();
 
   const newUsers = userSeed.filter((newUser) => {
     const isUserExist = allExistUsers.some(

@@ -69,4 +69,11 @@ export const positionSeed = [
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
   },
+  {
+    name: 'Deleted position',
+    duties: '',
+    requirements: '',
+    salaryMinLimit: 0,
+    salaryMaxLimit: 0,
+  },
 ];

@@ -9,7 +9,6 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
-import { positionRepository } from '../repositories/position.repository';
 import { DeleteResult } from 'typeorm';
 import * as fs from 'fs';
 
@@ -88,7 +87,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id): Promise<any> {
+  async deleteUser(id): Promise<DeleteResult> {
     const allCareers = await this.careerRepository.find({
       where: { user: id },
       relations: ['user', 'position'],
@@ -106,7 +105,18 @@ export class UsersService {
   }
 
   async saveUserAvatar(id, file) {
-    const { avatarFileName } = await this.usersRepository.findOne(id);
+    const user = await this.usersRepository.findOne(id);
+
+    if (!file) {
+      throw new NotFoundException(`File is not found`);
+    }
+
+    if (!user) {
+      throw new NotFoundException(`User with ID '${id}' not found`);
+    }
+
+    const { avatarFileName } = user;
+
     if (avatarFileName !== 'default_admin.png') {
       fs.unlink(`upload/img/avatars/${avatarFileName}`, (err) => {
         if (err) {

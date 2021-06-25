@@ -5,6 +5,8 @@ import { careerRepository } from 'users/repositories/career.repository';
 import { DeleteResult } from 'typeorm';
 import { UserEntity } from 'users/entity/user.entity';
 import { PositionEntity } from 'users/entity/position.entity';
+import { positionRepository } from 'users/repositories/position.repository';
+import { usersRepository } from '../repositories/users.repository';
 
 export interface CareerProps {
   user: UserEntity;
@@ -17,6 +19,10 @@ export interface CareerProps {
 @Injectable()
 export class CareerService {
   constructor(
+    @InjectRepository(usersRepository)
+    private usersRepository: usersRepository,
+    @InjectRepository(positionRepository)
+    private positionRepository: positionRepository,
     @InjectRepository(careerRepository)
     private careerRepository: careerRepository,
   ) {}
@@ -30,7 +36,26 @@ export class CareerService {
   }
 
   async createCareer(careerProps: CareerProps): Promise<CareerEntity> {
-    return this.careerRepository.save(careerProps);
+    const position = await this.positionRepository.findOne(
+      careerProps.position,
+    );
+    const user = await this.usersRepository.findOne(careerProps.user);
+    if (!position) {
+      throw new NotFoundException(
+        `Position with ID '${careerProps.position}' not found`,
+      );
+    }
+    if (!user) {
+      throw new NotFoundException(
+        `User with ID '${careerProps.user}' not found`,
+      );
+    }
+    const result = await this.careerRepository.save({
+      ...careerProps,
+      position,
+      user,
+    });
+    return result;
   }
 
   async updateCareer(
@@ -38,9 +63,25 @@ export class CareerService {
     newCareerProps: CareerProps,
   ): Promise<CareerEntity> {
     const career = await this.careerRepository.findOne(id);
+    const position = await this.positionRepository.findOne(
+      newCareerProps.position,
+    );
+    const user = await this.usersRepository.findOne(newCareerProps.user);
+    if (!position) {
+      throw new NotFoundException(
+        `Position with ID '${newCareerProps.position}' not found`,
+      );
+    }
+    if (!user) {
+      throw new NotFoundException(
+        `User with ID '${newCareerProps.user}' not found`,
+      );
+    }
     const result = await this.careerRepository.save({
       ...career,
       ...newCareerProps,
+      position,
+      user,
     });
     return result;
   }

@@ -6,6 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { PositionEntity } from '../entity/position.entity';
 import { positionRepository } from 'users/repositories/position.repository';
+import { careerRepository } from '../repositories/career.repository';
 import { DeleteResult } from 'typeorm';
 import { PositionProps } from '../controllers/position.controller';
 
@@ -14,6 +15,8 @@ export class PositionService {
   constructor(
     @InjectRepository(positionRepository)
     private positionRepository: positionRepository,
+    @InjectRepository(careerRepository)
+    private careerRepository: careerRepository,
   ) {}
 
   async getAll(): Promise<PositionEntity[]> {
@@ -39,7 +42,7 @@ export class PositionService {
   ): Promise<PositionEntity> {
     const position = await this.positionRepository.findOne(id);
     if (!position) {
-      throw new NotFoundException(`Role with ID ${id} not found`);
+      throw new NotFoundException(`Position with ID ${id} not found`);
     }
     const result = await this.positionRepository.save({
       ...position,
@@ -50,6 +53,22 @@ export class PositionService {
 
   async deletePosition(id: string): Promise<DeleteResult> {
     try {
+      const allCareersWithThisPosition = await this.careerRepository.find({
+        where: { position: id },
+      });
+      const deletedPosition = await this.positionRepository.findOne({
+        name: 'Deleted position',
+      });
+      const changedCareers = allCareersWithThisPosition.map((career) => {
+        return this.careerRepository.create({
+          ...career,
+          position: deletedPosition,
+        });
+      });
+      if (deletedPosition.id === id) {
+        throw new ConflictException(`You can't remove deleted position!`);
+      }
+      await this.careerRepository.save(changedCareers);
       const result = await this.positionRepository.delete(id);
       if (!result.affected) {
         throw new NotFoundException(`Position with ID '${id}' not found`);

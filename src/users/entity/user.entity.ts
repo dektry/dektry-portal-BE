@@ -36,7 +36,10 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   birthday: Date;
 
-  @ManyToOne(() => RoleEntity)
+  @ManyToOne(() => RoleEntity, {
+    cascade: true,
+    onDelete: 'SET NULL',
+  })
   @JoinColumn({ name: 'role' })
   role: RoleEntity;
 
