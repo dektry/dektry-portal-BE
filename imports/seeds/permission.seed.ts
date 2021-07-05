@@ -1,17 +1,50 @@
 export const permissionSeed = [
   {
-    name: 'deleteUsers',
+    name: 'DELETE_USERS',
   },
   {
-    name: 'createUser',
+    name: 'CREATE_USER',
   },
   {
-    name: 'getUser',
+    name: 'GET_USER',
   },
   {
-    name: 'getAllUsers',
+    name: 'GET_ALL_USERS',
   },
   {
-    name: 'updateUser',
+    name: 'UPDATE_USER',
+  },
+  {
+    name: 'GET_ALL_ROLES',
+  },
+  {
+    name: 'GET_ROLE_BY_NAME',
+  },
+  {
+    name: 'CREATE_ROLE',
+  },
+  {
+    name: 'UPDATE_ROLE',
+  },
+  {
+    name: 'DELETE_ROLE',
+  },
+  {
+    name: 'GET_PERMISSION_BY_NAME',
+  },
+  {
+    name: 'CREATE_PERMISSION',
+  },
+  {
+    name: 'CREATE_POSITION',
+  },
+  {
+    name: 'GET_ALL_POSITIONS',
+  },
+  {
+    name: 'UPDATE_POSITION',
+  },
+  {
+    name: 'DELETE_POSITION',
   },
 ];

@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/services/users.service';
+import { UsersService } from 'users/services/users.service';
+import { RequestUser } from './auth.interfaces';
+import { omit } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -9,21 +11,21 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(email: string, pass: string): Promise<RequestUser> {
     const user = await this.usersService.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException(`User with email '${email}' is not found!`);
+    }
     if (user.password === pass) {
-      const { password, ...result } = user;
-
+      const result = omit(user, ['password']);
       return result;
     }
     return null;
   }
 
-  async login(user: any) {
+  async login(user: RequestUser) {
     const payload = {
-      username: user.username,
-      sub: user.id,
-      role: user.role.name,
+      ...user,
     };
     return {
       access_token: this.jwtService.sign(payload),

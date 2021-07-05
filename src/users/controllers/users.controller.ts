@@ -2,28 +2,34 @@ import {
   Controller,
   Body,
   Get,
+  Req,
+  Res,
   Param,
-  ParseIntPipe,
   Post,
   UseGuards,
-  Req,
+  Put,
+  Delete,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import { DeleteUserDto } from '../dto/delete-user.dto';
-import { Roles } from '../../decorators/role.decorator';
-import { Role } from '../../enums/role.enum';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../../auth/guards/roles.guard';
+import { UserDto } from '../dto/user.dto';
+import { Permission } from 'decorators/permission.decorator';
+import { Permissions } from 'enums/permissions.enum';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { PermissionGuard } from 'auth/guards/permission.guard';
+import { DeleteResult } from 'typeorm';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
+import { uploadAvatarConfiguration } from '../multer.configuration';
+
 @Controller('users')
 export class UsersController {
   constructor(private UsersService: UsersService) {}
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.getAllUsers)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
   getAll(): Promise<UserEntity[]> {
     return this.UsersService.getAll();
@@ -31,28 +37,51 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  getUserById(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
+  getUserById(@Param('id') id: string): Promise<UserEntity> {
     return this.UsersService.getUserById(id);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Permission(Permissions.createUser, Permissions.updateUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
-  createUser(@Body() userProps: CreateUserDto): Promise<UserEntity> {
+  createUser(@Body() userProps: UserDto): Promise<UserEntity> {
     return this.UsersService.createUser(userProps);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('/update')
-  updateUser(@Body() userProps: UpdateUserDto): Promise<string> {
-    return this.UsersService.updateUser(userProps);
+  @Permission(Permissions.createUser, Permissions.updateUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Put('/:id')
+  updateUser(
+    @Param('id') id: string,
+    @Body() userProps: UserDto,
+  ): Promise<UserEntity> {
+    return this.UsersService.updateUser(id, userProps);
   }
 
-  @Roles(Role.Sudo, Role.Admin)
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('/delete')
-  deleteUser(@Body() userId: DeleteUserDto): Promise<string> {
-    return this.UsersService.deleteUser(userId);
+  @Permission(Permissions.deleteUsers)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Delete('/:id')
+  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
+    return this.UsersService.deleteUser(id);
+  }
+
+  @Permission(Permissions.createUser, Permissions.updateUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseInterceptors(FileInterceptor('avatar', uploadAvatarConfiguration))
+  @Post('upload-avatar/:id')
+  uploadAvatar(@Param('id') id, @UploadedFile() file: Express.Multer.File) {
+    return this.UsersService.saveUserAvatar(id, file);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('avatar', uploadAvatarConfiguration))
+  @Post('upload-avatar')
+  uploadOwnAvatar(@Req() request, @UploadedFile() file: Express.Multer.File) {
+    return this.UsersService.saveUserAvatar(request.user.id, file);
+  }
+
+  @Get('avatars/:fileName')
+  getUserAvatar(@Param('fileName') fileName, @Res() res) {
+    return this.UsersService.getUserAvatar(fileName, res);
   }
 }

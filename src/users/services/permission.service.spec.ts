@@ -45,7 +45,7 @@ describe('PermissionService', () => {
     describe('when all fields passed correctly', () => {
       it('should return the object with new Permission', async () => {
         const newPermission = {
-          permission: 'users',
+          name: 'users',
         };
 
         permissionsRepository.create.mockReturnValue(newPermission);
@@ -58,7 +58,7 @@ describe('PermissionService', () => {
     describe('when fields are not valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newPermission = {
-          permission: '',
+          name: '',
         };
         permissionsRepository.create.mockReturnValue(newPermission);
         permissionsRepository.save.mockReturnValue(newPermission);

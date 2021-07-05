@@ -13,10 +13,10 @@ export class RoleEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 255 })
+  @Column({ unique: true, length: 255 })
   name: string;
 
-  @ManyToMany(() => PermissionEntity)
+  @ManyToMany(() => PermissionEntity, { cascade: true })
   @JoinTable({ name: 'role_permissions' })
   permissions: PermissionEntity[];
 }

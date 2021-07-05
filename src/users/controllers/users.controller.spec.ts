@@ -52,7 +52,7 @@ describe('UsersController', () => {
   describe('get User by ID', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id', async () => {
-        const user = await controller.getUserById(1);
+        const user = await controller.getUserById('1');
         expect(user).toEqual(testUser);
       });
     });
@@ -60,7 +60,7 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.getUserById(10);
+          await controller.getUserById('10');
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }

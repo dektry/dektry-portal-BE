@@ -26,10 +26,27 @@
 
 [**Schema**](https://dbdiagram.io/d/6087c0fab29a09603d124dc9) of current database.
 
+## Postman requests
+
+The `postman` folder contains a file with traditional RBAC requests for postman.
+
 ## Installation
 
 ```bash
 $ npm install
+```
+
+## Import data
+
+```bash
+# Import all data
+$ npm run import:all
+
+# Import roles and permissions
+$ npm run import:roles
+
+# Import Users. Possible only after importing roles..
+$ npm run import:users
 ```
 
 ## Running the app
@@ -62,4 +79,4 @@ $ npm run test:cov
 
 - [**LocalAuthGuard**](http://www.passportjs.org/packages/passport-local/) - this is the guard, which provides passport local authentication strategy. This strategy authenticates users using a username and password. The strategy requires a `verify` callback, which accepts these credentials. After authentification on `/login` user get JWT token, which sets in cookies.
 - [**JwtAuthGuard**](http://www.passportjs.org/packages/passport-jwt/) - this is the guard, which provides passport JWT authentication strategy. This strategy authenticates users using a JWT from cookies.
-- [**RolesGuard**](https://docs.nestjs.com/security/authorization) - this is the guard, which gives access, depending on the user's role. Used in conjunction with a @Roles decorator.
+- [**PermissionGuard**](https://docs.nestjs.com/security/authorization) - this is the guard, which gives access, depending on the user's permissions. Used in conjunction with a @Permission decorator.

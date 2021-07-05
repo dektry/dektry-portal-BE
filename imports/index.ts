@@ -1,6 +1,8 @@
 import importRoles from './roles.import';
 import importPermissions from './permissions.import';
 import importUsers from './users.import';
+import importPositions from './positions.import';
+import importCareers from './careers.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -8,7 +10,9 @@ const importData = async () => {
     case 'all':
       await importPermissions();
       await importRoles();
+      await importPositions();
       await importUsers();
+      await importCareers();
       break;
     case 'roles':
       await importPermissions();

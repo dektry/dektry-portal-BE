@@ -1,94 +1,142 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { DeleteUserDto } from '../dto/delete-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
+import { careerRepository } from '../repositories/career.repository';
+import { roleRepository } from '../repositories/role.repository';
+import { DeleteResult } from 'typeorm';
+import * as fs from 'fs';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(usersRepository)
     private usersRepository: usersRepository,
+    @InjectRepository(roleRepository)
+    private roleRepository: roleRepository,
+    @InjectRepository(careerRepository)
+    private careerRepository: careerRepository,
   ) {}
 
   async getAll() {
-    const allUsers = await this.usersRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.role', 'role')
-      .leftJoinAndSelect('role.permission', 'permission')
-      .select(['user', 'role.roleName', 'permission'])
-      .getRawMany();
-    const groupUsers = (allUsers, key) => {
-      const groupedUsers: any = Object.values(
-        allUsers.reduce(
-          (result, user) => ({
-            ...result,
-            [user[key]]: {
-              id: user.user_id,
-              firstName: user.user_firstName,
-              lastName: user.user_lastName,
-              email: user.user_email,
-              password: user.user_password,
-              role: user.role_roleName,
-            },
-          }),
-          {},
-        ),
-      );
-      return groupedUsers;
-    };
-
-    const users = groupUsers(allUsers, 'user_id');
-    return users;
+    const allUsers = await this.usersRepository.find({
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
+    });
+    return allUsers;
   }
 
-  async getUserById(id: number): Promise<UserEntity> {
-    const found = await this.usersRepository.findOne(id);
+  async getUserById(id: string): Promise<UserEntity> {
+    const found = await this.usersRepository.findOne(id, {
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
+    });
 
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-
     return found;
   }
 
-  async findByEmail(email) {
+  async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({
       where: { email },
-      relations: ['role'],
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
     });
     return currentUser;
   }
 
-  async createUser(newUserProps: CreateUserDto): Promise<UserEntity> {
-    const { firstName, lastName, email, password, role } = newUserProps;
-    const newUser = this.usersRepository.create({
-      firstName,
-      lastName,
-      password,
+  async createUser(newUserProps: UserDto): Promise<UserEntity> {
+    const { email, role, ...otherProps } = newUserProps;
+    const isExist = await this.usersRepository.findOne({
       email,
-      role,
     });
-    return this.usersRepository.save(newUser);
+    if (isExist) {
+      throw new ConflictException('User with this email is already exist!');
+    } else {
+      const newUserRole = await this.roleRepository.findOne(role);
+      if (!newUserRole) {
+        throw new NotFoundException(`Role ${role} is incorrect!`);
+      }
+      const newUser = await this.usersRepository.create({
+        ...otherProps,
+        email,
+        role: newUserRole,
+      });
+      return this.usersRepository.save(newUser);
+    }
   }
 
-  async updateUser(newUserProps: UpdateUserDto): Promise<any> {
-    const { id, ...updatedProps } = newUserProps;
-    const result = await this.usersRepository.update({ id }, updatedProps);
-    if (!result.affected) {
-      throw new NotFoundException(`User with ID '${id}' not found`);
+  async updateUser(id: string, newUserProps: UserDto): Promise<UserEntity> {
+    const { role, ...updatedProps } = newUserProps;
+    const newUserRole = await this.roleRepository.findOne(role);
+    if (!newUserRole) {
+      throw new ConflictException(`Role ${role} is incorrect!`);
     }
-    return result;
+    try {
+      const result = await this.usersRepository.save({
+        role: newUserRole,
+        ...updatedProps,
+      });
+      return result;
+    } catch (error) {
+      return error;
+    }
   }
 
-  async deleteUser(userProps: DeleteUserDto): Promise<any> {
-    const { id } = userProps;
-    const result = await this.usersRepository.delete(id);
-    if (!result.affected) {
+  async deleteUser(id): Promise<DeleteResult> {
+    const allCareers = await this.careerRepository.find({
+      where: { user: id },
+      relations: ['user', 'position'],
+    });
+    await this.careerRepository.remove(allCareers);
+    try {
+      const result = await this.usersRepository.delete(id);
+      if (!result.affected) {
+        throw new NotFoundException(`User with ID '${id}' not found`);
+      }
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async saveUserAvatar(id, file) {
+    const user = await this.usersRepository.findOne(id);
+
+    if (!file) {
+      throw new NotFoundException(`File is not found`);
+    }
+
+    if (!user) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    return result;
+
+    const { avatarFileName } = user;
+
+    if (avatarFileName !== 'default_admin.png') {
+      fs.unlink(`upload/img/avatars/${avatarFileName}`, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+
+    await this.usersRepository.update(
+      { id },
+      { avatarFileName: file.filename },
+    );
+    return file.filename;
+  }
+
+  async getUserAvatar(fileName, res) {
+    try {
+      return res.sendFile(fileName, { root: 'upload/img/avatars' });
+    } catch (error) {
+      return error;
+    }
   }
 }
