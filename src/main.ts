@@ -10,9 +10,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: [
-      'https://dektry-fe-build.herokuapp.com',
-      'https://herokuapp.com',
-      'https://web.app',
+      /\.web\.app$/,
+      /\.herokuapp\.com$/,
       'http://localhost:3001',
       'http://localhost:3000',
     ],
