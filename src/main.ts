@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import dotEnv = require('dotenv');
+import { urlencoded, json } from 'express';
 
 const corsOrigins =
   process.env.NODE_ENV === 'production'
@@ -18,6 +19,8 @@ async function bootstrap() {
   await dotEnv.config();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
   app.enableCors({
     origin: corsOrigins,
     credentials: true,
