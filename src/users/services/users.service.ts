@@ -25,14 +25,26 @@ export class UsersService {
 
   async getAll() {
     const allUsers = await this.usersRepository.find({
-      relations: ['role', 'role.permissions', 'career', 'career.position'],
+      relations: [
+        'role',
+        'role.permissions',
+        'career',
+        'career.position',
+        'career.position.group',
+      ],
     });
     return allUsers;
   }
 
   async getUserById(id: string): Promise<UserEntity> {
     const found = await this.usersRepository.findOne(id, {
-      relations: ['role', 'role.permissions', 'career', 'career.position'],
+      relations: [
+        'role',
+        'role.permissions',
+        'career',
+        'career.position',
+        'career.position.group',
+      ],
     });
 
     if (!found) {
@@ -44,7 +56,13 @@ export class UsersService {
   async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({
       where: { email },
-      relations: ['role', 'role.permissions', 'career', 'career.position'],
+      relations: [
+        'role',
+        'role.permissions',
+        'career',
+        'career.position',
+        'career.position.group',
+      ],
     });
     return currentUser;
   }
@@ -90,7 +108,7 @@ export class UsersService {
   async deleteUser(id): Promise<DeleteResult> {
     const allCareers = await this.careerRepository.find({
       where: { user: id },
-      relations: ['user', 'position'],
+      relations: ['user', 'position', 'position.group'],
     });
     await this.careerRepository.remove(allCareers);
     try {

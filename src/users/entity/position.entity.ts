@@ -1,5 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
-
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  ManyToOne,
+} from 'typeorm';
+import { PositionGroupEntity } from './positionGroup.entity';
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -19,4 +25,10 @@ export class PositionEntity extends BaseEntity {
 
   @Column()
   salaryMaxLimit: number;
+
+  @ManyToOne(
+    () => PositionGroupEntity,
+    (positionGroup) => positionGroup.positions,
+  )
+  group: PositionGroupEntity;
 }

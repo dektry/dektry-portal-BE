@@ -5,6 +5,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Developers',
   },
   {
     name: 'Back-end developer',
@@ -12,6 +13,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Developers',
   },
   {
     name: 'Full stack developer',
@@ -19,6 +21,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Developers',
   },
   {
     name: 'Front-end trainee',
@@ -26,6 +29,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Trainee',
   },
   {
     name: 'Back-end trainee',
@@ -33,6 +37,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Trainee',
   },
   {
     name: 'Full stack trainee',
@@ -40,6 +45,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Trainee',
   },
   {
     name: 'Swift developer',
@@ -47,6 +53,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Developers',
   },
   {
     name: 'Business Development manager',
@@ -54,6 +61,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Business developers',
   },
   {
     name: 'Marketing Manager',
@@ -61,6 +69,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Business developers',
   },
   {
     name: 'CEO',
@@ -68,6 +77,7 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 100,
     salaryMaxLimit: 1000,
+    group: 'Administration',
   },
   {
     name: 'Deleted position',
@@ -75,5 +85,6 @@ export const positionSeed = [
     requirements: 'Some skills',
     salaryMinLimit: 0,
     salaryMaxLimit: 0,
+    group: 'Trainee',
   },
 ];
