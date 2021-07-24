@@ -37,14 +37,14 @@ export class CareerController {
     return this.CareerService.getByUser(id);
   }
 
-  @Permission(Permissions.createCareer, Permissions.updatePosition)
+  @Permission(Permissions.createCareer)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
   create(@Body() careerProps: CareerProps): Promise<CareerEntity> {
     return this.CareerService.createCareer(careerProps);
   }
 
-  @Permission(Permissions.createCareer, Permissions.updatePosition)
+  @Permission(Permissions.createCareer)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
   updateCareer(
