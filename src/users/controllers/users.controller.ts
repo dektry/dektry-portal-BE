@@ -41,14 +41,14 @@ export class UsersController {
     return this.UsersService.getUserById(id);
   }
 
-  @Permission(Permissions.createUser, Permissions.updateUser)
+  @Permission(Permissions.createUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
   createUser(@Body() userProps: UserDto): Promise<UserEntity> {
     return this.UsersService.createUser(userProps);
   }
 
-  @Permission(Permissions.createUser, Permissions.updateUser)
+  @Permission(Permissions.createUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
   updateUser(
@@ -65,7 +65,7 @@ export class UsersController {
     return this.UsersService.deleteUser(id);
   }
 
-  @Permission(Permissions.createUser, Permissions.updateUser)
+  @Permission(Permissions.createUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @UseInterceptors(FileInterceptor('avatar', uploadAvatarConfiguration))
   @Post('upload-avatar/:id')

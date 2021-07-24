@@ -10,7 +10,7 @@ import { PermissionGuard } from 'auth/guards/permission.guard';
 export class PermissionController {
   constructor(private PermissionService: PermissionService) {}
 
-  @Permission(Permissions.getPermissionByName)
+  @Permission(Permissions.getAllPermissions)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
   getAll(): Promise<PermissionEntity[]> {

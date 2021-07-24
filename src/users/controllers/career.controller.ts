@@ -30,34 +30,34 @@ export interface CareerProps {
 export class CareerController {
   constructor(private CareerService: CareerService) {}
 
-  @Permission(Permissions.getAllPositions)
+  @Permission(Permissions.getCareer)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get('/:id')
   getByUser(@Param('id') id: string): Promise<CareerEntity[]> {
     return this.CareerService.getByUser(id);
   }
 
-  @Permission(Permissions.createPosition, Permissions.updatePosition)
+  @Permission(Permissions.createCareer, Permissions.updatePosition)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
   create(@Body() careerProps: CareerProps): Promise<CareerEntity> {
     return this.CareerService.createCareer(careerProps);
   }
 
-  @Permission(Permissions.createPosition, Permissions.updatePosition)
+  @Permission(Permissions.createCareer, Permissions.updatePosition)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
-  updateRole(
+  updateCareer(
     @Param('id') id: string,
     @Body() careerProps: CareerProps,
   ): Promise<CareerEntity> {
     return this.CareerService.updateCareer(id, careerProps);
   }
 
-  @Permission(Permissions.deletePosition)
+  @Permission(Permissions.deleteCareer)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
-  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
+  deleteCareer(@Param('id') id: string): Promise<DeleteResult> {
     return this.CareerService.deleteCareer(id);
   }
 }
