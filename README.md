@@ -41,12 +41,6 @@ $ npm install
 ```bash
 # Import all data
 $ npm run import:all
-
-# Import roles and permissions
-$ npm run import:roles
-
-# Import Users. Possible only after importing roles..
-$ npm run import:users
 ```
 
 ## Running the app
@@ -58,7 +52,7 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
+# production mode 
 $ npm run start:prod
 ```
 
