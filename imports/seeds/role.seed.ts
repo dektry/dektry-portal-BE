@@ -27,6 +27,6 @@ export const roleSeed = [
   },
   {
     name: 'user',
-    permissions: [Permissions.getUser],
+    permissions: [Permissions.getUser, Permissions.getAllUsers],
   },
 ];
