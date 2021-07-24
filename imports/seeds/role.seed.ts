@@ -1,4 +1,4 @@
-import { Permissions } from 'enums/permissions.enum';
+import { Permissions } from '../../src/enums/permissions.enum';
 
 export const roleSeed = [
   {
