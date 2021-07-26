@@ -39,7 +39,10 @@ $ npm install
 ## Import data
 
 ```bash
-# Import all data
+# Import all data in development mode
+$ npm run import:dev:all
+
+# Import all seed-data on production
 $ npm run import:all
 ```
 
@@ -52,7 +55,7 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode 
+# production mode
 $ npm run start:prod
 ```
 
