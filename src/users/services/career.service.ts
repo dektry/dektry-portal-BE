@@ -30,7 +30,7 @@ export class CareerService {
   async getByUser(id): Promise<CareerEntity[]> {
     const fullCareer = await this.careerRepository.find({
       where: { user: id },
-      relations: ['user', 'position'],
+      relations: ['user', 'position', 'position.group'],
     });
     return fullCareer;
   }

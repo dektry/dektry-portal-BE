@@ -33,46 +33,43 @@ The `postman` folder contains a file with traditional RBAC requests for postman.
 ## Installation
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 ## Import data
 
 ```bash
-# Import all data
-$ npm run import:all
+# Import all data in development mode
+$ yarn run import:dev:all
 
-# Import roles and permissions
-$ npm run import:roles
-
-# Import Users. Possible only after importing roles..
-$ npm run import:users
+# Import all seed-data on production
+$ yarn run import:all
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ yarn run start
 
 # watch mode
-$ npm run start:dev
+$ yarn run start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn run test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn run test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn run test:cov
 ```
 
 ## Guars

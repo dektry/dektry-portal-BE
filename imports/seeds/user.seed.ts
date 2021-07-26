@@ -4,7 +4,7 @@ export const userSeed = [
     lastName: 'Homza',
     email: 'dm.homza@gmail.com',
     password: 'qwertasdfg',
-    role: 'sudo',
+    role: 'admin',
     isActive: true,
     birthday: '1990-01-23+02',
   },

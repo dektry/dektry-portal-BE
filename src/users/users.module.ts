@@ -15,6 +15,9 @@ import { positionRepository } from './repositories/position.repository';
 import { CareerController } from './controllers/career.controller';
 import { CareerService } from './services/career.service';
 import { careerRepository } from './repositories/career.repository';
+import { positionGroupRepository } from './repositories/positionGroup.repository';
+import { PositionGroupController } from './controllers/positionGroup.controller';
+import { PositionGroupService } from './services/positionGroup.service';
 
 @Module({
   imports: [
@@ -24,6 +27,7 @@ import { careerRepository } from './repositories/career.repository';
       permissionRepository,
       positionRepository,
       careerRepository,
+      positionGroupRepository,
     ]),
   ],
   providers: [
@@ -32,6 +36,7 @@ import { careerRepository } from './repositories/career.repository';
     PermissionService,
     PositionService,
     CareerService,
+    PositionGroupService,
   ],
   controllers: [
     UsersController,
@@ -39,6 +44,7 @@ import { careerRepository } from './repositories/career.repository';
     PermissionController,
     PositionController,
     CareerController,
+    PositionGroupController,
   ],
   exports: [UsersService],
 })

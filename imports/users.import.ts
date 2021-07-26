@@ -1,7 +1,6 @@
 import { createConnection, Connection } from 'typeorm';
 import { UserEntity } from '../src/users/entity/user.entity';
 import { RoleEntity } from '../src/users/entity/role.entity';
-import { PositionEntity } from '../src/users/entity/position.entity';
 import { userSeed } from './seeds/user.seed';
 import { difference } from 'lodash';
 
