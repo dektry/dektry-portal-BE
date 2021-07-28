@@ -9,8 +9,10 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
+import { getHashPassword } from '../../../utils/hashPassword';
 import { DeleteResult } from 'typeorm';
 import * as fs from 'fs';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -21,7 +23,7 @@ export class UsersService {
     private roleRepository: roleRepository,
     @InjectRepository(careerRepository)
     private careerRepository: careerRepository,
-  ) {}
+  ) { }
 
   async getAll() {
     const allUsers = await this.usersRepository.find({
@@ -33,6 +35,10 @@ export class UsersService {
         'career.position.group',
       ],
     });
+    // return _.map(allUsers, user => ({
+    //   ...user,
+    //   password: getPassword(user.password),
+    // }));
     return allUsers;
   }
 
@@ -50,6 +56,8 @@ export class UsersService {
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
+    // const result = _.omit(found, ['password']);
+    // return ({ ...result, password: getPassword(found.password) });
     return found;
   }
 
@@ -68,7 +76,7 @@ export class UsersService {
   }
 
   async createUser(newUserProps: UserDto): Promise<UserEntity> {
-    const { email, role, ...otherProps } = newUserProps;
+    const { email, role, password, ...otherProps } = newUserProps;
     const isExist = await this.usersRepository.findOne({
       email,
     });
@@ -79,25 +87,29 @@ export class UsersService {
       if (!newUserRole) {
         throw new NotFoundException(`Role ${role} is incorrect!`);
       }
+      const hashPassword = await getHashPassword(password);
       const newUser = await this.usersRepository.create({
         ...otherProps,
         email,
         role: newUserRole,
+        password: hashPassword,
       });
       return this.usersRepository.save(newUser);
     }
   }
 
   async updateUser(id: string, newUserProps: UserDto): Promise<UserEntity> {
-    const { role, ...updatedProps } = newUserProps;
+    const { role, password, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
     if (!newUserRole) {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
     try {
+      const hashPassword = await getHashPassword(password);
       const result = await this.usersRepository.save({
-        role: newUserRole,
         ...updatedProps,
+        role: newUserRole,
+        password: hashPassword,
       });
       return result;
     } catch (error) {
