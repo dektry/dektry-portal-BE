@@ -9,22 +9,10 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
+import { getHashPassword } from '../../../utils/hashPassword';
 import { DeleteResult } from 'typeorm';
 import * as fs from 'fs';
 import * as _ from 'lodash';
-import * as crypto from 'crypto-js';
-
-const getHashPassword = (password) => {
-  const encryptPassword = crypto.AES.encrypt(JSON.stringify(password), process.env.ENCRYPT_KEY).toString();
-
-  return encryptPassword;
-};
-
-const getPassword = (hash: string) => {
-  const decryptPassword = crypto.AES.decrypt(hash, process.env.ENCRYPT_KEY);
-  const original = decryptPassword.toString(crypto.enc.Utf8).replace(/['"]+/g, '');
-  return original;
-};
 
 @Injectable()
 export class UsersService {
@@ -47,10 +35,11 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    return _.map(allUsers, user => ({
-      ...user,
-      password: getPassword(user.password),
-    }));
+    // return _.map(allUsers, user => ({
+    //   ...user,
+    //   password: getPassword(user.password),
+    // }));
+    return allUsers;
   }
 
   async getUserById(id: string): Promise<UserEntity> {
@@ -67,8 +56,9 @@ export class UsersService {
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    const result = _.omit(found, ['password']);
-    return ({ ...result, password: getPassword(found.password) });
+    // const result = _.omit(found, ['password']);
+    // return ({ ...result, password: getPassword(found.password) });
+    return found;
   }
 
   async findByEmail(email: string) {
@@ -97,7 +87,7 @@ export class UsersService {
       if (!newUserRole) {
         throw new NotFoundException(`Role ${role} is incorrect!`);
       }
-      const hashPassword = getHashPassword(password);
+      const hashPassword = await getHashPassword(password);
       const newUser = await this.usersRepository.create({
         ...otherProps,
         email,
@@ -115,7 +105,7 @@ export class UsersService {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
     try {
-      const hashPassword = getHashPassword(password);
+      const hashPassword = await getHashPassword(password);
       const result = await this.usersRepository.save({
         ...updatedProps,
         role: newUserRole,
