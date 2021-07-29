@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as _ from 'lodash';
+import { comparePassword } from '../../utils/hashPassword';
 import { UsersService } from 'users/services/users.service';
 import { RequestUser } from './auth.interfaces';
-import { omit } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +17,9 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException(`User with email '${email}' is not found!`);
     }
-    if (user.password === pass) {
-      const result = omit(user, ['password']);
+    const isMatch = await comparePassword(pass, user.password);
+    if (isMatch) {
+      const result = _.omit(user, ['password']);
       return result;
     }
     return null;
