@@ -55,7 +55,7 @@ $ yarn run import:templates
 ## Running the app
 
 ```bash
-# development
+# deploy mode
 $ yarn run start
 
 # watch mode
