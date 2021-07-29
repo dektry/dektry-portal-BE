@@ -23,6 +23,7 @@ export const roleSeed = [
       Permissions.createCareer,
       Permissions.deleteCareer,
       Permissions.getAllPermissions,
+      Permissions.getAllArticles,
     ],
   },
   {

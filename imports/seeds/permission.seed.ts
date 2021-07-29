@@ -47,4 +47,7 @@ export const permissionSeed = [
   {
     name: 'DELETE_POSITION',
   },
+  {
+    name: 'GET_ALL_ARTICLES',
+  },
 ];
