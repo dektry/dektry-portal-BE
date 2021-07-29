@@ -47,4 +47,16 @@ export const permissionSeed = [
   {
     name: 'DELETE_POSITION',
   },
+  {
+    name: 'GET_USER_CAREER',
+  },
+  {
+    name: 'CREATE_CAREER',
+  },
+  {
+    name: 'DELETE_CAREER',
+  },
+  {
+    name: 'ONBOARDING_TEMPLATES',
+  },
 ];

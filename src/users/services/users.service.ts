@@ -89,13 +89,20 @@ export class UsersService {
   }
 
   async updateUser(id: string, newUserProps: UserDto): Promise<UserEntity> {
+    const existUser = await this.usersRepository.findOne({
+      where: { id },
+    });
     const { role, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
+    if (!existUser) {
+      throw new NotFoundException(`User ${id} not found!`);
+    }
     if (!newUserRole) {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
     try {
       const result = await this.usersRepository.save({
+        ...existUser,
         role: newUserRole,
         ...updatedProps,
       });

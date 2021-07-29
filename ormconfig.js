@@ -30,7 +30,7 @@ module.exports = [
     logging: true,
     name: 'default',
     synchronize: false,
-    entities: ['dist/src/users/entity/*.entity.js'],
+    entities: ['dist/src/**/entity/*.entity.js'],
     migrationsTableName: '__migrations',
     migrations: ['dist/src/migration/*.js'],
     cli: {
