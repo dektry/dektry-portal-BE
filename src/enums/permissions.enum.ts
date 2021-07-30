@@ -22,4 +22,6 @@ export enum Permissions {
   createPosition = 'CREATE_POSITION',
   updatePosition = 'UPDATE_POSITION',
   deletePosition = 'DELETE_POSITION',
+
+  createProject = 'CREATE_PROJECT',
 }

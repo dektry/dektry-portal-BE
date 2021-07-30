@@ -47,4 +47,7 @@ export const permissionSeed = [
   {
     name: 'DELETE_POSITION',
   },
+  {
+    name: 'CREATE_PROJECT'
+  },
 ];
