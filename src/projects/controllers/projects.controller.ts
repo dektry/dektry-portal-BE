@@ -2,12 +2,16 @@ import {
   Controller,
   Body,
   Post,
+  Put,
+  Delete,
   Get,
   Query,
   UseGuards,
   DefaultValuePipe,
   ParseIntPipe,
+  Param,
 } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { Permission } from '../../decorators/permission.decorator';
 import { Permissions } from '../../enums/permissions.enum';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
@@ -36,5 +40,22 @@ export class ProjectsController {
   @Post()
   createProject(@Body() projectProps: ProjectDto): Promise<ProjectEntity> {
     return this.ProjectsService.createProject(projectProps);
+  }
+
+  @Permission(Permissions.createProject)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Put('/:id')
+  updateUser(
+    @Param('id') id: string,
+    @Body() userProps: ProjectDto,
+  ): Promise<ProjectEntity> {
+    return this.ProjectsService.updateProject(id, userProps);
+  }
+
+  @Permission(Permissions.deleteProject)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Delete('/:id')
+  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
+    return this.ProjectsService.deleteProject(id);
   }
 }

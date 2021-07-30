@@ -24,5 +24,6 @@ export enum Permissions {
   deletePosition = 'DELETE_POSITION',
 
   createProject = 'CREATE_PROJECT',
+  deleteProject = 'DELETE_PROJECT',
   getAllProjects = 'GET_ALL_PROJECTS',
 }

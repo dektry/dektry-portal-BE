@@ -22,6 +22,7 @@ type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testProject),
+  createQueryBuilder: jest.fn(),
 });
 
 describe('ProjectsService', () => {
@@ -76,4 +77,26 @@ describe('ProjectsService', () => {
       });
     });
   });
+
+  // describe('get all Projects', () => {
+  //   it('should return the array of Projects', async () => {
+  //     let createQueryBuilder: any = {
+  //       leftJoinAndSelect: () => createQueryBuilder,
+  //     };
+
+  //     createQueryBuilder = {
+  //       ...createQueryBuilder,
+  //       leftJoinAndSelectе: () => createQueryBuilder,
+  //       select: () => createQueryBuilder,
+  //       getRawMany: () => [],
+  //     };
+
+  //     jest
+  //       .spyOn(projectRepository, 'createQueryBuilder')
+  //       .mockImplementation(() => createQueryBuilder);
+
+  //     const projects = await service.getAllProjects();
+  //     expect(projects).resolves.toEqual([]);
+  //   });
+  // });
 });

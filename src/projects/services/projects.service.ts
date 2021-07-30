@@ -1,7 +1,9 @@
 import {
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult } from 'typeorm';
 import { ProjectDto } from '../dto/project.dto';
 import { ProjectEntity } from '../entity/project.entity';
 import { projectsRepository } from '../repositories/projects.repository';
@@ -42,5 +44,28 @@ export class ProjectsService {
       next: page + 1,
       previous: page - 1,
     };
+  }
+
+  async updateProject(id: string, newProjectProps: ProjectDto): Promise<ProjectEntity> {
+    try {
+      const result = await this.projectsRepository.save({
+        ...newProjectProps,
+      });
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async deleteProject(id): Promise<DeleteResult> {
+    try {
+      const result = await this.projectsRepository.delete(id);
+      if (!result.affected) {
+        throw new NotFoundException(`Project with ID '${id}' not found`);
+      }
+      return result;
+    } catch (error) {
+      return error;
+    }
   }
 }

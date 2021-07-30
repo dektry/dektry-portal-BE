@@ -25,6 +25,12 @@ describe('ProjectsController', () => {
           provide: ProjectsService,
           useValue: {
             createProject: jest.fn(() => testProject),
+            getAllProjects: jest.fn(() => ({
+              results: [testProject],
+              total: 1,
+              prev: 0,
+              next: 2,
+            })),
           },
         },
       ],
@@ -56,6 +62,18 @@ describe('ProjectsController', () => {
         } catch (err) {
           expect(err).toBeInstanceOf(BadRequestException);
         }
+      });
+    });
+  });
+
+  describe('get all Projects', () => {
+    it('should get the list of Projects', async () => {
+      const projects = await controller.getAllProjects();
+      expect(projects).toEqual({
+        results: [testProject],
+        total: 1,
+        next: 2,
+        prev: 0,
       });
     });
   });

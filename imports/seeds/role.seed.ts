@@ -25,6 +25,7 @@ export const roleSeed = [
       Permissions.getAllPermissions,
       Permissions.createProject,
       Permissions.getAllProjects,
+      Permissions.deleteProject,
     ],
   },
   {
