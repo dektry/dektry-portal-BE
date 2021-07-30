@@ -22,11 +22,25 @@ export class ProjectsService {
     // if (isExist) {
     //   throw new ConflictException('User with this email is already exist!');
     // } else {
-      const newProject = await this.projectsRepository.create({
-        ...otherProps,
-        name,
-      });
-      return this.projectsRepository.save(newProject);
+    const newProject = await this.projectsRepository.create({
+      ...otherProps,
+      name,
+    });
+    return this.projectsRepository.save(newProject);
     // }
+  }
+
+  async getAllProjects(page: number = 1, limit: number = 10) {
+    const allProjects = await this.projectsRepository.find();
+    const projects = await this.projectsRepository.find({
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      results: projects,
+      total: _.size(allProjects),
+      next: page + 1,
+      previous: page - 1,
+    };
   }
 }

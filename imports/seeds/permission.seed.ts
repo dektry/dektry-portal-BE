@@ -50,4 +50,7 @@ export const permissionSeed = [
   {
     name: 'CREATE_PROJECT'
   },
+  {
+    name: 'GET_ALL_PROJECTS'
+  },
 ];

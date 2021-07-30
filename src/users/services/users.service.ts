@@ -35,10 +35,6 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    // return _.map(allUsers, user => ({
-    //   ...user,
-    //   password: getPassword(user.password),
-    // }));
     return allUsers;
   }
 
@@ -56,8 +52,6 @@ export class UsersService {
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    // const result = _.omit(found, ['password']);
-    // return ({ ...result, password: getPassword(found.password) });
     return found;
   }
 
