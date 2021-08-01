@@ -11,7 +11,9 @@ export class PositionGroupService {
   ) {}
 
   async getAll(): Promise<PositionGroupEntity[]> {
-    const allPositionGroups = await this.positionGroupRepository.find();
+    const allPositionGroups = await this.positionGroupRepository.find({
+      relations: ['access'],
+    });
     return allPositionGroups;
   }
 }

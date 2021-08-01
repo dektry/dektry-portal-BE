@@ -30,3 +30,8 @@ export const onBoardingTemplatesSeed = [
     write: ['Developers', 'Business developers'],
   },
 ];
+
+export const accessSeed = {
+  name: 'onboarding-templates',
+  position: 'CEO',
+};

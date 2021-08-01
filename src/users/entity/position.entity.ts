@@ -5,6 +5,7 @@ import {
   BaseEntity,
   ManyToOne,
 } from 'typeorm';
+import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
@@ -31,4 +32,7 @@ export class PositionEntity extends BaseEntity {
     (positionGroup) => positionGroup.positions,
   )
   group: PositionGroupEntity;
+
+  @ManyToOne(() => AccessEntity, (access) => access.positions)
+  access: AccessEntity[];
 }

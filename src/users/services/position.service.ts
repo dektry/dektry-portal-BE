@@ -21,7 +21,7 @@ export class PositionService {
 
   async getAll(): Promise<PositionEntity[]> {
     const allPositions = await this.positionRepository.find({
-      relations: ['group'],
+      relations: ['group', 'access'],
     });
     return allPositions;
   }

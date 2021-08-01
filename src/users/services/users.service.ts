@@ -8,6 +8,7 @@ import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
+import { accessRepository } from '../repositories/access.repository';
 import { roleRepository } from '../repositories/role.repository';
 import { getHashPassword } from '../../../utils/hashPassword';
 import { DeleteResult } from 'typeorm';
@@ -23,6 +24,8 @@ export class UsersService {
     private roleRepository: roleRepository,
     @InjectRepository(careerRepository)
     private careerRepository: careerRepository,
+    @InjectRepository(accessRepository)
+    private accessRepository: accessRepository,
   ) {}
 
   async getAll() {
@@ -172,6 +175,41 @@ export class UsersService {
   async getUserAvatar(fileName, res) {
     try {
       return res.sendFile(fileName, { root: 'upload/img/avatars' });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getAccessReq(point) {
+    const access = await this.accessRepository.findOne(
+      { name: point },
+      {
+        relations: ['positions', 'positionsGroups'],
+      },
+    );
+    return access;
+  }
+
+  async updateAccessReq(point, accessProps) {
+    const existAccess = await this.accessRepository.findOne(
+      { name: point },
+      {
+        relations: ['positions', 'positionsGroups'],
+      },
+    );
+
+    const { name } = accessProps;
+
+    if (!existAccess) {
+      throw new NotFoundException(`Access ${name} not found!`);
+    }
+
+    try {
+      const result = await this.accessRepository.save({
+        ...existAccess,
+        ...accessProps,
+      });
+      return result;
     } catch (error) {
       return error;
     }

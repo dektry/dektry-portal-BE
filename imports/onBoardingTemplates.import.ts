@@ -1,8 +1,13 @@
 import { createConnection, Connection } from 'typeorm';
-import { onBoardingTemplatesSeed } from './seeds/onBoardingsTemplates.seed';
+import {
+  onBoardingTemplatesSeed,
+  accessSeed,
+} from './seeds/onBoardingsTemplates.seed';
 import { difference } from 'lodash';
 import { TemplatesEntity } from '../src/onboarding/entity/templates.entity';
 import { PositionGroupEntity } from '../src/users/entity/positionGroup.entity';
+import { AccessEntity } from '../src/users/entity/access.entity';
+import { PositionEntity } from '../src/users/entity/position.entity';
 
 const importOnBoardingsTemplates = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -48,6 +53,22 @@ const importOnBoardingsTemplates = async () => {
     }),
   );
   console.log(`Added ${createdTemplates.length} new templates!`);
+
+  const accessRelation = await connection
+    .getRepository(PositionEntity)
+    .findOne({ name: accessSeed.position });
+
+  const createdTemplatesAccess = await connection
+    .getRepository(AccessEntity)
+    .save(
+      connection
+        .getRepository(AccessEntity)
+        .create({ ...accessSeed, positions: [accessRelation] }),
+    );
+  if (createdTemplatesAccess) {
+    console.log('Access to templates created!');
+  }
+
   await connection.close();
 };
 

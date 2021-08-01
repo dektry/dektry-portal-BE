@@ -23,6 +23,7 @@ import { DeleteResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { uploadAvatarConfiguration } from '../multer.configuration';
+import { AccessEntity } from 'users/entity/access.entity';
 
 @Controller('users')
 export class UsersController {
@@ -83,5 +84,20 @@ export class UsersController {
   @Get('avatars/:fileName')
   getUserAvatar(@Param('fileName') fileName, @Res() res) {
     return this.UsersService.getUserAvatar(fileName, res);
+  }
+
+  @Get('access/:point')
+  getAccessReq(@Param('point') point: string): Promise<AccessEntity> {
+    return this.UsersService.getAccessReq(point);
+  }
+
+  @Permission(Permissions.workWithOnBoardingTemplates)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Put('access/:point')
+  updateAccessReq(
+    @Param('point') point: string,
+    @Body() accessProps,
+  ): Promise<AccessEntity> {
+    return this.UsersService.updateAccessReq(point, accessProps);
   }
 }
