@@ -1,6 +1,7 @@
 import {
   Injectable,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult } from 'typeorm';
@@ -18,18 +19,18 @@ export class ProjectsService {
 
   async createProject(newProjectProps: ProjectDto): Promise<ProjectEntity> {
     const { name, ...otherProps } = newProjectProps;
-    // const isExist = await this.usersRepository.findOne({
-    //   email,
-    // });
-    // if (isExist) {
-    //   throw new ConflictException('User with this email is already exist!');
-    // } else {
-    const newProject = await this.projectsRepository.create({
-      ...otherProps,
+    const isExist = await this.projectsRepository.findOne({
       name,
     });
-    return this.projectsRepository.save(newProject);
-    // }
+    if (isExist) {
+      throw new ConflictException('Project with this name is already exist!');
+    } else {
+      const newProject = await this.projectsRepository.create({
+        ...otherProps,
+        name,
+      });
+      return this.projectsRepository.save(newProject);
+    }
   }
 
   async getAllProjects(page: number = 1, limit: number = 10) {
@@ -37,10 +38,35 @@ export class ProjectsService {
     const projects = await this.projectsRepository.find({
       take: limit,
       skip: limit * (page - 1),
+      order: {
+        name: 'ASC',
+      }
     });
     return {
       results: projects,
       total: _.size(allProjects),
+      currentPage: page,
+      next: page + 1,
+      previous: page - 1,
+    };
+  }
+
+  async findProjectByName(page: number = 1, limit: number = 10, name: string) {
+    const allProjects = await this.projectsRepository.find({
+      where: `LOWER(name) LIKE LOWER('%${name}%')`
+    });
+    const projects = await this.projectsRepository.find({
+      where: `LOWER(name) LIKE LOWER('%${name}%')`,
+      order: {
+        name: 'ASC',
+      },
+      take: limit,
+      skip: limit * (page - 1),
+    });
+    return {
+      results: projects,
+      total: _.size(allProjects),
+      currentPage: page,
       next: page + 1,
       previous: page - 1,
     };

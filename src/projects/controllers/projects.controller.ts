@@ -35,6 +35,17 @@ export class ProjectsController {
     return this.ProjectsService.getAllProjects(page, limit);
   }
 
+  @Permission(Permissions.getAllProjects)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Get('/:name')
+  getProjectsByName(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    @Param('name') name: string,
+  ): Promise<PaginationResultInterface<ProjectEntity>> {
+    return this.ProjectsService.findProjectByName(page, limit, name);
+  }
+
   @Permission(Permissions.createProject)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Post()
