@@ -50,4 +50,10 @@ export const permissionSeed = [
   {
     name: 'GET_ALL_ARTICLES',
   },
+  {
+    name: 'GET_ARTICLE',
+  },
+  {
+    name: 'UPDATE_ARTICLE',
+  },
 ];

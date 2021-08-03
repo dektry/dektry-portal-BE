@@ -24,4 +24,6 @@ export enum Permissions {
   deletePosition = 'DELETE_POSITION',
 
   getAllArticles = 'GET_ALL_ARTICLES',
+  getArticle = 'GET_ARTICLE',
+  updateArticle = 'UPDATE_ARTICLE',
 }

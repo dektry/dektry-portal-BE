@@ -24,6 +24,8 @@ export const roleSeed = [
       Permissions.deleteCareer,
       Permissions.getAllPermissions,
       Permissions.getAllArticles,
+      Permissions.getArticle,
+      Permissions.updateArticle,
     ],
   },
   {

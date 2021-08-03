@@ -19,10 +19,10 @@ export class ArticleEntity extends BaseEntity {
   @Column('text')
   content: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamptz' })
   create_at: Date;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamptz' })
   update_at: Date;
 
   @ManyToMany(() => PositionEntity)
