@@ -18,10 +18,14 @@ import { careerRepository } from './repositories/career.repository';
 import { positionGroupRepository } from './repositories/positionGroup.repository';
 import { PositionGroupController } from './controllers/positionGroup.controller';
 import { PositionGroupService } from './services/positionGroup.service';
+import { projectsRepository } from '../projects/repositories/projects.repository';
+import { projectsHistoryRepository } from '../projects/repositories/projectsHistory.repository';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
+      projectsRepository,
+      projectsHistoryRepository,
       usersRepository,
       roleRepository,
       permissionRepository,

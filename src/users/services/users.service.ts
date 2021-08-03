@@ -9,6 +9,8 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
+import { projectsRepository } from '../../projects/repositories/projects.repository';
+import { projectsHistoryRepository } from '../../projects/repositories/projectsHistory.repository';
 import { getHashPassword } from '../../../utils/hashPassword';
 import { DeleteResult } from 'typeorm';
 import * as fs from 'fs';
@@ -23,6 +25,10 @@ export class UsersService {
     private roleRepository: roleRepository,
     @InjectRepository(careerRepository)
     private careerRepository: careerRepository,
+    @InjectRepository(projectsRepository)
+    private projectsRepository: projectsRepository,
+    @InjectRepository(projectsHistoryRepository)
+    private projectsHistoryRepository: projectsHistoryRepository,
   ) { }
 
   async getAll() {
@@ -35,7 +41,23 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    return allUsers;
+    const allProjects = await this.projectsRepository.find();
+    const allProjectsHistory = await this.projectsHistoryRepository.find({
+      relations: [
+        'userId',
+        'projectId',
+      ],
+    });
+    const users = _.map(allUsers, user => {
+      const userProjects = _.filter(allProjects, project => _.includes(project.users, user.id) || _.includes(project.managers, user.id));
+      const projectsHistory = _.filter(allProjectsHistory, history => history.userId && history.userId.id === user.id);
+      return {
+        ...user,
+        projects: userProjects,
+        projectsHistory: projectsHistory,
+      }
+    });
+    return users;
   }
 
   async getUserById(id: string): Promise<UserEntity> {
