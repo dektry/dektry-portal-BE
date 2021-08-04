@@ -17,7 +17,7 @@ export class ProjectHistoryEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   from: Date;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ nullable: true, type: 'timestamptz' })
   to: Date;
 
   @ManyToOne(() => UserEntity)

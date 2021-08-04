@@ -56,4 +56,7 @@ export const permissionSeed = [
   {
     name: 'DELETE_PROJECT'
   },
+  {
+    name: 'UPDATE_PROJECT_HISTORY'
+  },
 ];

@@ -3,18 +3,21 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
+import * as _ from 'lodash';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult } from 'typeorm';
 import { ProjectDto } from '../dto/project.dto';
 import { ProjectEntity } from '../entity/project.entity';
 import { projectsRepository } from '../repositories/projects.repository';
-import * as _ from 'lodash';
+import { ProjectsHistoryService } from './projectsHistory.service';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     @InjectRepository(projectsRepository)
     private projectsRepository: projectsRepository,
+
+    private ProjectsHistoryService: ProjectsHistoryService,
   ) { }
 
   async createProject(newProjectProps: ProjectDto): Promise<ProjectEntity> {
@@ -29,7 +32,12 @@ export class ProjectsService {
         ...otherProps,
         name,
       });
-      return this.projectsRepository.save(newProject);
+      const createdProject = await this.projectsRepository.save(newProject);
+      const projectMemebers = _.concat(newProject.users, newProject.managers);
+      for (let member of projectMemebers) {
+        await this.ProjectsHistoryService.createHistory({userId: member, projectId: createdProject.id});
+      }
+      return createdProject;
     }
   }
 
@@ -73,10 +81,22 @@ export class ProjectsService {
   }
 
   async updateProject(id: string, newProjectProps: ProjectDto): Promise<ProjectEntity> {
+    const updatedProject = await this.projectsRepository.findOne({id});
+    const updatedProjectMembers = _.concat(updatedProject.managers, updatedProject.users);
+    const newProjectMembers = _.concat(newProjectProps.managers, newProjectProps.users);
+    const allMembers = _.concat(updatedProjectMembers, newProjectMembers);
     try {
       const result = await this.projectsRepository.save({
         ...newProjectProps,
       });
+      for (let member of allMembers) {
+        if (_.includes(updatedProjectMembers, member) && !_.includes(newProjectMembers, member)) {
+          await this.ProjectsHistoryService.updateHistoryTo({userId: member, projectId: id});
+        }
+        if (_.includes(newProjectMembers, member) && !_.includes(updatedProjectMembers, member)) {
+          await this.ProjectsHistoryService.createHistory({userId: member, projectId: id});
+        }
+      }
       return result;
     } catch (error) {
       return error;

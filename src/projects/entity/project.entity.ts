@@ -3,10 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  JoinColumn,
-  OneToMany,
 } from 'typeorm';
-import { UserEntity } from 'users/entity/user.entity';
 
 @Entity({ name: 'projects' })
 export class ProjectEntity extends BaseEntity {

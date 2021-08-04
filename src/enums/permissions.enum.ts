@@ -26,4 +26,6 @@ export enum Permissions {
   createProject = 'CREATE_PROJECT',
   deleteProject = 'DELETE_PROJECT',
   getAllProjects = 'GET_ALL_PROJECTS',
+
+  updateProjectHistory = 'UPDATE_PROJECT_HISTORY',
 }

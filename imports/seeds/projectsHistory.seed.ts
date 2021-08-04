@@ -2,11 +2,11 @@ export const projectsHistorySeed = [
   {
     user: 'moseikus@gmail.com',
     project: 'Control',
-    from: '2021-01-23T22:15:51.000Z',
-    to: '2013-01-23T22:15:51.000Z',
+    from: '2020-01-23T22:15:51.000Z',
+    to: '2021-01-23T22:15:51.000Z',
   },
   {
-    userId: 'laraz@gmail.com',
+    user: 'laraz@gmail.com',
     project: 'Dektry-portal',
     from: '2020-01-23T22:15:51.000Z',
     to: null,

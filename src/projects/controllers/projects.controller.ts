@@ -58,9 +58,9 @@ export class ProjectsController {
   @Put('/:id')
   updateUser(
     @Param('id') id: string,
-    @Body() userProps: ProjectDto,
+    @Body() projectProps: ProjectDto,
   ): Promise<ProjectEntity> {
-    return this.ProjectsService.updateProject(id, userProps);
+    return this.ProjectsService.updateProject(id, projectProps);
   }
 
   @Permission(Permissions.deleteProject)
