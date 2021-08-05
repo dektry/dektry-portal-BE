@@ -5,10 +5,7 @@ import {
   UseGuards,
   Param,
 } from '@nestjs/common';
-import { Permission } from '../../decorators/permission.decorator';
-import { Permissions } from '../../enums/permissions.enum';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { ProjectsHistoryService } from '../services/projectsHistory.service';
 import { ProjectHistoryEntity } from '../entity/projectHistory.entity';
 
@@ -16,8 +13,7 @@ import { ProjectHistoryEntity } from '../entity/projectHistory.entity';
 export class ProjectsHistoryController {
   constructor(private ProjectsHistoryService: ProjectsHistoryService) {}
 
-  @Permission(Permissions.updateProjectHistory)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseGuards(JwtAuthGuard)
   @Put('/:id')
   updateProjectHistory(
     @Param('id') id: string,

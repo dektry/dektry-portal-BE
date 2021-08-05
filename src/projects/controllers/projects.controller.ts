@@ -43,7 +43,7 @@ export class ProjectsController {
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
     @Param('name') name: string,
   ): Promise<PaginationResultInterface<ProjectEntity>> {
-    return this.ProjectsService.findProjectByName(page, limit, name);
+    return this.ProjectsService.findProjectByName(name, page, limit);
   }
 
   @Permission(Permissions.createProject)

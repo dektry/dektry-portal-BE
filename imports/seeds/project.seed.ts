@@ -6,5 +6,6 @@ export const projectSeed = [
   {
     name: 'Dektry-portal',
     managers: ['laraz@gmail.com'],
+    users: ['JG@gmail.com'],
   }
 ];

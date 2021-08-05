@@ -25,7 +25,7 @@ export class ProjectsService {
     const isExist = await this.projectsRepository.findOne({
       name,
     });
-    if (isExist) {
+    if (!!isExist) {
       throw new ConflictException('Project with this name is already exist!');
     } else {
       const newProject = await this.projectsRepository.create({
@@ -59,7 +59,7 @@ export class ProjectsService {
     };
   }
 
-  async findProjectByName(page: number = 1, limit: number = 10, name: string) {
+  async findProjectByName(name: string, page: number = 1, limit: number = 10) {
     const allProjects = await this.projectsRepository.find({
       where: `LOWER(name) LIKE LOWER('%${name}%')`
     });

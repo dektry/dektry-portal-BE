@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { projectsRepository } from '../repositories/projects.repository';
 import { ProjectsService } from '../services/projects.service';
@@ -6,11 +6,15 @@ import { ProjectsController } from './projects.controller';
 
 const newTestProject = {
   name: 'CRoom',
+  managers: [],
+  users: [],
 };
 
 const testProject = {
   id: 1,
   name: 'CRoom',
+  managers: [],
+  users: [],
 };
 
 describe('ProjectsController', () => {
@@ -55,6 +59,8 @@ describe('ProjectsController', () => {
       it('should throw the "BadRequestException"', async () => {
         const newEmptyProject = {
           name: '',
+          managers: [],
+          users: [],
         };
 
         try {
