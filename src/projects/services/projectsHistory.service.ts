@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
+import { DeleteResult } from 'typeorm';
 import { ProjectHistoryDto } from '../dto/projectHistory.dto';
 import { ProjectHistoryEntity } from '../entity/projectHistory.entity';
 import { projectsHistoryRepository } from '../repositories/projectsHistory.repository';

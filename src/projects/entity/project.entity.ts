@@ -18,4 +18,7 @@ export class ProjectEntity extends BaseEntity {
 
   @Column('uuid', { array: true })
   users: string[];
+
+  @Column({ default: false })
+  isArchive: boolean;
 }

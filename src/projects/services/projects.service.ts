@@ -114,4 +114,24 @@ export class ProjectsService {
       return error;
     }
   }
+
+  async archiveProject(id): Promise<ProjectEntity> {
+    const updatedProject = await this.projectsRepository.findOne({id});
+    const newProjectProps = {
+      ...updatedProject,
+      isArchive: true,
+    };
+    const allMembers = _.concat(updatedProject.managers, updatedProject.users);
+    try {
+      const result = await this.projectsRepository.save({
+        ...newProjectProps,
+      });
+      for (let member of allMembers) {
+        await this.ProjectsHistoryService.updateHistoryTo({userId: member, projectId: id});
+      }
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
 }

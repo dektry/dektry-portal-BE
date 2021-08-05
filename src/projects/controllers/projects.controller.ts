@@ -56,7 +56,7 @@ export class ProjectsController {
   @Permission(Permissions.createProject)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('/:id')
-  updateUser(
+  updateProject(
     @Param('id') id: string,
     @Body() projectProps: ProjectDto,
   ): Promise<ProjectEntity> {
@@ -66,7 +66,16 @@ export class ProjectsController {
   @Permission(Permissions.deleteProject)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Delete('/:id')
-  deleteUser(@Param('id') id: string): Promise<DeleteResult> {
+  deleteProject(@Param('id') id: string): Promise<DeleteResult> {
     return this.ProjectsService.deleteProject(id);
+  }
+
+  @Permission(Permissions.createProject)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Put('archive/:id')
+  archiveProject(
+    @Param('id') id: string
+  ): Promise<ProjectEntity> {
+    return this.ProjectsService.archiveProject(id);
   }
 }
