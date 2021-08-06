@@ -6,6 +6,7 @@ import { groupsRepository } from './repositories/groups.repository';
 import { UsersModule } from 'users/users.module';
 import { templatesRepository } from './repositories/template.repository';
 import { TemplatesService } from './services/templates.service';
+import { orderedTasksRepository } from './repositories/orderedTasks.repository';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TemplatesService } from './services/templates.service';
       tasksRepository,
       groupsRepository,
       templatesRepository,
+      orderedTasksRepository,
     ]),
     UsersModule,
   ],

@@ -6,10 +6,13 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  OneToMany,
+  JoinColumn,
 } from 'typeorm';
+import { PositionEntity } from '../../users/entity/position.entity';
 import { PositionGroupEntity } from '../../users/entity/positionGroup.entity';
 import { GroupsEntity } from './groups.entity';
-import { TasksEntity } from './tasks.entity';
+import { OrderedTasksEntity } from './orderedTasks.entity';
 
 @Entity({ name: 'onBoardingTemplates' })
 export class TemplatesEntity extends BaseEntity {
@@ -19,9 +22,17 @@ export class TemplatesEntity extends BaseEntity {
   @Column({ unique: true, length: 255 })
   name: string;
 
-  @ManyToMany(() => TasksEntity, { cascade: true })
-  @JoinTable({ name: 'onBoarding_templates_tasks' })
-  tasks: TasksEntity[];
+  @OneToMany(() => OrderedTasksEntity, (task) => task.template, {
+    cascade: true,
+  })
+  @JoinColumn()
+  tasks: OrderedTasksEntity[];
+
+  @ManyToOne(() => PositionEntity, (position) => position.templates, {
+    cascade: true,
+    nullable: true,
+  })
+  target: PositionEntity;
 
   @ManyToOne(() => GroupsEntity, (group) => group.template, {
     cascade: true,

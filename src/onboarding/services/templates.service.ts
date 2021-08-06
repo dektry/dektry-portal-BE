@@ -5,8 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GroupsEntity } from 'onboarding/entity/groups.entity';
+import { TasksEntity } from 'onboarding/entity/tasks.entity';
 import { TemplatesEntity } from 'onboarding/entity/templates.entity';
 import { groupsRepository } from 'onboarding/repositories/groups.repository';
+import { tasksRepository } from 'onboarding/repositories/tasks.repository';
 import { templatesRepository } from 'onboarding/repositories/template.repository';
 import { DeleteResult } from 'typeorm';
 
@@ -17,13 +19,34 @@ export class TemplatesService {
     private templatesRepository: templatesRepository,
     @InjectRepository(groupsRepository)
     private groupsRepository: groupsRepository,
+    @InjectRepository(tasksRepository)
+    private tasksRepository: tasksRepository,
   ) {}
+
+  sortTasks(templates) {
+    const transformedTemplates = templates.map((item) => {
+      const sortedTasks = item.tasks.sort((a, b) => a.index - b.index);
+      return {
+        ...item,
+        tasks: sortedTasks,
+      };
+    });
+    return transformedTemplates;
+  }
 
   async getAll(): Promise<TemplatesEntity[]> {
     const allTemplates = await this.templatesRepository.find({
-      relations: ['write', 'read', 'group', 'tasks'],
+      relations: ['write', 'read', 'group', 'tasks', 'tasks.task', 'target'],
     });
-    return allTemplates;
+    const sortedTemplates = this.sortTasks(allTemplates);
+    return sortedTemplates;
+  }
+
+  async getAllTasks(): Promise<TasksEntity[]> {
+    const allTasks = await this.tasksRepository.find({
+      relations: ['ordered', 'ordered.template'],
+    });
+    return allTasks;
   }
 
   async createTemplate(
@@ -75,6 +98,7 @@ export class TemplatesService {
         'template.read',
         'template.write',
         'template.group',
+        'template.target',
       ],
     });
     return allTemplateGroups;

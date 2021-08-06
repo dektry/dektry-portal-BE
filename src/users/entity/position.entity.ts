@@ -1,9 +1,11 @@
+import { TemplatesEntity } from '../../onboarding/entity/templates.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
@@ -35,4 +37,9 @@ export class PositionEntity extends BaseEntity {
 
   @ManyToOne(() => AccessEntity, (access) => access.positions)
   access: AccessEntity[];
+
+  @OneToMany(() => TemplatesEntity, (templates) => templates.target, {
+    nullable: true,
+  })
+  templates: TemplatesEntity[];
 }

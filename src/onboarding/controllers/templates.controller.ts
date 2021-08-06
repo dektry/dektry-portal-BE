@@ -16,6 +16,7 @@ import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
+import { TasksEntity } from 'onboarding/entity/tasks.entity';
 
 @Controller('templates')
 export class TemplatesController {
@@ -57,6 +58,13 @@ export class TemplatesController {
   @Get('/groups')
   getAllGroups(): Promise<GroupsEntity[]> {
     return this.TemplatesService.getAllGroups();
+  }
+
+  @Permission(Permissions.workWithOnBoardingTemplates)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Get('/tasks')
+  getAllTasks(): Promise<TasksEntity[]> {
+    return this.TemplatesService.getAllTasks();
   }
 
   @Permission(Permissions.workWithOnBoardingTemplates)

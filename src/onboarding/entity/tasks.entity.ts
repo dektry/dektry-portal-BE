@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { OrderedTasksEntity } from './orderedTasks.entity';
 
 @Entity({ name: 'onBoardingTasks' })
 export class TasksEntity extends BaseEntity {
@@ -10,4 +18,8 @@ export class TasksEntity extends BaseEntity {
 
   @Column()
   description: string;
+
+  @OneToMany(() => OrderedTasksEntity, (orderedTask) => orderedTask.task)
+  @JoinColumn()
+  ordered: OrderedTasksEntity[];
 }

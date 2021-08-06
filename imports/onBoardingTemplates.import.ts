@@ -8,6 +8,7 @@ import { TemplatesEntity } from '../src/onboarding/entity/templates.entity';
 import { PositionGroupEntity } from '../src/users/entity/positionGroup.entity';
 import { AccessEntity } from '../src/users/entity/access.entity';
 import { PositionEntity } from '../src/users/entity/position.entity';
+import { TasksEntity } from '../src/onboarding/entity/tasks.entity';
 
 const importOnBoardingsTemplates = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -17,6 +18,7 @@ const importOnBoardingsTemplates = async () => {
   const existPositionsGroups = await connection
     .getRepository(PositionGroupEntity)
     .find();
+  const allExistTasks = await connection.getRepository(TasksEntity).find();
 
   const newTemplates = onBoardingTemplatesSeed.filter((newTemplate) => {
     const isTemplateExist = allExistTemplates.some(
@@ -44,7 +46,21 @@ const importOnBoardingsTemplates = async () => {
         (existGroup) => readPositionGroup === existGroup.name,
       ),
     );
-    return { ...template, write: newTemplateWrite, read: newTemplateRead };
+    const newTasksRelation = template.tasks.map((orderedTask) => {
+      const tasksWithRelation = allExistTasks.find(
+        (existTask) => existTask.title === orderedTask.task,
+      );
+      return {
+        ...orderedTask,
+        task: tasksWithRelation,
+      };
+    });
+    return {
+      ...template,
+      write: newTemplateWrite,
+      read: newTemplateRead,
+      tasks: newTasksRelation,
+    };
   });
 
   const createdTemplates = await connection.getRepository(TemplatesEntity).save(
