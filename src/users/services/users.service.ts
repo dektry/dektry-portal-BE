@@ -121,12 +121,21 @@ export class UsersService {
       throw new ConflictException(`Role ${role} is incorrect!`);
     }
     try {
-      const hashPassword = await getHashPassword(password);
-      const result = await this.usersRepository.save({
-        ...updatedProps,
-        role: newUserRole,
-        password: hashPassword,
-      });
+      let updatedParams;
+      if (password) {
+        const hashPassword = await getHashPassword(password);
+        updatedParams = {
+          ...updatedProps,
+          role: newUserRole,
+          password: hashPassword,
+        };
+      } else {
+        updatedParams = {
+          ...updatedProps,
+          role: newUserRole,
+        };
+      }
+      const result = await this.usersRepository.save(updatedParams);
       return result;
     } catch (error) {
       return error;

@@ -41,9 +41,10 @@ export class ProjectsService {
     }
   }
 
-  async getAllProjects(page: number = 1, limit: number = 10) {
+  async getAllProjects(page: number = 1, limit: number = 10, isArchive?: boolean) {
     const allProjects = await this.projectsRepository.find();
     const projects = await this.projectsRepository.find({
+      where: isArchive ? {isArchive} : {},
       take: limit,
       skip: limit * (page - 1),
       order: {

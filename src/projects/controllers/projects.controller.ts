@@ -31,8 +31,9 @@ export class ProjectsController {
   getAllProjects(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    @Query('isArchive') isArchive: boolean = false,
   ): Promise<PaginationResultInterface<ProjectEntity>> {
-    return this.ProjectsService.getAllProjects(page, limit);
+    return this.ProjectsService.getAllProjects(page, limit, isArchive);
   }
 
   @Permission(Permissions.getAllProjects)

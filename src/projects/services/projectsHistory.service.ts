@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { DeleteResult } from 'typeorm';
@@ -53,6 +53,14 @@ export class ProjectsHistoryService {
 
   async updateProjectHistory(history: any): Promise<ProjectHistoryEntity> {
     try {
+      const project = await this.projectsRepository.findOne({ id: history.projectId.id });
+      if (!history.to && project.isArchive) {
+        throw new ConflictException('The project is archived. You cannot change its date "to" to now!');
+      }
+      const dateNow = moment().format();
+      if (moment(history.to).isAfter(dateNow) || moment(history.from).isAfter(dateNow)) {
+        throw new ConflictException('Project date cannot be later than the current date!');
+      }
       const result = await this.projectsHistoryRepository.save({
         ...history
       });
