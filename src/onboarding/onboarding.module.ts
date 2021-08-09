@@ -7,16 +7,18 @@ import { UsersModule } from 'users/users.module';
 import { templatesRepository } from './repositories/template.repository';
 import { TemplatesService } from './services/templates.service';
 import { orderedTasksRepository } from './repositories/orderedTasks.repository';
+import { accessRepository } from 'users/repositories/access.repository';
 
 @Module({
   imports: [
+    UsersModule,
     TypeOrmModule.forFeature([
       tasksRepository,
       groupsRepository,
       templatesRepository,
       orderedTasksRepository,
+      accessRepository,
     ]),
-    UsersModule,
   ],
   controllers: [TemplatesController],
   providers: [TemplatesService],

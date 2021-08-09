@@ -6,6 +6,7 @@ import {
   BaseEntity,
   ManyToOne,
   OneToMany,
+  ManyToMany,
 } from 'typeorm';
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
@@ -42,4 +43,10 @@ export class PositionEntity extends BaseEntity {
     nullable: true,
   })
   templates: TemplatesEntity[];
+
+  @ManyToMany(() => TemplatesEntity, (template) => template.write)
+  templatesWrite: TemplatesEntity[];
+
+  @ManyToMany(() => TemplatesEntity, (template) => template.read)
+  templatesRead: TemplatesEntity[];
 }

@@ -38,14 +38,19 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    // return _.map(allUsers, user => ({
-    //   ...user,
-    //   password: getPassword(user.password),
-    // }));
-    return allUsers;
+    const transformedUsers = allUsers.map((user) => {
+      const currentPositions = user.career
+        .filter((item) => item.to === null)
+        .map((item) => item.position);
+      return {
+        ...user,
+        currentPositions,
+      };
+    });
+    return transformedUsers;
   }
 
-  async getUserById(id: string): Promise<UserEntity> {
+  async getUserById(id: string): Promise<any> {
     const found = await this.usersRepository.findOne(id, {
       relations: [
         'role',
@@ -56,12 +61,18 @@ export class UsersService {
       ],
     });
 
+    const currentPositions = found.career
+      .filter((item) => item.to === null)
+      .map((item) => item.position);
+    const userWithCurrentPositions = {
+      ...found,
+      currentPositions,
+    };
+
     if (!found) {
       throw new NotFoundException(`User with ID '${id}' not found`);
     }
-    // const result = _.omit(found, ['password']);
-    // return ({ ...result, password: getPassword(found.password) });
-    return found;
+    return userWithCurrentPositions;
   }
 
   async findByEmail(email: string) {
@@ -178,6 +189,13 @@ export class UsersService {
     } catch (error) {
       return error;
     }
+  }
+
+  async getAllAccess() {
+    const access = await this.accessRepository.find({
+      relations: ['positions', 'positionsGroups'],
+    });
+    return access;
   }
 
   async getAccessReq(point) {

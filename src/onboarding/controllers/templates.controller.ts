@@ -7,6 +7,7 @@ import {
   Param,
   Put,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { GroupsEntity } from 'onboarding/entity/groups.entity';
 import { TemplatesEntity } from 'onboarding/entity/templates.entity';
@@ -22,22 +23,19 @@ import { TasksEntity } from 'onboarding/entity/tasks.entity';
 export class TemplatesController {
   constructor(private TemplatesService: TemplatesService) {}
 
-  @Permission(Permissions.workWithOnBoardingTemplates)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
-  getAll(): Promise<TemplatesEntity[]> {
-    return this.TemplatesService.getAll();
+  getAll(@Req() request): Promise<TemplatesEntity[]> {
+    return this.TemplatesService.getAll(request);
   }
 
-  @Permission(Permissions.workWithOnBoardingTemplates)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() CreateTemplateDto): Promise<TemplatesEntity> {
     return this.TemplatesService.createTemplate(CreateTemplateDto);
   }
 
-  @Permission(Permissions.workWithOnBoardingTemplates)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseGuards(JwtAuthGuard)
   @Put('/:id')
   updateTemplate(
     @Param('id') id: string,
@@ -46,11 +44,35 @@ export class TemplatesController {
     return this.TemplatesService.updateTemplate(id, templateProps);
   }
 
-  @Permission(Permissions.workWithOnBoardingTemplates)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   deleteTemplate(@Param('id') id: string): Promise<DeleteResult> {
     return this.TemplatesService.deleteTemplate(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/tasks')
+  getAllTasks(): Promise<TasksEntity[]> {
+    return this.TemplatesService.getAllTasks();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/tasks')
+  createTask(@Body() CreateTaskDto): Promise<TasksEntity> {
+    return this.TemplatesService.createTask(CreateTaskDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/tasks/:id')
+  updateTask(@Param('id') id: string, @Body() taskProps): Promise<TasksEntity> {
+    return this.TemplatesService.updateTask(id, taskProps);
+  }
+
+  @Permission(Permissions.workWithOnBoardingTemplates)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Delete('/tasks/:id')
+  deleteTask(@Param('id') id: string): Promise<DeleteResult> {
+    return this.TemplatesService.deleteTask(id);
   }
 
   @Permission(Permissions.workWithOnBoardingTemplates)
@@ -58,13 +80,6 @@ export class TemplatesController {
   @Get('/groups')
   getAllGroups(): Promise<GroupsEntity[]> {
     return this.TemplatesService.getAllGroups();
-  }
-
-  @Permission(Permissions.workWithOnBoardingTemplates)
-  @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Get('/tasks')
-  getAllTasks(): Promise<TasksEntity[]> {
-    return this.TemplatesService.getAllTasks();
   }
 
   @Permission(Permissions.workWithOnBoardingTemplates)

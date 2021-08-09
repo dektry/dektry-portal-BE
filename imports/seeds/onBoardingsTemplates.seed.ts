@@ -10,8 +10,8 @@ export const onBoardingTemplatesSeed = [
         index: 0,
       },
     ],
-    read: ['Developers'],
-    write: ['Developers', 'Business developers'],
+    read: ['CEO'],
+    write: ['CEO'],
   },
 ];
 

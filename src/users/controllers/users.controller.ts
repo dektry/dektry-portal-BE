@@ -32,13 +32,13 @@ export class UsersController {
   @Permission(Permissions.getAllUsers)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
-  getAll(): Promise<UserEntity[]> {
+  getAll(): Promise<any[]> {
     return this.UsersService.getAll();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  getUserById(@Param('id') id: string): Promise<UserEntity> {
+  getUserById(@Param('id') id: string): Promise<any> {
     return this.UsersService.getUserById(id);
   }
 
@@ -86,12 +86,19 @@ export class UsersController {
     return this.UsersService.getUserAvatar(fileName, res);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('access/all')
+  getAllAccess(): Promise<AccessEntity[]> {
+    return this.UsersService.getAllAccess();
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('access/:point')
   getAccessReq(@Param('point') point: string): Promise<AccessEntity> {
     return this.UsersService.getAccessReq(point);
   }
 
-  @Permission(Permissions.workWithOnBoardingTemplates)
+  @Permission(Permissions.createUser)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Put('access/:point')
   updateAccessReq(

@@ -15,9 +15,7 @@ const importOnBoardingsTemplates = async () => {
   const allExistTemplates = await connection
     .getRepository(TemplatesEntity)
     .find();
-  const existPositionsGroups = await connection
-    .getRepository(PositionGroupEntity)
-    .find();
+  const existPositions = await connection.getRepository(PositionEntity).find();
   const allExistTasks = await connection.getRepository(TasksEntity).find();
 
   const newTemplates = onBoardingTemplatesSeed.filter((newTemplate) => {
@@ -36,15 +34,11 @@ const importOnBoardingsTemplates = async () => {
   });
 
   const newTemplatesWithRelations = newTemplates.map((template) => {
-    const newTemplateWrite = template.write.map((writePositionGroup) =>
-      existPositionsGroups.find(
-        (existGroup) => writePositionGroup === existGroup.name,
-      ),
+    const newTemplateWrite = template.write.map((writePosition) =>
+      existPositions.find((existGroup) => writePosition === existGroup.name),
     );
-    const newTemplateRead = template.read.map((readPositionGroup) =>
-      existPositionsGroups.find(
-        (existGroup) => readPositionGroup === existGroup.name,
-      ),
+    const newTemplateRead = template.read.map((readPosition) =>
+      existPositions.find((existGroup) => readPosition === existGroup.name),
     );
     const newTasksRelation = template.tasks.map((orderedTask) => {
       const tasksWithRelation = allExistTasks.find(

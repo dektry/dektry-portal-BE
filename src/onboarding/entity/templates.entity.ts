@@ -40,11 +40,17 @@ export class TemplatesEntity extends BaseEntity {
   })
   group: GroupsEntity;
 
-  @ManyToMany(() => PositionGroupEntity)
+  @ManyToMany(() => PositionEntity, (position) => position.templatesWrite, {
+    cascade: true,
+    nullable: true,
+  })
   @JoinTable({ name: 'onBoarding_templates_write' })
-  write: PositionGroupEntity[];
+  write: PositionEntity[];
 
-  @ManyToMany(() => PositionGroupEntity)
+  @ManyToMany(() => PositionEntity, (position) => position.templatesRead, {
+    cascade: true,
+    nullable: true,
+  })
   @JoinTable({ name: 'onBoarding_templates_read' })
-  read: PositionGroupEntity[];
+  read: PositionEntity[];
 }
