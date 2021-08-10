@@ -1539,7 +1539,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/users/access",
+					"raw": "http://localhost:3000/users/access/all",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1547,7 +1547,8 @@
 					"port": "3000",
 					"path": [
 						"users",
-						"access"
+						"access",
+						"all"
 					]
 				}
 			},
