@@ -76,7 +76,7 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    const currentUser = this.usersRepository.findOne({
+    const currentUser = await this.usersRepository.findOne({
       where: { email },
       relations: [
         'role',
@@ -86,7 +86,14 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    return currentUser;
+    const currentPositions = currentUser.career
+      .filter((item) => item.to === null)
+      .map((item) => item.position);
+    const userWithCurrentPositions = {
+      ...currentUser,
+      currentPositions,
+    };
+    return userWithCurrentPositions;
   }
 
   async createUser(newUserProps: UserDto): Promise<UserEntity> {
