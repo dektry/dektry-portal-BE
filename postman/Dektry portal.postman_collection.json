@@ -1199,7 +1199,152 @@
 							]
 						},
 						{
-							"name": "Get all",
+							"name": "Tasks",
+							"item": [
+								{
+									"name": "Get all tasks",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/templates/tasks",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"templates",
+												"tasks"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create task",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "    {\r\n        \"title\": \"1zz1zz21z\",\r\n        \"description\": \"1\"\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/templates/tasks",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"templates",
+												"tasks"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update task",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "    {\r\n        \"id\": \"90544678-8cff-4e83-971f-98f6e84f1e2e\",\r\n        \"title\": \"1zz1zzz\",\r\n        \"description\": \"1\"\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/templates/tasks/90544678-8cff-4e83-971f-98f6e84f1e2e",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"templates",
+												"tasks",
+												"90544678-8cff-4e83-971f-98f6e84f1e2e"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete task",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:3000/templates/tasks/6c2c0bb5-6303-47c3-ad03-297a8e9314cc",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"templates",
+												"tasks",
+												"6c2c0bb5-6303-47c3-ad03-297a8e9314cc"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get all templates",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -1282,7 +1427,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n   \"read\": [{\"id\": \"581f5ef5-33fb-400f-9da2-66000f15b60d\"}],\r\n   \"write\": [{\"id\": \"581f5ef5-33fb-400f-9da2-66000f15b60d\"}],\r\n   \"group\": {\r\n       \"name\": \"test1G2r9oup\"\r\n   },\r\n   \"tasks\": [{\r\n      \"id\": \"7d00b9a3-cd36-4aed-afc1-7ceb9e348928\"\r\n   }]\r\n  }\r\n",
+									"raw": " {\r\n        \"id\": \"771ace8e-dc5e-44f4-8b9e-ac5c84a7038c\",\r\n        \"name\": \"Newcomer email\",\r\n        \"write\": [\r\n            {\r\n                \"id\": \"a9c1e904-aacf-4779-969e-e6177a0edd22\",\r\n                \"name\": \"Developers\",\r\n                \"color\": \"volcano\"\r\n            },\r\n            {\r\n                \"id\": \"44c251be-aeab-4b1b-9fd7-30ebfdddf32f\",\r\n                \"name\": \"Business developers\",\r\n                \"color\": \"blue\"\r\n            }\r\n        ],\r\n        \"read\": [\r\n            {\r\n                \"id\": \"a9c1e904-aacf-4779-969e-e6177a0edd22\",\r\n                \"name\": \"Developers\",\r\n                \"color\": \"volcano\"\r\n            }\r\n        ],\r\n        \"group\": {\r\n            \"id\": \"532d9b57-e654-440c-a5cb-9540b12ea9ec\",\r\n            \"name\": \"Common\"\r\n        },\r\n        \"tasks\": [\r\n                     {\r\n                \"id\": \"ae5ed784-0b6b-4020-80ce-b88a43201ec4\",\r\n                \"title\": \"3321\",\r\n                \"description\": \"3\"\r\n            },\r\n            {\r\n                \"id\": \"5863ae2f-aaea-4f96-b0e7-03b9cc6dffda\",\r\n                \"title\": \"Add post manage8\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"1f09abca-f7b7-4ab7-8d53-e8c45c8f8dc3\",\r\n                \"title\": \"Add post manager\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n   \r\n            {\r\n                \"id\": \"7972fefe-a5f1-4648-b978-d5a170f60c5c\",\r\n                \"title\": \"Add post manager2\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"c2cd8848-8365-432e-b7b7-541d1f26447d\",\r\n                \"title\": \"Add post manager4\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"226ca726-67b8-43cd-807e-12ec7527e661\",\r\n                \"title\": \"Add post manager5\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"262acc83-7957-4679-9240-5a2754c22d73\",\r\n                \"title\": \"Add post manager6\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"6edd9dfc-98cb-4735-a1e6-5b95f5bd4316\",\r\n                \"title\": \"Add post manager86\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"dfad1853-33e4-4b63-85f1-bb945f26b917\",\r\n                \"title\": \"Add post manager8\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"7213bff5-d973-4da4-9bda-3bff7773c0f0\",\r\n                \"title\": \"Add post manager9\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            },\r\n            {\r\n                \"id\": \"75b77558-f1ac-4c1b-bb9d-80aa2dbd8f44\",\r\n                \"title\": \"Add post manager10\",\r\n                \"description\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\r\n            }\r\n        ]\r\n    }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1290,7 +1435,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/templates/678705a7-deff-409d-9efc-b578e46dcc71",
+									"raw": "http://localhost:3000/templates/771ace8e-dc5e-44f4-8b9e-ac5c84a7038c",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1298,7 +1443,7 @@
 									"port": "3000",
 									"path": [
 										"templates",
-										"678705a7-deff-409d-9efc-b578e46dcc71"
+										"771ace8e-dc5e-44f4-8b9e-ac5c84a7038c"
 									]
 								}
 							},
@@ -1319,17 +1464,8 @@
 								},
 								"method": "DELETE",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n   \"name\": \"test\",\r\n   \"read\": [{\"id\": \"a1c31c10-ba92-4178-be29-e6d5302e123d\"}],\r\n   \"write\": [{\"id\": \"a1c31c10-ba92-4178-be29-e6d5302e123d\"}],\r\n   \"group\": {\r\n       \"name\": \"testGroup\"\r\n   },\r\n   \"tasks\": [{\r\n      \"id\": \"7946b762-f046-4d95-a3f6-704b590a0317\"\r\n   }]\r\n  }\r\n",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "http://localhost:3000/templates/e7dbda60-92ee-4497-93c0-c3492de0ac82",
+									"raw": "http://localhost:3000/templates/000ff5a7-459c-46b6-b162-2f61fd44f852",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1337,38 +1473,7 @@
 									"port": "3000",
 									"path": [
 										"templates",
-										"e7dbda60-92ee-4497-93c0-c3492de0ac82"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get access",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/users/access/onboarding-templates",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"users",
-										"access",
-										"onboarding-templates"
+										"000ff5a7-459c-46b6-b162-2f61fd44f852"
 									]
 								}
 							},
@@ -1417,6 +1522,36 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Get access",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxMDZjNzRhLTk5YWMtNDc5NS1hZGUyLWIxODY1MjhmYjc1MyIsImZpcnN0TmFtZSI6IkRtaXRyaXkiLCJsYXN0TmFtZSI6IkhvbXphIiwiZW1haWwiOiJkbS5ob216YUBnbWFpbC5jb20iLCJhdmF0YXJGaWxlTmFtZSI6ImRlZmF1bHRfYWRtaW4ucG5nIiwiaXNBY3RpdmUiOnRydWUsImJpcnRoZGF5IjoiMTk5MC0wMS0yMlQyMjowMDowMC4wMDBaIiwicm9sZSI6eyJpZCI6IjMxMWZjOTYyLWJjN2ItNDkxOS1iOGVkLTU1NGUwNWIwM2I1NiIsIm5hbWUiOiJhZG1pbiIsInBlcm1pc3Npb25zIjpbeyJpZCI6IjQ0ZWIwYWRlLTA4NmYtNDQ2ZS1hYTAwLWU5YzkzMDAwMDkwYiIsIm5hbWUiOiJERUxFVEVfVVNFUlMifSx7ImlkIjoiMjBlMzFjMWYtNWY0MS00MDA0LWI5YjYtYTk1Y2I4MTM2ZDJlIiwibmFtZSI6IkNSRUFURV9VU0VSIn0seyJpZCI6IjYyYzdkNmUwLTcwNTEtNGI5MC1iYzE1LWZhYzU3MDc3YjcyOSIsIm5hbWUiOiJHRVRfVVNFUiJ9LHsiaWQiOiI5NzI5YzMxOS1lNDhhLTRlMmQtOWJkZC02NzIyOWFlNjU2N2YiLCJuYW1lIjoiR0VUX0FMTF9VU0VSUyJ9LHsiaWQiOiIyODY1YTAyNC1jN2U3LTRiMTYtOTk4OC1mZDg1OTg3OWM3MGUiLCJuYW1lIjoiR0VUX0FMTF9ST0xFUyJ9LHsiaWQiOiI3YzcxOGI1MC1mMDNlLTQ2MzQtYjc3Mi1lMjllOTc1NzgzNDMiLCJuYW1lIjoiR0VUX1JPTEVfQllfTkFNRSJ9LHsiaWQiOiIyYjk0YzBhZC05NGVhLTRiY2UtYWNlZi04NmExZTAxYzAxNjMiLCJuYW1lIjoiQ1JFQVRFX1JPTEUifSx7ImlkIjoiZGY5MWQ0MjctMTQ3ZC00MThkLTljMjEtYTY5MjMzNzc3MzMxIiwibmFtZSI6IlVQREFURV9ST0xFIn0seyJpZCI6ImZmYTY5ZjlhLWY3MGMtNGIyMy05MzdhLTEyZmFmYTk4Zjc5NSIsIm5hbWUiOiJERUxFVEVfUk9MRSJ9LHsiaWQiOiJhZWUzOWM2YS0yMjNhLTRmMTktOGVhNS05MTAzYzA1NWY3NWYiLCJuYW1lIjoiR0VUX1BFUk1JU1NJT05fQllfTkFNRSJ9LHsiaWQiOiJmNjI5NDE2Mi1lYmE0LTQxNWEtOTYzNS1mNmNkYzc5N2I2ZWYiLCJuYW1lIjoiQ1JFQVRFX1BFUk1JU1NJT04ifSx7ImlkIjoiNTE3MDRmZTEtNDliYy00ZmNkLTgyZTMtNTE2YTgxZTRlZmRlIiwibmFtZSI6IkNSRUFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNTRjNmYwNy00YTk2LTQ2MTEtYjc3NS1iYzMwNWZhNDZjYjUiLCJuYW1lIjoiR0VUX0FMTF9QT1NJVElPTlMifSx7ImlkIjoiYjRiODdkNGMtNDQ2Ni00ODZkLTk1ZTEtYjY2ZGZiNWY0OThiIiwibmFtZSI6IlVQREFURV9QT1NJVElPTiJ9LHsiaWQiOiJhNjExMTBlNS1jNTA5LTQwOTMtYTk5MS1iYjk2ODA4MWU3MDMiLCJuYW1lIjoiREVMRVRFX1BPU0lUSU9OIn0seyJpZCI6ImUyNTRmMWQ3LTU0MDctNDhjMi1hY2UxLTA5ZmFhNjZhODg1ZCIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiY2U1NWU2ZGItMTc5Ny00ZWIzLTk3MTItZDZmMGI2ZjExMzEwIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiODgzZjYxYmItNjZmYi00NjJkLWI2NmItOWFkZWMxM2FkNGI5IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiNzU0MjIxMjYtNTM2MC00ODhmLWE0MWUtMGFmNDgzNDcwZTQ1IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn1dfSwiY2FyZWVyIjpbeyJpZCI6IjNkYjkyNjdmLTgwZmYtNDEzNi1hOWUyLTUxNWFjOGM2YWNkMiIsInNhbGFyeSI6MTAwLCJmcm9tIjoiMjAxMi0wMS0yM1QyMjoxNTo1MS4wMDBaIiwidG8iOm51bGwsInBvc2l0aW9uIjp7ImlkIjoiNjNjMWRlMzAtMWU3OS00YmIwLThkMzAtODU0N2Y2Zjc0NzIwIiwibmFtZSI6IkZ1bGwgc3RhY2sgdHJhaW5lZSIsImR1dGllcyI6IlNvbWUgZHV0aWVzIiwicmVxdWlyZW1lbnRzIjoiU29tZSBza2lsbHMiLCJzYWxhcnlNaW5MaW1pdCI6MTAwLCJzYWxhcnlNYXhMaW1pdCI6MTAwMCwiZ3JvdXAiOnsiaWQiOiJmYTJhNWIzMC0xYjg1LTQ0ZTAtYjBkNS05NTBiMWFlMmNlYWMiLCJuYW1lIjoiVHJhaW5lZSIsImNvbG9yIjoiZ3JlZW4ifX19XSwiaWF0IjoxNjI3NTY5MzY0LCJleHAiOjE2MzAxNjEzNjR9.ZpobhAyFjxsfWP55yJ5tJRpQRCQ6Js_5y2bFsuBTrYo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users/access",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"access"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
