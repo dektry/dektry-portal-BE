@@ -9,6 +9,7 @@ import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { roleRepository } from '../repositories/role.repository';
+import { positionGroupRepository } from '../repositories/positionGroup.repository';
 import { projectsRepository } from '../../projects/repositories/projects.repository';
 import { projectsHistoryRepository } from '../../projects/repositories/projectsHistory.repository';
 import { getHashPassword } from '../../../utils/hashPassword';
@@ -29,10 +30,13 @@ export class UsersService {
     private projectsRepository: projectsRepository,
     @InjectRepository(projectsHistoryRepository)
     private projectsHistoryRepository: projectsHistoryRepository,
+    @InjectRepository(positionGroupRepository)
+    private positionGroupRepository: positionGroupRepository,
   ) { }
 
-  async getAll() {
-    const allUsers = await this.usersRepository.find({
+  async getAll(page: number, limit: number) {
+    const allUsers = await this.usersRepository.find();
+    const usersFromPage = await this.usersRepository.find({
       relations: [
         'role',
         'role.permissions',
@@ -40,7 +44,12 @@ export class UsersService {
         'career.position',
         'career.position.group',
       ],
-    });
+      take: limit,
+      skip: limit * (page - 1),
+      order: {
+        firstName: 'ASC',
+      },
+    })
     const allProjects = await this.projectsRepository.find();
     const allProjectsHistory = await this.projectsHistoryRepository.find({
       relations: [
@@ -48,7 +57,7 @@ export class UsersService {
         'projectId',
       ],
     });
-    const users = _.map(allUsers, user => {
+    const users = _.map(usersFromPage, user => {
       const userProjects = _.filter(allProjects, project => _.includes(project.users, user.id) || _.includes(project.managers, user.id));
       const projectsHistory = _.filter(allProjectsHistory, history => history.userId && history.userId.id === user.id);
       return {
@@ -57,7 +66,13 @@ export class UsersService {
         projectsHistory: projectsHistory,
       }
     });
-    return users;
+    return {
+      results: users,
+      total: _.size(allUsers),
+      currentPage: page,
+      next: page + 1,
+      previous: page - 1,
+    };
   }
 
   async getUserById(id: string): Promise<UserEntity> {
@@ -76,6 +91,116 @@ export class UsersService {
     }
     return found;
   }
+
+  async getUsers(filter: { positions: string[], name: string }, page: number = 1, limit: number = 10) {
+    let searchPositions = '';
+    let searchNames = '';
+    if (_.size(filter.positions)) {
+      const searchGroups = _.map(filter.positions, position => (
+        `"name"='${position}'`
+      ));
+
+      const allPositionGroups = await this.positionGroupRepository.find({
+        where: _.join(searchGroups, ' OR '),
+      });
+
+      const searchValues = _.map(allPositionGroups, group => (
+        group.name === 'None' ?
+          `"UserEntity__career" IS NULL`
+          :
+          `"UserEntity__career__position"."groupId"='${group.id}'`
+      ));
+
+      const search = `(${_.join(searchValues, ' OR ')})` + ' AND "UserEntity__career"."to" IS NULL';
+
+      const allUsers = await this.usersRepository.find({
+        where: search,
+        relations: [
+          'career',
+          'career.position',
+          'career.position.group',
+        ]
+      });
+  
+      const userSearch = _.map(allUsers, user => (
+        `"email"='${user.email}'`
+      ));
+
+      searchPositions = `${_.join(userSearch, ' OR ')}`;
+    }
+    if (filter.name) {
+      const searchValue = _.split(filter.name, ' ');
+      const firstName = searchValue[0];
+      const lastName = searchValue[1];
+      searchNames = `LOWER("firstName") LIKE LOWER('%${firstName}%')`;
+      if (lastName) {
+        searchNames = searchNames + ' ' + `AND LOWER("lastName") LIKE LOWER('%${lastName}%')`;
+      }
+    }
+
+    if (!searchPositions && !searchNames) {
+      return {
+        results: [],
+        total: 0,
+        currentPage: page,
+        next: page + 1,
+        previous: page - 1,
+      };
+    }
+
+    const search = searchPositions && searchNames
+      ? `(${searchPositions}) AND (${searchNames})`
+      : searchPositions || searchNames;
+    
+    const allUsers = await this.usersRepository.find({
+      where: search,
+      relations: [
+        'role',
+        'role.permissions',
+        'career',
+        'career.position',
+        'career.position.group',
+      ]
+    });
+    const users = await this.usersRepository.find({
+      where: search,
+      order: {
+        firstName: 'ASC',
+      },
+      take: limit,
+      skip: limit * (page - 1),
+      relations: [
+        'role',
+        'role.permissions',
+        'career',
+        'career.position',
+        'career.position.group',
+      ],
+    });
+    const allProjects = await this.projectsRepository.find();
+    const allProjectsHistory = await this.projectsHistoryRepository.find({
+      relations: [
+        'userId',
+        'projectId',
+      ],
+    });
+    const results = _.map(users, user => {
+      const userProjects = _.filter(allProjects, project => _.includes(project.users, user.id) || _.includes(project.managers, user.id));
+      const projectsHistory = _.filter(allProjectsHistory, history => history.userId && history.userId.id === user.id);
+      return {
+        ...user,
+        projects: userProjects,
+        projectsHistory: projectsHistory,
+      }
+    });
+    return {
+      results: results,
+      total: _.size(allUsers),
+      currentPage: page,
+      next: page + 1,
+      previous: page - 1,
+    };
+  };
 
   async findByEmail(email: string) {
     const currentUser = this.usersRepository.findOne({

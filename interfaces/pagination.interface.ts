@@ -1,4 +1,4 @@
-export interface PaginationResultInterface<PaginationEntity> {
+export interface IPaginationResult<PaginationEntity> {
   results: PaginationEntity[];
   total: number;
   currentPage: number,

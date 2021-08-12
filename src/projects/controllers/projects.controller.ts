@@ -19,7 +19,7 @@ import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { ProjectsService } from '../services/projects.service';
 import { ProjectDto } from '../dto/project.dto';
 import { ProjectEntity } from '../entity/project.entity';
-import { PaginationResultInterface } from '../../../interfaces/pagination.interface';
+import { IPaginationResult } from '../../../interfaces/pagination.interface';
 
 @Controller('projects')
 export class ProjectsController {
@@ -32,7 +32,7 @@ export class ProjectsController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
     @Query('isArchive') isArchive: boolean = false,
-  ): Promise<PaginationResultInterface<ProjectEntity>> {
+  ): Promise<IPaginationResult<ProjectEntity>> {
     return this.ProjectsService.getAllProjects(page, limit, isArchive);
   }
 
@@ -43,7 +43,7 @@ export class ProjectsController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
     @Param('name') name: string,
-  ): Promise<PaginationResultInterface<ProjectEntity>> {
+  ): Promise<IPaginationResult<ProjectEntity>> {
     return this.ProjectsService.findProjectByName(name, page, limit);
   }
 

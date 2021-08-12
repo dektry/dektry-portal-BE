@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PositionEntity } from '../entity/position.entity';
-import { positionRepository } from 'users/repositories/position.repository';
+import { positionRepository } from '../repositories/position.repository';
 import { careerRepository } from '../repositories/career.repository';
 import { DeleteResult } from 'typeorm';
 import { PositionProps } from '../controllers/position.controller';

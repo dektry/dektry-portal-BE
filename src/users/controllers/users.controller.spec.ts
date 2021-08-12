@@ -1,17 +1,21 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RoleEntity } from '../entity/role.entity';
+import { CareerEntity } from '../entity/career.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { UsersService } from '../services/users.service';
 import { UsersController } from './users.controller';
 
 const testUser = {
-  id: 1,
+  id: '1',
   firstName: 'Zheniya',
   lastName: 'Best Dev Ever',
   password: 'bestOfTheBest',
   email: 'test@test.com',
   role: ['user'],
+  isActive: true,
+  birthday: '1998-01-23T22:15:51.000Z',
+  career: ['Full stack trainee'],
 };
 
 describe('UsersController', () => {
@@ -76,7 +80,10 @@ describe('UsersController', () => {
           lastName: 'Best Dev Ever',
           password: 'bestOfTheBest',
           email: 'test@test.com',
-          role: RoleEntity['user'],
+          birthday: new Date('1998-01-23T22:15:51.000Z'),
+          isActive: true,
+          career: CareerEntity[''],
+          role: RoleEntity['Full stack trainee'],
         });
         expect(newUser).toEqual(testUser);
       });
@@ -85,11 +92,14 @@ describe('UsersController', () => {
     describe('if fields are NOT valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newUser = {
-          firstName: '',
-          lastName: '',
-          password: '',
-          email: '',
-          role: RoleEntity['user'],
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOfTheBest',
+          email: 'test@test.com',
+          birthday: new Date('1998-01-23T22:15:51.000Z'),
+          isActive: true,
+          career: CareerEntity[''],
+          role: RoleEntity[''],
         };
 
         try {
@@ -104,10 +114,10 @@ describe('UsersController', () => {
   describe('update User', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and update it', async () => {
-        const user = await controller.getUserById(1);
+        const user = await controller.getUserById(testUser.id);
 
         const fieldsToUpdate = {
-          id: user.id,
+          ...user,
           firstName: 'Gabbi',
           lastName: 'Lalala',
         };
@@ -115,7 +125,7 @@ describe('UsersController', () => {
         user.firstName = fieldsToUpdate.firstName;
         user.lastName = fieldsToUpdate.lastName;
 
-        const newUser = await controller.updateUser(fieldsToUpdate);
+        const newUser = await controller.updateUser(user.id, fieldsToUpdate);
         expect(user).toEqual(newUser);
       });
     });
@@ -123,7 +133,7 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.getUserById(1);
+          await controller.getUserById(testUser.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
@@ -135,8 +145,7 @@ describe('UsersController', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and delete it', async () => {
         const user = await controller.getUserById(testUser.id);
-        const dto = { id: testUser.id };
-        const userToDelete = await controller.deleteUser(dto);
+        const userToDelete = await controller.deleteUser(testUser.id);
         expect(user.id).toEqual(userToDelete);
       });
     });
@@ -144,8 +153,8 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          const dto = { id: 100 };
-          await controller.deleteUser(dto);
+          const dto = { id: '100' };
+          await controller.deleteUser(dto.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
