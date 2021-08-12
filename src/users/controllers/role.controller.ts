@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common';
 import { RoleService } from '../services/role.service';
 import { RoleEntity } from '../entity/role.entity';
-import { Permission } from 'decorators/permission.decorator';
-import { Permissions } from 'enums/permissions.enum';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'auth/guards/permission.guard';
+import { Permission } from '../../decorators/permission.decorator';
+import { Permissions } from '../../enums/permissions.enum';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
 
 interface RoleProps {
