@@ -18,6 +18,7 @@ import { careerRepository } from './repositories/career.repository';
 import { positionGroupRepository } from './repositories/positionGroup.repository';
 import { PositionGroupController } from './controllers/positionGroup.controller';
 import { PositionGroupService } from './services/positionGroup.service';
+import { accessRepository } from './repositories/access.repository';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PositionGroupService } from './services/positionGroup.service';
       positionRepository,
       careerRepository,
       positionGroupRepository,
+      accessRepository,
     ]),
   ],
   providers: [

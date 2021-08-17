@@ -59,4 +59,16 @@ export const permissionSeed = [
   {
     name: 'READ_ARTICLE',
   },
+  {
+    name: 'GET_USER_CAREER',
+  },
+  {
+    name: 'CREATE_CAREER',
+  },
+  {
+    name: 'DELETE_CAREER',
+  },
+  {
+    name: 'ONBOARDING_TEMPLATES',
+  },
 ];

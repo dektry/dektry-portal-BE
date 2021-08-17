@@ -27,4 +27,5 @@ export enum Permissions {
   getArticle = 'GET_ARTICLE',
   updateArticle = 'UPDATE_ARTICLE',
   readArticle = 'READ_ARTICLE',
+  workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
 }
