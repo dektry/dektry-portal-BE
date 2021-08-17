@@ -39,7 +39,7 @@ export class ArticlesController {
   updateArticle(
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
-  ): Promise<ArticleEntity> {
+  ) {
     return this.ArticlesService.updateArticle(id, updateArticleDto);
   }
 }

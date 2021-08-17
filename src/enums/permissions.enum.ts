@@ -26,4 +26,5 @@ export enum Permissions {
   getAllArticles = 'GET_ALL_ARTICLES',
   getArticle = 'GET_ARTICLE',
   updateArticle = 'UPDATE_ARTICLE',
+  readArticle = 'READ_ARTICLE',
 }

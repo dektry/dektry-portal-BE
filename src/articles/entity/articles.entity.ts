@@ -25,11 +25,11 @@ export class ArticleEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   update_at: Date;
 
-  @ManyToMany(() => PositionEntity)
+  @ManyToMany(() => PositionEntity, { eager: true, cascade: true })
   @JoinTable()
   read_positions: PositionEntity[];
 
-  @ManyToMany(() => PositionEntity)
+  @ManyToMany(() => PositionEntity, { eager: true, cascade: true })
   @JoinTable()
   edit_positions: PositionEntity[];
 }

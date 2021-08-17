@@ -56,4 +56,7 @@ export const permissionSeed = [
   {
     name: 'UPDATE_ARTICLE',
   },
+  {
+    name: 'READ_ARTICLE',
+  },
 ];

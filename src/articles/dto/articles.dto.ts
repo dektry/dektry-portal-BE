@@ -1,6 +1,6 @@
 export class UpdateArticleDto {
   title: string;
   content: string;
-  edit_positions: string[];
-  read_positions: string[];
+  edit_positions: any;
+  read_positions: any;
 }
