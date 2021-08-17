@@ -23,10 +23,15 @@ export const roleSeed = [
       Permissions.createCareer,
       Permissions.deleteCareer,
       Permissions.getAllPermissions,
+      Permissions.workWithOnBoardingTemplates,
     ],
   },
   {
     name: 'user',
-    permissions: [Permissions.getUser, Permissions.getAllUsers],
+    permissions: [
+      Permissions.getUser,
+      Permissions.getAllUsers,
+      Permissions.getAllPositions,
+    ],
   },
 ];

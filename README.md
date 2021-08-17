@@ -44,6 +44,12 @@ $ yarn run import:dev:all
 
 # Import all seed-data on production
 $ yarn run import:all
+
+# Import templates in development mode
+$ yarn run import:dev:templates
+
+# Import templates on production
+$ yarn run import:templates
 ```
 
 ## Running the app

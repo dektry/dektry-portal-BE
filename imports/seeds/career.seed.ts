@@ -25,7 +25,7 @@ export const careerSeed = [
     salary: 1000,
     from: '2012-01-23T22:15:51.000Z',
     to: null,
-    position: 'CEO',
+    position: 'Full stack developer',
   },
   {
     user: 'dm.homza@gmail.com',
