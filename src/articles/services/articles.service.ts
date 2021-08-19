@@ -2,8 +2,6 @@ import { Injectable, Body, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { articleRepository } from '../repositories/articles.repository';
-import { positionRepository } from 'users/repositories/position.repository';
-import { usersRepository } from 'users/repositories/users.repository';
 import { ArticleEntity } from '../entity/articles.entity';
 import { UpdateArticleDto } from 'articles/dto/articles.dto';
 
@@ -11,25 +9,23 @@ import { UpdateArticleDto } from 'articles/dto/articles.dto';
 export class ArticlesService {
   constructor(
     @InjectRepository(articleRepository)
-    private articleRepository: Repository<articleRepository>,
-    @InjectRepository(positionRepository)
-    private positionRepository: Repository<positionRepository>,
-    @InjectRepository(usersRepository)
-    private usersRepository: Repository<usersRepository>,
+    private articleRepository: articleRepository,
   ) {}
 
-  async getArticleList() {
+  async getArticleList(): Promise<ArticleEntity[]> {
     const articleList = await this.articleRepository
       .createQueryBuilder('articles')
+      .leftJoinAndSelect('articles.read_positions', 'read_positions')
+      .leftJoinAndSelect('articles.edit_positions', 'edit_positions')
       .orderBy('update_at', 'DESC')
       .getMany();
 
     return articleList;
   }
 
-  async getArticleById(id: string) {
+  async getArticleById(id: string): Promise<ArticleEntity> {
     const [article] = await this.articleRepository.find({ where: { id } });
-
+    console.log('article', article);
     if (!article) {
       throw new NotFoundException(`Article with ID '${id}' not found`);
     } else {
@@ -39,37 +35,22 @@ export class ArticlesService {
 
   async createArticle() {}
 
-  async updateArticle(id: string, params: UpdateArticleDto) {
+  async updateArticle(
+    id: string,
+    params: UpdateArticleDto,
+  ): Promise<ArticleEntity> {
     const { title, content, edit_positions, read_positions } = params;
-    console.log('params', params);
+
     const article = await this.articleRepository.findOne({
       where: { id },
-    });
-
-    const users = await this.usersRepository.find({});
-    console.log('users', users);
-    const editPositions = await this.positionRepository.find({
-      where: [
-        ...edit_positions.map((position) => {
-          return { name: position };
-        }),
-      ],
-    });
-
-    const readPositions = await this.positionRepository.find({
-      where: [
-        ...read_positions.map((position) => {
-          return { name: position };
-        }),
-      ],
     });
 
     const updateArticle = await this.articleRepository.save({
       ...article,
       title,
       content,
-      edit_positions: edit_positions.length ? editPositions : [],
-      read_positions: read_positions.length ? readPositions : [],
+      edit_positions,
+      read_positions,
       update_at: new Date(),
     });
 

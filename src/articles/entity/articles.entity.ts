@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import { PositionEntity } from '../../users/entity/position.entity';
 
@@ -25,11 +24,13 @@ export class ArticleEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   update_at: Date;
 
-  @ManyToMany(() => PositionEntity, { eager: true, cascade: true })
-  @JoinTable()
+  @ManyToMany(() => PositionEntity, (position) => position.read, {
+    eager: true,
+  })
   read_positions: PositionEntity[];
 
-  @ManyToMany(() => PositionEntity, { eager: true, cascade: true })
-  @JoinTable()
+  @ManyToMany(() => PositionEntity, (position) => position.edit, {
+    eager: true,
+  })
   edit_positions: PositionEntity[];
 }

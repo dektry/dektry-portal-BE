@@ -22,14 +22,14 @@ export class ArticlesController {
   @Permission(Permissions.getAllArticles)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
-  getArticleList() {
+  getArticleList(): Promise<ArticleEntity[]> {
     return this.ArticlesService.getArticleList();
   }
 
   @Permission(Permissions.getArticle)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get(':id')
-  getArticleById(@Param('id') id: string) {
+  getArticleById(@Param('id') id: string): Promise<ArticleEntity> {
     return this.ArticlesService.getArticleById(id);
   }
 
@@ -39,7 +39,7 @@ export class ArticlesController {
   updateArticle(
     @Param('id') id: string,
     @Body() updateArticleDto: UpdateArticleDto,
-  ) {
+  ): Promise<ArticleEntity> {
     return this.ArticlesService.updateArticle(id, updateArticleDto);
   }
 }

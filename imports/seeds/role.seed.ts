@@ -36,6 +36,9 @@ export const roleSeed = [
       Permissions.getUser,
       Permissions.getAllUsers,
       Permissions.getAllPositions,
+      Permissions.getAllArticles,
+      Permissions.getArticle,
+      Permissions.updateArticle,
     ],
   },
 ];
