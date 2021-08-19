@@ -1,7 +1,7 @@
 import { IsNotEmpty, Length } from 'class-validator';
 import { PositionEntity } from '../../users/entity/position.entity';
 
-export class UpdateArticleDto {
+export class SaveArticleDto {
   @IsNotEmpty()
   @Length(2, 255)
   title: string;

@@ -1,9 +1,9 @@
 import { Injectable, Body, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult } from 'typeorm';
 import { articleRepository } from '../repositories/articles.repository';
 import { ArticleEntity } from '../entity/articles.entity';
-import { UpdateArticleDto } from 'articles/dto/articles.dto';
+import { SaveArticleDto } from 'articles/dto/articles.dto';
 
 @Injectable()
 export class ArticlesService {
@@ -25,7 +25,7 @@ export class ArticlesService {
 
   async getArticleById(id: string): Promise<ArticleEntity> {
     const [article] = await this.articleRepository.find({ where: { id } });
-    console.log('article', article);
+
     if (!article) {
       throw new NotFoundException(`Article with ID '${id}' not found`);
     } else {
@@ -33,11 +33,24 @@ export class ArticlesService {
     }
   }
 
-  async createArticle() {}
+  async createArticle(params: SaveArticleDto): Promise<ArticleEntity> {
+    const { title, content, edit_positions, read_positions } = params;
+
+    const newArticle = await this.articleRepository.save({
+      title,
+      content,
+      edit_positions,
+      read_positions,
+      update_at: new Date(),
+      create_at: new Date(),
+    });
+
+    return newArticle;
+  }
 
   async updateArticle(
     id: string,
-    params: UpdateArticleDto,
+    params: SaveArticleDto,
   ): Promise<ArticleEntity> {
     const { title, content, edit_positions, read_positions } = params;
 
@@ -55,5 +68,18 @@ export class ArticlesService {
     });
 
     return updateArticle;
+  }
+
+  async deleteArticle(id: string): Promise<DeleteResult> {
+    try {
+      const deletedArticle = await this.articleRepository.delete(id);
+      if (!deletedArticle.affected) {
+        throw new NotFoundException(`Article with ID '${id}' not found`);
+      }
+
+      return deletedArticle;
+    } catch (error) {
+      return error;
+    }
   }
 }

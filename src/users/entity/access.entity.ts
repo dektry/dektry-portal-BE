@@ -5,6 +5,7 @@ import {
   BaseEntity,
   OneToMany,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 import { PositionEntity } from './position.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
@@ -22,6 +23,11 @@ export class AccessEntity extends BaseEntity {
   })
   @JoinColumn()
   positions: PositionEntity[];
+  // @ManyToMany(() => PositionEntity, (position) => position.access, {
+  //   cascade: true,
+  // })
+  // @JoinColumn()
+  // positions: PositionEntity[];
 
   @OneToMany(() => PositionGroupEntity, (group) => group.access, {
     cascade: true,

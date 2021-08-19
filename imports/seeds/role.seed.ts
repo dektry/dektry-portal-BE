@@ -27,6 +27,8 @@ export const roleSeed = [
       Permissions.getArticle,
       Permissions.updateArticle,
       Permissions.readArticle,
+      Permissions.createArticle,
+      Permissions.deleteArticle,
       Permissions.workWithOnBoardingTemplates,
     ],
   },
@@ -39,6 +41,8 @@ export const roleSeed = [
       Permissions.getAllArticles,
       Permissions.getArticle,
       Permissions.updateArticle,
+      Permissions.createArticle,
+      Permissions.deleteArticle,
     ],
   },
 ];

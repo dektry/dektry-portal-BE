@@ -60,6 +60,12 @@ export const permissionSeed = [
     name: 'READ_ARTICLE',
   },
   {
+    name: 'CREATE_ARTICLE',
+  },
+  {
+    name: 'DELETE_ARTICLE',
+  },
+  {
     name: 'GET_USER_CAREER',
   },
   {

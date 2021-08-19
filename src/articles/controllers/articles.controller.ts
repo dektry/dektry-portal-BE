@@ -6,13 +6,14 @@ import {
   Body,
   Put,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { ArticlesService } from '../services/articles.service';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
 import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
-import { UpdateArticleDto } from '../dto/articles.dto';
+import { SaveArticleDto } from '../dto/articles.dto';
 import { ArticleEntity } from '../entity/articles.entity';
 
 @Controller('articles')
@@ -38,8 +39,24 @@ export class ArticlesController {
   @Put(':id')
   updateArticle(
     @Param('id') id: string,
-    @Body() updateArticleDto: UpdateArticleDto,
+    @Body() updateArticleDto: SaveArticleDto,
   ): Promise<ArticleEntity> {
     return this.ArticlesService.updateArticle(id, updateArticleDto);
+  }
+
+  @Permission(Permissions.createArticle)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Post()
+  createArticle(
+    @Body() saveArticleDto: SaveArticleDto,
+  ): Promise<ArticleEntity> {
+    return this.ArticlesService.createArticle(saveArticleDto);
+  }
+
+  @Permission(Permissions.deleteArticle)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Delete(':id')
+  deleteArticle(@Param('id') id: string) {
+    return this.ArticlesService.deleteArticle(id);
   }
 }
