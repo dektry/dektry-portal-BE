@@ -12,9 +12,12 @@ export class ArticlesService {
     private articleRepository: articleRepository,
   ) {}
 
-  async getArticleList(): Promise<ArticleEntity[]> {
+  async getArticleList(searchValue): Promise<ArticleEntity[]> {
+    const value = searchValue?.value || '';
+
     const articleList = await this.articleRepository
       .createQueryBuilder('articles')
+      .where('title ILIKE :value', { value: `%${value}%` })
       .leftJoinAndSelect('articles.read_positions', 'read_positions')
       .leftJoinAndSelect('articles.edit_positions', 'edit_positions')
       .orderBy('update_at', 'DESC')

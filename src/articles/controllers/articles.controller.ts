@@ -13,7 +13,7 @@ import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { PermissionGuard } from 'auth/guards/permission.guard';
 import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
-import { SaveArticleDto } from '../dto/articles.dto';
+import { SaveArticleDto, SearchValueDto } from '../dto/articles.dto';
 import { ArticleEntity } from '../entity/articles.entity';
 
 @Controller('articles')
@@ -22,9 +22,11 @@ export class ArticlesController {
 
   @Permission(Permissions.getAllArticles)
   @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Get()
-  getArticleList(): Promise<ArticleEntity[]> {
-    return this.ArticlesService.getArticleList();
+  @Post()
+  getArticleList(
+    @Body() searchValueDto: SearchValueDto,
+  ): Promise<ArticleEntity[]> {
+    return this.ArticlesService.getArticleList(searchValueDto);
   }
 
   @Permission(Permissions.getArticle)
@@ -46,7 +48,7 @@ export class ArticlesController {
 
   @Permission(Permissions.createArticle)
   @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Post()
+  @Post('create')
   createArticle(
     @Body() saveArticleDto: SaveArticleDto,
   ): Promise<ArticleEntity> {

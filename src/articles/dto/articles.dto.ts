@@ -12,3 +12,7 @@ export class SaveArticleDto {
   edit_positions: PositionEntity[];
   read_positions: PositionEntity[];
 }
+
+export class SearchValueDto {
+  value: string;
+}
