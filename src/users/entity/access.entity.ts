@@ -18,16 +18,8 @@ export class AccessEntity extends BaseEntity {
   @Column({ length: 50, unique: true })
   name: string;
 
-  @OneToMany(() => PositionEntity, (position) => position.access, {
-    cascade: true,
-  })
-  @JoinColumn()
+  @ManyToMany(() => PositionEntity, (position) => position.access)
   positions: PositionEntity[];
-  // @ManyToMany(() => PositionEntity, (position) => position.access, {
-  //   cascade: true,
-  // })
-  // @JoinColumn()
-  // positions: PositionEntity[];
 
   @OneToMany(() => PositionGroupEntity, (group) => group.access, {
     cascade: true,

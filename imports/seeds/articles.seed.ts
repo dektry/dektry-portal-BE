@@ -67,3 +67,8 @@ export const articleSeed = [
     ],
   },
 ];
+
+export const accessArticleSeed = {
+  name: 'articles',
+  position: 'CEO',
+};

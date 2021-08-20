@@ -33,9 +33,4 @@ export class ArticleEntity extends BaseEntity {
     eager: true,
   })
   edit_positions: PositionEntity[];
-
-  // @ManyToMany(() => PositionEntity, (position) => position.create, {
-  //   eager: true,
-  // })
-  // create_positions: PositionEntity[];
 }

@@ -1,7 +1,8 @@
 import { createConnection, Connection } from 'typeorm';
 import { ArticleEntity } from '../src/articles/entity/articles.entity';
 import { PositionEntity } from '../src/users/entity/position.entity';
-import { articleSeed } from './seeds/articles.seed';
+import { AccessEntity } from '../src/users/entity/access.entity';
+import { articleSeed, accessArticleSeed } from './seeds/articles.seed';
 import { difference } from 'lodash';
 
 const importArticles = async () => {
@@ -51,6 +52,21 @@ const importArticles = async () => {
   );
 
   console.log(`Added ${createdArticles.length} new articles!`);
+
+  const accessRelation = await connection
+    .getRepository(PositionEntity)
+    .findOne({ name: accessArticleSeed.position });
+
+  const createdArticlesAccess = await connection
+    .getRepository(AccessEntity)
+    .save(
+      connection
+        .getRepository(AccessEntity)
+        .create({ ...accessArticleSeed, positions: [accessRelation] }),
+    );
+  if (createdArticlesAccess) {
+    console.log('Access to articles created!');
+  }
   await connection.close();
 };
 

@@ -38,10 +38,12 @@ export class PositionEntity extends BaseEntity {
   )
   group: PositionGroupEntity;
 
-  @ManyToOne(() => AccessEntity, (access) => access.positions)
+  @ManyToMany(() => AccessEntity, (access) => access.positions, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable({ name: 'positions_access' })
   access: AccessEntity[];
-  // @ManyToMany(() => AccessEntity, (access) => access.positions)
-  // access: AccessEntity[];
 
   @OneToMany(() => TemplatesEntity, (templates) => templates.target, {
     nullable: true,
@@ -67,11 +69,4 @@ export class PositionEntity extends BaseEntity {
   })
   @JoinTable({ name: 'article_read_positions' })
   read: ArticleEntity[];
-
-  // @ManyToMany(() => ArticleEntity, (article) => article.create_positions, {
-  //   cascade: true,
-  //   nullable: true,
-  // })
-  // @JoinTable({ name: 'article_create_positions' })
-  // create: ArticleEntity[];
 }
