@@ -15,7 +15,10 @@ import { Permission } from 'decorators/permission.decorator';
 import { Permissions } from 'enums/permissions.enum';
 import { SaveArticleDto, SearchValueDto } from '../dto/articles.dto';
 import { ArticleEntity } from '../entity/articles.entity';
-
+export interface IArticleList {
+  articleList: ArticleEntity[];
+  count: number;
+}
 @Controller('articles')
 export class ArticlesController {
   constructor(private ArticlesService: ArticlesService) {}
@@ -25,7 +28,7 @@ export class ArticlesController {
   @Post()
   getArticleList(
     @Body() searchValueDto: SearchValueDto,
-  ): Promise<ArticleEntity[]> {
+  ): Promise<IArticleList> {
     return this.ArticlesService.getArticleList(searchValueDto);
   }
 

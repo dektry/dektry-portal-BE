@@ -15,4 +15,8 @@ export class SaveArticleDto {
 
 export class SearchValueDto {
   value: string;
+  pagination: {
+    page: number;
+    pageSize: number;
+  };
 }

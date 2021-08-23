@@ -1,9 +1,10 @@
 import { Injectable, Body, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult } from 'typeorm';
+import { DeleteResult, ILike } from 'typeorm';
 import { articleRepository } from '../repositories/articles.repository';
 import { ArticleEntity } from '../entity/articles.entity';
 import { SaveArticleDto } from 'articles/dto/articles.dto';
+import { IArticleList } from '../controllers/articles.controller';
 
 @Injectable()
 export class ArticlesService {
@@ -12,18 +13,24 @@ export class ArticlesService {
     private articleRepository: articleRepository,
   ) {}
 
-  async getArticleList(searchValue): Promise<ArticleEntity[]> {
-    const value = searchValue?.value || '';
+  async getArticleList(searchParam): Promise<IArticleList> {
+    const { value, pagination } = searchParam;
+    const searchValue = value || '';
+    const page = pagination?.page || 1;
+    const take = pagination?.pageSize || 10;
+    const skip = (page - 1) * take;
 
-    const articleList = await this.articleRepository
-      .createQueryBuilder('articles')
-      .where('title ILIKE :value', { value: `%${value}%` })
-      .leftJoinAndSelect('articles.read_positions', 'read_positions')
-      .leftJoinAndSelect('articles.edit_positions', 'edit_positions')
-      .orderBy('update_at', 'DESC')
-      .getMany();
+    const [result, total] = await this.articleRepository.findAndCount({
+      where: { title: ILike('%' + searchValue + '%') },
+      order: { update_at: 'DESC' },
+      skip,
+      take,
+    });
 
-    return articleList;
+    return {
+      articleList: result,
+      count: total,
+    };
   }
 
   async getArticleById(id: string): Promise<ArticleEntity> {
