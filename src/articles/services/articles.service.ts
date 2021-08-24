@@ -2,6 +2,7 @@ import { Injectable, Body, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike } from 'typeorm';
 import { articleRepository } from '../repositories/articles.repository';
+import { usersRepository } from '../../users/repositories/users.repository';
 import { ArticleEntity } from '../entity/articles.entity';
 import { SaveArticleDto } from 'articles/dto/articles.dto';
 import { IArticleList } from '../controllers/articles.controller';
@@ -11,24 +12,59 @@ export class ArticlesService {
   constructor(
     @InjectRepository(articleRepository)
     private articleRepository: articleRepository,
+    @InjectRepository(usersRepository)
+    private usersRepository: usersRepository,
   ) {}
 
   async getArticleList(searchParam): Promise<IArticleList> {
-    const { value, pagination } = searchParam;
+    const { value, pagination, permission, userId } = searchParam;
     const searchValue = value || '';
     const page = pagination?.page || 1;
-    const take = pagination?.pageSize || 10;
+    const take = pagination?.pageSize || 5;
     const skip = (page - 1) * take;
 
-    const [result, total] = await this.articleRepository.findAndCount({
-      where: { title: ILike('%' + searchValue + '%') },
-      order: { update_at: 'DESC' },
-      skip,
-      take,
+    const currentUser = await this.usersRepository.findOne({
+      where: { id: userId },
+      relations: ['role', 'role.permissions', 'career', 'career.position'],
     });
 
+    let articleList = [];
+    let total = 0;
+
+    if (currentUser) {
+      const accessGranted = currentUser.role.permissions.filter(
+        (rolePermission) => rolePermission.name === permission,
+      );
+      const currentUserPositionId = currentUser.career[0]?.position?.id;
+
+      if (!accessGranted.length) {
+        [articleList, total] = await this.articleRepository.findAndCount({
+          where: (qb) => {
+            qb.where({
+              title: ILike('%' + searchValue + '%'),
+            }).andWhere(
+              'ArticleEntity_read_positions_ArticleEntity.positionsId = :positionsId',
+              {
+                positionsId: currentUserPositionId,
+              },
+            );
+          },
+          order: { update_at: 'DESC' },
+          skip,
+          take,
+        });
+      } else {
+        [articleList, total] = await this.articleRepository.findAndCount({
+          where: { title: ILike('%' + searchValue + '%') },
+          order: { update_at: 'DESC' },
+          skip,
+          take,
+        });
+      }
+    }
+
     return {
-      articleList: result,
+      articleList,
       count: total,
     };
   }

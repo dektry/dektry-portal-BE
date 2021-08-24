@@ -19,4 +19,6 @@ export class SearchValueDto {
     page: number;
     pageSize: number;
   };
+  permission: string;
+  userId: string;
 }
