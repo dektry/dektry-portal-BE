@@ -66,6 +66,9 @@ export const permissionSeed = [
     name: 'DELETE_ARTICLE',
   },
   {
+    name: 'FULL_ACCESS_ARTICLE',
+  },
+  {
     name: 'GET_USER_CAREER',
   },
   {

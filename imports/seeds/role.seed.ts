@@ -29,6 +29,7 @@ export const roleSeed = [
       Permissions.readArticle,
       Permissions.createArticle,
       Permissions.deleteArticle,
+      Permissions.fullAccessArticle,
       Permissions.workWithOnBoardingTemplates,
     ],
   },

@@ -29,6 +29,7 @@ export enum Permissions {
   readArticle = 'READ_ARTICLE',
   createArticle = 'CREATE_ARTICLE',
   deleteArticle = 'DELETE_ARTICLE',
+  fullAccessArticle = 'FULL_ACCESS_ARTICLE',
 
   workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
 }

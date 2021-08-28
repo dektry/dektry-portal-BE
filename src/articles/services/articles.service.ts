@@ -1,4 +1,8 @@
-import { Injectable, Body, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, ILike } from 'typeorm';
 import { articleRepository } from '../repositories/articles.repository';
@@ -31,37 +35,37 @@ export class ArticlesService {
     let articleList = [];
     let total = 0;
 
-    if (currentUser) {
-      const accessGranted = currentUser.role.permissions.filter(
-        (rolePermission) => rolePermission.name === permission,
-      );
-      const currentUserPositionId = currentUser.career[0]?.position?.id;
+    // if (currentUser) {
+    const accessGranted = currentUser.role.permissions.filter(
+      (rolePermission) => rolePermission.name === permission,
+    );
+    const currentUserPositionId = currentUser.career[0]?.position?.id;
 
-      if (!accessGranted.length) {
-        [articleList, total] = await this.articleRepository.findAndCount({
-          where: (qb) => {
-            qb.where({
-              title: ILike('%' + searchValue + '%'),
-            }).andWhere(
-              'ArticleEntity_read_positions_ArticleEntity.positionsId = :positionsId',
-              {
-                positionsId: currentUserPositionId,
-              },
-            );
-          },
-          order: { update_at: 'DESC' },
-          skip,
-          take,
-        });
-      } else {
-        [articleList, total] = await this.articleRepository.findAndCount({
-          where: { title: ILike('%' + searchValue + '%') },
-          order: { update_at: 'DESC' },
-          skip,
-          take,
-        });
-      }
+    if (!accessGranted.length) {
+      [articleList, total] = await this.articleRepository.findAndCount({
+        where: (qb) => {
+          qb.where({
+            title: ILike('%' + searchValue + '%'),
+          }).andWhere(
+            'ArticleEntity_read_positions_ArticleEntity.positionsId = :positionsId',
+            {
+              positionsId: currentUserPositionId,
+            },
+          );
+        },
+        order: { update_at: 'DESC' },
+        skip,
+        take,
+      });
+    } else {
+      [articleList, total] = await this.articleRepository.findAndCount({
+        where: { title: ILike('%' + searchValue + '%') },
+        order: { update_at: 'DESC' },
+        skip,
+        take,
+      });
     }
+    // }
 
     return {
       articleList,
@@ -82,16 +86,26 @@ export class ArticlesService {
   async createArticle(params: SaveArticleDto): Promise<ArticleEntity> {
     const { title, content, edit_positions, read_positions } = params;
 
-    const newArticle = await this.articleRepository.save({
-      title,
-      content,
-      edit_positions,
-      read_positions,
-      update_at: new Date(),
-      create_at: new Date(),
+    const existArticle = await this.articleRepository.find({
+      where: { title },
     });
 
-    return newArticle;
+    if (existArticle.length) {
+      throw new ConflictException(
+        `Article with '${title}' title already exists!`,
+      );
+    } else {
+      const newArticle = await this.articleRepository.save({
+        title,
+        content,
+        edit_positions,
+        read_positions,
+        update_at: new Date(),
+        create_at: new Date(),
+      });
+
+      return newArticle;
+    }
   }
 
   async updateArticle(
@@ -100,20 +114,30 @@ export class ArticlesService {
   ): Promise<ArticleEntity> {
     const { title, content, edit_positions, read_positions } = params;
 
-    const article = await this.articleRepository.findOne({
-      where: { id },
+    const [existArticle] = await this.articleRepository.find({
+      where: { title },
     });
 
-    const updateArticle = await this.articleRepository.save({
-      ...article,
-      title,
-      content,
-      edit_positions,
-      read_positions,
-      update_at: new Date(),
-    });
+    if (existArticle && existArticle?.id !== id) {
+      throw new ConflictException(
+        `Article with '${title}' title already exists!`,
+      );
+    } else {
+      const currentArticle = await this.articleRepository.findOne({
+        where: { id },
+      });
 
-    return updateArticle;
+      const updateArticle = await this.articleRepository.save({
+        ...currentArticle,
+        title,
+        content,
+        edit_positions,
+        read_positions,
+        update_at: new Date(),
+      });
+
+      return updateArticle;
+    }
   }
 
   async deleteArticle(id: string): Promise<DeleteResult> {
@@ -121,9 +145,9 @@ export class ArticlesService {
       const deletedArticle = await this.articleRepository.delete(id);
       if (!deletedArticle.affected) {
         throw new NotFoundException(`Article with ID '${id}' not found`);
+      } else {
+        return deletedArticle;
       }
-
-      return deletedArticle;
     } catch (error) {
       return error;
     }
