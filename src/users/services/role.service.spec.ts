@@ -7,10 +7,17 @@ import { permissionRepository } from '../repositories/permission.repository';
 import { NotFoundException } from '@nestjs/common';
 import { PermissionService } from './permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
+import { usersRepository } from '../repositories/users.repository';
 
 const testRole = {
   id: '1',
   name: 'user',
+  permissions: PermissionEntity['user'],
+};
+
+const createRole = {
+  id: '1',
+  name: 'users',
   permissions: PermissionEntity['user'],
 };
 
@@ -20,6 +27,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn(),
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testRole),
+  find: jest.fn().mockReturnValue([createRole]),
 });
 
 describe('RoleService', () => {
@@ -40,6 +48,10 @@ describe('RoleService', () => {
         },
         {
           provide: getRepositoryToken(permissionRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(usersRepository),
           useValue: createMockRepository(),
         },
       ],
@@ -68,7 +80,7 @@ describe('RoleService', () => {
       jest
         .spyOn(rolesRepository, 'createQueryBuilder')
         .mockImplementation(() => createQueryBuilder);
-
+      rolesRepository.find.mockReturnValue([testRole]);
       await expect(service.getAll()).resolves.toEqual([testRole]);
     });
   });
@@ -76,25 +88,23 @@ describe('RoleService', () => {
   describe('find Role by ID', () => {
     describe('when Role with ID exists', () => {
       it('should return the role object', async () => {
-        const roleId = 1;
         const expectedRole = {};
-
+        const roleName = 'Back-end developer';
         rolesRepository.findOne.mockReturnValue(expectedRole);
-        const role = await service.getRoleById(roleId);
+        const role = await service.getRoleByName(roleName);
         expect(role).toEqual(expectedRole);
       });
     });
 
-    describe('when Role with ID DOES NOT exist', () => {
+    describe('when Role with name DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
-        const roleId = 1;
         rolesRepository.findOne.mockReturnValue(undefined);
-
+        const roleName = 'Back-end developer';
         try {
-          await service.getRoleById(roleId);
+          await service.getRoleByName(roleName);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`Role with ID "${roleId}" not found`);
+          expect(err.message).toEqual(`Role '${roleName}' not found`);
         }
       });
     });
@@ -105,7 +115,7 @@ describe('RoleService', () => {
       let expectedPermission = [];
 
       const newPermission = {
-        permission: 'users',
+        name: 'users',
       };
 
       permissionsRepository.create.mockReturnValue(newPermission);
@@ -113,15 +123,14 @@ describe('RoleService', () => {
       const permission = await permissionsService.createPermission(
         newPermission,
       );
-
-      expectedPermission = [{ ...permission }];
+      expectedPermission = [permission?.name];
       const newRole = {
-        name: 'user',
+        name: 'users',
         permissions: expectedPermission,
       };
-
-      rolesRepository.create.mockReturnValue(newRole);
       rolesRepository.save.mockReturnValue(newRole);
+      rolesRepository.find.mockReturnValue([newRole]);
+
       const role = await service.createRole(newRole);
       expect(role).toEqual(newRole);
     });

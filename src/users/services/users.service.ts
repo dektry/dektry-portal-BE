@@ -61,17 +61,18 @@ export class UsersService {
       ],
     });
 
+    if (!found) {
+      throw new NotFoundException(`User with ID '${id}' not found`);
+    }
     const currentPositions = found.career
       .filter((item) => item.to === null)
       .map((item) => item.position);
+
     const userWithCurrentPositions = {
       ...found,
       currentPositions,
     };
 
-    if (!found) {
-      throw new NotFoundException(`User with ID '${id}' not found`);
-    }
     return userWithCurrentPositions;
   }
 
@@ -86,6 +87,11 @@ export class UsersService {
         'career.position.group',
       ],
     });
+
+    if (!currentUser) {
+      throw new NotFoundException(`User with email '${email}' not found`);
+    }
+
     const currentPositions = currentUser.career
       .filter((item) => item.to === null)
       .map((item) => item.position);
@@ -101,6 +107,7 @@ export class UsersService {
     const isExist = await this.usersRepository.findOne({
       email,
     });
+
     if (isExist) {
       throw new ConflictException('User with this email is already exist!');
     } else {
@@ -125,6 +132,7 @@ export class UsersService {
     });
     const { role, password, ...updatedProps } = newUserProps;
     const newUserRole = await this.roleRepository.findOne(role);
+
     if (!existUser) {
       throw new NotFoundException(`User ${id} not found!`);
     }
@@ -150,6 +158,7 @@ export class UsersService {
       where: { user: id },
       relations: ['user', 'position', 'position.group'],
     });
+
     await this.careerRepository.remove(allCareers);
     try {
       const result = await this.usersRepository.delete(id);

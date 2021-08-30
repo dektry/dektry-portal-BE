@@ -20,7 +20,7 @@ describe('RoleController', () => {
           provide: RoleService,
           useValue: {
             getAll: jest.fn(() => [testRole]),
-            getRoleById: jest.fn(() => testRole),
+            getRoleByName: jest.fn(() => testRole),
             createRole: jest.fn(() => testRole),
           },
         },
@@ -41,18 +41,18 @@ describe('RoleController', () => {
     });
   });
 
-  describe('get Role by ID', () => {
-    describe('when role with ID exists', () => {
-      it('should get the role matching the id', async () => {
-        const role = await controller.getRoleById(1);
+  describe('get Role by name', () => {
+    describe('when role with name exists', () => {
+      it('should get the role matching the name', async () => {
+        const role = await controller.getRoleByName('Back-end developer');
         expect(role).toEqual(testRole);
       });
     });
 
-    describe('when role with ID DOES NOT exists', () => {
+    describe('when role with name DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.getRoleById(10);
+          await controller.getRoleByName('Back-end developer');
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }

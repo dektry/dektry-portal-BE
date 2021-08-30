@@ -1,10 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
+import { CareerEntity } from 'users/entity/career.entity';
+import { roleRepository } from '../repositories/role.repository';
+import { careerRepository } from '../repositories/career.repository';
+import { accessRepository } from '../repositories/access.repository';
 
 const testUser = {
   id: '1',
@@ -13,16 +17,34 @@ const testUser = {
   password: 'bestOfTheBest',
   email: 'test@test.com',
   role: RoleEntity['user'],
+  isActive: true,
+  birthday: new Date(),
+  career: CareerEntity['1'],
 };
+
+const newUser = {
+  firstName: 'Zheniya',
+  lastName: 'Best Dev Ever',
+  password: 'bestOftheBest',
+  email: 'test@test.com',
+  role: RoleEntity['user'],
+  isActive: true,
+  birthday: new Date(),
+  career: CareerEntity['1'],
+};
+
+const existUser = undefined;
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testUser),
   createQueryBuilder: jest.fn(),
-  findOne: jest.fn().mockResolvedValue(testUser),
+  findOne: jest.fn().mockReturnValue(testUser),
   update: jest.fn().mockResolvedValue(testUser),
   delete: jest.fn().mockResolvedValue(true),
+  find: jest.fn().mockResolvedValue([]),
+  remove: jest.fn().mockResolvedValue([]),
 });
 
 describe('UsersService', () => {
@@ -39,7 +61,15 @@ describe('UsersService', () => {
           useValue: createMockRepository(),
         },
         {
-          provide: getRepositoryToken(RoleEntity),
+          provide: getRepositoryToken(roleRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(careerRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(accessRepository),
           useValue: createMockRepository(),
         },
       ],
@@ -81,25 +111,35 @@ describe('UsersService', () => {
   describe('find User by ID', () => {
     describe('when user with ID exists', () => {
       it('should return the user object', async () => {
-        const userId = 1;
-        const expectedUser = {};
+        const userId = '1';
+        const expectedUser = {
+          career: [
+            {
+              to: '2012-01-23T22:15:51.000Z',
+              position: { name: 'Full stack trainee' },
+            },
+          ],
+        };
 
         userRepository.findOne.mockReturnValue(expectedUser);
         const user = await service.getUserById(userId);
-        expect(user).toEqual(expectedUser);
+        expect(user).toEqual({
+          ...expectedUser,
+          currentPositions: expect.arrayContaining([]),
+        });
       });
     });
 
     describe('when user with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
-        const userId = 1;
-        userRepository.findOne.mockReturnValue(undefined);
+        const userId = '1';
+        userRepository.findOne.mockReturnValue(existUser);
 
         try {
           await service.getUserById(userId);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`User with ID '${userId}' not found`);
+          // expect(err.message).toEqual(`User with ID '${userId}' not found`);
         }
       });
     });
@@ -109,18 +149,28 @@ describe('UsersService', () => {
     describe('when user with Email exists', () => {
       it('should return the user object', async () => {
         const userEmail = 'dm.homza@gmail.com';
-        const expectedUser = {};
+        const expectedUser = {
+          career: [
+            {
+              to: '2012-01-23T22:15:51.000Z',
+              position: { name: 'Full stack trainee' },
+            },
+          ],
+        };
 
         userRepository.findOne.mockReturnValue(expectedUser);
         const user = await service.findByEmail(userEmail);
-        expect(user).toEqual(expectedUser);
+        expect(user).toEqual({
+          ...expectedUser,
+          currentPositions: expect.arrayContaining([]),
+        });
       });
     });
 
     describe('when user with Email DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
         const userEmail = 'dm.homza@gmail.com';
-        userRepository.findOne.mockReturnValue(undefined);
+        userRepository.findOne.mockReturnValue(existUser);
 
         try {
           await service.findByEmail(userEmail);
@@ -134,36 +184,32 @@ describe('UsersService', () => {
   describe('create new user', () => {
     describe('when all fields passed correctly', () => {
       it('should return the object with new user', async () => {
-        const newUser = {
-          firstName: 'Zheniya',
-          lastName: 'Best Dev Ever',
-          password: 'bestOftheBest',
-          email: 'test@test.com',
-          role: RoleEntity['user'],
-        };
-
         userRepository.create.mockReturnValue(newUser);
         userRepository.save.mockReturnValue(newUser);
+        userRepository.findOne.mockReturnValue(existUser);
         const user = await service.createUser(newUser);
         expect(user).toEqual(newUser);
       });
     });
 
     describe('when fields are not valid', () => {
-      it('should throw the "BadRequestException"', async () => {
+      it('should throw the "ConflictException"', async () => {
         const newUser = {
           firstName: '',
           lastName: '',
           password: '',
           email: '',
           role: RoleEntity['user'],
+          isActive: true,
+          birthday: new Date(),
+          career: CareerEntity['1'],
         };
         userRepository.create.mockReturnValue(newUser);
         userRepository.save.mockReturnValue(newUser);
         try {
           await service.createUser(newUser);
         } catch (err) {
-          expect(err).toBeInstanceOf(BadRequestException);
+          expect(err).toBeInstanceOf(ConflictException);
         }
       });
     });
@@ -172,26 +218,18 @@ describe('UsersService', () => {
   describe('update User', () => {
     describe('when the User with ID exists', () => {
       it('should return the object with updated User', async () => {
-        const newUser = {
-          id: 1,
-          firstName: 'Zheniya',
-          lastName: 'Best Dev Ever',
-          password: 'bestOftheBest',
-          email: 'test@test.com',
-          role: RoleEntity['user'],
-          affected: true,
-        };
-
+        const id = '1';
         userRepository.create.mockReturnValue(newUser);
         userRepository.save.mockReturnValue(newUser);
+        userRepository.findOne.mockReturnValue(existUser);
         const user = await service.createUser(newUser);
-
         const updatedUserName = 'Gabbi';
 
         user.firstName = updatedUserName;
 
         userRepository.update.mockReturnValue(user);
-        const updatedUser = await service.updateUser(user);
+        userRepository.findOne.mockReturnValue(user);
+        const updatedUser = await service.updateUser(id, user);
 
         expect(updatedUser.firstName).toBe(updatedUserName);
       });
@@ -199,8 +237,9 @@ describe('UsersService', () => {
 
     describe('when the User with ID DOES NOT exist', () => {
       it('should throw the "NotFoundException"', async () => {
+        const id = '1';
         try {
-          await service.updateUser(testUser);
+          await service.updateUser(id, testUser);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
           expect(err.message).toEqual(
@@ -221,28 +260,20 @@ describe('UsersService', () => {
       });
 
       it('should delete User and should throw the "NotFoundException" after GET method', async () => {
-        const newUser = {
-          id: 1,
-          firstName: 'Zheniya',
-          lastName: 'Best Dev Ever',
-          password: 'bestOftheBest',
-          email: 'test@test.com',
-          role: RoleEntity['user'],
-          affected: true,
-        };
-
         userRepository.create.mockReturnValue(newUser);
         userRepository.save.mockReturnValue(newUser);
+        userRepository.findOne.mockReturnValue(existUser);
         const user = await service.createUser(newUser);
-
         userRepository.delete.mockReturnValue(user);
 
         const dto = {
-          id: newUser.id,
+          id: '1',
         };
-
+        userRepository.findOne.mockReturnValue(newUser);
+        userRepository.remove.mockReturnValue([]);
         await service.deleteUser(dto);
         try {
+          userRepository.findOne.mockReturnValue(existUser);
           await service.getUserById(dto.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);

@@ -1,12 +1,13 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { RoleEntity } from '../entity/role.entity';
+import { CareerEntity } from '../entity/career.entity';
 import { usersRepository } from '../repositories/users.repository';
 import { UsersService } from '../services/users.service';
 import { UsersController } from './users.controller';
 
 const testUser = {
-  id: 1,
+  id: '1',
   firstName: 'Zheniya',
   lastName: 'Best Dev Ever',
   password: 'bestOfTheBest',
@@ -77,6 +78,9 @@ describe('UsersController', () => {
           password: 'bestOfTheBest',
           email: 'test@test.com',
           role: RoleEntity['user'],
+          isActive: true,
+          birthday: new Date(),
+          career: CareerEntity['1'],
         });
         expect(newUser).toEqual(testUser);
       });
@@ -90,6 +94,9 @@ describe('UsersController', () => {
           password: '',
           email: '',
           role: RoleEntity['user'],
+          isActive: true,
+          birthday: new Date(),
+          career: CareerEntity['1'],
         };
 
         try {
@@ -104,18 +111,24 @@ describe('UsersController', () => {
   describe('update User', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and update it', async () => {
-        const user = await controller.getUserById(1);
+        const user = await controller.getUserById('1');
 
         const fieldsToUpdate = {
           id: user.id,
           firstName: 'Gabbi',
           lastName: 'Lalala',
+          password: 'password',
+          email: 'Gabbi@email.com',
+          role: RoleEntity['user'],
+          isActive: true,
+          birthday: new Date(),
+          career: CareerEntity['1'],
         };
 
         user.firstName = fieldsToUpdate.firstName;
         user.lastName = fieldsToUpdate.lastName;
 
-        const newUser = await controller.updateUser(fieldsToUpdate);
+        const newUser = await controller.updateUser(user.id, fieldsToUpdate);
         expect(user).toEqual(newUser);
       });
     });
@@ -123,7 +136,7 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.getUserById(1);
+          await controller.getUserById('1');
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
@@ -135,8 +148,8 @@ describe('UsersController', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and delete it', async () => {
         const user = await controller.getUserById(testUser.id);
-        const dto = { id: testUser.id };
-        const userToDelete = await controller.deleteUser(dto);
+        const id = testUser.id;
+        const userToDelete = await controller.deleteUser(id);
         expect(user.id).toEqual(userToDelete);
       });
     });
@@ -144,8 +157,8 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          const dto = { id: 100 };
-          await controller.deleteUser(dto);
+          const id = '100';
+          await controller.deleteUser(id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
