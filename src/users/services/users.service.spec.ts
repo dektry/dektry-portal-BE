@@ -3,12 +3,15 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CareerEntity } from '../entity/career.entity';
 import { RoleEntity } from '../entity/role.entity';
 import { usersRepository } from '../repositories/users.repository';
-import { CareerEntity } from 'users/entity/career.entity';
+import { accessRepository } from '../repositories/access.repository';
 import { roleRepository } from '../repositories/role.repository';
 import { careerRepository } from '../repositories/career.repository';
-import { accessRepository } from '../repositories/access.repository';
+import { projectsRepository } from '../../projects/repositories/projects.repository';
+import { projectsHistoryRepository } from '../../projects/repositories/projectsHistory.repository';
+import { positionGroupRepository } from '../repositories/positionGroup.repository';
 
 const testUser = {
   id: '1',
@@ -20,6 +23,19 @@ const testUser = {
   isActive: true,
   birthday: new Date(),
   career: CareerEntity['1'],
+  projects: [],
+  projectsHistory: [],
+};
+
+const page = 1;
+const limit = 10;
+
+const result = {
+  results: [testUser],
+  total: 1,
+  currentPage: page,
+  next: page + 1,
+  previous: page - 1,
 };
 
 const newUser = {
@@ -43,7 +59,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn().mockReturnValue(testUser),
   update: jest.fn().mockResolvedValue(testUser),
   delete: jest.fn().mockResolvedValue(true),
-  find: jest.fn().mockResolvedValue([]),
+  find: jest.fn().mockResolvedValue([testUser]),
   remove: jest.fn().mockResolvedValue([]),
 });
 
@@ -72,6 +88,18 @@ describe('UsersService', () => {
           provide: getRepositoryToken(accessRepository),
           useValue: createMockRepository(),
         },
+        {
+          provide: getRepositoryToken(projectsRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(projectsHistoryRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(positionGroupRepository),
+          useValue: createMockRepository(),
+        },
       ],
     }).compile();
 
@@ -96,15 +124,13 @@ describe('UsersService', () => {
         leftJoinAndSelectе: () => createQueryBuilder,
         select: () => createQueryBuilder,
         getRawMany: () => [],
-        //getRawMany: () => [testUser],
       };
 
       jest
         .spyOn(userRepository, 'createQueryBuilder')
         .mockImplementation(() => createQueryBuilder);
 
-      await expect(service.getAll()).resolves.toEqual([]);
-      //await expect(service.getAll()).resolves.toEqual([testUser]);
+      await expect(service.getAll(page, limit)).resolves.toEqual(result);
     });
   });
 
@@ -139,7 +165,6 @@ describe('UsersService', () => {
           await service.getUserById(userId);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
-          // expect(err.message).toEqual(`User with ID '${userId}' not found`);
         }
       });
     });
@@ -265,6 +290,8 @@ describe('UsersService', () => {
         userRepository.findOne.mockReturnValue(existUser);
         const user = await service.createUser(newUser);
         userRepository.delete.mockReturnValue(user);
+
+        // careersRepository.remove.mockReturnValue([deletedUser.career]);
 
         const dto = {
           id: '1',

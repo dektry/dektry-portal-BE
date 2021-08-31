@@ -1,32 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CareerService } from './career.service';
-import { careerRepository } from '../repositories/career.repository';
-import { usersRepository } from '../repositories/users.repository';
 import { positionRepository } from '../repositories/position.repository';
+import { usersRepository } from '../repositories/users.repository';
+import { careerRepository } from '../repositories/career.repository';
+
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+const createMockRepository = <T = any>(): MockRepository<T> => ({
+  save: jest.fn(),
+  createQueryBuilder: jest.fn(),
+});
 
 describe('CareerService', () => {
   let service: CareerService;
-
-  const mockCareerService = {};
-  const mockUserService = {};
-  const mockPositionService = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CareerService,
         {
-          provide: getRepositoryToken(careerRepository),
-          useValue: mockCareerService,
+          provide: getRepositoryToken(positionRepository),
+          useValue: createMockRepository(),
         },
         {
           provide: getRepositoryToken(usersRepository),
-          useValue: mockUserService,
+          useValue: createMockRepository(),
         },
         {
-          provide: getRepositoryToken(positionRepository),
-          useValue: mockPositionService,
+          provide: getRepositoryToken(careerRepository),
+          useValue: createMockRepository(),
         },
       ],
     }).compile();

@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoleEntity } from '../entity/role.entity';
-import { roleRepository } from 'users/repositories/role.repository';
+import { roleRepository } from '../repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
 import { PermissionEntity } from '../entity/permission.entity';
 import { DeleteResult } from 'typeorm';
 import { usersRepository } from '../repositories/users.repository';
-import { UserEntity } from 'users/entity/user.entity';
+import { UserEntity } from '../entity/user.entity';
 
 interface RoleProps {
   name: string;

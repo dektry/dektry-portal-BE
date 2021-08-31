@@ -69,6 +69,15 @@ export const permissionSeed = [
     name: 'FULL_ACCESS_ARTICLE',
   },
   {
+    name: 'CREATE_PROJECT',
+  },
+  {
+    name: 'GET_ALL_PROJECTS',
+  },
+  {
+    name: 'DELETE_PROJECT',
+  },
+  {
     name: 'GET_USER_CAREER',
   },
   {

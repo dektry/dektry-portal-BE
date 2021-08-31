@@ -5,6 +5,8 @@ import importPositions from './positions.import';
 import importCareers from './careers.import';
 import importPositionGroup from './positionGroup.import';
 import importArticles from './articles.import';
+import importProjects from './projects.import';
+import importProjectsHistory from './projectsHistory.import';
 import importOnBoardingsTemplates from './onBoardingTemplates.import';
 import importTasks from './OTTasks.import';
 
@@ -19,6 +21,8 @@ const importData = async () => {
       await importUsers();
       await importCareers();
       await importArticles();
+      await importProjects();
+      await importProjectsHistory();
       await importTasks();
       await importOnBoardingsTemplates();
       break;

@@ -4,20 +4,14 @@ import { Connection, Repository } from 'typeorm';
 import { RoleService } from './role.service';
 import { roleRepository } from '../repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
-import { NotFoundException } from '@nestjs/common';
+import { usersRepository } from '../repositories/users.repository';
 import { PermissionService } from './permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
-import { usersRepository } from '../repositories/users.repository';
+import { NotFoundException } from '@nestjs/common';
 
 const testRole = {
   id: '1',
   name: 'user',
-  permissions: PermissionEntity['user'],
-};
-
-const createRole = {
-  id: '1',
-  name: 'users',
   permissions: PermissionEntity['user'],
 };
 
@@ -27,7 +21,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn(),
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testRole),
-  find: jest.fn().mockReturnValue([createRole]),
+  find: jest.fn().mockResolvedValue([testRole]),
 });
 
 describe('RoleService', () => {
@@ -112,10 +106,10 @@ describe('RoleService', () => {
 
   describe('create new Role', () => {
     it('should return the object with new Role', async () => {
-      let expectedPermission = [];
+      const expectedPermission = ['user'];
 
       const newPermission = {
-        name: 'users',
+        name: 'user',
       };
 
       permissionsRepository.create.mockReturnValue(newPermission);
@@ -123,7 +117,6 @@ describe('RoleService', () => {
       const permission = await permissionsService.createPermission(
         newPermission,
       );
-      expectedPermission = [permission?.name];
       const newRole = {
         name: 'users',
         permissions: expectedPermission,

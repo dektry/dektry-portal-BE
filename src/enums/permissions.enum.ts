@@ -31,5 +31,8 @@ export enum Permissions {
   deleteArticle = 'DELETE_ARTICLE',
   fullAccessArticle = 'FULL_ACCESS_ARTICLE',
 
+  createProject = 'CREATE_PROJECT',
+  deleteProject = 'DELETE_PROJECT',
+  getAllProjects = 'GET_ALL_PROJECTS',
   workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
 }

@@ -13,6 +13,9 @@ const testUser = {
   password: 'bestOfTheBest',
   email: 'test@test.com',
   role: ['user'],
+  isActive: true,
+  birthday: '1998-01-23T22:15:51.000Z',
+  career: ['Full stack trainee'],
 };
 
 describe('UsersController', () => {
@@ -77,10 +80,10 @@ describe('UsersController', () => {
           lastName: 'Best Dev Ever',
           password: 'bestOfTheBest',
           email: 'test@test.com',
-          role: RoleEntity['user'],
+          birthday: new Date('1998-01-23T22:15:51.000Z'),
           isActive: true,
-          birthday: new Date(),
-          career: CareerEntity['1'],
+          career: CareerEntity[''],
+          role: RoleEntity['Full stack trainee'],
         });
         expect(newUser).toEqual(testUser);
       });
@@ -89,14 +92,14 @@ describe('UsersController', () => {
     describe('if fields are NOT valid', () => {
       it('should throw the "BadRequestException"', async () => {
         const newUser = {
-          firstName: '',
-          lastName: '',
-          password: '',
-          email: '',
-          role: RoleEntity['user'],
+          firstName: 'Zheniya',
+          lastName: 'Best Dev Ever',
+          password: 'bestOfTheBest',
+          email: 'test@test.com',
+          birthday: new Date('1998-01-23T22:15:51.000Z'),
           isActive: true,
-          birthday: new Date(),
-          career: CareerEntity['1'],
+          career: CareerEntity[''],
+          role: RoleEntity[''],
         };
 
         try {
@@ -111,10 +114,10 @@ describe('UsersController', () => {
   describe('update User', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and update it', async () => {
-        const user = await controller.getUserById('1');
+        const user = await controller.getUserById(testUser.id);
 
         const fieldsToUpdate = {
-          id: user.id,
+          ...user,
           firstName: 'Gabbi',
           lastName: 'Lalala',
           password: 'password',
@@ -136,7 +139,7 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          await controller.getUserById('1');
+          await controller.getUserById(testUser.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }
@@ -148,8 +151,7 @@ describe('UsersController', () => {
     describe('when user with ID exists', () => {
       it('should get the user matching the id and delete it', async () => {
         const user = await controller.getUserById(testUser.id);
-        const id = testUser.id;
-        const userToDelete = await controller.deleteUser(id);
+        const userToDelete = await controller.deleteUser(testUser.id);
         expect(user.id).toEqual(userToDelete);
       });
     });
@@ -157,8 +159,8 @@ describe('UsersController', () => {
     describe('when user with ID DOES NOT exists', () => {
       it('should throw the "NotFoundException"', async () => {
         try {
-          const id = '100';
-          await controller.deleteUser(id);
+          const dto = { id: '100' };
+          await controller.deleteUser(dto.id);
         } catch (err) {
           expect(err).toBeInstanceOf(NotFoundException);
         }

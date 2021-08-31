@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CareerEntity } from 'users/entity/career.entity';
-import { careerRepository } from 'users/repositories/career.repository';
+import { CareerEntity } from '../entity/career.entity';
+import { careerRepository } from '../repositories/career.repository';
 import { DeleteResult } from 'typeorm';
-import { UserEntity } from 'users/entity/user.entity';
-import { PositionEntity } from 'users/entity/position.entity';
-import { positionRepository } from 'users/repositories/position.repository';
+import { UserEntity } from '../entity/user.entity';
+import { PositionEntity } from '../entity/position.entity';
+import { positionRepository } from '../repositories/position.repository';
 import { usersRepository } from '../repositories/users.repository';
 
 export interface CareerProps {

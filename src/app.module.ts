@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ArticleModule } from './articles/articles.module';
+import { ProjectsModule } from './projects/projects.module';
 import { OnboardingModule } from './onboarding/onboarding.module';
 
 @Module({
@@ -14,6 +15,8 @@ import { OnboardingModule } from './onboarding/onboarding.module';
     AuthModule,
     ArticleModule,
     OnboardingModule,
+    OnboardingModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
