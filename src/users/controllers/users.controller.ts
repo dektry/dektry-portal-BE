@@ -11,18 +11,22 @@ import {
   Delete,
   UploadedFile,
   UseInterceptors,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entity/user.entity';
 import { UserDto } from '../dto/user.dto';
-import { Permission } from 'decorators/permission.decorator';
-import { Permissions } from 'enums/permissions.enum';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'auth/guards/permission.guard';
+import { Permission } from '../../decorators/permission.decorator';
+import { Permissions } from '../../enums/permissions.enum';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { uploadAvatarConfiguration } from '../multer.configuration';
+import { IPaginationResult } from '../../../interfaces/pagination.interface';
 import { AccessEntity } from 'users/entity/access.entity';
 
 @Controller('users')
@@ -32,14 +36,28 @@ export class UsersController {
   @Permission(Permissions.getAllUsers)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
-  getAll(): Promise<any[]> {
-    return this.UsersService.getAll();
+  getAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+  ): Promise<IPaginationResult<UserEntity>> {
+    return this.UsersService.getAll(page, limit);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
   getUserById(@Param('id') id: string): Promise<any> {
     return this.UsersService.getUserById(id);
+  }
+
+  @Permission(Permissions.getAllUsers)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Post('user')
+  getUsers(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    @Body() filter: { positions: string[]; name: string },
+  ): Promise<IPaginationResult<UserEntity>> {
+    return this.UsersService.getUsers(filter, page, limit);
   }
 
   @Permission(Permissions.createUser)

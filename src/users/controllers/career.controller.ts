@@ -8,14 +8,14 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
-import { CareerService } from 'users/services/career.service';
-import { CareerEntity } from 'users/entity/career.entity';
-import { UserEntity } from 'users/entity/user.entity';
-import { PositionEntity } from 'users/entity/position.entity';
-import { Permission } from 'decorators/permission.decorator';
-import { Permissions } from 'enums/permissions.enum';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'auth/guards/permission.guard';
+import { CareerService } from '../services/career.service';
+import { CareerEntity } from '../entity/career.entity';
+import { UserEntity } from '../entity/user.entity';
+import { PositionEntity } from '../entity/position.entity';
+import { Permission } from '../../decorators/permission.decorator';
+import { Permissions } from '../../enums/permissions.enum';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
 
 export interface CareerProps {

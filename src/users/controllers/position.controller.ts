@@ -8,12 +8,12 @@ import {
   Post,
   Delete,
 } from '@nestjs/common';
-import { PositionService } from 'users/services/position.service';
-import { PositionEntity } from 'users/entity/position.entity';
-import { Permission } from 'decorators/permission.decorator';
-import { Permissions } from 'enums/permissions.enum';
-import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { PermissionGuard } from 'auth/guards/permission.guard';
+import { PositionService } from '../services/position.service';
+import { PositionEntity } from '../entity/position.entity';
+import { Permission } from '../../decorators/permission.decorator';
+import { Permissions } from '../../enums/permissions.enum';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { PermissionGuard } from '../../auth/guards/permission.guard';
 import { DeleteResult } from 'typeorm';
 
 export interface PositionProps {

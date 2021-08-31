@@ -23,5 +23,8 @@ export enum Permissions {
   updatePosition = 'UPDATE_POSITION',
   deletePosition = 'DELETE_POSITION',
 
+  createProject = 'CREATE_PROJECT',
+  deleteProject = 'DELETE_PROJECT',
+  getAllProjects = 'GET_ALL_PROJECTS',
   workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
 }

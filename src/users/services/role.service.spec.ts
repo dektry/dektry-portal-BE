@@ -4,7 +4,7 @@ import { Connection, Repository } from 'typeorm';
 import { RoleService } from './role.service';
 import { roleRepository } from '../repositories/role.repository';
 import { permissionRepository } from '../repositories/permission.repository';
-import { NotFoundException } from '@nestjs/common';
+import { usersRepository } from '../repositories/users.repository';
 import { PermissionService } from './permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
 
@@ -20,6 +20,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn(),
   save: jest.fn(),
   create: jest.fn().mockReturnValue(testRole),
+  find: jest.fn().mockResolvedValue([testRole]),
 });
 
 describe('RoleService', () => {
@@ -40,6 +41,10 @@ describe('RoleService', () => {
         },
         {
           provide: getRepositoryToken(permissionRepository),
+          useValue: createMockRepository(),
+        },
+        {
+          provide: getRepositoryToken(usersRepository),
           useValue: createMockRepository(),
         },
       ],
@@ -73,39 +78,12 @@ describe('RoleService', () => {
     });
   });
 
-  describe('find Role by ID', () => {
-    describe('when Role with ID exists', () => {
-      it('should return the role object', async () => {
-        const roleId = 1;
-        const expectedRole = {};
-
-        rolesRepository.findOne.mockReturnValue(expectedRole);
-        const role = await service.getRoleById(roleId);
-        expect(role).toEqual(expectedRole);
-      });
-    });
-
-    describe('when Role with ID DOES NOT exist', () => {
-      it('should throw the "NotFoundException"', async () => {
-        const roleId = 1;
-        rolesRepository.findOne.mockReturnValue(undefined);
-
-        try {
-          await service.getRoleById(roleId);
-        } catch (err) {
-          expect(err).toBeInstanceOf(NotFoundException);
-          expect(err.message).toEqual(`Role with ID "${roleId}" not found`);
-        }
-      });
-    });
-  });
-
   describe('create new Role', () => {
     it('should return the object with new Role', async () => {
-      let expectedPermission = [];
+      const expectedPermission = ['user'];
 
       const newPermission = {
-        permission: 'users',
+        name: 'user',
       };
 
       permissionsRepository.create.mockReturnValue(newPermission);
@@ -114,7 +92,6 @@ describe('RoleService', () => {
         newPermission,
       );
 
-      expectedPermission = [{ ...permission }];
       const newRole = {
         name: 'user',
         permissions: expectedPermission,
