@@ -3,7 +3,9 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import * as _ from 'lodash';
+import * as concat from 'lodash/concat';
+import * as size from 'lodash/size';
+import * as includes from 'lodash/includes';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult } from 'typeorm';
 import { ProjectDto } from '../dto/project.dto';
@@ -18,7 +20,7 @@ export class ProjectsService {
     private projectsRepository: projectsRepository,
 
     private ProjectsHistoryService: ProjectsHistoryService,
-  ) { }
+  ) {}
 
   async createProject(newProjectProps: ProjectDto): Promise<ProjectEntity> {
     const { name, ...otherProps } = newProjectProps;
@@ -33,27 +35,34 @@ export class ProjectsService {
         name,
       });
       const createdProject = await this.projectsRepository.save(newProject);
-      const projectMemebers = _.concat(newProject.users, newProject.managers);
+      const projectMemebers = concat(newProject.users, newProject.managers);
       for (let member of projectMemebers) {
-        await this.ProjectsHistoryService.createHistory({userId: member, projectId: createdProject.id});
+        await this.ProjectsHistoryService.createHistory({
+          userId: member,
+          projectId: createdProject.id,
+        });
       }
       return createdProject;
     }
   }
 
-  async getAllProjects(page: number = 1, limit: number = 10, isArchive?: boolean) {
+  async getAllProjects(
+    page: number = 1,
+    limit: number = 10,
+    isArchive?: boolean,
+  ) {
     const allProjects = await this.projectsRepository.find();
     const projects = await this.projectsRepository.find({
-      where: isArchive ? {isArchive} : {},
+      where: isArchive ? { isArchive } : {},
       take: limit,
       skip: limit * (page - 1),
       order: {
         name: 'ASC',
-      }
+      },
     });
     return {
       results: projects,
-      total: _.size(allProjects),
+      total: size(allProjects),
       currentPage: page,
       next: page + 1,
       previous: page - 1,
@@ -62,7 +71,7 @@ export class ProjectsService {
 
   async findProjectByName(name: string, page: number = 1, limit: number = 10) {
     const allProjects = await this.projectsRepository.find({
-      where: `LOWER(name) LIKE LOWER('%${name}%')`
+      where: `LOWER(name) LIKE LOWER('%${name}%')`,
     });
     const projects = await this.projectsRepository.find({
       where: `LOWER(name) LIKE LOWER('%${name}%')`,
@@ -74,28 +83,49 @@ export class ProjectsService {
     });
     return {
       results: projects,
-      total: _.size(allProjects),
+      total: size(allProjects),
       currentPage: page,
       next: page + 1,
       previous: page - 1,
     };
   }
 
-  async updateProject(id: string, newProjectProps: ProjectDto): Promise<ProjectEntity> {
-    const updatedProject = await this.projectsRepository.findOne({id});
-    const updatedProjectMembers = _.concat(updatedProject.managers, updatedProject.users);
-    const newProjectMembers = _.concat(newProjectProps.managers, newProjectProps.users);
-    const allMembers = _.concat(updatedProjectMembers, newProjectMembers);
+  async updateProject(
+    id: string,
+    newProjectProps: ProjectDto,
+  ): Promise<ProjectEntity> {
+    const updatedProject = await this.projectsRepository.findOne({ id });
+    const updatedProjectMembers = concat(
+      updatedProject.managers,
+      updatedProject.users,
+    );
+    const newProjectMembers = concat(
+      newProjectProps.managers,
+      newProjectProps.users,
+    );
+    const allMembers = concat(updatedProjectMembers, newProjectMembers);
     try {
       const result = await this.projectsRepository.save({
         ...newProjectProps,
       });
       for (let member of allMembers) {
-        if (_.includes(updatedProjectMembers, member) && !_.includes(newProjectMembers, member)) {
-          await this.ProjectsHistoryService.updateHistoryTo({userId: member, projectId: id});
+        if (
+          includes(updatedProjectMembers, member) &&
+          !includes(newProjectMembers, member)
+        ) {
+          await this.ProjectsHistoryService.updateHistoryTo({
+            userId: member,
+            projectId: id,
+          });
         }
-        if (_.includes(newProjectMembers, member) && !_.includes(updatedProjectMembers, member)) {
-          await this.ProjectsHistoryService.createHistory({userId: member, projectId: id});
+        if (
+          includes(newProjectMembers, member) &&
+          !includes(updatedProjectMembers, member)
+        ) {
+          await this.ProjectsHistoryService.createHistory({
+            userId: member,
+            projectId: id,
+          });
         }
       }
       return result;
@@ -117,18 +147,21 @@ export class ProjectsService {
   }
 
   async archiveProject(id): Promise<ProjectEntity> {
-    const updatedProject = await this.projectsRepository.findOne({id});
+    const updatedProject = await this.projectsRepository.findOne({ id });
     const newProjectProps = {
       ...updatedProject,
       isArchive: true,
     };
-    const allMembers = _.concat(updatedProject.managers, updatedProject.users);
+    const allMembers = concat(updatedProject.managers, updatedProject.users);
     try {
       const result = await this.projectsRepository.save({
         ...newProjectProps,
       });
       for (let member of allMembers) {
-        await this.ProjectsHistoryService.updateHistoryTo({userId: member, projectId: id});
+        await this.ProjectsHistoryService.updateHistoryTo({
+          userId: member,
+          projectId: id,
+        });
       }
       return result;
     } catch (error) {
