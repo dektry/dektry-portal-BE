@@ -120,6 +120,12 @@ describe('UsersController', () => {
           ...user,
           firstName: 'Gabbi',
           lastName: 'Lalala',
+          password: 'password',
+          email: 'Gabbi@email.com',
+          role: RoleEntity['user'],
+          isActive: true,
+          birthday: new Date(),
+          career: CareerEntity['1'],
         };
 
         user.firstName = fieldsToUpdate.firstName;

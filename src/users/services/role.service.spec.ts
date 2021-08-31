@@ -7,6 +7,7 @@ import { permissionRepository } from '../repositories/permission.repository';
 import { usersRepository } from '../repositories/users.repository';
 import { PermissionService } from './permission.service';
 import { PermissionEntity } from '../entity/permission.entity';
+import { NotFoundException } from '@nestjs/common';
 
 const testRole = {
   id: '1',
@@ -73,8 +74,33 @@ describe('RoleService', () => {
       jest
         .spyOn(rolesRepository, 'createQueryBuilder')
         .mockImplementation(() => createQueryBuilder);
-
+      rolesRepository.find.mockReturnValue([testRole]);
       await expect(service.getAll()).resolves.toEqual([testRole]);
+    });
+  });
+
+  describe('find Role by ID', () => {
+    describe('when Role with ID exists', () => {
+      it('should return the role object', async () => {
+        const expectedRole = {};
+        const roleName = 'Back-end developer';
+        rolesRepository.findOne.mockReturnValue(expectedRole);
+        const role = await service.getRoleByName(roleName);
+        expect(role).toEqual(expectedRole);
+      });
+    });
+
+    describe('when Role with name DOES NOT exist', () => {
+      it('should throw the "NotFoundException"', async () => {
+        rolesRepository.findOne.mockReturnValue(undefined);
+        const roleName = 'Back-end developer';
+        try {
+          await service.getRoleByName(roleName);
+        } catch (err) {
+          expect(err).toBeInstanceOf(NotFoundException);
+          expect(err.message).toEqual(`Role '${roleName}' not found`);
+        }
+      });
     });
   });
 
@@ -91,14 +117,13 @@ describe('RoleService', () => {
       const permission = await permissionsService.createPermission(
         newPermission,
       );
-
       const newRole = {
-        name: 'user',
+        name: 'users',
         permissions: expectedPermission,
       };
-
-      rolesRepository.create.mockReturnValue(newRole);
       rolesRepository.save.mockReturnValue(newRole);
+      rolesRepository.find.mockReturnValue([newRole]);
+
       const role = await service.createRole(newRole);
       expect(role).toEqual(newRole);
     });

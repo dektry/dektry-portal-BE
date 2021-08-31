@@ -23,6 +23,14 @@ export enum Permissions {
   updatePosition = 'UPDATE_POSITION',
   deletePosition = 'DELETE_POSITION',
 
+  getAllArticles = 'GET_ALL_ARTICLES',
+  getArticle = 'GET_ARTICLE',
+  updateArticle = 'UPDATE_ARTICLE',
+  readArticle = 'READ_ARTICLE',
+  createArticle = 'CREATE_ARTICLE',
+  deleteArticle = 'DELETE_ARTICLE',
+  fullAccessArticle = 'FULL_ACCESS_ARTICLE',
+
   createProject = 'CREATE_PROJECT',
   deleteProject = 'DELETE_PROJECT',
   getAllProjects = 'GET_ALL_PROJECTS',

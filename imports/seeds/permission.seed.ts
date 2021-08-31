@@ -48,6 +48,27 @@ export const permissionSeed = [
     name: 'DELETE_POSITION',
   },
   {
+    name: 'GET_ALL_ARTICLES',
+  },
+  {
+    name: 'GET_ARTICLE',
+  },
+  {
+    name: 'UPDATE_ARTICLE',
+  },
+  {
+    name: 'READ_ARTICLE',
+  },
+  {
+    name: 'CREATE_ARTICLE',
+  },
+  {
+    name: 'DELETE_ARTICLE',
+  },
+  {
+    name: 'FULL_ACCESS_ARTICLE',
+  },
+  {
     name: 'CREATE_PROJECT',
   },
   {

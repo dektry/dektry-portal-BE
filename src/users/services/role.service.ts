@@ -32,6 +32,7 @@ export class RoleService {
     const allRoles = await this.roleRepository.find({
       relations: ['permissions'],
     });
+
     return allRoles;
   }
 
@@ -57,10 +58,12 @@ export class RoleService {
     const isExist = await this.roleRepository.findOne({
       name,
     });
+
     if (isExist) {
       throw new ConflictException(`Role '${name}' is already exist!`);
     }
     const allExistPermissions: PermissionEntity[] = await this.permissionRepository.find();
+
     const updatedPermissionsEntity = permissions.map((newRolePermission) => {
       const existPermission: PermissionEntity = allExistPermissions.find(
         (existPermission) => {
@@ -69,6 +72,7 @@ export class RoleService {
       );
       return existPermission;
     });
+
     if (updatedPermissionsEntity.includes(undefined)) {
       throw new NotFoundException(`Permissions is invalid!`);
     }
@@ -76,6 +80,7 @@ export class RoleService {
       name,
       permissions: updatedPermissionsEntity,
     });
+
     return this.roleRepository.save(newRoleEntity);
   }
 

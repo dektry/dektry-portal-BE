@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ArticleModule } from './articles/articles.module';
 import { ProjectsModule } from './projects/projects.module';
 import { OnboardingModule } from './onboarding/onboarding.module';
 
@@ -12,6 +13,8 @@ import { OnboardingModule } from './onboarding/onboarding.module';
     TypeOrmModule.forRoot(),
     UsersModule,
     AuthModule,
+    ArticleModule,
+    OnboardingModule,
     OnboardingModule,
     ProjectsModule,
   ],

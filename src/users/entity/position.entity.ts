@@ -1,4 +1,5 @@
 import { TemplatesEntity } from '../../onboarding/entity/templates.entity';
+import { ArticleEntity } from '../../articles/entity/articles.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
@@ -36,7 +38,11 @@ export class PositionEntity extends BaseEntity {
   )
   group: PositionGroupEntity;
 
-  @ManyToOne(() => AccessEntity, (access) => access.positions)
+  @ManyToMany(() => AccessEntity, (access) => access.positions, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable({ name: 'positions_access' })
   access: AccessEntity[];
 
   @OneToMany(() => TemplatesEntity, (templates) => templates.target, {
@@ -49,4 +55,18 @@ export class PositionEntity extends BaseEntity {
 
   @ManyToMany(() => TemplatesEntity, (template) => template.read)
   templatesRead: TemplatesEntity[];
+
+  @ManyToMany(() => ArticleEntity, (article) => article.edit_positions, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable({ name: 'article_edit_positions' })
+  edit: ArticleEntity[];
+
+  @ManyToMany(() => ArticleEntity, (article) => article.read_positions, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable({ name: 'article_read_positions' })
+  read: ArticleEntity[];
 }
