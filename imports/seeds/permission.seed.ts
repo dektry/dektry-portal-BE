@@ -48,12 +48,24 @@ export const permissionSeed = [
     name: 'DELETE_POSITION',
   },
   {
-    name: 'CREATE_PROJECT'
+    name: 'CREATE_PROJECT',
   },
   {
-    name: 'GET_ALL_PROJECTS'
+    name: 'GET_ALL_PROJECTS',
   },
   {
-    name: 'DELETE_PROJECT'
+    name: 'DELETE_PROJECT',
+  },
+  {
+    name: 'GET_USER_CAREER',
+  },
+  {
+    name: 'CREATE_CAREER',
+  },
+  {
+    name: 'DELETE_CAREER',
+  },
+  {
+    name: 'ONBOARDING_TEMPLATES',
   },
 ];

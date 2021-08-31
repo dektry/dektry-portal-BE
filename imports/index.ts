@@ -6,6 +6,8 @@ import importCareers from './careers.import';
 import importPositionGroup from './positionGroup.import';
 import importProjects from './projects.import';
 import importProjectsHistory from './projectsHistory.import';
+import importOnBoardingsTemplates from './onBoardingTemplates.import';
+import importTasks from './OTTasks.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -19,6 +21,13 @@ const importData = async () => {
       await importCareers();
       await importProjects();
       await importProjectsHistory();
+      await importTasks();
+      await importOnBoardingsTemplates();
+      break;
+    case 'templates':
+      await importTasks();
+      await importPositionGroup();
+      await importOnBoardingsTemplates();
       break;
     default:
       console.log(`No import function found for ${target}`);

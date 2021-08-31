@@ -26,10 +26,15 @@ export const roleSeed = [
       Permissions.createProject,
       Permissions.getAllProjects,
       Permissions.deleteProject,
+      Permissions.workWithOnBoardingTemplates,
     ],
   },
   {
     name: 'user',
-    permissions: [Permissions.getUser, Permissions.getAllUsers],
+    permissions: [
+      Permissions.getUser,
+      Permissions.getAllUsers,
+      Permissions.getAllPositions,
+    ],
   },
 ];

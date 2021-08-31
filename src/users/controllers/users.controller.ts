@@ -27,10 +27,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { uploadAvatarConfiguration } from '../multer.configuration';
 import { IPaginationResult } from '../../../interfaces/pagination.interface';
+import { AccessEntity } from 'users/entity/access.entity';
 
 @Controller('users')
 export class UsersController {
-  constructor(private UsersService: UsersService) { }
+  constructor(private UsersService: UsersService) {}
 
   @Permission(Permissions.getAllUsers)
   @UseGuards(JwtAuthGuard, PermissionGuard)
@@ -44,7 +45,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
-  getUserById(@Param('id') id: string): Promise<UserEntity> {
+  getUserById(@Param('id') id: string): Promise<any> {
     return this.UsersService.getUserById(id);
   }
 
@@ -54,7 +55,7 @@ export class UsersController {
   getUsers(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
-    @Body() filter: { positions: string[], name: string },
+    @Body() filter: { positions: string[]; name: string },
   ): Promise<IPaginationResult<UserEntity>> {
     return this.UsersService.getUsers(filter, page, limit);
   }
@@ -101,5 +102,27 @@ export class UsersController {
   @Get('avatars/:fileName')
   getUserAvatar(@Param('fileName') fileName, @Res() res) {
     return this.UsersService.getUserAvatar(fileName, res);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('access/all')
+  getAllAccess(): Promise<AccessEntity[]> {
+    return this.UsersService.getAllAccess();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('access/:point')
+  getAccessReq(@Param('point') point: string): Promise<AccessEntity> {
+    return this.UsersService.getAccessReq(point);
+  }
+
+  @Permission(Permissions.createUser)
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Put('access/:point')
+  updateAccessReq(
+    @Param('point') point: string,
+    @Body() accessProps,
+  ): Promise<AccessEntity> {
+    return this.UsersService.updateAccessReq(point, accessProps);
   }
 }

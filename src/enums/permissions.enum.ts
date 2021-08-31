@@ -26,4 +26,5 @@ export enum Permissions {
   createProject = 'CREATE_PROJECT',
   deleteProject = 'DELETE_PROJECT',
   getAllProjects = 'GET_ALL_PROJECTS',
+  workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
 }

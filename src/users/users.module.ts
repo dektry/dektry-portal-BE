@@ -20,6 +20,7 @@ import { PositionGroupController } from './controllers/positionGroup.controller'
 import { PositionGroupService } from './services/positionGroup.service';
 import { projectsRepository } from '../projects/repositories/projects.repository';
 import { projectsHistoryRepository } from '../projects/repositories/projectsHistory.repository';
+import { accessRepository } from './repositories/access.repository';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { projectsHistoryRepository } from '../projects/repositories/projectsHist
       positionRepository,
       careerRepository,
       positionGroupRepository,
+      accessRepository,
     ]),
   ],
   providers: [

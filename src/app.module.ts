@@ -5,9 +5,16 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
+import { OnboardingModule } from './onboarding/onboarding.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, AuthModule, ProjectsModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    UsersModule,
+    AuthModule,
+    OnboardingModule,
+    ProjectsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
