@@ -13,7 +13,12 @@ export class UserDto {
 
   @IsNotEmpty()
   @Length(2, 40)
-  @IsEmail()
+  @IsEmail(
+    {},
+    {
+      message: 'Please enter a valid email address',
+    },
+  )
   email: string;
 
   @IsOptional()
@@ -21,8 +26,10 @@ export class UserDto {
   @Length(6, 255)
   password: string;
 
-  @IsNotEmpty()
-  role: RoleEntity;
+  @IsNotEmpty({
+    message: 'Role must not be empty',
+  })
+  roleId: string;
 
   @IsNotEmpty()
   isActive: boolean;
