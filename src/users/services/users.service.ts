@@ -255,7 +255,7 @@ export class UsersService {
   }
 
   async createUser(newUserProps: UserDto): Promise<UserEntity> {
-    const { email, role, password, ...otherProps } = newUserProps;
+    const { email, roleId, password, ...otherProps } = newUserProps;
     const isExist = await this.usersRepository.findOne({
       email,
     });
@@ -263,9 +263,9 @@ export class UsersService {
     if (isExist) {
       throw new ConflictException('User with this email is already exist!');
     } else {
-      const newUserRole = await this.roleRepository.findOne(role);
+      const newUserRole = await this.roleRepository.findOne(roleId);
       if (!newUserRole) {
-        throw new NotFoundException(`Role ${role} is incorrect!`);
+        throw new NotFoundException(`Role ${roleId} is incorrect!`);
       }
       const hashPassword = await getHashPassword(password);
       const newUser = await this.usersRepository.create({
@@ -282,14 +282,14 @@ export class UsersService {
     const existUser = await this.usersRepository.findOne({
       where: { id },
     });
-    const { role, password, ...updatedProps } = newUserProps;
-    const newUserRole = await this.roleRepository.findOne(role);
+    const { roleId, password, ...updatedProps } = newUserProps;
+    const newUserRole = await this.roleRepository.findOne(roleId);
 
     if (!existUser) {
       throw new NotFoundException(`User ${id} not found!`);
     }
     if (!newUserRole) {
-      throw new ConflictException(`Role ${role} is incorrect!`);
+      throw new ConflictException(`Role ${roleId} is incorrect!`);
     }
     try {
       let updatedParams;

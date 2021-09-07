@@ -47,6 +47,7 @@ export const roleSeed = [
       Permissions.updateArticle,
       Permissions.createArticle,
       Permissions.deleteArticle,
+      Permissions.getAllProjects,
     ],
   },
 ];
