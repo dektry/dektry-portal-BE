@@ -89,4 +89,16 @@ export const permissionSeed = [
   {
     name: 'ONBOARDING_TEMPLATES',
   },
+  {
+    name: 'GET_ALL_VACATIONS',
+  },
+  {
+    name: 'UPDATE_VACATION',
+  },
+  {
+    name: 'CREATE_VACATION',
+  },
+  {
+    name: 'DELETE_VACATION',
+  },
 ];

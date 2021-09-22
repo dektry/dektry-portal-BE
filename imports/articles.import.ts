@@ -20,7 +20,7 @@ const importArticles = async () => {
   const alreadyExistedNewArticles = difference(articleSeed, newArticles);
 
   alreadyExistedNewArticles.forEach((article) => {
-    console.log(`Permission ${article.title} is already exist!`);
+    console.log(`Article ${article.title} is already exist!`);
   });
 
   const newArticlesWithPosition = newArticles.map((newArticle) => {

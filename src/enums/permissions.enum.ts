@@ -35,4 +35,9 @@ export enum Permissions {
   deleteProject = 'DELETE_PROJECT',
   getAllProjects = 'GET_ALL_PROJECTS',
   workWithOnBoardingTemplates = 'ONBOARDING_TEMPLATES',
+
+  getAllVacations = 'GET_ALL_VACATIONS',
+  updateVacation = 'UPDATE_VACATION',
+  createVacation = 'CREATE_VACATION',
+  deleteVacation = 'DELETE_VACATION',
 }
