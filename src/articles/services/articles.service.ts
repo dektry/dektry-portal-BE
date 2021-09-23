@@ -35,7 +35,6 @@ export class ArticlesService {
     let articleList = [];
     let total = 0;
 
-    // if (currentUser) {
     const accessGranted = currentUser.role.permissions.filter(
       (rolePermission) => rolePermission.name === permission,
     );
@@ -65,7 +64,6 @@ export class ArticlesService {
         take,
       });
     }
-    // }
 
     return {
       articleList,

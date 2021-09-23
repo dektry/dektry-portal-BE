@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToMany,
   ManyToOne,
 } from 'typeorm';
 import { UserEntity } from '../../users/entity/user.entity';
@@ -18,8 +17,8 @@ export class VacationsEntity extends BaseEntity {
 
   @Column({ type: 'timestamptz' })
   start: Date;
-
-  @Column({ type: 'timestamptz' })
+  // TODO choose more optimal variant
+  @Column({ type: 'timestamp' })
   end: Date;
 
   @Column({ enum: ['submitted', 'approved', 'denied'] })
