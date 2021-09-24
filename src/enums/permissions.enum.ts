@@ -40,4 +40,5 @@ export enum Permissions {
   updateVacation = 'UPDATE_VACATION',
   createVacation = 'CREATE_VACATION',
   deleteVacation = 'DELETE_VACATION',
+  fullAccessVacations = 'FULL_ACCESS_VACATIONS',
 }

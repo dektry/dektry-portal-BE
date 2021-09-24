@@ -6,13 +6,14 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { UserEntity } from '../../users/entity/user.entity';
+import { vacationStatuses, policyType } from '../utils/constants';
 
 @Entity({ name: 'vacations' })
 export class VacationsEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ enum: ['VAC', 'SICK', 'LEAVE'] })
+  @Column({ enum: [policyType.vac, policyType.sick, policyType.leave] })
   policy: string;
 
   @Column({ type: 'timestamptz' })
@@ -21,7 +22,13 @@ export class VacationsEntity extends BaseEntity {
   @Column({ type: 'timestamp' })
   end: Date;
 
-  @Column({ enum: ['submitted', 'approved', 'denied'] })
+  @Column({
+    enum: [
+      vacationStatuses.submitted,
+      vacationStatuses.approved,
+      vacationStatuses.denied,
+    ],
+  })
   status: string;
 
   @Column({ type: 'text' })

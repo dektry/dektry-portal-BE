@@ -1,14 +1,18 @@
 import * as moment from 'moment-business-days';
-import { hourPerDay } from './constants';
+import { hourPerDay, typeBusinessTime } from './constants';
 
-export const getAvailableTime = (
-  start: string,
-  end: string,
+export const getBusinessTime = (
+  start: Date | string,
+  end: Date | string,
   userBalance: number,
+  type?: string,
 ) => {
   const startDate = moment(start);
   const endDate = moment(end).add(1, 'days');
   const vacationDuration = startDate.businessDiff(endDate);
+  const vacationDurationHour = vacationDuration * hourPerDay;
 
-  return userBalance - vacationDuration * hourPerDay;
+  return type === typeBusinessTime.restore
+    ? userBalance + vacationDurationHour
+    : userBalance - vacationDurationHour;
 };

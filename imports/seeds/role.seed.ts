@@ -38,6 +38,7 @@ export const roleSeed = [
       Permissions.updateVacation,
       Permissions.createVacation,
       Permissions.deleteVacation,
+      Permissions.fullAccessVacations,
     ],
   },
   {

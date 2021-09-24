@@ -101,4 +101,7 @@ export const permissionSeed = [
   {
     name: 'DELETE_VACATION',
   },
+  {
+    name: 'FULL_ACCESS_VACATIONS',
+  },
 ];

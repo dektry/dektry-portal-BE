@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { Permission } from 'decorators/permission.decorator';
@@ -23,8 +24,11 @@ export class VacationsController {
   @Permission(Permissions.getAllVacations)
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
-  getVacationsList() {
-    return this.VacationsService.getVacationsList();
+  getVacationsList(
+    @Query('userId') userId: string,
+    @Query('tabFilter') tabFilter: string,
+  ) {
+    return this.VacationsService.getVacationsList(userId, tabFilter);
   }
 
   @Permission(Permissions.createVacation)
