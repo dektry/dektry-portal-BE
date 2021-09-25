@@ -26,9 +26,10 @@ export class VacationsController {
   @Get()
   getVacationsList(
     @Query('userId') userId: string,
-    @Query('tabFilter') tabFilter: string,
+    @Query('status') status: string,
+    @Query('name') name: string,
   ) {
-    return this.VacationsService.getVacationsList(userId, tabFilter);
+    return this.VacationsService.getVacationsList(userId, status, name);
   }
 
   @Permission(Permissions.createVacation)

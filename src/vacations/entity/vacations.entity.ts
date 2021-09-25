@@ -18,8 +18,8 @@ export class VacationsEntity extends BaseEntity {
 
   @Column({ type: 'timestamptz' })
   start: Date;
-  // TODO choose more optimal variant
-  @Column({ type: 'timestamp' })
+
+  @Column({ type: 'timestamptz' })
   end: Date;
 
   @Column({

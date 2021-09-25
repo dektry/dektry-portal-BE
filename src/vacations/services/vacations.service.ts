@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, In } from 'typeorm';
+import { DeleteResult, In, ILike } from 'typeorm';
+import * as map from 'lodash/map';
 import { vacationRepository } from '../repositories/vacations.repository';
 import { usersRepository } from 'users/repositories/users.repository';
 import { VacationsEntity } from '../entity/vacations.entity';
@@ -10,6 +11,7 @@ import {
   vacationStatuses,
   policyType,
   typeBusinessTime,
+  vacationStatusesArray,
 } from '../utils/constants';
 
 @Injectable()
@@ -21,28 +23,40 @@ export class VacationsService {
     private usersRepository: usersRepository,
   ) {}
 
-  async getVacationsList(userId: string, tabFilter: string) {
+  async getVacationsList(userId: string, status: string, name: string) {
     // isArchive?: boolean, // limit: number = 10, // page: number = 1,
+    const isStatusTypeAll = status === 'all';
     let allVacations;
-
-    const statusOptions =
-      tabFilter === vacationStatuses.all
-        ? In([
-            vacationStatuses.submitted,
-            vacationStatuses.approved,
-            vacationStatuses.denied,
-          ])
-        : tabFilter;
+    let statusOptions;
 
     if (userId) {
+      statusOptions = isStatusTypeAll ? In(vacationStatusesArray) : status;
       allVacations = await this.vacationRepository.find({
         where: { user: { id: userId }, status: statusOptions },
       });
     } else {
-      allVacations = await this.vacationRepository.find({
-        where: { status: statusOptions },
-      });
+      statusOptions = isStatusTypeAll ? vacationStatusesArray : [status];
+      allVacations = await this.vacationRepository
+        .createQueryBuilder('vacations')
+        .leftJoinAndSelect('vacations.user', 'user')
+        .where('vacations.status IN (:...status)', {
+          status: statusOptions,
+        })
+        .andWhere(
+          name
+            ? 'user.firstName ILike :name OR user.lastName ILike :name'
+            : '1=1',
+          {
+            name: `%${name}%`,
+          },
+        )
+        // .addOrderBy(
+        //   filter === 'latest' ? 'topic.created_at' : 'topic.repliesCount',
+        //   'DESC',
+        // )
+        .getMany();
     }
+    console.log('allVacations', allVacations);
     return allVacations;
   }
 
