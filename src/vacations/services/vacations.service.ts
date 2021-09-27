@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, In, ILike } from 'typeorm';
-import * as map from 'lodash/map';
+import { Brackets, DeleteResult, ILike, In } from 'typeorm';
 import { vacationRepository } from '../repositories/vacations.repository';
 import { usersRepository } from 'users/repositories/users.repository';
 import { VacationsEntity } from '../entity/vacations.entity';
@@ -23,41 +22,51 @@ export class VacationsService {
     private usersRepository: usersRepository,
   ) {}
 
-  async getVacationsList(userId: string, status: string, name: string) {
-    // isArchive?: boolean, // limit: number = 10, // page: number = 1,
+  async getVacationsList(
+    limit: number,
+    page: number,
+    userId: string,
+    status: string,
+    name: string,
+  ) {
     const isStatusTypeAll = status === 'all';
     let allVacations;
+    let total = 0;
     let statusOptions;
 
     if (userId) {
       statusOptions = isStatusTypeAll ? In(vacationStatusesArray) : status;
-      allVacations = await this.vacationRepository.find({
+      [allVacations, total] = await this.vacationRepository.findAndCount({
         where: { user: { id: userId }, status: statusOptions },
+        skip: limit * (page - 1),
+        take: limit,
       });
     } else {
       statusOptions = isStatusTypeAll ? vacationStatusesArray : [status];
-      allVacations = await this.vacationRepository
+      [allVacations, total] = await this.vacationRepository
         .createQueryBuilder('vacations')
         .leftJoinAndSelect('vacations.user', 'user')
         .where('vacations.status IN (:...status)', {
           status: statusOptions,
         })
         .andWhere(
-          name
-            ? 'user.firstName ILike :name OR user.lastName ILike :name'
-            : '1=1',
-          {
-            name: `%${name}%`,
-          },
+          new Brackets((qb) => {
+            qb.where(
+              name
+                ? 'user.firstName ILike :name OR user.lastName ILike :name'
+                : '1=1',
+              {
+                name: `%${name}%`,
+              },
+            );
+          }),
         )
-        // .addOrderBy(
-        //   filter === 'latest' ? 'topic.created_at' : 'topic.repliesCount',
-        //   'DESC',
-        // )
-        .getMany();
+        .skip(limit * (page - 1))
+        .take(limit)
+        .getManyAndCount();
     }
-    console.log('allVacations', allVacations);
-    return allVacations;
+
+    return { allVacations, total };
   }
 
   async createVacation(body: SaveVacationDto): Promise<VacationsEntity> {
@@ -99,7 +108,6 @@ export class VacationsService {
       policy === policyType.vac
     ) {
       const availableTime = getBusinessTime(start, end, currentUser.balance);
-
       if (availableTime > 0) {
         await this.usersRepository.save({
           ...currentUser,

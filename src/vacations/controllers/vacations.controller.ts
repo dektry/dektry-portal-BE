@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -25,11 +27,19 @@ export class VacationsController {
   @UseGuards(JwtAuthGuard, PermissionGuard)
   @Get()
   getVacationsList(
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('userId') userId: string,
     @Query('status') status: string,
     @Query('name') name: string,
   ) {
-    return this.VacationsService.getVacationsList(userId, status, name);
+    return this.VacationsService.getVacationsList(
+      limit,
+      page,
+      userId,
+      status,
+      name,
+    );
   }
 
   @Permission(Permissions.createVacation)
