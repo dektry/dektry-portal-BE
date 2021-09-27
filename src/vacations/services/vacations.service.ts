@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Brackets, DeleteResult, ILike, In } from 'typeorm';
+import { Brackets, DeleteResult, In } from 'typeorm';
 import { vacationRepository } from '../repositories/vacations.repository';
 import { usersRepository } from 'users/repositories/users.repository';
 import { VacationsEntity } from '../entity/vacations.entity';

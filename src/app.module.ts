@@ -8,10 +8,12 @@ import { ArticleModule } from './articles/articles.module';
 import { ProjectsModule } from './projects/projects.module';
 import { OnboardingModule } from './onboarding/onboarding.module';
 import { VacationsModule } from './vacations/vacations.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
+    ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
     ArticleModule,

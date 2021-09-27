@@ -4,6 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { UserDto } from '../dto/user.dto';
 import { UserEntity } from '../entity/user.entity';
 import { usersRepository } from '../repositories/users.repository';
@@ -407,5 +408,20 @@ export class UsersService {
     } catch (error) {
       return error;
     }
+  }
+
+  @Cron(CronExpression.EVERY_YEAR)
+  async updateBalance() {
+    const users = await this.usersRepository.find();
+
+    users.forEach(async (user) => {
+      const currentBalance = user.balance;
+      const yearBalance = 160;
+      const updatedBalance = currentBalance + yearBalance;
+      await this.usersRepository.save({
+        ...user,
+        balance: updatedBalance,
+      });
+    });
   }
 }
