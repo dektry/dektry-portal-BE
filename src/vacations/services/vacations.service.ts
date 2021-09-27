@@ -38,6 +38,7 @@ export class VacationsService {
       statusOptions = isStatusTypeAll ? In(vacationStatusesArray) : status;
       [allVacations, total] = await this.vacationRepository.findAndCount({
         where: { user: { id: userId }, status: statusOptions },
+        order: { update_at: 'DESC' },
         skip: limit * (page - 1),
         take: limit,
       });
@@ -61,6 +62,7 @@ export class VacationsService {
             );
           }),
         )
+        .orderBy('vacations.update_at', 'DESC')
         .skip(limit * (page - 1))
         .take(limit)
         .getManyAndCount();
@@ -79,6 +81,8 @@ export class VacationsService {
       end,
       status: vacationStatuses.submitted,
       reason,
+      create_at: new Date(),
+      update_at: new Date(),
     });
 
     return newVacation;
@@ -147,6 +151,7 @@ export class VacationsService {
       end,
       status,
       reason,
+      update_at: new Date(),
     });
 
     return updatedVacation;

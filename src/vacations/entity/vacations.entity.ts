@@ -22,6 +22,12 @@ export class VacationsEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   end: Date;
 
+  @Column({ type: 'timestamptz' })
+  create_at: Date;
+
+  @Column({ type: 'timestamptz' })
+  update_at: Date;
+
   @Column({
     enum: [
       vacationStatuses.submitted,
