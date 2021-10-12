@@ -37,7 +37,7 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   birthday: Date;
 
-  @Column()
+  @Column({ default: 160 })
   balance: number;
 
   @ManyToOne(() => RoleEntity, {
