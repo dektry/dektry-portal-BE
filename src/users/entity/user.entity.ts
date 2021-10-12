@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { RoleEntity } from './role.entity';
 import { CareerEntity } from './career.entity';
+import { VacationsEntity } from '../../vacations/entity/vacations.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -36,6 +37,9 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'timestamptz' })
   birthday: Date;
 
+  @Column()
+  balance: number;
+
   @ManyToOne(() => RoleEntity, {
     cascade: true,
     onDelete: 'SET NULL',
@@ -49,4 +53,7 @@ export class UserEntity extends BaseEntity {
   })
   @JoinColumn()
   career: CareerEntity[];
+
+  @OneToMany(() => VacationsEntity, (vacation) => vacation.user)
+  vacations: VacationsEntity[];
 }

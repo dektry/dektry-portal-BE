@@ -34,6 +34,11 @@ export const roleSeed = [
       Permissions.getAllProjects,
       Permissions.deleteProject,
       Permissions.workWithOnBoardingTemplates,
+      Permissions.getAllVacations,
+      Permissions.updateVacation,
+      Permissions.createVacation,
+      Permissions.deleteVacation,
+      Permissions.fullAccessVacations,
     ],
   },
   {
@@ -48,6 +53,10 @@ export const roleSeed = [
       Permissions.createArticle,
       Permissions.deleteArticle,
       Permissions.getAllProjects,
+      Permissions.getAllVacations,
+      Permissions.updateVacation,
+      Permissions.createVacation,
+      Permissions.deleteVacation,
     ],
   },
 ];

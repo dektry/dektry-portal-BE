@@ -9,6 +9,7 @@ import importProjects from './projects.import';
 import importProjectsHistory from './projectsHistory.import';
 import importOnBoardingsTemplates from './onBoardingTemplates.import';
 import importTasks from './OTTasks.import';
+import importVacations from './vacations.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -25,6 +26,7 @@ const importData = async () => {
       await importProjectsHistory();
       await importTasks();
       await importOnBoardingsTemplates();
+      await importVacations();
       break;
     case 'templates':
       await importTasks();

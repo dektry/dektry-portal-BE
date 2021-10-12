@@ -9,6 +9,7 @@ export const userSeed = [
     role: 'admin',
     isActive: true,
     birthday: '1990-01-23+02',
+    balance: 160,
   },
   {
     firstName: 'Veronika',
@@ -18,6 +19,7 @@ export const userSeed = [
     role: 'admin',
     isActive: true,
     birthday: '2000-01-23+02',
+    balance: 160,
   },
   {
     firstName: 'Eugenuiy',
@@ -27,6 +29,7 @@ export const userSeed = [
     role: 'user',
     isActive: true,
     birthday: '1997-01-23+02',
+    balance: 160,
   },
   {
     firstName: 'Jake',
@@ -36,5 +39,6 @@ export const userSeed = [
     role: 'user',
     isActive: true,
     birthday: '1992-01-23+02',
+    balance: 160,
   },
 ];
