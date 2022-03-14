@@ -2,7 +2,7 @@
   "name": "backend-boilerplate",
   "version": "0.0.1",
   "engines": {
-    "yarn": "1.22.10"
+    "yarn": "1.22.17"
   },
   "description": "Vlad Leo backend boilerplate",
   "author": "Vlad-Leo",
@@ -13,7 +13,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "cross-env NODE_ENV=production nest start",
-    "heroku-prebuild": "cross-env NODE_ENV=production cross-env ts-node imports all",
+    "heroku-prebuild": "yarn import:all",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "start:prod": "cross-env NODE_ENV=production node dist/src/main",
