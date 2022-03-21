@@ -1,15 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import * as _ from 'lodash';
-import { comparePassword } from '../../utils/hashPassword';
-import { UsersService } from 'users/services/users.service';
-import { RequestUser } from './auth.interfaces';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import * as _ from "lodash";
+import { comparePassword } from "../../utils/hashPassword";
+import { UsersService } from "users/services/users.service";
+import { RequestUser } from "./auth.interfaces";
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async validateUser(email: string, pass: string): Promise<RequestUser> {
@@ -19,7 +19,7 @@ export class AuthService {
     }
     const isMatch = await comparePassword(pass, user.password);
     if (isMatch) {
-      const result = _.omit(user, ['password']);
+      const result = _.omit(user, ["password"]);
       return result;
     }
     return null;
@@ -38,8 +38,6 @@ export class AuthService {
       },
       career: [],
     };
-    console.log(user);
-    console.log(user.role, 444444);
     return {
       access_token: this.jwtService.sign(payload),
     };
