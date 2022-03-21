@@ -23,6 +23,11 @@ export enum Permissions {
   updatePosition = 'UPDATE_POSITION',
   deletePosition = 'DELETE_POSITION',
 
+  getAllLevels = 'GET_ALL_LEVELS',
+  createLevel = 'CREATE_LEVEL',
+  updateLevel = 'UPDATE_LEVEL',
+  deleteLevel = 'DELETE_LEVEL',
+
   getAllArticles = 'GET_ALL_ARTICLES',
   getArticle = 'GET_ARTICLE',
   updateArticle = 'UPDATE_ARTICLE',

@@ -8,11 +8,8 @@ export const articleSeed = [
     read_positions: [
       'CEO',
       'Business Development manager',
-      'Full stack trainee',
-      'Back-end trainee',
       'Front-end developer',
       'Marketing Manager',
-      'Front-end trainee',
       'Swift developer',
       'Full stack developer',
       'Back-end developer',
@@ -20,11 +17,8 @@ export const articleSeed = [
     edit_positions: [
       'CEO',
       'Business Development manager',
-      'Full stack trainee',
-      'Back-end trainee',
       'Front-end developer',
       'Marketing Manager',
-      'Front-end trainee',
       'Swift developer',
       'Full stack developer',
       'Back-end developer',

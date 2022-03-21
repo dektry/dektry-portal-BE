@@ -42,6 +42,8 @@ export class VacationsEntity extends BaseEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.vacations, {
     eager: true,
+    onDelete: 'CASCADE',
+    cascade: true,
   })
   user: UserEntity;
 }

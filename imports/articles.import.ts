@@ -53,20 +53,20 @@ const importArticles = async () => {
 
   console.log(`Added ${createdArticles.length} new articles!`);
 
-  const accessRelation = await connection
-    .getRepository(PositionEntity)
-    .findOne({ name: accessArticleSeed.position });
-
-  const createdArticlesAccess = await connection
-    .getRepository(AccessEntity)
-    .save(
-      connection
-        .getRepository(AccessEntity)
-        .create({ ...accessArticleSeed, positions: [accessRelation] }),
-    );
-  if (createdArticlesAccess) {
-    console.log('Access to articles created!');
-  }
+  // const accessRelation = await connection
+  //   .getRepository(PositionEntity)
+  //   .findOne({ name: accessArticleSeed.position });
+  //
+  // const createdArticlesAccess = await connection
+  //   .getRepository(AccessEntity)
+  //   .save(
+  //     connection
+  //       .getRepository(AccessEntity)
+  //       .create({ ...accessArticleSeed, positions: [accessRelation] }),
+  //   );
+  // if (createdArticlesAccess) {
+  //   console.log('Access to articles created!');
+  // }
   await connection.close();
 };
 

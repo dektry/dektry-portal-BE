@@ -48,6 +48,18 @@ export const permissionSeed = [
     name: 'DELETE_POSITION',
   },
   {
+    name: 'CREATE_LEVEL',
+  },
+  {
+    name: 'GET_ALL_LEVELS',
+  },
+  {
+    name: 'UPDATE_LEVEL',
+  },
+  {
+    name: 'DELETE_LEVEL',
+  },
+  {
     name: 'GET_ALL_ARTICLES',
   },
   {

@@ -10,14 +10,14 @@ const importProjects = async () => {
   const connection: Connection = await createConnection('data-import');
   const allExistUsers = await connection.getRepository(UserEntity).find();
   const allExistProjects = await connection.getRepository(ProjectEntity).find();
-
   const alreadyExistedProjects = [];
-
+  console.log('projects');
   const projects = projectSeed.map((newProject) => {
     const isProjectExist = allExistProjects.some(
       (existProject) => newProject.name === existProject.name,
     );
     if (isProjectExist) {
+      console.log(isProjectExist, 333);
       alreadyExistedProjects.push(newProject);
       return !newProject;
     }
@@ -31,7 +31,7 @@ const importProjects = async () => {
     });
     return { ...newProject, users: projectUsers, managers: projectManagers };
   });
-
+  console.log(projects, 333);
   alreadyExistedProjects.forEach((element) => {
     console.log(`Project '${element.name}' is already exist!`);
   });

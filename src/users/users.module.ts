@@ -21,6 +21,9 @@ import { PositionGroupService } from './services/positionGroup.service';
 import { projectsRepository } from '../projects/repositories/projects.repository';
 import { projectsHistoryRepository } from '../projects/repositories/projectsHistory.repository';
 import { accessRepository } from './repositories/access.repository';
+import { LevelsController } from './controllers/level.controller';
+import { LevelsService } from './services/level.service';
+import { levelRepository } from './repositories/level.repository';
 
 @Module({
   imports: [
@@ -31,6 +34,7 @@ import { accessRepository } from './repositories/access.repository';
       roleRepository,
       permissionRepository,
       positionRepository,
+      levelRepository,
       careerRepository,
       positionGroupRepository,
       accessRepository,
@@ -41,6 +45,7 @@ import { accessRepository } from './repositories/access.repository';
     RoleService,
     PermissionService,
     PositionService,
+    LevelsService,
     CareerService,
     PositionGroupService,
   ],
@@ -49,6 +54,7 @@ import { accessRepository } from './repositories/access.repository';
     RoleController,
     PermissionController,
     PositionController,
+    LevelsController,
     CareerController,
     PositionGroupController,
   ],

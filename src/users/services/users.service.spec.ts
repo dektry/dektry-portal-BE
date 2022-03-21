@@ -254,6 +254,8 @@ describe('UsersService', () => {
 
         userRepository.update.mockReturnValue(user);
         userRepository.findOne.mockReturnValue(user);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         const updatedUser = await service.updateUser(id, user);
 
         expect(updatedUser.firstName).toBe(updatedUserName);

@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { PositionEntity } from './position.entity';
 import { UserEntity } from './user.entity';
+import { CareerLevelEntity } from './careerLevel.entity';
 
 @Entity({ name: 'careers' })
 export class CareerEntity extends BaseEntity {
@@ -29,4 +30,8 @@ export class CareerEntity extends BaseEntity {
   @ManyToOne(() => PositionEntity)
   @JoinTable({ name: 'position' })
   position: PositionEntity;
+
+  @ManyToOne(() => CareerLevelEntity)
+  @JoinTable({ name: 'level' })
+  level: CareerLevelEntity;
 }

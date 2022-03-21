@@ -4,10 +4,6 @@ export const positionGroupSeed = [
     color: 'volcano',
   },
   {
-    name: 'Trainee',
-    color: 'green',
-  },
-  {
     name: 'Business developers',
     color: 'blue',
   },
