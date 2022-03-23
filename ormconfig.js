@@ -41,6 +41,8 @@ module.exports = [
     ...common,
     name: 'data-import',
     entities: [`${__dirname}/src/**/*.entity.ts`],
+    synchronize: false,
+    // keepConnectionAlive: true,
     migrationsTableName: '__migrations',
     migrations: [`${__dirname}/src/migration/*.ts`],
   },

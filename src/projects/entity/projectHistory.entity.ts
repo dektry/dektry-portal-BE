@@ -20,11 +20,19 @@ export class ProjectHistoryEntity extends BaseEntity {
   @Column({ nullable: true, type: 'timestamptz' })
   to: Date;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, {
+    eager: true,
+    onDelete: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn({ name: 'userId' })
   userId: UserEntity;
 
-  @ManyToOne(() => ProjectEntity)
+  @ManyToOne(() => ProjectEntity, {
+    eager: true,
+    onDelete: 'CASCADE',
+    cascade: true,
+  })
   @JoinColumn({ name: 'projectId' })
   projectId: ProjectEntity;
 }

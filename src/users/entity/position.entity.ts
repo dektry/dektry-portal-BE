@@ -12,6 +12,8 @@ import {
 } from 'typeorm';
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
+import { CareerLevelEntity } from './careerLevel.entity';
+
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -69,4 +71,11 @@ export class PositionEntity extends BaseEntity {
   })
   @JoinTable({ name: 'article_read_positions' })
   read: ArticleEntity[];
+
+  @ManyToMany(() => CareerLevelEntity, (level) => level.name, {
+    cascade: true,
+    nullable: true,
+  })
+  @JoinTable({ name: 'level_positions' })
+  level: CareerLevelEntity[];
 }

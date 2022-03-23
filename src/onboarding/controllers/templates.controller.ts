@@ -26,6 +26,7 @@ export class TemplatesController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getAll(@Req() request): Promise<TemplatesEntity[]> {
+    console.log('aa');
     return this.TemplatesService.getAll(request);
   }
 

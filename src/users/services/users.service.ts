@@ -45,6 +45,7 @@ export class UsersService {
         'role',
         'role.permissions',
         'career',
+        'level',
         'career.position',
         'career.position.group',
       ],
@@ -90,6 +91,7 @@ export class UsersService {
         'role',
         'role.permissions',
         'career',
+        'level',
         'career.position',
         'career.position.group',
       ],
@@ -112,8 +114,8 @@ export class UsersService {
 
   async getUsers(
     filter: { positions: string[]; name: string },
-    page: number = 1,
-    limit: number = 10,
+    page = 1,
+    limit = 10,
   ) {
     let searchPositions = '';
     let searchNames = '';
@@ -255,7 +257,16 @@ export class UsersService {
     return userWithCurrentPositions;
   }
 
-  async createUser(newUserProps: UserDto): Promise<UserEntity> {
+  async createUser(newUserProps: {
+    birthday: Date;
+    firstName: string;
+    lastName: string;
+    password: string;
+    career: any;
+    roleId: any;
+    isActive: boolean;
+    email: string;
+  }): Promise<UserEntity> {
     const { email, roleId, password, ...otherProps } = newUserProps;
     const isExist = await this.usersRepository.findOne({
       email,
@@ -398,7 +409,6 @@ export class UsersService {
     if (!existAccess) {
       throw new NotFoundException(`Access ${name} not found!`);
     }
-
     try {
       const result = await this.accessRepository.save({
         ...existAccess,

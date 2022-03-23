@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Length, IsOptional } from 'class-validator';
+ import { IsEmail, IsNotEmpty, Length, IsOptional } from 'class-validator';
 import { RoleEntity } from '../entity/role.entity';
 import { CareerEntity } from 'users/entity/career.entity';
 

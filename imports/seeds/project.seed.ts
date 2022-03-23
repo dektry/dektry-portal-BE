@@ -9,5 +9,5 @@ export const projectSeed = [
     managers: ['laraz@gmail.com'],
     users: ['JG@gmail.com'],
     isArchive: false,
-  }
+  },
 ];
