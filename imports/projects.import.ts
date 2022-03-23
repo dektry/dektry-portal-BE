@@ -1,13 +1,13 @@
-import { createConnection, Connection } from "typeorm";
-import { ProjectEntity } from "../src/projects/entity/project.entity";
-import { UserEntity } from "../src/users/entity/user.entity";
-import { projectSeed } from "./seeds/project.seed";
-import * as map from "lodash/map";
-import * as find from "lodash/find";
-import * as filter from "lodash/filter";
+import { createConnection, Connection } from 'typeorm';
+import { ProjectEntity } from '../src/projects/entity/project.entity';
+import { UserEntity } from '../src/users/entity/user.entity';
+import { projectSeed } from './seeds/project.seed';
+import * as map from 'lodash/map';
+import * as find from 'lodash/find';
+import * as filter from 'lodash/filter';
 
 const importProjects = async () => {
-  const connection: Connection = await createConnection("data-import");
+  const connection: Connection = await createConnection('data-import');
   const allExistUsers = await connection.getRepository(UserEntity).find();
 
   const projects = projectSeed.map((newProject) => {
@@ -27,7 +27,7 @@ const importProjects = async () => {
   await connection.getRepository(ProjectEntity).save(
     newProjects.map((project) => {
       return connection.getRepository(ProjectEntity).create(project);
-    })
+    }),
   );
 
   await connection.close();
