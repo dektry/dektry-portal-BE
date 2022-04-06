@@ -9,6 +9,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { OnboardingModule } from './onboarding/onboarding.module';
 import { VacationsModule } from './vacations/vacations.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { CandidatesModule } from './candidates/candidates.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     OnboardingModule,
     ProjectsModule,
     VacationsModule,
+    CandidatesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
