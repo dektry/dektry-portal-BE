@@ -1,4 +1,12 @@
-import {Controller, Get, Param, UseGuards} from '@nestjs/common';
+import {
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CandidatesService } from '../services/candidates.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
@@ -8,8 +16,13 @@ export class CandidatesController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getCandidatesList() {
-    return this.CandidatesService.getCandidatesList();
+  getCandidatesList(
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('order') order?: 'ASC' | 'DESC',
+    @Query('field') field?: string,
+  ) {
+    return this.CandidatesService.getCandidatesList(limit, page, order, field);
   }
 
   @UseGuards(JwtAuthGuard)

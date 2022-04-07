@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { getCandidates } from './candidates';
 import { InjectRepository } from '@nestjs/typeorm';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { CandidateEntity } from '../entity/candidate.entity';
@@ -11,8 +10,23 @@ export class CandidatesService {
     private candidateRepository: candidateRepository,
   ) {}
 
-  async getCandidatesList(): Promise<CandidateEntity[]> {
-    return await this.candidateRepository.find();
+  async getCandidatesList(
+    limit: number,
+    page: number,
+    order?: 'ASC' | 'DESC',
+    field?: string,
+  ): Promise<[CandidateEntity[], number]> {
+    return await this.candidateRepository.findAndCount({
+      skip: limit * (page - 1),
+      take: limit,
+      ...(order
+        ? {
+            order: {
+              [field]: order,
+            },
+          }
+        : {}),
+    });
   }
 
   async getCandidate(id): Promise<CandidateEntity> {
