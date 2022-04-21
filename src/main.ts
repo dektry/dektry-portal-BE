@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import dotEnv = require('dotenv');
 import { urlencoded, json } from 'express';
+import { candidatesCron } from './cron/candidates';
 
 const corsOrigins =
   process.env.NODE_ENV === 'production'
@@ -28,3 +29,7 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 5000);
 }
 bootstrap();
+
+candidatesCron.start();
+
+console.log(`Serving at http://localhost:${process.env.PORT || 5000}`);
