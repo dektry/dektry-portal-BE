@@ -10,6 +10,7 @@ import {
 import { SkillGroupEntity } from './skillGroup.entity';
 import { QuestionEntity } from './question.entity';
 import { SkillsToLevelsEntity } from './skillsToLevels.entity';
+import { SkillToInterviewEntity } from '../../candidates/entity/skillToInterview.entity';
 
 @Entity({ name: 'skill' })
 export class SkillEntity extends BaseEntity {
@@ -39,4 +40,10 @@ export class SkillEntity extends BaseEntity {
   })
   @JoinColumn()
   levels: SkillsToLevelsEntity[];
+
+  @OneToMany(() => SkillToInterviewEntity, (sti) => sti.skill_id, {
+    orphanedRowAction: 'delete',
+  })
+  @JoinColumn()
+  interviews: SkillToInterviewEntity[];
 }
