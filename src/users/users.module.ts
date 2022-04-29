@@ -24,6 +24,12 @@ import { accessRepository } from './repositories/access.repository';
 import { LevelsController } from './controllers/level.controller';
 import { LevelsService } from './services/level.service';
 import { levelRepository } from './repositories/level.repository';
+import { SkillGroupService } from './services/skillGroup.service';
+import { SkillGroupController } from './controllers/skillGroup.controller';
+import { skillGroupRepository } from './repositories/skillGroup.repository';
+import { skillRepository } from './repositories/skill.repository';
+import { questionRepository } from './repositories/question.repository';
+import { skillsToLevelsRepository } from './repositories/skillsToLevels.repository';
 
 @Module({
   imports: [
@@ -38,6 +44,10 @@ import { levelRepository } from './repositories/level.repository';
       careerRepository,
       positionGroupRepository,
       accessRepository,
+      skillGroupRepository,
+      skillRepository,
+      questionRepository,
+      skillsToLevelsRepository,
     ]),
   ],
   providers: [
@@ -48,6 +58,7 @@ import { levelRepository } from './repositories/level.repository';
     LevelsService,
     CareerService,
     PositionGroupService,
+    SkillGroupService,
   ],
   controllers: [
     UsersController,
@@ -57,6 +68,7 @@ import { levelRepository } from './repositories/level.repository';
     LevelsController,
     CareerController,
     PositionGroupController,
+    SkillGroupController,
   ],
   exports: [UsersService],
 })

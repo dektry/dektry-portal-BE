@@ -16,6 +16,7 @@
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "migrate:generate": "yarn typeorm migration:generate -n",
+    "migration:generate": "yarn typeorm migrations:generate -n",
     "import:dev:all": "cross-env NODE_ENV=development ts-node imports all",
     "import:dev:templates": "cross-env NODE_ENV=development ts-node imports templates",
     "import:all": "cross-env NODE_ENV=production cross-env ts-node imports all",

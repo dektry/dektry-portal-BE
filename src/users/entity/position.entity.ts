@@ -9,10 +9,12 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  JoinColumn,
 } from 'typeorm';
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
+import { SkillGroupEntity } from './skillGroup.entity';
 
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
@@ -78,4 +80,10 @@ export class PositionEntity extends BaseEntity {
   })
   @JoinTable({ name: 'level_positions' })
   level: CareerLevelEntity[];
+
+  @OneToMany(() => SkillGroupEntity, (skillGroup) => skillGroup.position_id, {
+    orphanedRowAction: 'delete',
+  })
+  @JoinColumn()
+  skillGroups: SkillGroupEntity[];
 }
