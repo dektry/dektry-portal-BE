@@ -12,7 +12,10 @@ import { EducationService } from './services/education.service';
 import { LanguageService } from './services/language.service';
 import { ExperienceService } from './services/experience.service';
 import { InterviewService } from './services/interview.service';
-import { InterviewController } from './controllers/interview.controller';
+import { InterviewsController } from './controllers/interviews.controller';
+import { skillsToLevelsRepository } from '../users/repositories/skillsToLevels.repository';
+import { positionRepository } from '../users/repositories/position.repository';
+import { levelRepository } from '../users/repositories/level.repository';
 
 @Module({
   imports: [
@@ -23,9 +26,12 @@ import { InterviewController } from './controllers/interview.controller';
       languageRepository,
       interviewRepository,
       skillToInterviewRepository,
+      skillsToLevelsRepository,
+      positionRepository,
+      levelRepository,
     ]),
   ],
-  controllers: [CandidatesController, InterviewController],
+  controllers: [CandidatesController, InterviewsController],
   providers: [
     CandidatesService,
     EducationService,

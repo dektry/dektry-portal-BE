@@ -1,24 +1,25 @@
-import { Controller } from '@nestjs/common';
-import { InterviewService } from '../services/interview.service';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { IAnswer, InterviewService } from '../services/interview.service';
+import { InterviewEntity } from '../entity/interview.entity';
 
 @Controller('interviews')
 export class InterviewsController {
   constructor(private InterviewService: InterviewService) {}
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get()
-  // getCandidatesList(
-  //   @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
-  //   @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-  //   @Query('order') order?: 'ASC' | 'DESC',
-  //   @Query('field') field?: string,
-  // ) {
-  //   return this.CandidatesService.getCandidatesList(limit, page, order, field);
-  // }
-  //
-  // @UseGuards(JwtAuthGuard)
-  // @Get('/:id')
-  // getCandidates(@Param('id') id: string) {
-  //   return this.CandidatesService.getCandidate(id);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  completeInterview(
+    @Body() CompleteInterviewDto,
+  ): Promise<{ interview: InterviewEntity; answers?: IAnswer[] }> {
+    return this.InterviewService.completeInterview(CompleteInterviewDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':candidateId')
+  getInterviewResult(
+    @Param('candidateId') candidateId: string,
+  ): Promise<{ interview: InterviewEntity; answers?: IAnswer[] }> {
+    return this.InterviewService.getInterviewResult(candidateId);
+  }
 }

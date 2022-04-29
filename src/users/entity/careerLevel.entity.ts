@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { SkillsToLevelsEntity } from './skillsToLevels.entity';
+import { InterviewEntity } from '../../candidates/entity/interview.entity';
 @Entity({ name: 'careersLevels' })
 export class CareerLevelEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -20,4 +21,9 @@ export class CareerLevelEntity extends BaseEntity {
   })
   @JoinColumn()
   skills: SkillsToLevelsEntity[];
+
+  @OneToMany(() => InterviewEntity, (interview) => interview.level, {
+    orphanedRowAction: 'delete',
+  })
+  interview: InterviewEntity[];
 }
