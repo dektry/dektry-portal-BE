@@ -7,6 +7,8 @@ import { interviewRepository } from '../repositories/interview.repository';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { countReviewResult, getInterviewAnswers } from '../utils/helpers';
 import { levelRepository } from 'users/repositories/level.repository';
+import { skillRepository } from '../../users/repositories/skill.repository';
+import { In } from 'typeorm';
 
 export interface ICompleteInterview {
   candidateId: string;
@@ -37,6 +39,8 @@ export class InterviewService {
     private positionRepository: positionRepository,
     @InjectRepository(levelRepository)
     private levelRepository: levelRepository,
+    @InjectRepository(skillRepository)
+    private skillRepository: skillRepository,
   ) {}
   async completeInterview(interview: ICompleteInterview) {
     const dateNow = moment().format();
@@ -52,19 +56,25 @@ export class InterviewService {
     );
     const level = await this.levelRepository.findOne(interview.levelId);
 
+    const filteredSkills = await this.skillRepository.find({
+      where: {
+        id: In(Object.keys(interview.answers)),
+      },
+    });
+
     const savedInterview = await this.interviewRepository.save({
       candidate,
       createdAt: dateNow,
       position,
       level,
-      result: await countReviewResult(interview),
+      result: await countReviewResult(interview, filteredSkills),
     });
 
-    const interviewSkills = Object.keys(interview.answers).map((key: any) => {
+    const interviewSkills = filteredSkills.map((skill) => {
       return this.skillToInterviewRepository.create({
         interview_id: savedInterview,
-        skill_id: key,
-        value: interview.answers[key],
+        skill_id: skill,
+        value: interview.answers[skill.id],
       });
     });
 

@@ -16,6 +16,7 @@ import { InterviewsController } from './controllers/interviews.controller';
 import { skillsToLevelsRepository } from '../users/repositories/skillsToLevels.repository';
 import { positionRepository } from '../users/repositories/position.repository';
 import { levelRepository } from '../users/repositories/level.repository';
+import { skillRepository } from '../users/repositories/skill.repository';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { levelRepository } from '../users/repositories/level.repository';
       skillsToLevelsRepository,
       positionRepository,
       levelRepository,
+      skillRepository,
     ]),
   ],
   controllers: [CandidatesController, InterviewsController],

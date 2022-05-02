@@ -4,9 +4,11 @@ import { IAnswer, ICompleteInterview } from '../services/interview.service';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 import { InterviewEntity } from '../entity/interview.entity';
 import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';
+import { SkillEntity } from 'users/entity/skill.entity';
 
 export const countReviewResult = async (
   interview: ICompleteInterview,
+  filteredSkills: SkillEntity[],
 ): Promise<number> => {
   const amountForOne = 100 / Object.keys(interview.answers).length;
   let result = 0;
@@ -19,10 +21,12 @@ export const countReviewResult = async (
     relations: ['skill_id'],
   });
 
-  Object.keys(interview.answers).map((key) => {
-    const record = skillsLevels.find(({ skill_id }) => skill_id.id === key);
+  filteredSkills.map((skill) => {
+    const record = skillsLevels.find(
+      ({ skill_id }) => skill_id.id === skill.id,
+    );
     if (
-      levelTypesPriority[interview.answers[key]] >=
+      levelTypesPriority[interview.answers[skill.id]] >=
       levelTypesPriority[record.value]
     ) {
       result += amountForOne;
