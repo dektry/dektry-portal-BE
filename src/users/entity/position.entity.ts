@@ -15,6 +15,7 @@ import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
 import { SkillGroupEntity } from './skillGroup.entity';
+import { InterviewEntity } from '../../candidates/entity/interview.entity';
 
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
@@ -86,4 +87,9 @@ export class PositionEntity extends BaseEntity {
   })
   @JoinColumn()
   skillGroups: SkillGroupEntity[];
+
+  @OneToMany(() => InterviewEntity, (interview) => interview.position, {
+    orphanedRowAction: 'delete',
+  })
+  interview: InterviewEntity[];
 }

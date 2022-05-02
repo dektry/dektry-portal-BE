@@ -7,10 +7,12 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  OneToOne,
 } from 'typeorm';
 import { ExperienceEntity } from './experience.entity';
 import { EducationEntity } from './education.entity';
 import { LanguageEntity } from './language.entity';
+import { InterviewEntity } from './interview.entity';
 
 @Entity({ name: 'candidate' })
 export class CandidateEntity extends BaseEntity {
@@ -53,4 +55,7 @@ export class CandidateEntity extends BaseEntity {
   @ManyToMany(() => LanguageEntity, (lang) => lang.candidates)
   @JoinTable({ name: 'candidate_language' })
   languages: LanguageEntity[];
+
+  @OneToOne(() => InterviewEntity, (interview) => interview.candidate)
+  interview: InterviewEntity;
 }

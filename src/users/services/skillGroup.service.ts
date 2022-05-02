@@ -61,13 +61,19 @@ export class SkillGroupService {
     return skillGroups;
   }
 
-  async getSkillGroup(positionId): Promise<SkillGroupEntity> {
-    return await this.skillGroupRepository.findOne({
-      where: {
-        position_id: positionId,
-      },
-      relations: ['skills'],
-    });
+  async getSkillGroupsByIds(
+    positionId: string,
+    levelId: string,
+  ): Promise<SkillGroupEntity[]> {
+    return await this.skillGroupRepository
+      .createQueryBuilder('sg')
+      .where({ position_id: positionId })
+      .andWhere('sl."level_id" = :id', { id: levelId })
+      .select(['sg', 's', 'q', 'sl.value'])
+      .leftJoin('sg.skills', 's')
+      .leftJoin('s.questions', 'q')
+      .leftJoin('s.levels', 'sl')
+      .getMany();
   }
 
   async updateSkillGroup({

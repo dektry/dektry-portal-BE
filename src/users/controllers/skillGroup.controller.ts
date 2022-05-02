@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { SkillGroupService } from '../services/skillGroup.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { SkillGroupEntity } from '../entity/skillGroup.entity';
@@ -17,6 +17,15 @@ export class SkillGroupController {
   @Get(':positionId')
   getSkillGroupsById(@Param('positionId') positionId: string) {
     return this.SkillGroupService.getSkillGroupsByPositionId(positionId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/:positionId/:levelId')
+  getSkillGroupsByIds(
+    @Param('positionId') positionId: string,
+    @Param('levelId') levelId: string,
+  ) {
+    return this.SkillGroupService.getSkillGroupsByIds(positionId, levelId);
   }
 
   @UseGuards(JwtAuthGuard)
