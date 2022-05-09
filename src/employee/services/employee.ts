@@ -1,10 +1,6 @@
-import axios from 'axios';
 import { getRepository, In, Not } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
-
-export const PFAxios = axios.create({
-  baseURL: process.env.PF_API,
-});
+import { PFAxios } from '../../../utils/pfAxios';
 
 PFAxios.interceptors.request.use(
   (config) => {
