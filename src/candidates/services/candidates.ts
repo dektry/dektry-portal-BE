@@ -1,22 +1,9 @@
-import axios from 'axios';
 import { EntityTarget, getRepository, In, Not } from 'typeorm';
 import { EducationEntity } from '../entity/education.entity';
 import { ExperienceEntity } from '../entity/experience.entity';
 import { LanguageEntity } from '../entity/language.entity';
 import { CandidateEntity } from '../entity/candidate.entity';
-
-export const PFAxios = axios.create({
-  baseURL: process.env.PF_API,
-});
-
-PFAxios.interceptors.request.use(
-  (config) => {
-    config.headers['X-API-KEY'] = process.env.PF_API_KEY;
-
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
+import { PFAxios } from '../../../utils/pfAxios';
 
 const formatFields = <T>(array, entity: EntityTarget<T>): T[] => {
   return array.map((item) => {

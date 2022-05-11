@@ -10,6 +10,7 @@ import { OnboardingModule } from './onboarding/onboarding.module';
 import { VacationsModule } from './vacations/vacations.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CandidatesModule } from './candidates/candidates.module';
+import { EmployeeModule } from 'employee/employee.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CandidatesModule } from './candidates/candidates.module';
     ProjectsModule,
     VacationsModule,
     CandidatesModule,
+    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
