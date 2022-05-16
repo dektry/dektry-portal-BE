@@ -21,8 +21,15 @@ export class EmployeeController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('order') order?: 'ASC' | 'DESC',
     @Query('field') field?: string,
+    @Query('query') query?: string,
   ) {
-    return this.EmployeeService.getEmployeesList(limit, page, order, field);
+    return this.EmployeeService.getEmployeesList({
+      limit,
+      page,
+      order,
+      field,
+      query,
+    });
   }
 
   @UseGuards(JwtAuthGuard)
