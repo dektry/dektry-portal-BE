@@ -1,14 +1,17 @@
 import {
+  Body,
   Controller,
   DefaultValuePipe,
   Get,
   Param,
   ParseIntPipe,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
 import { CandidatesService } from '../services/candidates.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { UpdateCandidateDto } from '../entity/candidate.dto';
 
 @Controller('candidates')
 export class CandidatesController {
@@ -36,5 +39,14 @@ export class CandidatesController {
   @Get('/:id')
   getCandidates(@Param('id') id: string) {
     return this.CandidatesService.getCandidate(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:id')
+  updateCandidate(
+    @Param('id') id: string,
+    @Body() updatedCandidate: UpdateCandidateDto,
+  ) {
+    return this.CandidatesService.updateCandidate(id, updatedCandidate);
   }
 }
