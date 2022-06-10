@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CandidatesService } from '../services/candidates.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { UpdateCandidateDto } from '../entity/candidate.dto';
+import { UpdateCandidateDto } from '../dto/candidate.dto';
 
 @Controller('candidates')
 export class CandidatesController {

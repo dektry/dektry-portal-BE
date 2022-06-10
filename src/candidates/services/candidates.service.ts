@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult } from 'typeorm';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { CandidateEntity } from '../entity/candidate.entity';
-import { UpdateCandidateDto } from '../entity/candidate.dto';
+import { UpdateCandidateDto } from '../dto/candidate.dto';
 
 type getCandidatesListParams = {
   limit: number;
@@ -61,6 +61,11 @@ export class CandidatesService {
 
     if (!updateResult.affected) return updateResult;
 
-    return await this.candidateRepository.findOne(id);
+    const candidate = await this.candidateRepository.findOne(id);
+
+    // temporarily disabled to prevent data corruption in the PF
+    // await updateCandidatePF(candidate.pfId, updatedCandidate);
+
+    return candidate;
   }
 }
