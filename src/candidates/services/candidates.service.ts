@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateResult } from 'typeorm';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { CandidateEntity } from '../entity/candidate.entity';
+import { UpdateCandidateDto } from '../dto/candidate.dto';
 
 type getCandidatesListParams = {
   limit: number;
@@ -46,5 +48,24 @@ export class CandidatesService {
     return await this.candidateRepository.findOne(id, {
       relations: ['languages', 'education', 'experience'],
     });
+  }
+
+  async updateCandidate(
+    id: string,
+    updatedCandidate: UpdateCandidateDto,
+  ): Promise<CandidateEntity | UpdateResult> {
+    const updateResult = await this.candidateRepository.update(
+      id,
+      updatedCandidate,
+    );
+
+    if (!updateResult.affected) return updateResult;
+
+    const candidate = await this.candidateRepository.findOne(id);
+
+    // temporarily disabled to prevent data corruption in the PF
+    // await updateCandidatePF(candidate.pfId, updatedCandidate);
+
+    return candidate;
   }
 }

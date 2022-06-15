@@ -4,6 +4,7 @@ import { ExperienceEntity } from '../entity/experience.entity';
 import { LanguageEntity } from '../entity/language.entity';
 import { CandidateEntity } from '../entity/candidate.entity';
 import { PFAxios } from '../../../utils/pfAxios';
+import { UpdateCandidateDto, UpdateCandidatePFdto } from '../dto/candidate.dto';
 
 const formatFields = <T>(array, entity: EntityTarget<T>): T[] => {
   return array.map((item) => {
@@ -91,6 +92,29 @@ export const getCandidates = async () => {
 
         await getRepository(CandidateEntity).save(formattedCandidate);
       }
+
+    console.log('completed');
+    return 'completed';
+  } catch (error) {
+    console.log(error, 444444);
+    return error;
+  }
+};
+
+export const updateCandidatePF = async (
+  id: number,
+  updatedCandidate: UpdateCandidateDto,
+) => {
+  try {
+    const updatedCandidatePF: UpdateCandidatePFdto = {
+      ...updatedCandidate,
+      full_name: updatedCandidate.fullName,
+    };
+
+    const response = await PFAxios.put(
+      `/recruitment/candidates/${id}`,
+      updatedCandidatePF,
+    );
 
     console.log('completed');
     return 'completed';
