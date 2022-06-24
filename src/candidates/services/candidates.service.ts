@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult } from 'typeorm';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { CandidateEntity } from '../entity/candidate.entity';
+import { InterviewEntity } from 'candidates/entity/interview.entity';
 import { UpdateCandidateDto } from '../dto/candidate.dto';
 
 type getCandidatesListParams = {
@@ -18,7 +19,7 @@ export class CandidatesService {
   constructor(
     @InjectRepository(candidateRepository)
     private candidateRepository: candidateRepository,
-  ) {}
+  ) { }
 
   async getCandidatesList({
     limit,
@@ -29,16 +30,22 @@ export class CandidatesService {
   }: getCandidatesListParams): Promise<[CandidateEntity[], number]> {
     return await this.candidateRepository
       .createQueryBuilder('candidate')
+      .leftJoin(
+        InterviewEntity,
+        'interview',
+        'interview.candidate_id = candidate.id',
+      )
       .where('candidate.fullName ILIKE :query', {
         query: `%${query ? query.trim() : ''}%`,
       })
+      .andWhere('interview.candidate_id IS NULL')
       .skip(limit * (page - 1))
       .take(limit)
       .orderBy(
         order
           ? {
-              [`candidate.${field}`]: order,
-            }
+            [`candidate.${field}`]: order,
+          }
           : {},
       )
       .getManyAndCount();
