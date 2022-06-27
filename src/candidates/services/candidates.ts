@@ -31,6 +31,7 @@ const formatCandidate = async (
     fullName: candidate.full_name,
     position: candidate.position,
     level: candidate.level,
+    email: candidate.email,
     location: candidate.location,
     timezone: '1',
     languages: formatFields(candidate.languages, LanguageEntity),

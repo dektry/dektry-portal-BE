@@ -46,6 +46,9 @@ export class CandidateEntity extends BaseEntity {
   @JoinColumn()
   experience: ExperienceEntity[];
 
+  @Column({ length: 255, nullable: true })
+  email: string;
+
   @OneToMany(() => EducationEntity, (edc) => edc.candidate, {
     orphanedRowAction: 'delete',
   })
