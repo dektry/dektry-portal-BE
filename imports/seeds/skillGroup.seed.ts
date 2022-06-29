@@ -1,7 +1,7 @@
 export const skillGroupSeed = [
   {
-    name: 'Core algorithms',
-    carrerLevels: [
+    value: 'Core algorithms',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -16,40 +16,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Data structures',
-    carrerLevels: [
-      'Trainee',
-      'Junior',
-      'Regular (Junior+)',
-      'Middle',
-      'Middle+',
-      'Senior',
-    ],
-    positions: [
-      'Front-end developer',
-      'Back-end developer',
-      'Full stack developer',
-      'Swift developer',
-    ],
-  },
-  {
-    name: 'Patterns',
-    carrerLevels: [
-      'Junior',
-      'Regular (Junior+)',
-      'Middle',
-      'Middle+',
-      'Senior',
-    ],
-    positions: [
-      'Front-end developer',
-      'Back-end developer',
-      'Full stack developer',
-    ],
-  },
-  {
-    name: 'GIT',
-    carrerLevels: [
+    value: 'Data structures',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -65,8 +33,40 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'HTML',
-    carrerLevels: [
+    value: 'Patterns',
+    careerLevels: [
+      'Junior',
+      'Regular (Junior+)',
+      'Middle',
+      'Middle+',
+      'Senior',
+    ],
+    positions: [
+      'Front-end developer',
+      'Back-end developer',
+      'Full stack developer',
+    ],
+  },
+  {
+    value: 'GIT',
+    careerLevels: [
+      'Trainee',
+      'Junior',
+      'Regular (Junior+)',
+      'Middle',
+      'Middle+',
+      'Senior',
+    ],
+    positions: [
+      'Front-end developer',
+      'Back-end developer',
+      'Full stack developer',
+      'Swift developer',
+    ],
+  },
+  {
+    value: 'HTML',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -77,8 +77,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'CSS',
-    carrerLevels: [
+    value: 'CSS',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -89,8 +89,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'CSS frameworks (TailWind, bootstrap)',
-    carrerLevels: [
+    value: 'CSS frameworks (TailWind, bootstrap)',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -100,8 +100,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Functions (vanilla JS)',
-    carrerLevels: [
+    value: 'Functions (vanilla JS)',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -116,8 +116,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Event loop (vanilla JS)',
-    carrerLevels: [
+    value: 'Event loop (vanilla JS)',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -132,8 +132,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Types (primitives + object) (vanilla JS)',
-    carrerLevels: [
+    value: 'Types (primitives + object) (vanilla JS)',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -148,8 +148,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Data Structures JS (vanilla JS)',
-    carrerLevels: [
+    value: 'Data Structures JS (vanilla JS)',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -163,13 +163,13 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'WebWorkers / ServiceWorkers',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'WebWorkers / ServiceWorkers',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Typescript',
-    carrerLevels: [
+    value: 'Typescript',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -183,8 +183,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'React',
-    carrerLevels: [
+    value: 'React',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -195,13 +195,13 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'RXjs',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'RXjs',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Websocket',
-    carrerLevels: [
+    value: 'Websocket',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -211,8 +211,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'GraphQL (JS)',
-    carrerLevels: [
+    value: 'GraphQL (JS)',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -226,8 +226,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Browser storages (LocalStorage and etc)',
-    carrerLevels: [
+    value: 'Browser storages (LocalStorage and etc)',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -237,8 +237,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Cross tabs communication',
-    carrerLevels: [
+    value: 'Cross tabs communication',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -248,8 +248,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'UI libraries (MaterialUI, react-botstrap)',
-    carrerLevels: [
+    value: 'UI libraries (MaterialUI, react-botstrap)',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -259,8 +259,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Dev tools',
-    carrerLevels: [
+    value: 'Dev tools',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -271,13 +271,13 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Logging',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Logging',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Cross-browser problems',
-    carrerLevels: [
+    value: 'Cross-browser problems',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -287,8 +287,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Tests',
-    carrerLevels: [
+    value: 'Tests',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -298,8 +298,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Canvas',
-    carrerLevels: [
+    value: 'Canvas',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -309,8 +309,8 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    name: 'Multithread/multiprocess',
-    carrerLevels: [
+    value: 'Multithread/multiprocess',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -324,8 +324,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'File api',
-    carrerLevels: [
+    value: 'File api',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -335,8 +335,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Stream',
-    carrerLevels: [
+    value: 'Stream',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -346,8 +346,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Cron',
-    carrerLevels: [
+    value: 'Cron',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -357,8 +357,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Express',
-    carrerLevels: [
+    value: 'Express',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -368,8 +368,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'ORM',
-    carrerLevels: [
+    value: 'ORM',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -380,8 +380,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'DB (JS)',
-    carrerLevels: [
+    value: 'DB (JS)',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -392,8 +392,8 @@ export const skillGroupSeed = [
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Google Firebase',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Google Firebase',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: [
       'Back-end developer',
       'Full stack developer',
@@ -401,8 +401,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'AWS',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'AWS',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: [
       'Back-end developer',
       'Full stack developer',
@@ -410,8 +410,8 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'Jenkins',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Jenkins',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: [
       'Back-end developer',
       'Full stack developer',
@@ -419,18 +419,18 @@ export const skillGroupSeed = [
     ],
   },
   {
-    name: 'CircleCI',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'CircleCI',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Docker',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Docker',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {
-    name: 'Memory managment',
-    carrerLevels: [
+    value: 'Memory managment',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -441,8 +441,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'Design Principles',
-    carrerLevels: [
+    value: 'Design Principles',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -453,8 +453,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'Design Patterns',
-    carrerLevels: [
+    value: 'Design Patterns',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -464,8 +464,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'OOP',
-    carrerLevels: [
+    value: 'OOP',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -476,23 +476,23 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'FRP',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'FRP',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Objective-C',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'Objective-C',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Swift',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Swift',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'SwitfUI',
-    carrerLevels: [
+    value: 'SwitfUI',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -503,8 +503,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'UIKit',
-    carrerLevels: [
+    value: 'UIKit',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -514,8 +514,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'Foundation',
-    carrerLevels: [
+    value: 'Foundation',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -525,38 +525,38 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'GCD',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'GCD',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'StoreKit',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'StoreKit',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Push Notifications',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Push Notifications',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Quartz',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Quartz',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'AVFoundation',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'AVFoundation',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'DB (Swift)',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'DB (Swift)',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'REST',
-    carrerLevels: [
+    value: 'REST',
+    careerLevels: [
       'Trainee',
       'Junior',
       'Regular (Junior+)',
@@ -567,48 +567,48 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'GraphQL (Swift)',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'GraphQL (Swift)',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Crashlytics',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Crashlytics',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Profiling & Debuging',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Profiling & Debuging',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Unit Testing',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Unit Testing',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'RxSwift',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'RxSwift',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Combine',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Combine',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Alamofire',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Alamofire',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Kingfisher',
-    carrerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
+    value: 'Kingfisher',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Cocoapods',
-    carrerLevels: [
+    value: 'Cocoapods',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -618,8 +618,8 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'SPM',
-    carrerLevels: [
+    value: 'SPM',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -629,23 +629,23 @@ export const skillGroupSeed = [
     positions: ['Swift developer'],
   },
   {
-    name: 'Carthage',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'Carthage',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Jenkins (Swift)',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'Jenkins (Swift)',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'Fastlane',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'Fastlane',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
   {
-    name: 'CircleCI (Swift)',
-    carrerLevels: ['Middle', 'Middle+', 'Senior'],
+    value: 'CircleCI (Swift)',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Swift developer'],
   },
 ];
