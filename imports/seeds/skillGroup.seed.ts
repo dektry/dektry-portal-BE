@@ -100,7 +100,7 @@ export const skillGroupSeed = [
     positions: ['Front-end developer', 'Full stack developer'],
   },
   {
-    value: 'Functions (vanilla JS)',
+    value: 'Vanilla JS',
     careerLevels: [
       'Trainee',
       'Junior',
@@ -186,6 +186,17 @@ export const skillGroupSeed = [
     value: 'React',
     careerLevels: [
       'Trainee',
+      'Junior',
+      'Regular (Junior+)',
+      'Middle',
+      'Middle+',
+      'Senior',
+    ],
+    positions: ['Front-end developer', 'Full stack developer'],
+  },
+  {
+    value: 'Context Store management',
+    careerLevels: [
       'Junior',
       'Regular (Junior+)',
       'Middle',
@@ -389,6 +400,11 @@ export const skillGroupSeed = [
       'Middle+',
       'Senior',
     ],
+    positions: ['Back-end developer', 'Full stack developer'],
+  },
+  {
+    value: 'Oauth2',
+    careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Back-end developer', 'Full stack developer'],
   },
   {

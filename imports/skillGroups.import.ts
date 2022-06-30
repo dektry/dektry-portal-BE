@@ -1,9 +1,8 @@
 import { createConnection, Connection } from 'typeorm';
 import { SkillGroupEntity } from '../src/users/entity/skillGroup.entity';
-import { CareerLevelEntity } from '../src/users/entity/careerLevel.entity';
 import { PositionEntity } from '../src/users/entity/position.entity';
 import { skillGroupSeed } from './seeds/skillGroup.seed';
-import { difference } from 'lodash';
+import { difference, flatten } from 'lodash';
 
 const importSkillGroups = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -11,10 +10,6 @@ const importSkillGroups = async () => {
     .getRepository(SkillGroupEntity)
     .find();
   const existPositions = await connection.getRepository(PositionEntity).find();
-  const existCareerLevels = await connection
-    .getRepository(CareerLevelEntity)
-    .find();
-
   const newSkillGroups = skillGroupSeed.filter((newGroup) => {
     const isGroupExist = currentSkillGroups.some(
       (existGroup) => newGroup.value === existGroup.value,
@@ -27,25 +22,28 @@ const importSkillGroups = async () => {
   alreadyExistedNewGroups.forEach((group) => {
     console.log(`Skill group ${group.value} already exists!`);
   });
-
-  const newSkillGroupsWithPositions = newSkillGroups.map((newGroup) => {
-    const formatPosition = newGroup.positions.map((position) => {
+  const newSkillGroupsWithPositions = []; 
+  newSkillGroups.forEach((newGroup) => {
+    newGroup.positions.forEach((position) => {
       const existPositionEntity = existPositions.find(
         (existPosition) => existPosition.name === position,
       );
-      return existPositionEntity;
+      newSkillGroupsWithPositions.push({
+        value: newGroup.value,
+        position_id: existPositionEntity,
+      });
     });
-    return {
-      ...newGroup,
-      position_id: formatPosition,
-    };
   });
-  console.log('POSITION FOR SKILL GROUP', newSkillGroupsWithPositions);
-  const createdGroups = await connection.getRepository(SkillGroupEntity).save(
-    newSkillGroupsWithPositions.map((group) => {
-      return connection.getRepository(SkillGroupEntity).create(group);
-    }),
-  );
+
+  const flattenArray = flatten(newSkillGroupsWithPositions);
+
+  const mapped = flattenArray.map((group) => {
+    return connection.getRepository(SkillGroupEntity).create(group);
+  });
+
+  const createdGroups = await connection
+    .getRepository(SkillGroupEntity)
+    .save(mapped);
 
   console.log(`Added ${createdGroups.length} new skill group!`);
   await connection.close();
