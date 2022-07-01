@@ -24,8 +24,8 @@ const importData = async () => {
       await importRoles();
       await importPositions();
       await importCareerLevels();
-      await importSkills();
       await importSkillGroups();
+      await importSkills();
       await importSkillLevels();
       await importUsers();
       await importCareers();

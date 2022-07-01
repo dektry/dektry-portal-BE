@@ -12,7 +12,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Core algorithms',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -42,7 +42,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Data structures',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -72,7 +72,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Patterns',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -102,7 +102,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'GIT',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -132,7 +132,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'HTML',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -162,7 +162,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'CSS',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -192,7 +192,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Closures',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -222,7 +222,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Сontext',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -252,7 +252,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Scopes',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -282,7 +282,7 @@ export const skillLevelsSeed = [
   {
     value: 'advanced',
     skill: 'Inheritance',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -312,7 +312,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Event loop',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -342,7 +342,7 @@ export const skillLevelsSeed = [
   {
     value: 'advanced',
     skill: 'Types (primitives + object)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -372,7 +372,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Data Structures JS',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -402,7 +402,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'WebWorkers / ServiceWorkers',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -432,7 +432,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Typescript',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -462,7 +462,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'React',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -492,7 +492,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'React hooks',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'advanced',
@@ -522,7 +522,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'React router',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -552,7 +552,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Reselect',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -582,7 +582,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Context Store management',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -612,7 +612,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Redux',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -642,7 +642,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Mobix',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -672,7 +672,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Sagas',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -702,7 +702,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'RXjs',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -732,7 +732,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Websocket',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -762,7 +762,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'GraphQL (JS)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -792,7 +792,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Browser storages (LocalStorage and etc)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -822,7 +822,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'UI libraries (MaterialUI, react-botstrap)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -852,7 +852,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Cross tabs communication',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -882,7 +882,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'CSS frameworks (TailWind, bootstrap)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -912,7 +912,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Dev tools',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -942,7 +942,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Logging',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -972,7 +972,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Cross-browser problems',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1002,7 +1002,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Tests',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1032,7 +1032,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Canvas',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1062,7 +1062,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Multithread/multiprocess',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1092,7 +1092,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'File api',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1122,7 +1122,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Stream',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1152,7 +1152,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Cron',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1182,7 +1182,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Express',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1212,7 +1212,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Express Routing',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1242,7 +1242,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Middlewares',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1272,7 +1272,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'NestJs',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1302,7 +1302,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'ORM',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1332,7 +1332,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'DB (JS)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1362,7 +1362,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Non-relative DB',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1392,7 +1392,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Relative DB',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1422,7 +1422,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Oauth2',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1452,7 +1452,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Google Firebase',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1482,7 +1482,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'AWS',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1512,7 +1512,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Jenkins',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1542,7 +1542,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'CircleCI',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1572,7 +1572,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Docker',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1602,7 +1602,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Memory managment',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1632,7 +1632,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'Design Principles',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1662,7 +1662,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Design Patterns',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1692,7 +1692,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'OOP',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1722,7 +1722,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'FRP',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -1752,7 +1752,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'Objective-C',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -1782,7 +1782,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Swift',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1812,7 +1812,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Swift',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1842,7 +1842,7 @@ export const skillLevelsSeed = [
   {
     value: 'regular',
     skill: 'SwitfUI',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1872,7 +1872,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'UIKit',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1902,7 +1902,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Foundation',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1932,7 +1932,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'GCD',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -1962,7 +1962,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'StoreKit',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -1992,7 +1992,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Push Notifications',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2022,7 +2022,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Quartz',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2052,7 +2052,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'AVFoundation',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2082,7 +2082,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'DB (Swift)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2112,7 +2112,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'REST',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2142,7 +2142,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'GraphQL (Swift)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2172,7 +2172,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Crashlytics',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2202,7 +2202,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Profiling & Debuging',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2232,7 +2232,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Unit Testing',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2262,7 +2262,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'RxSwift',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2292,7 +2292,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Combine',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2322,7 +2322,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Alamofire',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2352,7 +2352,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Kingfisher',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2382,7 +2382,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'Cocoapods',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2412,7 +2412,7 @@ export const skillLevelsSeed = [
   {
     value: 'basic',
     skill: 'SPM',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'regular',
@@ -2442,7 +2442,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'Carthage',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2472,7 +2472,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'Jenkins (Swift)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2502,7 +2502,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'Fastlane',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',
@@ -2532,7 +2532,7 @@ export const skillLevelsSeed = [
   {
     value: 'none',
     skill: 'CircleCI (Swift)',
-    level: 'Regular (Junior +)',
+    level: 'Regular (Junior+)',
   },
   {
     value: 'basic',

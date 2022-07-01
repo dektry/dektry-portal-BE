@@ -2,7 +2,7 @@ import { createConnection, Connection } from 'typeorm';
 import { SkillGroupEntity } from '../src/users/entity/skillGroup.entity';
 import { SkillEntity } from '../src/users/entity/skill.entity';
 import { skillsSeed } from './seeds/skills.seed';
-import { difference } from 'lodash';
+import { difference, flatten } from 'lodash';
 
 const importSkills = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -23,18 +23,24 @@ const importSkills = async () => {
     console.log(`Skill ${skill.value} already exists!`);
   });
 
-  const newSkillsWithSkillGroup = newSkills.map((newSkill) => {
-    const formatSkillGroup = existSkillGroups.find(
+  const newSkillsWithSkillGroup = [];
+  skillsSeed.forEach((newSkill) => {
+    const formatSkillGroup = existSkillGroups.filter(
       (existSkillGroup) => existSkillGroup.value === newSkill.skillGroup,
     );
 
-    return {
-      value: newSkill.value,
-      skill_group_id: formatSkillGroup,
-    };
+    formatSkillGroup.forEach((group) =>
+      newSkillsWithSkillGroup.push({
+        value: newSkill.value,
+        skill_group_id: group,
+      }),
+    );
   });
+
+  const flattenSkills = flatten(newSkillsWithSkillGroup);
+
   const createdSkills = await connection.getRepository(SkillEntity).save(
-    newSkillsWithSkillGroup.map((skill) => {
+    flattenSkills.map((skill) => {
       return connection.getRepository(SkillEntity).create(skill);
     }),
   );

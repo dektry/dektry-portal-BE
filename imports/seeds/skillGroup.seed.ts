@@ -116,53 +116,6 @@ export const skillGroupSeed = [
     ],
   },
   {
-    value: 'Event loop (vanilla JS)',
-    careerLevels: [
-      'Trainee',
-      'Junior',
-      'Regular (Junior+)',
-      'Middle',
-      'Middle+',
-      'Senior',
-    ],
-    positions: [
-      'Front-end developer',
-      'Back-end developer',
-      'Full stack developer',
-    ],
-  },
-  {
-    value: 'Types (primitives + object) (vanilla JS)',
-    careerLevels: [
-      'Trainee',
-      'Junior',
-      'Regular (Junior+)',
-      'Middle',
-      'Middle+',
-      'Senior',
-    ],
-    positions: [
-      'Front-end developer',
-      'Back-end developer',
-      'Full stack developer',
-    ],
-  },
-  {
-    value: 'Data Structures JS (vanilla JS)',
-    careerLevels: [
-      'Junior',
-      'Regular (Junior+)',
-      'Middle',
-      'Middle+',
-      'Senior',
-    ],
-    positions: [
-      'Front-end developer',
-      'Back-end developer',
-      'Full stack developer',
-    ],
-  },
-  {
     value: 'WebWorkers / ServiceWorkers',
     careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
     positions: ['Front-end developer', 'Full stack developer'],
@@ -428,11 +381,7 @@ export const skillGroupSeed = [
   {
     value: 'Jenkins',
     careerLevels: ['Regular (Junior+)', 'Middle', 'Middle+', 'Senior'],
-    positions: [
-      'Back-end developer',
-      'Full stack developer',
-      'Swift developer',
-    ],
+    positions: ['Back-end developer', 'Full stack developer'],
   },
   {
     value: 'CircleCI',

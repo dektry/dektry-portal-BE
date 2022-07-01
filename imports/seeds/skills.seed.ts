@@ -104,6 +104,10 @@ export const skillsSeed = [
     skillGroup: 'GraphQL (JS)',
   },
   {
+    value: 'Browser storages (LocalStorage and etc)',
+    skillGroup: 'Browser storages (LocalStorage and etc)',
+  },
+  {
     value: 'Cross tabs communication',
     skillGroup: 'Cross tabs communication',
   },

@@ -23,7 +23,7 @@ const importSkillGroups = async () => {
     console.log(`Skill group ${group.value} already exists!`);
   });
   const newSkillGroupsWithPositions = []; 
-  newSkillGroups.forEach((newGroup) => {
+  skillGroupSeed.forEach((newGroup) => {
     newGroup.positions.forEach((position) => {
       const existPositionEntity = existPositions.find(
         (existPosition) => existPosition.name === position,

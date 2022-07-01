@@ -27,7 +27,7 @@ const importSkillLevels = async () => {
     console.log(`Skill level ${level.value} already exists!`);
   });
 
-  const newSkillLevelsWithSkillGroupAndCareerLevels = newSkillLevels.map(
+  const newSkillLevelsWithSkillGroupAndCareerLevels = skillLevelsSeed.map(
     (newLevel) => {
       const existPositionEntity = existCarrerLevels.find(
         (existPosition) => existPosition.name === newLevel.level,
