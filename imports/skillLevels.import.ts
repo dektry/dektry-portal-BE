@@ -3,7 +3,7 @@ import { SkillsToLevelsEntity } from '../src/users/entity/skillsToLevels.entity'
 import { SkillEntity } from '../src/users/entity/skill.entity';
 import { CareerLevelEntity } from '../src/users/entity/careerLevel.entity';
 import { skillLevelsSeed } from './seeds/skillLevels.seed';
-import { difference } from 'lodash';
+import { difference, flatten } from 'lodash';
 
 const importSkillLevels = async () => {
   const connection: Connection = await createConnection('data-import');
@@ -27,27 +27,33 @@ const importSkillLevels = async () => {
     console.log(`Skill level ${level.value} already exists!`);
   });
 
-  const newSkillLevelsWithSkillGroupAndCareerLevels = skillLevelsSeed.map(
-    (newLevel) => {
-      const existPositionEntity = existCarrerLevels.find(
-        (existPosition) => existPosition.name === newLevel.level,
-      );
+  const newSkillLevelsWithSkillGroupAndCareerLevels = [];
+  skillLevelsSeed.forEach((newLevel) => {
+    const existPositionEntity = existCarrerLevels.find(
+      (existPosition) => existPosition.name === newLevel.level,
+    );
 
-      const existSkillEntity = existSkills.find(
-        (existSkill) => existSkill.value === newLevel.skill,
-      );
+    const existSkillEntity = existSkills.filter(
+      (existSkill) => existSkill.value === newLevel.skill,
+    );
 
-      return {
+    existSkillEntity.forEach((skill) =>
+      newSkillLevelsWithSkillGroupAndCareerLevels.push({
         value: newLevel.value,
-        skill_id: existSkillEntity,
+        skill_id: skill,
         level_id: existPositionEntity,
-      };
-    },
+      }),
+    );
+  });
+
+  const flattenSkillLevels = flatten(
+    newSkillLevelsWithSkillGroupAndCareerLevels,
   );
+
   const createdLevels = await connection
     .getRepository(SkillsToLevelsEntity)
     .save(
-      newSkillLevelsWithSkillGroupAndCareerLevels.map((level) => {
+      flattenSkillLevels.map((level) => {
         return connection.getRepository(SkillsToLevelsEntity).create(level);
       }),
     );
