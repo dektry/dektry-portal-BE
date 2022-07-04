@@ -27,14 +27,14 @@ const importData = async () => {
       await importSkillGroups();
       await importSkills();
       await importSkillLevels();
-      await importUsers();
-      await importCareers();
-      await importArticles();
-      await importProjects();
-      await importProjectsHistory();
-      await importTasks();
-      await importOnBoardingsTemplates();
-      await importVacations();
+      // await importUsers();
+      // await importCareers();
+      // await importArticles();
+      // await importProjects();
+      // await importProjectsHistory();
+      // await importTasks();
+      // await importOnBoardingsTemplates();
+      // await importVacations();
       break;
     case 'templates':
       await importTasks();
