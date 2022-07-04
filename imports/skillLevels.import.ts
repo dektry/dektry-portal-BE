@@ -14,10 +14,24 @@ const importSkillLevels = async () => {
   const existCarrerLevels = await connection
     .getRepository(CareerLevelEntity)
     .find();
+
   const newSkillLevels = skillLevelsSeed.filter((newLevel) => {
-    const isLevelExist = currentSkillLevels.some(
-      (existLevel) => newLevel.value === existLevel.value,
-    );
+    let isLevelExist = false;
+    for (const existLevel of currentSkillLevels) {
+      const existLevelSkillValue = existSkills.find(
+        (skill) => skill.id === existLevel.skill_id.id,
+      ).value;
+      const existLevelCareerValue = existCarrerLevels.find(
+        (careerLevel) => careerLevel.id === existLevel.level_id.id,
+      ).name;
+      if (
+        newLevel.value === existLevel.value &&
+        newLevel.skill === existLevelSkillValue &&
+        newLevel.level === existLevelCareerValue
+      ) {
+        isLevelExist = true;
+      }
+    }
     return !isLevelExist;
   });
 
@@ -28,7 +42,7 @@ const importSkillLevels = async () => {
   });
 
   const newSkillLevelsWithSkillGroupAndCareerLevels = [];
-  skillLevelsSeed.forEach((newLevel) => {
+  newSkillLevels.forEach((newLevel) => {
     const existPositionEntity = existCarrerLevels.find(
       (existPosition) => existPosition.name === newLevel.level,
     );

@@ -10,10 +10,21 @@ const importSkills = async () => {
   const existSkillGroups = await connection
     .getRepository(SkillGroupEntity)
     .find();
+
   const newSkills = skillsSeed.filter((newSkill) => {
-    const isSkillExist = currentSkills.some(
-      (existLevel) => newSkill.value === existLevel.value,
-    );
+    let isSkillExist = false;
+
+    for (const existSkill of currentSkills) {
+      const existSkillGroupValue = existSkillGroups.find(
+        (group) => group.id === existSkill.skill_group_id.id,
+      ).value;
+      if (
+        newSkill.value === existSkill.value &&
+        newSkill.skillGroup === existSkillGroupValue
+      ) {
+        isSkillExist = true;
+      }
+    }
     return !isSkillExist;
   });
 
@@ -24,7 +35,7 @@ const importSkills = async () => {
   });
 
   const newSkillsWithSkillGroup = [];
-  skillsSeed.forEach((newSkill) => {
+  newSkills.forEach((newSkill) => {
     const formatSkillGroup = existSkillGroups.filter(
       (existSkillGroup) => existSkillGroup.value === newSkill.skillGroup,
     );
