@@ -10,7 +10,6 @@ const importCareerLevels = async () => {
     .getRepository(CareerLevelEntity)
     .find();
   const existPositions = await connection.getRepository(PositionEntity).find();
-  console.log(existPositions);
   const newCareerLevels = careerLevelsSeed.filter((newLevel) => {
     const isLevelExist = currentLevels.some(
       (existLevel) => newLevel.name === existLevel.name,

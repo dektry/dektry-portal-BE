@@ -11,6 +11,9 @@ import importOnBoardingsTemplates from './onBoardingTemplates.import';
 import importTasks from './OTTasks.import';
 import importVacations from './vacations.import';
 import importCareerLevels from './careerLevels.import';
+import importSkillGroups from './skillGroups.import';
+import importSkills from './skills.import';
+import importSkillLevels from './skillLevels.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -21,6 +24,9 @@ const importData = async () => {
       await importRoles();
       await importPositions();
       await importCareerLevels();
+      await importSkillGroups();
+      await importSkills();
+      await importSkillLevels();
       await importUsers();
       await importCareers();
       await importArticles();

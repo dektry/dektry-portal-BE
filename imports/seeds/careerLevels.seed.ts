@@ -1,5 +1,14 @@
 export const careerLevelsSeed = [
   {
+    name: 'Trainee',
+    positions: [
+      'Front-end developer',
+      'Back-end developer',
+      'Full stack developer',
+      'Swift developer',
+    ],
+  },
+  {
     name: 'Junior',
     positions: [
       'Front-end developer',
@@ -9,7 +18,25 @@ export const careerLevelsSeed = [
     ],
   },
   {
+    name: 'Regular (Junior+)',
+    positions: [
+      'Front-end developer',
+      'Back-end developer',
+      'Full stack developer',
+      'Swift developer',
+    ],
+  },
+  {
     name: 'Middle',
+    positions: [
+      'Front-end developer',
+      'Back-end developer',
+      'Full stack developer',
+      'Swift developer',
+    ],
+  },
+  {
+    name: 'Middle+',
     positions: [
       'Front-end developer',
       'Back-end developer',
