@@ -39,13 +39,16 @@ export const countReviewResult = async (
 export const getInterviewAnswers = async (interview: InterviewEntity) => {
   const interviewSkills = await getRepository(SkillToInterviewEntity).find({
     where: {
-      interview_id: interview.id,
+      interview_id: interview?.id,
     },
     relations: ['skill_id'],
   });
+
+  const interviewSkillsIds = interviewSkills.map((skill) => skill.skill_id.id);
+
   const positionSkills = await getRepository(SkillsToLevelsEntity).find({
     where: {
-      skill_id: In(interviewSkills.map(({ skill_id }) => skill_id.id)),
+      skill_id: In(interviewSkillsIds),
       level_id: interview.level.id,
     },
     relations: ['skill_id'],
@@ -63,5 +66,6 @@ export const getInterviewAnswers = async (interview: InterviewEntity) => {
       id: skill.id,
     };
   });
+
   return answers;
 };

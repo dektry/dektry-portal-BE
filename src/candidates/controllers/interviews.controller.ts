@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { IAnswer, InterviewService } from '../services/interview.service';
 import { InterviewEntity } from '../entity/interview.entity';
@@ -13,6 +21,13 @@ export class InterviewsController {
     @Body() CompleteInterviewDto,
   ): Promise<{ interview: InterviewEntity; answers?: IAnswer[] }> {
     return this.InterviewService.completeInterview(CompleteInterviewDto);
+  }
+
+  @Put()
+  editInterview(
+    @Body() CompleteInterviewDto,
+  ): Promise<{ interview: InterviewEntity; answers?: IAnswer[] }> {
+    return this.InterviewService.editInterview(CompleteInterviewDto);
   }
 
   @UseGuards(JwtAuthGuard)
