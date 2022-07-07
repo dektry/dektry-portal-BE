@@ -1,3 +1,6 @@
+import { InterviewEntity } from 'candidates/entity/interview.entity';
+import { IAnswer } from 'candidates/services/interview.service';
+
 export enum LevelTypesEnum {
   None = 'none',
   Novice = 'novice',
@@ -11,3 +14,11 @@ export const levelTypesPriority: { [key in LevelTypesEnum]: number } = {
   [LevelTypesEnum.Intermediate]: 3,
   [LevelTypesEnum.Expert]: 4,
 };
+
+export interface ICompletedInterviewResponse {
+  interview: InterviewEntity;
+  answers?: IAnswer[];
+};
+
+
+export const candidateNotFound = 'Candidate not found';
