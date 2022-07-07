@@ -47,27 +47,28 @@ export class InterviewService {
     private levelRepository: levelRepository,
     @InjectRepository(skillRepository)
     private skillRepository: skillRepository,
-  ) {}
+  ) { }
   async completeInterview(interview: ICompleteInterview) {
-    const dateNow = moment().format();
-    const candidate: CandidateEntity = await this.candidateRepository.findOne(
-      interview.candidateId,
-    );
-
-    if (!candidate)
-      throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
-
-    const position: PositionEntity = await this.positionRepository.findOne(
-      interview.positionId,
-    );
-    const level = await this.levelRepository.findOne(interview.levelId);
-
-    const filteredSkills: SkillEntity[] = await this.skillRepository.find({
-      where: {
-        id: In(Object.keys(interview.answers)),
-      },
-    });
     try {
+      const dateNow = moment().format();
+      const candidate: CandidateEntity = await this.candidateRepository.findOne(
+        interview.candidateId,
+      );
+
+      if (!candidate)
+        throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+
+      const position: PositionEntity = await this.positionRepository.findOne(
+        interview.positionId,
+      );
+      const level = await this.levelRepository.findOne(interview.levelId);
+
+      const filteredSkills: SkillEntity[] = await this.skillRepository.find({
+        where: {
+          id: In(Object.keys(interview.answers)),
+        },
+      });
+
       const result = await countReviewResult(interview, filteredSkills);
       const savedInterview = await this.interviewRepository.save({
         candidate,
@@ -96,36 +97,38 @@ export class InterviewService {
         answers,
       };
     } catch (error) {
-      console.error(error);
+      console.error('[COMPLETE_INTERVIEW_ERROR]', error);
+      throw new HttpException(error.text, 500);
     }
   }
 
   async editInterview(interview: ICompleteInterview) {
-    const candidate: CandidateEntity = await this.candidateRepository.findOne(
-      interview.candidateId,
-    );
+    try {
+      const candidate: CandidateEntity = await this.candidateRepository.findOne(
+        interview.candidateId,
+      );
 
-    if (!candidate)
-      throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+      if (!candidate)
+        throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
 
-    const position: PositionEntity = await this.positionRepository.findOne(
-      interview.positionId,
-    );
-    const level = await this.levelRepository.findOne(interview.levelId);
+      const position: PositionEntity = await this.positionRepository.findOne(
+        interview.positionId,
+      );
+      const level = await this.levelRepository.findOne(interview.levelId);
 
-    const filteredSkills: SkillEntity[] = await this.skillRepository.find({
-      where: {
-        id: In(Object.keys(interview.answers)),
-      },
-    });
-
-    const prevResultsOfInterview: InterviewEntity =
-      await this.interviewRepository.findOne({
+      const filteredSkills: SkillEntity[] = await this.skillRepository.find({
         where: {
-          candidate,
+          id: In(Object.keys(interview.answers)),
         },
       });
-    try {
+
+      const prevResultsOfInterview: InterviewEntity =
+        await this.interviewRepository.findOne({
+          where: {
+            candidate,
+          },
+        });
+
       const result = await countReviewResult(interview, filteredSkills);
       await this.interviewRepository.update(
         { id: prevResultsOfInterview.id },
@@ -190,7 +193,8 @@ export class InterviewService {
         answers,
       };
     } catch (error) {
-      console.error(error);
+      console.error('[EDIT_INTERVIEW_ERROR]', error);
+      throw new HttpException(error.text, 500);
     }
   }
 
