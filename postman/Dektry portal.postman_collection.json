@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "49814799-6e16-478c-887d-d28bb85d22a9",
+		"_postman_id": "cf795270-c617-443c-8acc-8458c8e7e852",
 		"name": "Dektry portal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -476,6 +476,63 @@
 							"path": [
 								"users",
 								"4b1cef36-0b1a-40a7-8278-91390e6b5661"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get soft skill list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/softskill",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"softskill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new soft skill",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"value\": \"Communication 4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/softskill",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"softskill"
 							]
 						}
 					},

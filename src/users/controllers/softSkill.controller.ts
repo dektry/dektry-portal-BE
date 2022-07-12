@@ -17,6 +17,7 @@ export class SoftSkillController {
     return this.SoftSkillService.getSoftSkillList();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   addSoftSkill(@Body() skillBody: SoftSkillDto): Promise<SoftSkillEntity[]> {
     return this.SoftSkillService.addSoftSkill(skillBody);
