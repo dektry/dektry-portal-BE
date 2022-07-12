@@ -9,6 +9,7 @@ import { LevelsController } from './controllers/level.controller';
 import { CareerController } from './controllers/career.controller';
 import { SkillGroupController } from './controllers/skillGroup.controller';
 import { PositionGroupController } from './controllers/positionGroup.controller';
+import { SoftSkillController } from './controllers/softSkill.controller';
 
 import { UsersService } from './services/users.service';
 import { RoleService } from './services/role.service';
@@ -18,6 +19,7 @@ import { PositionService } from './services/position.service';
 import { LevelsService } from './services/level.service';
 import { CareerService } from './services/career.service';
 import { PositionGroupService } from './services/positionGroup.service';
+import { SoftSkillService } from './services/softSkill.service';
 
 import { careerRepository } from './repositories/career.repository';
 import { positionGroupRepository } from './repositories/positionGroup.repository';
@@ -64,6 +66,7 @@ import { levelRepository } from './repositories/level.repository';
     CareerService,
     PositionGroupService,
     SkillGroupService,
+    SoftSkillService,
   ],
   controllers: [
     UsersController,
@@ -74,6 +77,7 @@ import { levelRepository } from './repositories/level.repository';
     CareerController,
     PositionGroupController,
     SkillGroupController,
+    SoftSkillController,
   ],
   exports: [UsersService],
 })
