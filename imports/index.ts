@@ -14,6 +14,7 @@ import importCareerLevels from './careerLevels.import';
 import importSkillGroups from './skillGroups.import';
 import importSkills from './skills.import';
 import importSkillLevels from './skillLevels.import';
+import importSoftSkills from './softSkill.imports';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -26,6 +27,7 @@ const importData = async () => {
       await importCareerLevels();
       await importSkillGroups();
       await importSkills();
+      await importSoftSkills();
       await importSkillLevels();
       await importUsers();
       await importCareers();
