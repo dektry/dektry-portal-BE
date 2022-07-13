@@ -1626,6 +1626,71 @@
 			]
 		},
 		{
+			"name": "Candidates",
+			"item": [
+				{
+					"name": "Complete soft skill interview",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hobby\": \"Some text body\",\n    \"comment\": \"Some comment\",\n    \"candidateId\": \"15f32c8c-cec1-4982-9899-df11c444e328\",\n    \"softSkills\": [\n         {\n            \"id\": \"2eeca6a5-8a06-436a-a812-7ac4d1ad718a\",\n            \"value\": \"Communication\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"b90fcd2f-01ea-4415-ba61-dc1dbc795c86\",\n            \"value\": \"Listening\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"fb30791b-9368-46a8-b9ad-d5b8fa445f7b\",\n            \"value\": \"Time management\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"2fe3e6a0-3ac7-4fef-a0c4-e8851ca4bf68\",\n            \"value\": \"Leadership\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"45399caa-65b7-4c74-8bf0-670d50a64662\",\n            \"value\": \"Teamwork\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"1aac9795-3410-42d5-ab52-c9ba5cd91e84\",\n            \"value\": \"Initiative\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"a79ccafa-291c-406c-93f7-302f6f129f6d\",\n            \"value\": \"Attention to details\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"ee863bca-4634-4518-89d4-62a3efdf7ada\",\n            \"value\": \"Deadline focus\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"01975d2c-013b-455b-83fc-9872bf074c18\",\n            \"value\": \"Motivation\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"129b9ad7-36fd-4d6b-85c2-f09ec73ac47d\",\n            \"value\": \"Communication 1\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"d4aa38c5-84c9-4659-b22e-8d8ff2d0b976\",\n            \"value\": \"Communication 2\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"b5541cbc-b555-4669-9586-d89ad2e419fe\",\n            \"value\": \"Communication 3\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"5661b039-47b5-4ccf-a6cd-7f71dfbfe0ac\",\n            \"value\": \"Communication 4\",\n            \"isActive\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/softinterviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"softinterviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get soft interview result",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/softinterviews/15f32c8c-cec1-4982-9899-df11c444e328",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"softinterviews",
+								"15f32c8c-cec1-4982-9899-df11c444e328"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Get access",
 			"request": {
 				"auth": {

@@ -3,12 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { CandidatesController } from './controllers/candidates.controller';
 import { InterviewsController } from './controllers/interviews.controller';
+import { SoftInterviewsController } from './controllers/softInterviews.controller';
 
 import { CandidatesService } from './services/candidates.service';
 import { EducationService } from './services/education.service';
 import { LanguageService } from './services/language.service';
 import { ExperienceService } from './services/experience.service';
 import { InterviewService } from './services/interview.service';
+import { SoftInterviewService } from './services/softInterview.service';
 
 import { skillsToLevelsRepository } from '../users/repositories/skillsToLevels.repository';
 import { positionRepository } from '../users/repositories/position.repository';
@@ -22,6 +24,7 @@ import { skillToInterviewRepository } from './repositories/skillToInterview.repo
 import { interviewRepository } from './repositories/interview.repository';
 import { softInterviewRepository } from './repositories/softInerview.repository';
 import { softSkillToSoftInterviewRepository } from './repositories/softSkillToSoftInterview.repository';
+import { softSkillRepository } from '../users/repositories/softSkill.repository';
 
 @Module({
   imports: [
@@ -38,15 +41,21 @@ import { softSkillToSoftInterviewRepository } from './repositories/softSkillToSo
       skillRepository,
       softInterviewRepository,
       softSkillToSoftInterviewRepository,
+      softSkillRepository,
     ]),
   ],
-  controllers: [CandidatesController, InterviewsController],
+  controllers: [
+    CandidatesController,
+    InterviewsController,
+    SoftInterviewsController,
+  ],
   providers: [
     CandidatesService,
     EducationService,
     LanguageService,
     ExperienceService,
     InterviewService,
+    SoftInterviewService,
   ],
 })
 export class CandidatesModule {}
