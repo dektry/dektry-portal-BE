@@ -26,6 +26,14 @@ export class SoftInterviewsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Put()
+  editInterviewResult(
+    @Body() completeInterviewBody: CompleteSoftInterviewsDto,
+  ): Promise<ISoftInterviewResultResponse> {
+    return this.SoftInterviewService.editInterviewResult(completeInterviewBody);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':candidateId')
   getInterviewResult(
     @Param('candidateId') candidateId: string,

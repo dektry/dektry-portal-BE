@@ -18,6 +18,7 @@ import {
   softSkillInterviewExist,
   softSkillInterviewNotFound,
   ISoftInterviewResultResponse,
+  softSkillInterviewCantEdit,
 } from '../utils/constants';
 
 @Injectable()
@@ -84,7 +85,6 @@ export class SoftInterviewService {
       );
     }
   }
-
   async getInterviewResult(
     candidateId: string,
   ): Promise<ISoftInterviewResultResponse> {
@@ -112,6 +112,47 @@ export class SoftInterviewService {
 
       throw new HttpException(
         softSkillInterviewNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+  async editInterviewResult(
+    softInerview: ICompleteSoftInterviewBody,
+  ): Promise<ISoftInterviewResultResponse> {
+    try {
+      const candidate: CandidateEntity = await this.candidateRepository.findOne(
+        softInerview.candidateId,
+      );
+
+      if (!candidate)
+        throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+
+      await this.softInterviewRepository.update(
+        { candidate: candidate },
+        {
+          hobby: softInerview.hobby,
+          comment: softInerview.comment,
+        },
+      );
+
+      for (const activeSkillToUpdate of softInerview.softSkills) {
+        await this.softSkillToSoftInterviewRepository.update(
+          { id: activeSkillToUpdate.id },
+          {
+            isActive: activeSkillToUpdate.isActive,
+          },
+        );
+      }
+
+      return await this.getInterviewResult(softInerview.candidateId);
+    } catch (err) {
+      console.error('[EDIT_SOFT_SKILL_INTERVIEW_ERROR]', err);
+      Logger.error(err);
+
+      if (err?.response) return err?.response;
+
+      throw new HttpException(
+        softSkillInterviewCantEdit,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

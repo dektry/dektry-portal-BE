@@ -50,3 +50,4 @@ export const softSkillInterviewExist = 'Soft skill interview already exists!';
 export const softSkillInterviewNotFound = 'Soft skill interview not found!';
 export const softSkillInterviewCantComplete =
   'Soft skill interview cant be complete!';
+export const softSkillInterviewCantEdit = 'Soft skill interview cant be edit!';

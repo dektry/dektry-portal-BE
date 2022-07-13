@@ -1687,6 +1687,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update soft interviews result",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"hobby\": \"footbol1\",\n    \"comment\": \"update comment1\",\n    \"candidateId\": \"15f32c8c-cec1-4982-9899-df11c444e328\",\n    \"softSkills\": [\n        {\n            \"id\": \"dd41e46e-1741-471c-bff8-675efcd0fcd9\",\n            \"isActive\": false\n        },\n        {\n            \"id\": \"1bc6133d-d817-4ca3-8773-0d08a3dc3433\",\n            \"isActive\": false\n        },\n        {\n            \"id\": \"1fed4da4-16e2-4465-bbb6-78bb0cec5771\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"2d03136a-0ddc-4ed6-a81b-a359dddfb271\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"7ef8817c-899c-42d8-a320-d3ca213dac57\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"f7c50fa2-2b30-450c-83d8-8523524e7a3f\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"fa4276bd-3a6e-4a01-99c4-421ac9faff88\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"f7dc2d64-6ada-41cb-958a-83c716034e36\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"857e5d21-4d03-4376-b554-04851c4dc65f\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"c9aadd61-c14a-4788-8273-fcfe88d04d75\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"19c5076e-09c8-4ced-9573-fc3ede2001c0\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"0a34bb4f-598d-4763-b284-1e753354a0cb\",\n            \"isActive\": true\n        },\n        {\n            \"id\": \"0806c752-f792-4572-b7a1-c31f857044c4\",\n            \"isActive\": true\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/softinterviews",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"softinterviews"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
