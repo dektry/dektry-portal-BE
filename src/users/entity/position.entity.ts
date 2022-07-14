@@ -1,5 +1,3 @@
-import { TemplatesEntity } from '../../onboarding/entity/templates.entity';
-import { ArticleEntity } from '../../articles/entity/articles.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,11 +9,15 @@ import {
   JoinTable,
   JoinColumn,
 } from 'typeorm';
+
 import { AccessEntity } from './access.entity';
 import { PositionGroupEntity } from './positionGroup.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
 import { SkillGroupEntity } from './skillGroup.entity';
 import { InterviewEntity } from '../../candidates/entity/interview.entity';
+import { SoftInterviewEntity } from '../../candidates/entity/softInterview.entity';
+import { TemplatesEntity } from '../../onboarding/entity/templates.entity';
+import { ArticleEntity } from '../../articles/entity/articles.entity';
 
 @Entity({ name: 'positions' })
 export class PositionEntity extends BaseEntity {
@@ -92,4 +94,13 @@ export class PositionEntity extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   interview: InterviewEntity[];
+
+  @OneToMany(
+    () => SoftInterviewEntity,
+    (softInterview) => softInterview.position,
+    {
+      orphanedRowAction: 'delete',
+    },
+  )
+  softInterview: SoftInterviewEntity[];
 }

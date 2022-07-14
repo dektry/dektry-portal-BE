@@ -18,7 +18,59 @@ export const levelTypesPriority: { [key in LevelTypesEnum]: number } = {
 export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
   answers?: IAnswer[];
-};
+}
 
+export interface ICompleteSoftInterviewBody {
+  candidateId: string;
+  positionId: string;
+  levelId: string;
+  hobby?: string;
+  comment?: string;
+  softSkills: Array<ISoftSkill>;
+}
+
+export interface IEditSoftInterviewBody {
+  candidateId: string;
+  hobby?: string;
+  comment?: string;
+  softSkills: Array<ISoftSkill>;
+}
+
+export interface ISoftSkill {
+  id: string;
+  value: string;
+  isActive: boolean;
+}
+
+export interface ISoftInterviewResultResponse {
+  id: string;
+  createdAt: Date;
+  hobby: string;
+  comment: string;
+  skills: Array<{
+    id: string;
+    isActive: boolean;
+    soft_skill_id: { id: string; value: string };
+  }>;
+  level: {
+    id: string;
+    name: string;
+  };
+  position: {
+    id: string;
+    name: string;
+    duties: string;
+    requirements: string;
+    salaryMinLimit: number;
+    salaryMaxLimit: number;
+  };
+}
 
 export const candidateNotFound = 'Candidate not found';
+export const positionNotFound = 'Position not found';
+export const levelNotFound = 'Level not found';
+export const softSkillInterviewExist = 'Soft skill interview already exists!';
+export const softSkillInterviewNotFound = 'Soft skill interview not found!';
+export const softSkillInterviewCantComplete =
+  'Soft skill interview cant be complete!';
+export const softSkillInterviewCantEdit = 'Soft skill interview cant be edit!';
