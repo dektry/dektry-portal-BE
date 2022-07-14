@@ -9,10 +9,12 @@ import {
   JoinTable,
   OneToOne,
 } from 'typeorm';
+
 import { ExperienceEntity } from './experience.entity';
 import { EducationEntity } from './education.entity';
 import { LanguageEntity } from './language.entity';
 import { InterviewEntity } from './interview.entity';
+import { SoftInterviewEntity } from './softInterview.entity';
 
 @Entity({ name: 'candidate' })
 export class CandidateEntity extends BaseEntity {
@@ -61,4 +63,10 @@ export class CandidateEntity extends BaseEntity {
 
   @OneToOne(() => InterviewEntity, (interview) => interview.candidate)
   interview: InterviewEntity;
+
+  @OneToOne(
+    () => SoftInterviewEntity,
+    (softInterview) => softInterview.candidate,
+  )
+  softInterview: SoftInterviewEntity;
 }

@@ -6,9 +6,13 @@ import {
   JoinColumn,
   OneToOne,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
+
 import { CandidateEntity } from './candidate.entity';
 import { SoftSkillToSoftInterviewEntity } from './softSkillToSoftInterview.entity';
+import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
+import { PositionEntity } from '../../users/entity/position.entity';
 
 @Entity({ name: 'soft_interview' })
 export class SoftInterviewEntity extends BaseEntity {
@@ -31,6 +35,20 @@ export class SoftInterviewEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'candidate_id' })
   candidate: CandidateEntity;
+
+  @ManyToOne(() => CareerLevelEntity, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'level_id' })
+  level: CareerLevelEntity;
+
+  @ManyToOne(() => PositionEntity, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'position_id' })
+  position: PositionEntity;
 
   @OneToMany(
     () => SoftSkillToSoftInterviewEntity,
