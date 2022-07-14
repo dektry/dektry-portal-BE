@@ -1,4 +1,6 @@
 import { IsOptional, MaxLength } from 'class-validator';
+import { InterviewEntity } from '../entity/interview.entity';
+import { SoftInterviewEntity } from '../entity/softInterview.entity';
 
 export class UpdateCandidateDto {
   @IsOptional()
@@ -21,6 +23,12 @@ export class UpdateCandidateDto {
   @IsOptional()
   @MaxLength(255, { message: 'Email is too long' })
   email: string;
+
+  @IsOptional()
+  interview: null | InterviewEntity;
+
+  @IsOptional()
+  soft_interview: null | SoftInterviewEntity;
 }
 
 export class UpdateCandidatePFdto {

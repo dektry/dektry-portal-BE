@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult } from 'typeorm';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { CandidateEntity } from '../entity/candidate.entity';
-import { InterviewEntity } from 'candidates/entity/interview.entity';
 import { UpdateCandidateDto } from '../dto/candidate.dto';
 
 type getCandidatesListParams = {
@@ -11,7 +10,9 @@ type getCandidatesListParams = {
   page: number;
   order?: 'ASC' | 'DESC';
   field?: string;
-  query?: string;
+  fullName?: string;
+  woInterview?: string;
+  woSoftInterview?: string;
 };
 
 @Injectable()
@@ -19,33 +20,48 @@ export class CandidatesService {
   constructor(
     @InjectRepository(candidateRepository)
     private candidateRepository: candidateRepository,
-  ) { }
+  ) {}
 
   async getCandidatesList({
     limit,
     page,
     order,
     field,
-    query,
+    fullName,
+    woInterview,
+    woSoftInterview,
   }: getCandidatesListParams): Promise<[CandidateEntity[], number]> {
+    const filterByTechInterview = JSON.parse(woInterview)
+      ? 'interview.candidate_id IS NULL'
+      : {};
+    const filterBySoftInterview = JSON.parse(woSoftInterview)
+      ? 'softInterview.candidate_id IS NULL'
+      : {};
+
     return await this.candidateRepository
       .createQueryBuilder('candidate')
-      .leftJoin(
-        InterviewEntity,
+      .leftJoinAndSelect(
+        'candidate.interview',
         'interview',
         'interview.candidate_id = candidate.id',
       )
+      .leftJoinAndSelect(
+        'candidate.softInterview',
+        'softInterview',
+        'softInterview.id = candidate.id',
+      )
       .where('candidate.fullName ILIKE :query', {
-        query: `%${query ? query.trim() : ''}%`,
+        query: `%${fullName ? fullName.trim() : ''}%`,
       })
-      .andWhere('interview.candidate_id IS NULL')
+      .andWhere(filterByTechInterview)
+      .andWhere(filterBySoftInterview)
       .skip(limit * (page - 1))
       .take(limit)
       .orderBy(
         order
           ? {
-            [`candidate.${field}`]: order,
-          }
+              [`candidate.${field}`]: order,
+            }
           : {},
       )
       .getManyAndCount();
