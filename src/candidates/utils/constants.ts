@@ -22,6 +22,15 @@ export interface ICompletedInterviewResponse {
 
 export interface ICompleteSoftInterviewBody {
   candidateId: string;
+  positionId: string;
+  levelId: string;
+  hobby?: string;
+  comment?: string;
+  softSkills: Array<ISoftSkill>;
+}
+
+export interface IEditSoftInterviewBody {
+  candidateId: string;
   hobby?: string;
   comment?: string;
   softSkills: Array<ISoftSkill>;
@@ -43,9 +52,23 @@ export interface ISoftInterviewResultResponse {
     isActive: boolean;
     soft_skill_id: { id: string; value: string };
   }>;
+  level: {
+    id: string;
+    name: string;
+  };
+  position: {
+    id: string;
+    name: string;
+    duties: string;
+    requirements: string;
+    salaryMinLimit: number;
+    salaryMaxLimit: number;
+  };
 }
 
 export const candidateNotFound = 'Candidate not found';
+export const positionNotFound = 'Position not found';
+export const levelNotFound = 'Level not found';
 export const softSkillInterviewExist = 'Soft skill interview already exists!';
 export const softSkillInterviewNotFound = 'Soft skill interview not found!';
 export const softSkillInterviewCantComplete =

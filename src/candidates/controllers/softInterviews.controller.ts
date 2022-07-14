@@ -10,7 +10,10 @@ import {
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 
-import { CompleteSoftInterviewsDto } from '../dto/softInterviews.dto';
+import {
+  CompleteSoftInterviewsDto,
+  EditSoftInterviewsDto,
+} from '../dto/softInterviews.dto';
 import { ISoftInterviewResultResponse } from '../utils/constants';
 
 import { SoftInterviewService } from '../services/softInterview.service';
@@ -28,9 +31,9 @@ export class SoftInterviewsController {
   @UseGuards(JwtAuthGuard)
   @Put()
   editInterviewResult(
-    @Body() completeInterviewBody: CompleteSoftInterviewsDto,
+    @Body() editInterviewBody: EditSoftInterviewsDto,
   ): Promise<ISoftInterviewResultResponse> {
-    return this.SoftInterviewService.editInterviewResult(completeInterviewBody);
+    return this.SoftInterviewService.editInterviewResult(editInterviewBody);
   }
 
   @UseGuards(JwtAuthGuard)

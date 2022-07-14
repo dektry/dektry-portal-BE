@@ -6,15 +6,20 @@ import * as moment from 'moment';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { softSkillToSoftInterviewRepository } from '../repositories/softSkillToSoftInterview.repository';
 import { softInterviewRepository } from '../repositories/softInerview.repository';
-import { softSkillRepository } from '../../users/repositories/softSkill.repository';
+import { positionRepository } from 'users/repositories/position.repository';
+import { levelRepository } from 'users/repositories/level.repository';
 
 import { CandidateEntity } from '../entity/candidate.entity';
 import { SoftSkillToSoftInterviewEntity } from '../entity/softSkillToSoftInterview.entity';
+import { PositionEntity } from 'users/entity/position.entity';
 
 import {
   ICompleteSoftInterviewBody,
+  IEditSoftInterviewBody,
   softSkillInterviewCantComplete,
   candidateNotFound,
+  positionNotFound,
+  levelNotFound,
   softSkillInterviewExist,
   softSkillInterviewNotFound,
   ISoftInterviewResultResponse,
@@ -30,19 +35,31 @@ export class SoftInterviewService {
     private softSkillToSoftInterviewRepository: softSkillToSoftInterviewRepository,
     @InjectRepository(softInterviewRepository)
     private softInterviewRepository: softInterviewRepository,
-    @InjectRepository(softSkillRepository)
-    private softSkillRepository: softSkillRepository,
+    @InjectRepository(positionRepository)
+    private positionRepository: positionRepository,
+    @InjectRepository(levelRepository)
+    private levelRepository: levelRepository,
   ) {}
 
   async completeInterview(softInerview: ICompleteSoftInterviewBody) {
     try {
       const dateNow = moment().format();
+
       const candidate: CandidateEntity = await this.candidateRepository.findOne(
         softInerview.candidateId,
       );
-
       if (!candidate)
         throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+
+      const position: PositionEntity = await this.positionRepository.findOne(
+        softInerview.positionId,
+      );
+      if (!position)
+        throw new HttpException(positionNotFound, HttpStatus.BAD_REQUEST);
+
+      const level = await this.levelRepository.findOne(softInerview.levelId);
+      if (!level)
+        throw new HttpException(levelNotFound, HttpStatus.BAD_REQUEST);
 
       const isSoftInerviewExist = await this.softInterviewRepository.findOne({
         where: {
@@ -61,6 +78,8 @@ export class SoftInterviewService {
         createdAt: dateNow,
         hobby: softInerview.hobby,
         comment: softInerview.comment,
+        position,
+        level,
       });
 
       const interviewSkills: SoftSkillToSoftInterviewEntity[] =
@@ -94,7 +113,7 @@ export class SoftInterviewService {
           where: {
             candidate: candidateId,
           },
-          relations: ['skills', 'skills.soft_skill_id'],
+          relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
         });
 
       if (!isSoftInerview)
@@ -117,7 +136,7 @@ export class SoftInterviewService {
     }
   }
   async editInterviewResult(
-    softInerview: ICompleteSoftInterviewBody,
+    softInerview: IEditSoftInterviewBody,
   ): Promise<ISoftInterviewResultResponse> {
     try {
       const candidate: CandidateEntity = await this.candidateRepository.findOne(
