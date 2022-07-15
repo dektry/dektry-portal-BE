@@ -24,14 +24,18 @@ export class CandidatesController {
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('order') order?: 'ASC' | 'DESC',
     @Query('field') field?: string,
-    @Query('query') query?: string,
+    @Query('fullName') fullName?: string,
+    @Query('woInterview') woInterview?: string,
+    @Query('woSoftInterview') woSoftInterview?: string,
   ) {
     return this.CandidatesService.getCandidatesList({
       limit,
       page,
       order,
       field,
-      query,
+      fullName,
+      woInterview,
+      woSoftInterview,
     });
   }
 
