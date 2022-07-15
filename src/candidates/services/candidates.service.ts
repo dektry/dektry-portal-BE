@@ -48,7 +48,7 @@ export class CandidatesService {
       .leftJoinAndSelect(
         'candidate.softInterview',
         'softInterview',
-        'softInterview.id = candidate.id',
+        'softInterview.candidate_id = candidate.id',
       )
       .where('candidate.fullName ILIKE :query', {
         query: `%${fullName ? fullName.trim() : ''}%`,
