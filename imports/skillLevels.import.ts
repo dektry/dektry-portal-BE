@@ -9,7 +9,7 @@ const importSkillLevels = async () => {
   const connection: Connection = await createConnection('data-import');
   const currentSkillLevels = await connection
     .getRepository(SkillsToLevelsEntity)
-    .find();
+    .find({ relations: ['skill_id', 'level_id'] });
   const existSkills = await connection.getRepository(SkillEntity).find();
   const existCarrerLevels = await connection
     .getRepository(CareerLevelEntity)

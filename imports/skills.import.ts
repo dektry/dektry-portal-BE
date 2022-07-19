@@ -6,7 +6,9 @@ import { difference, flatten } from 'lodash';
 
 const importSkills = async () => {
   const connection: Connection = await createConnection('data-import');
-  const currentSkills = await connection.getRepository(SkillEntity).find();
+  const currentSkills = await connection
+    .getRepository(SkillEntity)
+    .find({ relations: ['skill_group_id'] });
   const existSkillGroups = await connection
     .getRepository(SkillGroupEntity)
     .find();

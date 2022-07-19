@@ -1,3 +1,5 @@
+import { Logger } from '@nestjs/common';
+
 import importRoles from './roles.import';
 import importPermissions from './permissions.import';
 import importUsers from './users.import';
@@ -48,5 +50,9 @@ const importData = async () => {
       break;
   }
 };
-
-importData();
+try {
+  importData();
+} catch (err) {
+  console.error('[ERROR_SEED_RUN]', err);
+  Logger.error(err);
+}
