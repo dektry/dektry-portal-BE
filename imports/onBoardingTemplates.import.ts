@@ -67,16 +67,21 @@ const importOnBoardingsTemplates = async () => {
   const accessRelation = await connection
     .getRepository(PositionEntity)
     .findOne({ name: accessSeed.position });
-
-  const createdTemplatesAccess = await connection
+  const isAccessNameAlreadyExist = await connection
     .getRepository(AccessEntity)
-    .save(
-      connection
-        .getRepository(AccessEntity)
-        .create({ ...accessSeed, positions: [accessRelation] }),
-    );
-  if (createdTemplatesAccess) {
-    console.log('Access to templates created!');
+    .findOne({ name: accessSeed.name });
+
+  if (!isAccessNameAlreadyExist) {
+    const createdTemplatesAccess = await connection
+      .getRepository(AccessEntity)
+      .save(
+        connection
+          .getRepository(AccessEntity)
+          .create({ ...accessSeed, positions: [accessRelation] }),
+      );
+    if (createdTemplatesAccess) {
+      console.log('Access to templates created!');
+    }
   }
 
   await connection.close();

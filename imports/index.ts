@@ -48,5 +48,8 @@ const importData = async () => {
       break;
   }
 };
-
-importData();
+try {
+  importData();
+} catch (err) {
+  console.log('[ERROR_SEED]', err);
+}
