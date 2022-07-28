@@ -1,5 +1,4 @@
 import { InterviewEntity } from 'candidates/entity/interview.entity';
-import { IAnswer } from 'candidates/services/interview.service';
 
 export enum LevelTypesEnum {
   None = 'none',
@@ -14,6 +13,27 @@ export const levelTypesPriority: { [key in LevelTypesEnum]: number } = {
   [LevelTypesEnum.Intermediate]: 3,
   [LevelTypesEnum.Expert]: 4,
 };
+
+export interface ICompleteInterview {
+  candidateId: string;
+  levelId: string;
+  positionId: string;
+  answers: {
+    [key: string]: string;
+  };
+}
+
+export interface IEditInterviewBody extends ICompleteInterview {
+  comment?: string;
+  isOffered: boolean;
+}
+
+export interface IAnswer {
+  skill: string;
+  actual: string;
+  desired: string;
+  id: string;
+}
 
 export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
@@ -67,6 +87,7 @@ export interface ISoftInterviewResultResponse {
 }
 
 export const candidateNotFound = 'Candidate not found';
+export const interviewIsOver = 'The interview is over!';
 export const positionNotFound = 'Position not found';
 export const levelNotFound = 'Level not found';
 export const softSkillInterviewExist = 'Soft skill interview already exists!';
