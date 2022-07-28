@@ -7,10 +7,20 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { IAnswer, InterviewService } from '../services/interview.service';
+
+import { InterviewService } from '../services/interview.service';
 import { InterviewEntity } from '../entity/interview.entity';
-import { ICompletedInterviewResponse } from 'candidates/utils/constants';
+
+import {
+  ICompletedInterviewResponse,
+  IAnswer,
+} from 'candidates/utils/constants';
+import {
+  CompleteInterviewsDto,
+  EditInterviewsDto,
+} from './../dto/interviews.dto';
 
 @Controller('interviews')
 export class InterviewsController {
@@ -19,23 +29,23 @@ export class InterviewsController {
   @UseGuards(JwtAuthGuard)
   @Post()
   completeInterview(
-    @Body() CompleteInterviewDto,
+    @Body() completeInterviewDto: CompleteInterviewsDto,
   ): Promise<ICompletedInterviewResponse> {
-    return this.InterviewService.completeInterview(CompleteInterviewDto);
+    return this.InterviewService.completeInterview(completeInterviewDto);
   }
 
   @Put()
   editInterview(
-    @Body() CompleteInterviewDto,
+    @Body() editInterviewDto: EditInterviewsDto,
   ): Promise<ICompletedInterviewResponse> {
-    return this.InterviewService.editInterview(CompleteInterviewDto);
+    return this.InterviewService.editInterview(editInterviewDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':candidateId')
   getInterviewResult(
     @Param('candidateId') candidateId: string,
-  ): Promise<{ interview: InterviewEntity; answers?: IAnswer[] }> {
+  ): Promise<ICompletedInterviewResponse> {
     return this.InterviewService.getInterviewResult(candidateId);
   }
 }

@@ -1,6 +1,6 @@
 import { getRepository, In } from 'typeorm';
 import { levelTypesPriority } from './constants';
-import { IAnswer, ICompleteInterview } from '../services/interview.service';
+import { IAnswer, ICompleteInterview } from '../utils/constants';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 import { InterviewEntity } from '../entity/interview.entity';
 import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';

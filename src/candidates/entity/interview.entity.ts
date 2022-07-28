@@ -5,7 +5,8 @@ import {
   BaseEntity,
   JoinColumn,
   OneToOne,
-  OneToMany, ManyToOne
+  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { CandidateEntity } from './candidate.entity';
 import { SkillToInterviewEntity } from './skillToInterview.entity';
@@ -22,6 +23,12 @@ export class InterviewEntity extends BaseEntity {
 
   @Column({ type: 'integer' })
   result: number;
+
+  @Column({ type: 'boolean', nullable: true })
+  isOffered: boolean;
+
+  @Column({ length: 512, nullable: true })
+  comment: string;
 
   @OneToOne(() => CandidateEntity, (candidate) => candidate.interview, {
     orphanedRowAction: 'delete',
