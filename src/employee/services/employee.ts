@@ -39,6 +39,19 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
     pfId: employee.id,
     pfUpdatedAt: employee.updated_at,
     fullName: employee.full_name,
+    email: employee.email,
+    personalEmail: employee.personal_email,
+    mobileNumber: employee.mobile_number,
+    dateOfBirth: employee.date_of_birth,
+    gender: employee.gender,
+    avatarUrl: employee.avatar_url,
+    hiredOn: employee.hired_on,
+    skypeUsername: employee.skype_username,
+    slackUsername: employee.slack_username,
+    twitterUsername: employee.twitter_username,
+    facebookUrl: employee.facebook_url,
+    linkedinUrl: employee.linkedin_url,
+    department: employee.department,
     position: employee.position.name,
     level: positionArr.length > 1 ? positionArr.pop()?.trim() : null,
     location: employee.custom_fields.reduce((acc, el) => {
@@ -69,7 +82,6 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.name === CustomFieldNames.interests,
     )?.value,
   });
-
   if (employeeId) newEmployee.id = employeeId.id;
   return newEmployee;
 };

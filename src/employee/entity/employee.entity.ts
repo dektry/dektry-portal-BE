@@ -15,6 +15,42 @@ export class EmployeeEntity extends BaseEntity {
   fullName: string;
 
   @Column({ length: 255, nullable: true })
+  email: string;
+
+  @Column({ length: 255, nullable: true })
+  personalEmail: string;
+
+  @Column({ length: 255, nullable: true })
+  mobileNumber: string;
+
+  @Column({ length: 255, nullable: true })
+  dateOfBirth: string;
+
+  @Column({ length: 255, nullable: true })
+  gender: string;
+
+  @Column({ length: 1000, nullable: true })
+  avatarUrl: string;
+
+  @Column({ length: 255, nullable: true })
+  hiredOn: string;
+
+  @Column({ length: 255, nullable: true })
+  skypeUsername: string;
+
+  @Column({ length: 255, nullable: true })
+  slackUsername: string;
+
+  @Column({ length: 255, nullable: true })
+  twitterUsername: string;
+
+  @Column({ length: 255, nullable: true })
+  facebookUrl: string;
+
+  @Column({ length: 255, nullable: true })
+  linkedinUrl: string;
+
+  @Column({ length: 255, nullable: true })
   position: string;
 
   @Column({ length: 255, nullable: true })
@@ -22,6 +58,9 @@ export class EmployeeEntity extends BaseEntity {
 
   @Column({ length: 255, nullable: true })
   location: string;
+
+  @Column({ length: 255, nullable: true })
+  division: string;
 
   @Column({ length: 40, nullable: true })
   timezone: string;
@@ -38,4 +77,7 @@ export class EmployeeEntity extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   interests: string;
+
+  @Column({ type: 'json', nullable: true })
+  department: string;
 }
