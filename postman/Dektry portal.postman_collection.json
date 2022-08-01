@@ -1976,6 +1976,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Put changes to employee by id",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/employee/fa7cf95a-13df-4005-8c57-088f3ae1b2c3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee",
+								"fa7cf95a-13df-4005-8c57-088f3ae1b2c3"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

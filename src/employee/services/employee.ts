@@ -2,6 +2,7 @@ import { getRepository, In, Not } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { CustomFieldGroupNames, CustomFieldNames } from 'enums/employee.enum';
+import { UpdateEmployeeDto } from 'employee/dto/employee.dto';
 
 // Parsing an html-like string and getting text inside the tags
 const parseStr = (
@@ -110,3 +111,26 @@ export const getEmployees = async () => {
     return error;
   }
 };
+
+// export const updateEmployeePF = async (
+//   id: number,
+//   updatedEmployee: UpdateEmployeeDto,
+// ) => {
+//   try {
+//     const updatedCandidatePF: UpdateEmployeeDto = {
+//       ...updatedEmployee,
+//       full_name: updatedEmployee.fullName,
+//     };
+
+//     const response = await PFAxios.put(
+//       `/recruitment/candidates/${id}`,
+//       updatedCandidatePF,
+//     );
+
+//     console.log('completed');
+//     return 'completed';
+//   } catch (error) {
+//     console.log(error, 444444);
+//     return error;
+//   }
+// };
