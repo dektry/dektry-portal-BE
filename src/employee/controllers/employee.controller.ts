@@ -4,11 +4,15 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Put,
   Query,
   UseGuards,
+  Body
 } from '@nestjs/common';
 import { EmployeeService } from '../services/employee.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { EmployeeEntity } from '../entity/employee.entity';
+import { UpdateEmployeeDto } from '../dto/employee.dto';
 
 @Controller('employee')
 export class EmployeeController {
@@ -36,5 +40,14 @@ export class EmployeeController {
   @Get('/:id')
   getEmployee(@Param('id') id: string) {
     return this.EmployeeService.getEmployee(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:id')
+  updateEmployee(
+    @Param('id') id: string,
+    @Body() updatedEmployee: UpdateEmployeeDto,
+  ) {
+    return this.EmployeeService.updateEmployee(id, updatedEmployee);
   }
 }

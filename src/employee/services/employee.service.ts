@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateResult } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { EmployeeEntity } from '../entity/employee.entity';
+import { UpdateEmployeeDto } from '../dto/employee.dto';
 
 type getEmployeesListParams = {
   limit: number;
@@ -17,7 +19,7 @@ export class EmployeeService {
   constructor(
     @InjectRepository(employeeRepository)
     private employeeRepository: employeeRepository,
-  ) {}
+  ) { }
 
   async getEmployeesList({
     limit,
@@ -36,8 +38,8 @@ export class EmployeeService {
       .orderBy(
         order
           ? {
-              [`employee.${field}`]: order,
-            }
+            [`employee.${field}`]: order,
+          }
           : {},
       )
       .getManyAndCount();
@@ -45,5 +47,22 @@ export class EmployeeService {
 
   async getEmployee(id): Promise<EmployeeEntity> {
     return await this.employeeRepository.findOne(id);
+  }
+
+  async updateEmployee(
+    id: string,
+    updatedEmployee: UpdateEmployeeDto,
+  ): Promise<UpdateEmployeeDto | UpdateResult> {
+    console.log('EMPLOYEE', updatedEmployee);
+    const updateResult = await this.employeeRepository.update(
+      id,
+      updatedEmployee,
+    );
+
+    if (!updateResult.affected) return updateResult;
+
+    const employee = await this.employeeRepository.findOne(id);
+
+    return employee;
   }
 }
