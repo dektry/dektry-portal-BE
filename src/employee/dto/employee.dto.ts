@@ -78,3 +78,37 @@ export class UpdateEmployeeDto {
   @MaxLength(255, { message: 'Formal education is too long' })
   formalEducation: string;
 }
+
+export class UpdateEmployeeDtoPF {
+  @IsOptional()
+  @MaxLength(255, { message: 'First name is too long' })
+  first_name: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Last name is too long' })
+  last_name: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Email is too long' })
+  email: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Date of birth is too long' })
+  dateOfBirth: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Hired on is too long' })
+  hiredOn: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Gender is too long' })
+  gender: string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Personal email is too long' })
+  presonalEmail?: null | string;
+
+  @IsOptional()
+  @MaxLength(255, { message: 'Mobile number is too long' })
+  mobileNumber: string;
+}

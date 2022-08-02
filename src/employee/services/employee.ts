@@ -1,8 +1,8 @@
-import { getRepository, In, Not } from 'typeorm';
+import { getRepository, In, Not, UpdateResult } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { CustomFieldGroupNames, CustomFieldNames } from 'enums/employee.enum';
-import { UpdateEmployeeDto } from 'employee/dto/employee.dto';
+import { UpdateEmployeeDtoPF, UpdateEmployeeDto } from 'employee/dto/employee.dto';
 
 // Parsing an html-like string and getting text inside the tags
 const parseStr = (
@@ -112,25 +112,26 @@ export const getEmployees = async () => {
   }
 };
 
-// export const updateEmployeePF = async (
-//   id: number,
-//   updatedEmployee: UpdateEmployeeDto,
-// ) => {
-//   try {
-//     const updatedCandidatePF: UpdateEmployeeDto = {
-//       ...updatedEmployee,
-//       full_name: updatedEmployee.fullName,
-//     };
+export const updateEmployeePF = async (
+  id: number,
+  updatedEmployee: UpdateEmployeeDto,
+) => {
+  try {
+    const updatedCandidatePF: UpdateEmployeeDtoPF = {
+      ...updatedEmployee,
+      first_name: updatedEmployee.fullName.split(' ')[0],
+      last_name: updatedEmployee.fullName.split(' ')[1]
+    };
 
-//     const response = await PFAxios.put(
-//       `/recruitment/candidates/${id}`,
-//       updatedCandidatePF,
-//     );
+    const response = await PFAxios.put(
+      `/recruitment/employees/${id}`,
+      updatedCandidatePF,
+    );
 
-//     console.log('completed');
-//     return 'completed';
-//   } catch (error) {
-//     console.log(error, 444444);
-//     return error;
-//   }
-// };
+    console.log('completed');
+    return 'completed';
+  } catch (error) {
+    console.log(error, 444444);
+    return error;
+  }
+};

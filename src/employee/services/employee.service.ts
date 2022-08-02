@@ -6,6 +6,7 @@ import { employeeRepository } from '../repositories/employee.repository';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { UpdateEmployeeDto } from '../dto/employee.dto';
 import { employeeNotFound } from '../utils/constants';
+import { updateEmployeePF } from './employee';
 
 type getEmployeesListParams = {
   limit: number;
@@ -86,8 +87,11 @@ export class EmployeeService {
       );
   
       if (!updateResult.affected) return updateResult;
-  
+
+      
       const employee = await this.employeeRepository.findOne(id);
+      // temporarily disabled to prevent data corruption in the PF
+      // await updateEmployeePF(employee.pfId, employee);
   
       return employee;
 
