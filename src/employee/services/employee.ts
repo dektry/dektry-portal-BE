@@ -1,8 +1,12 @@
-import { getRepository, In, Not, UpdateResult } from 'typeorm';
+import { getRepository, In, Not } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { CustomFieldGroupNames, CustomFieldNames } from 'enums/employee.enum';
-import { UpdateEmployeeDtoPF, UpdateEmployeeDto } from 'employee/dto/employee.dto';
+import {
+  UpdateEmployeeDtoPF,
+  UpdateEmployeeDto,
+} from 'employee/dto/employee.dto';
+import { endpoints } from '../utils/endpoints';
 
 // Parsing an html-like string and getting text inside the tags
 const parseStr = (
@@ -91,7 +95,7 @@ export const getEmployees = async () => {
   try {
     const {
       data: { data: employees },
-    } = await PFAxios.get('/employees');
+    } = await PFAxios.get(endpoints.employees);
 
     await getRepository(EmployeeEntity).delete({
       pfId: Not(In(employees.map(({ id }) => id))),
@@ -104,10 +108,10 @@ export const getEmployees = async () => {
         await getRepository(EmployeeEntity).save(formattedEmployee);
       }
 
-    console.log('completed');
+    console.log('[PF_GET_EMPLOYEES_COMPLETED]');
     return 'completed';
   } catch (error) {
-    console.log(error, 444444);
+    console.log('[PF_GET_EMPLOYEES_ERROR]', error);
     return error;
   }
 };
@@ -120,18 +124,15 @@ export const updateEmployeePF = async (
     const updatedCandidatePF: UpdateEmployeeDtoPF = {
       ...updatedEmployee,
       first_name: updatedEmployee.fullName.split(' ')[0],
-      last_name: updatedEmployee.fullName.split(' ')[1]
+      last_name: updatedEmployee.fullName.split(' ')[1],
     };
 
-    const response = await PFAxios.put(
-      `/recruitment/employees/${id}`,
-      updatedCandidatePF,
-    );
+    await PFAxios.put(`${endpoints.employeeUpdate}${id}`, updatedCandidatePF);
 
-    console.log('completed');
+    console.log('[PF_UPDATE_EMPLOYEE_COMPLETED]');
     return 'completed';
   } catch (error) {
-    console.log(error, 444444);
+    console.log('[PF_UPDATE_EMPLOYEE_ERROR]', error);
     return error;
   }
 };

@@ -21,7 +21,7 @@ export class EmployeeService {
   constructor(
     @InjectRepository(employeeRepository)
     private employeeRepository: employeeRepository,
-  ) { }
+  ) {}
 
   async getEmployeesList({
     limit,
@@ -31,7 +31,7 @@ export class EmployeeService {
     query,
   }: getEmployeesListParams): Promise<[EmployeeEntity[], number]> {
     try {
-      return this.employeeRepository
+      return await this.employeeRepository
         .createQueryBuilder('employee')
         .where('employee.fullName ILIKE :query', {
           query: `%${query ? query.trim() : ''}%`,
@@ -41,12 +41,11 @@ export class EmployeeService {
         .orderBy(
           order
             ? {
-              [`employee.${field}`]: order,
-            }
+                [`employee.${field}`]: order,
+              }
             : {},
         )
         .getManyAndCount();
-
     } catch (error) {
       console.error('[EMPLOYEES_LIST_ERROR]', error);
       Logger.error(error);
@@ -85,16 +84,14 @@ export class EmployeeService {
         id,
         updatedEmployee,
       );
-  
+
       if (!updateResult.affected) return updateResult;
 
-      
       const employee = await this.employeeRepository.findOne(id);
       // temporarily disabled to prevent data corruption in the PF
-      // await updateEmployeePF(employee.pfId, employee);
-  
-      return employee;
+      // await upd  ateEmployeePF(employee.pfId, employee);
 
+      return employee;
     } catch (error) {
       console.error('[EMPLOYEE_UPDATE_ERROR]', error);
       Logger.error(error);
