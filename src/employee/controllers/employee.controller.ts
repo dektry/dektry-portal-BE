@@ -9,6 +9,7 @@ import {
   UseGuards,
   Body
 } from '@nestjs/common';
+import { UpdateResult } from 'typeorm';
 import { EmployeeService } from '../services/employee.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { EmployeeEntity } from '../entity/employee.entity';
@@ -47,7 +48,7 @@ export class EmployeeController {
   updateEmployee(
     @Param('id') id: string,
     @Body() updatedEmployee: UpdateEmployeeDto,
-  ) {
+  ): Promise<UpdateEmployeeDto | UpdateResult> {
     return this.EmployeeService.updateEmployee(id, updatedEmployee);
   }
 }

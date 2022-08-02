@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateResult } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { UpdateEmployeeDto } from '../dto/employee.dto';
+import { employeeNotFound } from '../utils/constants';
 
 type getEmployeesListParams = {
   limit: number;
@@ -28,41 +29,78 @@ export class EmployeeService {
     field,
     query,
   }: getEmployeesListParams): Promise<[EmployeeEntity[], number]> {
-    return this.employeeRepository
-      .createQueryBuilder('employee')
-      .where('employee.fullName ILIKE :query', {
-        query: `%${query ? query.trim() : ''}%`,
-      })
-      .skip(limit * (page - 1))
-      .take(limit)
-      .orderBy(
-        order
-          ? {
-            [`employee.${field}`]: order,
-          }
-          : {},
-      )
-      .getManyAndCount();
+    try {
+      return this.employeeRepository
+        .createQueryBuilder('employee')
+        .where('employee.fullName ILIKE :query', {
+          query: `%${query ? query.trim() : ''}%`,
+        })
+        .skip(limit * (page - 1))
+        .take(limit)
+        .orderBy(
+          order
+            ? {
+              [`employee.${field}`]: order,
+            }
+            : {},
+        )
+        .getManyAndCount();
+
+    } catch (error) {
+      console.error('[EMPLOYEES_LIST_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) return error?.response;
+
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async getEmployee(id): Promise<EmployeeEntity> {
-    return await this.employeeRepository.findOne(id);
+    try {
+      return await this.employeeRepository.findOne(id);
+    } catch (error) {
+      console.error('[GET_EMPLOYEE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) return error?.response;
+
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   async updateEmployee(
     id: string,
     updatedEmployee: UpdateEmployeeDto,
   ): Promise<UpdateEmployeeDto | UpdateResult> {
-    console.log('EMPLOYEE', updatedEmployee);
-    const updateResult = await this.employeeRepository.update(
-      id,
-      updatedEmployee,
-    );
+    try {
+      const updateResult = await this.employeeRepository.update(
+        id,
+        updatedEmployee,
+      );
+  
+      if (!updateResult.affected) return updateResult;
+  
+      const employee = await this.employeeRepository.findOne(id);
+  
+      return employee;
 
-    if (!updateResult.affected) return updateResult;
+    } catch (error) {
+      console.error('[EMPLOYEE_UPDATE_ERROR]', error);
+      Logger.error(error);
 
-    const employee = await this.employeeRepository.findOne(id);
+      if (error?.response) return error?.response;
 
-    return employee;
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }
