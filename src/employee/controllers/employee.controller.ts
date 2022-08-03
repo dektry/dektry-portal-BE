@@ -7,12 +7,12 @@ import {
   Put,
   Query,
   UseGuards,
-  Body
+  Body,
 } from '@nestjs/common';
 import { UpdateResult } from 'typeorm';
+
 import { EmployeeService } from '../services/employee.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { EmployeeEntity } from '../entity/employee.entity';
 import { UpdateEmployeeDto } from '../dto/employee.dto';
 
 @Controller('employee')
