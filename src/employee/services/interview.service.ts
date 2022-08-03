@@ -27,7 +27,7 @@ import {
   IEditInterviewBody,
 } from '../utils/constants';
 
-import { Helper } from '../utils/helpers';
+import { Helper } from 'utils/helpers';
 
 @Injectable()
 export class InterviewService {

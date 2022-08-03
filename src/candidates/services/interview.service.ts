@@ -18,6 +18,7 @@ import { SkillEntity } from 'users/entity/skill.entity';
 import { SkillToInterviewEntity } from 'candidates/entity/skillToInterview.entity';
 import { InterviewEntity } from 'candidates/entity/interview.entity';
 import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
+import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 
 import {
   candidateNotFound,
@@ -27,7 +28,8 @@ import {
   IAnswer,
   ICompletedInterviewResponse,
 } from 'candidates/utils/constants';
-import { countReviewResult, getInterviewAnswers } from '../utils/helpers';
+import { countReviewResult } from '../utils/helpers';
+import { Helper } from 'utils/helpers';
 
 @Injectable()
 export class InterviewService {
@@ -49,7 +51,6 @@ export class InterviewService {
     interview: ICompleteInterview,
   ): Promise<ICompletedInterviewResponse> {
     try {
-      const dateNow = moment().format();
       const candidate: CandidateEntity = await this.candidateRepository.findOne(
         interview.candidateId,
       );
@@ -66,6 +67,9 @@ export class InterviewService {
 
       if (isInterview)
         throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+
+      const dateNow = moment().format();
+      const helper = new Helper();
 
       const position: PositionEntity = await this.positionRepository.findOne(
         interview.positionId,
@@ -101,7 +105,11 @@ export class InterviewService {
 
       await this.skillToInterviewRepository.save(interviewSkills);
 
-      const answers: IAnswer[] = await getInterviewAnswers(savedInterview);
+      const answers: IAnswer[] = await helper.getInterviewAnswers(
+        savedInterview,
+        SkillToInterviewEntity,
+        SkillsToLevelsEntity,
+      );
 
       return {
         interview: savedInterview,
@@ -140,6 +148,8 @@ export class InterviewService {
 
       if (!prevResultsOfInterview)
         throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+
+      const helper = new Helper();
 
       const position: PositionEntity = await this.positionRepository.findOne(
         interview.positionId,
@@ -213,7 +223,11 @@ export class InterviewService {
 
       await this.skillToInterviewRepository.save(interviewSkills);
 
-      const answers: IAnswer[] = await getInterviewAnswers(savedInterview);
+      const answers: IAnswer[] = await helper.getInterviewAnswers(
+        savedInterview,
+        SkillToInterviewEntity,
+        SkillsToLevelsEntity,
+      );
 
       return {
         interview: savedInterview,
@@ -249,7 +263,13 @@ export class InterviewService {
     });
 
     if (interview) {
-      const answers = await getInterviewAnswers(interview);
+      const helper = new Helper();
+
+      const answers = await helper.getInterviewAnswers(
+        interview,
+        SkillToInterviewEntity,
+        SkillsToLevelsEntity,
+      );
       return {
         interview,
         answers,

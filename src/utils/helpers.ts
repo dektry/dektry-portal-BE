@@ -1,5 +1,5 @@
 import { getRepository, In } from 'typeorm';
-import { IAnswer } from '../../candidates/utils/constants';
+import { IAnswer } from '../candidates/utils/constants';
 
 export class Helper {
   public getInterviewAnswers = async (
