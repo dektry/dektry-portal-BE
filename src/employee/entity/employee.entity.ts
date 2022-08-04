@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToOne,
+} from 'typeorm';
+
+import { InterviewEntity } from './interview.entity';
 
 @Entity({ name: 'employee' })
 export class EmployeeEntity extends BaseEntity {
@@ -80,4 +88,7 @@ export class EmployeeEntity extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   department: string;
+
+  @OneToOne(() => InterviewEntity, (interview) => interview.employee)
+  interview: InterviewEntity;
 }

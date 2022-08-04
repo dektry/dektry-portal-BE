@@ -5,41 +5,39 @@ import * as moment from 'moment';
 import { In } from 'typeorm';
 
 import { positionRepository } from 'users/repositories/position.repository';
-import { skillToInterviewRepository } from '../repositories/skillToInterview.repository';
-import { interviewRepository } from '../repositories/interview.repository';
-import { candidateRepository } from '../repositories/candidate.repository';
-
+import { employeeSkillToInterviewRepository } from '../repositories/skillToInterview.repository';
+import { employeeInterviewRepository } from '../repositories/interview.repository';
+import { employeeRepository } from '../repositories/employee.repository';
 import { levelRepository } from 'users/repositories/level.repository';
 import { skillRepository } from '../../users/repositories/skill.repository';
 
-import { CandidateEntity } from 'candidates/entity/candidate.entity';
+import { EmployeeEntity } from '../entity/employee.entity';
 import { PositionEntity } from 'users/entity/position.entity';
 import { SkillEntity } from 'users/entity/skill.entity';
-import { SkillToInterviewEntity } from 'candidates/entity/skillToInterview.entity';
-import { InterviewEntity } from 'candidates/entity/interview.entity';
+import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';
+import { InterviewEntity } from '../entity/interview.entity';
 import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 
+import { interviewIsOver, IAnswer } from 'candidates/utils/constants';
 import {
-  candidateNotFound,
-  interviewIsOver,
+  employeeNotFound,
+  ICompletedInterviewResponse,
   ICompleteInterview,
   IEditInterviewBody,
-  IAnswer,
-  ICompletedInterviewResponse,
-} from 'candidates/utils/constants';
-import { countReviewResult } from '../utils/helpers';
+} from '../utils/constants';
+
 import { Helper } from 'utils/helpers';
 
 @Injectable()
 export class InterviewService {
   constructor(
-    @InjectRepository(interviewRepository)
-    private interviewRepository: interviewRepository,
-    @InjectRepository(candidateRepository)
-    private candidateRepository: candidateRepository,
-    @InjectRepository(skillToInterviewRepository)
-    private skillToInterviewRepository: skillToInterviewRepository,
+    @InjectRepository(employeeInterviewRepository)
+    private interviewRepository: employeeInterviewRepository,
+    @InjectRepository(employeeRepository)
+    private employeeRepository: employeeRepository,
+    @InjectRepository(employeeSkillToInterviewRepository)
+    private skillToInterviewRepository: employeeSkillToInterviewRepository,
     @InjectRepository(positionRepository)
     private positionRepository: positionRepository,
     @InjectRepository(levelRepository)
@@ -51,17 +49,17 @@ export class InterviewService {
     interview: ICompleteInterview,
   ): Promise<ICompletedInterviewResponse> {
     try {
-      const candidate: CandidateEntity = await this.candidateRepository.findOne(
-        interview.candidateId,
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        interview.employeeId,
       );
 
-      if (!candidate)
-        throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+      if (!employee)
+        throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
       const isInterview: InterviewEntity =
         await this.interviewRepository.findOne({
           where: {
-            candidate: candidate,
+            employee: employee,
           },
         });
 
@@ -84,13 +82,11 @@ export class InterviewService {
         },
       });
 
-      const result: number = await countReviewResult(interview, filteredSkills);
       const savedInterview = await this.interviewRepository.save({
-        candidate,
+        employee,
         createdAt: dateNow,
         position,
         level,
-        result,
       });
 
       const interviewSkills: SkillToInterviewEntity[] = filteredSkills.map(
@@ -116,13 +112,13 @@ export class InterviewService {
         answers,
       };
     } catch (error) {
-      console.error('[COMPLETE_INTERVIEW_ERROR]', error);
+      console.error('[COMPLETE_EMPLOYEE_INTERVIEW_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) return error?.response;
 
       throw new HttpException(
-        candidateNotFound,
+        employeeNotFound,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -132,17 +128,16 @@ export class InterviewService {
     interview: IEditInterviewBody,
   ): Promise<ICompletedInterviewResponse> {
     try {
-      const candidate: CandidateEntity = await this.candidateRepository.findOne(
-        interview.candidateId,
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        interview.employeeId,
       );
-
-      if (!candidate)
-        throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
+      if (!employee)
+        throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
       const prevResultsOfInterview: InterviewEntity =
         await this.interviewRepository.findOne({
           where: {
-            candidate: candidate,
+            employee: employee,
           },
         });
 
@@ -164,15 +159,13 @@ export class InterviewService {
         },
       });
 
-      const result = await countReviewResult(interview, filteredSkills);
       await this.interviewRepository.update(
         { id: prevResultsOfInterview.id },
         {
-          candidate,
+          employee,
           position,
           level,
-          result,
-          isOffered: interview.isOffered,
+          isApproved: interview.isApproved,
           comment: interview.comment ?? null,
         },
       );
@@ -180,7 +173,7 @@ export class InterviewService {
       const savedInterview: InterviewEntity =
         await this.interviewRepository.findOne({
           where: {
-            candidate,
+            employee,
           },
           relations: ['level'],
         });
@@ -228,53 +221,66 @@ export class InterviewService {
         SkillToInterviewEntity,
         SkillsToLevelsEntity,
       );
-
       return {
         interview: savedInterview,
         answers,
       };
     } catch (error) {
-      console.error('[EDIT_INTERVIEW_ERROR]', error);
+      console.error('[EDIT_EMPLOYEE_INTERVIEW_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) return error?.response;
 
       throw new HttpException(
-        candidateNotFound,
+        employeeNotFound,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
   async getInterviewResult(
-    candidateId: string,
+    employeeId: string,
   ): Promise<ICompletedInterviewResponse> {
-    const candidate: CandidateEntity = await this.candidateRepository.findOne(
-      candidateId,
-    );
-    if (!candidate)
-      throw new HttpException('Candidate not found', HttpStatus.BAD_REQUEST);
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException('Candidate not found', HttpStatus.BAD_REQUEST);
 
-    const interview: InterviewEntity = await this.interviewRepository.findOne({
-      where: {
-        candidate: candidate,
-      },
-      relations: ['level', 'position'],
-    });
-
-    if (interview) {
       const helper = new Helper();
 
-      const answers = await helper.getInterviewAnswers(
-        interview,
-        SkillToInterviewEntity,
-        SkillsToLevelsEntity,
+      const interview: InterviewEntity = await this.interviewRepository.findOne(
+        {
+          where: {
+            employee: employee,
+          },
+          relations: ['level', 'position'],
+        },
       );
-      return {
-        interview,
-        answers,
-      };
+
+      if (interview) {
+        const answers = await helper.getInterviewAnswers(
+          interview,
+          SkillToInterviewEntity,
+          SkillsToLevelsEntity,
+        );
+        return {
+          interview,
+          answers,
+        };
+      }
+      throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+    } catch (error) {
+      console.error('[GET_EMPLOYEE_INTERVIEW_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) return error?.response;
+
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
-    return { interview };
   }
 }

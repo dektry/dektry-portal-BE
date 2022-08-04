@@ -1,9 +1,7 @@
 import { getRepository, In } from 'typeorm';
 import { levelTypesPriority } from './constants';
-import { IAnswer, ICompleteInterview } from '../utils/constants';
+import { ICompleteInterview } from '../utils/constants';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
-import { InterviewEntity } from '../entity/interview.entity';
-import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';
 import { SkillEntity } from 'users/entity/skill.entity';
 
 export const countReviewResult = async (
@@ -34,38 +32,4 @@ export const countReviewResult = async (
   });
 
   return Math.round(result);
-};
-
-export const getInterviewAnswers = async (interview: InterviewEntity) => {
-  const interviewSkills = await getRepository(SkillToInterviewEntity).find({
-    where: {
-      interview_id: interview?.id,
-    },
-    relations: ['skill_id'],
-  });
-
-  const interviewSkillsIds = interviewSkills.map((skill) => skill.skill_id.id);
-
-  const positionSkills = await getRepository(SkillsToLevelsEntity).find({
-    where: {
-      skill_id: In(interviewSkillsIds),
-      level_id: interview.level.id,
-    },
-    relations: ['skill_id'],
-  });
-
-  const answers: IAnswer[] = interviewSkills.map((skill) => {
-    const desiredSkill = positionSkills.find(
-      (item) => item.skill_id.id === skill.skill_id.id,
-    );
-
-    return {
-      skill: skill.skill_id.value,
-      actual: skill.value,
-      desired: desiredSkill.value,
-      id: skill.id,
-    };
-  });
-
-  return answers;
 };
