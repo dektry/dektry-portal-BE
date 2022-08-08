@@ -182,7 +182,7 @@ export class InterviewService {
           where: {
             candidate,
           },
-          relations: ['level'],
+          relations: ['level', 'position'],
         });
 
       const existingAnswers: SkillToInterviewEntity[] =
