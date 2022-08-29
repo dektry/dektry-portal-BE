@@ -158,6 +158,11 @@ export class InterviewService {
         interview.levelId,
       );
 
+      await this.candidateRepository.update(
+        { id: candidate.id },
+        { level: level.name, position: position.name },
+      );
+
       const filteredSkills: SkillEntity[] = await this.skillRepository.find({
         where: {
           id: In(Object.keys(interview.answers)),

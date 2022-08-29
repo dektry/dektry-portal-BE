@@ -19,6 +19,15 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('')
+  async auth(@Req() request: Request) {
+    const result = await this.authService.auth(
+      request.headers['authorization'].split(' ')[1],
+    );
+    return result;
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('/profile')
   getProfile(@Req() request: Request) {
     const currentUser = request.user;

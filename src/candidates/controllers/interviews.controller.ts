@@ -11,12 +11,8 @@ import {
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 
 import { InterviewService } from '../services/interview.service';
-import { InterviewEntity } from '../entity/interview.entity';
 
-import {
-  ICompletedInterviewResponse,
-  IAnswer,
-} from 'candidates/utils/constants';
+import { ICompletedInterviewResponse } from 'candidates/utils/constants';
 import {
   CompleteInterviewsDto,
   EditInterviewsDto,

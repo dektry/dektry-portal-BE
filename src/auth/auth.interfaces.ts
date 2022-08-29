@@ -8,3 +8,7 @@ export interface RequestUser {
   role: RoleEntity;
   career: any;
 }
+
+export interface IAuthUser extends RequestUser {
+  jwt: any;
+}
