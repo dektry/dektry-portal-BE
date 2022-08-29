@@ -29,8 +29,6 @@ const formatCandidate = async (
     pfId: candidate.id,
     pfUpdatedAt: candidate.updated_at,
     fullName: candidate.full_name,
-    position: candidate.position,
-    level: candidate.level,
     email: candidate.email,
     location: candidate.location,
     timezone: '1',
