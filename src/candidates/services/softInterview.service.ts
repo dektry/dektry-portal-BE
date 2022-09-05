@@ -54,12 +54,8 @@ export class SoftInterviewService {
       const position: PositionEntity = await this.positionRepository.findOne(
         softInerview.positionId,
       );
-      if (!position)
-        throw new HttpException(positionNotFound, HttpStatus.BAD_REQUEST);
 
       const level = await this.levelRepository.findOne(softInerview.levelId);
-      if (!level)
-        throw new HttpException(levelNotFound, HttpStatus.BAD_REQUEST);
 
       const isSoftInerviewExist = await this.softInterviewRepository.findOne({
         where: {
