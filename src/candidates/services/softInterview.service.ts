@@ -18,8 +18,6 @@ import {
   IEditSoftInterviewBody,
   softSkillInterviewCantComplete,
   candidateNotFound,
-  positionNotFound,
-  levelNotFound,
   softSkillInterviewExist,
   softSkillInterviewNotFound,
   ISoftInterviewResultResponse,
