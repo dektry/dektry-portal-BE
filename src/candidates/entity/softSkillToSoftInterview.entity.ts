@@ -14,8 +14,8 @@ export class SoftSkillToSoftInterviewEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ default: false })
-  isActive: boolean;
+  @Column({ nullable: true })
+  softSkillScoreId: string;
 
   @Column({ length: 512, nullable: true })
   comment: string;

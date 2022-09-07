@@ -31,6 +31,7 @@ import { skillRepository } from './repositories/skill.repository';
 import { questionRepository } from './repositories/question.repository';
 import { skillsToLevelsRepository } from './repositories/skillsToLevels.repository';
 import { softSkillRepository } from './repositories/softSkill.repository';
+import { softSkillScoreRepository } from './repositories/softSkillScore.repository';
 import { usersRepository } from './repositories/users.repository';
 import { roleRepository } from './repositories/role.repository';
 import { permissionRepository } from './repositories/permission.repository';
@@ -55,6 +56,7 @@ import { levelRepository } from './repositories/level.repository';
       questionRepository,
       skillsToLevelsRepository,
       softSkillRepository,
+      softSkillScoreRepository,
     ]),
   ],
   providers: [

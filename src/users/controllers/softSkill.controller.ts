@@ -3,6 +3,7 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
 import { SoftSkillEntity } from '../entity/softSkill.entity';
+import { SoftSkillScoreEntity } from '../entity/softSkillScore.entity';
 import { SoftSkillService } from '../services/softSkill.service';
 
 import { SoftSkillDto } from '../dto/softSkill.dto';
@@ -21,5 +22,12 @@ export class SoftSkillController {
   @Post()
   addSoftSkill(@Body() skillBody: SoftSkillDto): Promise<SoftSkillEntity[]> {
     return this.SoftSkillService.addSoftSkill(skillBody);
+  }
+
+  /* soft skill score */
+  @UseGuards(JwtAuthGuard)
+  @Get('/score')
+  getSoftSkillScoreList(): Promise<SoftSkillScoreEntity[]> {
+    return this.SoftSkillService.getSoftSkillScoreList();
   }
 }

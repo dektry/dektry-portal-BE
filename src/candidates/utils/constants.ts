@@ -59,7 +59,7 @@ export interface IEditSoftInterviewBody {
 export interface ISoftSkill {
   id: string;
   value: string;
-  isActive: boolean;
+  softSkillScoreId: string;
   comment: string;
 }
 
@@ -70,7 +70,7 @@ export interface ISoftInterviewResultResponse {
   comment: string;
   skills: Array<{
     id: string;
-    isActive: boolean;
+    softSkillScoreId: string;
     comment: string;
     soft_skill_id: { id: string; value: string };
   }>;
