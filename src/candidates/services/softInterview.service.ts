@@ -82,7 +82,7 @@ export class SoftInterviewService {
             soft_interview_id: savedInterview,
             soft_skill_id: { id: skill.id, value: skill.value },
             comment: skill.comment,
-            isActive: skill.isActive,
+            softSkillScoreId: skill.softSkillScoreId,
           });
         });
 
@@ -157,7 +157,7 @@ export class SoftInterviewService {
         await this.softSkillToSoftInterviewRepository.update(
           { id },
           {
-            isActive: activeSkillToUpdate.isActive,
+            softSkillScoreId: activeSkillToUpdate.softSkillScoreId,
             comment: activeSkillToUpdate.comment,
           },
         );

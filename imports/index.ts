@@ -17,6 +17,7 @@ import importSkillGroups from './skillGroups.import';
 import importSkills from './skills.import';
 import importSkillLevels from './skillLevels.import';
 import importSoftSkills from './softSkill.imports';
+import importSoftSkillsScore from './softSkillScore.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -39,6 +40,7 @@ const importData = async () => {
       await importTasks();
       await importOnBoardingsTemplates();
       await importVacations();
+      await importSoftSkillsScore();
       break;
     case 'templates':
       await importTasks();
