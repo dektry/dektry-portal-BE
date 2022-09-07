@@ -17,6 +17,9 @@ export class SoftSkillToSoftInterviewEntity extends BaseEntity {
   @Column({ default: false })
   isActive: boolean;
 
+  @Column({ length: 512, nullable: true })
+  comment: string;
+
   @ManyToOne(() => SoftSkillEntity, {
     cascade: true,
     onDelete: 'CASCADE',

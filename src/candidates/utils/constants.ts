@@ -60,6 +60,7 @@ export interface ISoftSkill {
   id: string;
   value: string;
   isActive: boolean;
+  comment: string;
 }
 
 export interface ISoftInterviewResultResponse {
@@ -70,6 +71,7 @@ export interface ISoftInterviewResultResponse {
   skills: Array<{
     id: string;
     isActive: boolean;
+    comment: string;
     soft_skill_id: { id: string; value: string };
   }>;
   level: {
