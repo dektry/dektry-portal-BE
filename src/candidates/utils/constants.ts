@@ -42,8 +42,8 @@ export interface ICompletedInterviewResponse {
 
 export interface ICompleteSoftInterviewBody {
   candidateId: string;
-  positionId: string;
-  levelId: string;
+  positionId?: string;
+  levelId?: string;
   hobby?: string;
   comment?: string;
   softSkills: Array<ISoftSkill>;

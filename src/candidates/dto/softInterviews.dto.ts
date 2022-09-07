@@ -22,13 +22,9 @@ export class EditSoftInterviewsDto {
   softSkills: Array<ISoftSkill>;
 }
 export class CompleteSoftInterviewsDto extends EditSoftInterviewsDto {
-  @IsNotEmpty({
-    message: 'PositionId must not be empty',
-  })
-  positionId: string;
+  @IsOptional()
+  positionId?: string;
 
-  @IsNotEmpty({
-    message: 'LevelId must not be empty',
-  })
-  levelId: string;
+  @IsOptional()
+  levelId?: string;
 }
