@@ -81,6 +81,7 @@ export class SoftInterviewService {
           return this.softSkillToSoftInterviewRepository.create({
             soft_interview_id: savedInterview,
             soft_skill_id: { id: skill.id, value: skill.value },
+            comment: skill.comment,
             isActive: skill.isActive,
           });
         });
@@ -136,7 +137,6 @@ export class SoftInterviewService {
       const candidate: CandidateEntity = await this.candidateRepository.findOne(
         softInerview.candidateId,
       );
-
       if (!candidate)
         throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
 
@@ -149,10 +149,16 @@ export class SoftInterviewService {
       );
 
       for (const activeSkillToUpdate of softInerview.softSkills) {
+        const { id } = await this.softSkillToSoftInterviewRepository.findOne({
+          where: {
+            soft_skill_id: activeSkillToUpdate.id,
+          },
+        });
         await this.softSkillToSoftInterviewRepository.update(
-          { id: activeSkillToUpdate.id },
+          { id },
           {
             isActive: activeSkillToUpdate.isActive,
+            comment: activeSkillToUpdate.comment,
           },
         );
       }
