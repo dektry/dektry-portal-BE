@@ -7,4 +7,7 @@ export class SoftSkillEntity extends BaseEntity {
 
   @Column({ default: '' })
   value: string;
+
+  @Column({ length: 512, default: '' })
+  question: string;
 }
