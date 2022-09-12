@@ -6,12 +6,9 @@ import * as moment from 'moment';
 import { candidateRepository } from '../repositories/candidate.repository';
 import { softSkillToSoftInterviewRepository } from '../repositories/softSkillToSoftInterview.repository';
 import { softInterviewRepository } from '../repositories/softInerview.repository';
-import { positionRepository } from 'users/repositories/position.repository';
-import { levelRepository } from 'users/repositories/level.repository';
 
 import { CandidateEntity } from '../entity/candidate.entity';
 import { SoftSkillToSoftInterviewEntity } from '../entity/softSkillToSoftInterview.entity';
-import { PositionEntity } from 'users/entity/position.entity';
 
 import {
   ICompleteSoftInterviewBody,
@@ -33,10 +30,6 @@ export class SoftInterviewService {
     private softSkillToSoftInterviewRepository: softSkillToSoftInterviewRepository,
     @InjectRepository(softInterviewRepository)
     private softInterviewRepository: softInterviewRepository,
-    @InjectRepository(positionRepository)
-    private positionRepository: positionRepository,
-    @InjectRepository(levelRepository)
-    private levelRepository: levelRepository,
   ) {}
 
   async completeInterview(softInerview: ICompleteSoftInterviewBody) {
@@ -48,12 +41,6 @@ export class SoftInterviewService {
       );
       if (!candidate)
         throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
-
-      const position: PositionEntity = await this.positionRepository.findOne(
-        softInerview.positionId,
-      );
-
-      const level = await this.levelRepository.findOne(softInerview.levelId);
 
       const isSoftInerviewExist = await this.softInterviewRepository.findOne({
         where: {
@@ -72,8 +59,6 @@ export class SoftInterviewService {
         createdAt: dateNow,
         hobby: softInerview.hobby,
         comment: softInerview.comment,
-        position,
-        level,
       });
 
       const interviewSkills: SoftSkillToSoftInterviewEntity[] =
@@ -108,7 +93,7 @@ export class SoftInterviewService {
           where: {
             candidate: candidateId,
           },
-          relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
+          relations: ['skills', 'skills.soft_skill_id'],
         });
 
       if (!isSoftInerview)

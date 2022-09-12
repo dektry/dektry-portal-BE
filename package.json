@@ -18,7 +18,7 @@
     "start:dev:build": "cross-env NODE_ENV=development node dist/src/main",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
     "migration:generate": "yarn typeorm migration:generate -n",
-    "migtation:run": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run",
+    "migration:run": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run",
     "migration:revert": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:revert",
     "import:dev:all": "cross-env NODE_ENV=development ts-node imports all",
     "import:dev:templates": "cross-env NODE_ENV=development ts-node imports templates",
