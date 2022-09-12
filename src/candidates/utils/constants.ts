@@ -74,18 +74,6 @@ export interface ISoftInterviewResultResponse {
     comment: string;
     soft_skill_id: { id: string; value: string };
   }>;
-  level: {
-    id: string;
-    name: string;
-  };
-  position: {
-    id: string;
-    name: string;
-    duties: string;
-    requirements: string;
-    salaryMinLimit: number;
-    salaryMaxLimit: number;
-  };
 }
 
 export const candidateNotFound = 'Candidate not found';

@@ -9,7 +9,6 @@ import {
 
 import { SkillsToLevelsEntity } from './skillsToLevels.entity';
 import { InterviewEntity } from '../../candidates/entity/interview.entity';
-import { SoftInterviewEntity } from '../../candidates/entity/softInterview.entity';
 @Entity({ name: 'careersLevels' })
 export class CareerLevelEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -28,13 +27,4 @@ export class CareerLevelEntity extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   interview: InterviewEntity[];
-
-  @OneToMany(
-    () => SoftInterviewEntity,
-    (softInterview) => softInterview.level,
-    {
-      orphanedRowAction: 'delete',
-    },
-  )
-  softInterview: SoftInterviewEntity[];
 }

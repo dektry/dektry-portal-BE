@@ -42,7 +42,6 @@ export class SoftInterviewService {
       if (!candidate)
         throw new HttpException(candidateNotFound, HttpStatus.BAD_REQUEST);
 
-
       const isSoftInerviewExist = await this.softInterviewRepository.findOne({
         where: {
           candidate: softInerview.candidateId,

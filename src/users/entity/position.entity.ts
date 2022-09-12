@@ -15,7 +15,6 @@ import { PositionGroupEntity } from './positionGroup.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
 import { SkillGroupEntity } from './skillGroup.entity';
 import { InterviewEntity } from '../../candidates/entity/interview.entity';
-import { SoftInterviewEntity } from '../../candidates/entity/softInterview.entity';
 import { TemplatesEntity } from '../../onboarding/entity/templates.entity';
 import { ArticleEntity } from '../../articles/entity/articles.entity';
 
@@ -94,13 +93,4 @@ export class PositionEntity extends BaseEntity {
     orphanedRowAction: 'delete',
   })
   interview: InterviewEntity[];
-
-  @OneToMany(
-    () => SoftInterviewEntity,
-    (softInterview) => softInterview.position,
-    {
-      orphanedRowAction: 'delete',
-    },
-  )
-  softInterview: SoftInterviewEntity[];
 }
