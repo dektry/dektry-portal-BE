@@ -5,7 +5,7 @@ import { EmployeeController } from './controllers/employee.controller';
 import { EmployeeInterviewsController } from './controllers/interviews.controller';
 
 import { EmployeeService } from './services/employee.service';
-import { InterviewService } from './services/interview.service';
+import { EmployeeInterviewService } from './services/interview.service';
 
 import { employeeRepository } from './repositories/employee.repository';
 import { employeeInterviewRepository } from './repositories/interview.repository';
@@ -26,6 +26,6 @@ import { skillRepository } from '../users/repositories/skill.repository';
     ]),
   ],
   controllers: [EmployeeController, EmployeeInterviewsController],
-  providers: [EmployeeService, InterviewService],
+  providers: [EmployeeService, EmployeeInterviewService],
 })
 export class EmployeeModule {}

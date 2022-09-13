@@ -30,7 +30,7 @@ import {
 import { Helper } from 'utils/helpers';
 
 @Injectable()
-export class InterviewService {
+export class EmployeeInterviewService {
   constructor(
     @InjectRepository(employeeInterviewRepository)
     private interviewRepository: employeeInterviewRepository,
@@ -47,6 +47,7 @@ export class InterviewService {
   ) {}
   async completeInterview(
     interview: ICompleteInterview,
+    datetimeOfCreation?: string,
   ): Promise<ICompletedInterviewResponse> {
     try {
       const employee: EmployeeEntity = await this.employeeRepository.findOne(
@@ -84,7 +85,7 @@ export class InterviewService {
 
       const savedInterview = await this.interviewRepository.save({
         employee,
-        createdAt: dateNow,
+        createdAt: datetimeOfCreation || dateNow,
         position,
         level,
       });

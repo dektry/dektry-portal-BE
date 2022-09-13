@@ -10,7 +10,7 @@ import {
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 
-import { InterviewService } from '../services/interview.service';
+import { EmployeeInterviewService } from '../services/interview.service';
 
 import { ICompletedInterviewResponse } from '../utils/constants';
 import {
@@ -20,7 +20,7 @@ import {
 
 @Controller('employee-interviews')
 export class EmployeeInterviewsController {
-  constructor(private InterviewService: InterviewService) {}
+  constructor(private InterviewService: EmployeeInterviewService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
