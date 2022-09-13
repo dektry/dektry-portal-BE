@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as moment from 'moment';
-import { In } from 'typeorm';
+import { DeleteResult, In } from 'typeorm';
 
 import { positionRepository } from 'users/repositories/position.repository';
 import { employeeSkillToInterviewRepository } from '../repositories/skillToInterview.repository';
@@ -19,12 +19,17 @@ import { InterviewEntity } from '../entity/interview.entity';
 import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 
-import { interviewIsOver, IAnswer } from 'candidates/utils/constants';
+import {
+  interviewIsOver,
+  IAnswer,
+  interviewWasNotDeleted,
+} from 'candidates/utils/constants';
 import {
   employeeNotFound,
   ICompletedInterviewResponse,
   ICompleteInterview,
   IEditInterviewBody,
+  IDeletedInterviewResponse,
 } from '../utils/constants';
 
 import { Helper } from 'utils/helpers';
@@ -247,7 +252,7 @@ export class EmployeeInterviewService {
         employeeId,
       );
       if (!employee)
-        throw new HttpException('Candidate not found', HttpStatus.BAD_REQUEST);
+        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
 
       const helper = new Helper();
 
@@ -274,6 +279,40 @@ export class EmployeeInterviewService {
       throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
     } catch (error) {
       console.error('[GET_EMPLOYEE_INTERVIEW_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) return error?.response;
+
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async deleteInterviewResult(
+    employeeId: string,
+  ): Promise<IDeletedInterviewResponse> {
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
+
+      const interviewWasDeleted: DeleteResult =
+        await this.interviewRepository.delete({
+          employee,
+        });
+
+      if (interviewWasDeleted) {
+        return {
+          answer: 'Interview was deleted successfully',
+        };
+      }
+      throw new HttpException(interviewWasNotDeleted, HttpStatus.BAD_REQUEST);
+    } catch (error) {
+      console.error('[DELETE_EMPLOYEE_INTERVIEW_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) return error?.response;

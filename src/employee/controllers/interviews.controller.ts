@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -12,7 +13,7 @@ import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 
 import { EmployeeInterviewService } from '../services/interview.service';
 
-import { ICompletedInterviewResponse } from '../utils/constants';
+import { ICompletedInterviewResponse, IDeletedInterviewResponse } from '../utils/constants';
 import {
   CompleteInterviewsDto,
   EditInterviewsDto,
@@ -30,6 +31,7 @@ export class EmployeeInterviewsController {
     return this.InterviewService.completeInterview(completeInterviewDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
   editInterview(
     @Body() editInterviewDto: EditInterviewsDto,
@@ -43,5 +45,13 @@ export class EmployeeInterviewsController {
     @Param('employeeId') employeeId: string,
   ): Promise<ICompletedInterviewResponse> {
     return this.InterviewService.getInterviewResult(employeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':employeeId')
+  deleteInterviewResult(
+    @Param('employeeId') employeeId: string,
+  ): Promise<IDeletedInterviewResponse> {
+    return this.InterviewService.deleteInterviewResult(employeeId);
   }
 }
