@@ -290,6 +290,40 @@ export class EmployeeInterviewService {
     }
   }
 
+  async getAllInterviews(employeeId: string): Promise<InterviewEntity[]> {
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
+
+      const interviews: InterviewEntity[] = await this.interviewRepository.find(
+        {
+          where: {
+            employee: employee,
+          },
+          relations: ['level', 'position'],
+        },
+      );
+
+      if (interviews.length) {
+        return interviews;
+      }
+      throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+    } catch (error) {
+      console.error('[GET_ALL_INTERVIEWS_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) return error?.response;
+
+      throw new HttpException(
+        employeeNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   async deleteInterviewResult(
     employeeId: string,
   ): Promise<IDeletedInterviewResponse> {

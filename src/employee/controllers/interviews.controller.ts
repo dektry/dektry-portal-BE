@@ -10,10 +10,14 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { InterviewEntity } from '../entity/interview.entity';
 
 import { EmployeeInterviewService } from '../services/interview.service';
 
-import { ICompletedInterviewResponse, IDeletedInterviewResponse } from '../utils/constants';
+import {
+  ICompletedInterviewResponse,
+  IDeletedInterviewResponse,
+} from '../utils/constants';
 import {
   CompleteInterviewsDto,
   EditInterviewsDto,
@@ -45,6 +49,14 @@ export class EmployeeInterviewsController {
     @Param('employeeId') employeeId: string,
   ): Promise<ICompletedInterviewResponse> {
     return this.InterviewService.getInterviewResult(employeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId')
+  getAllInterviews(
+    @Param('employeeId') employeeId: string,
+  ): Promise<InterviewEntity[]> {
+    return this.InterviewService.getAllInterviews(employeeId);
   }
 
   @UseGuards(JwtAuthGuard)

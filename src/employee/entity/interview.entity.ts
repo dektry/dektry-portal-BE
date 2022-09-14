@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne,
   OneToMany,
   ManyToOne,
 } from 'typeorm';
@@ -28,7 +27,7 @@ export class InterviewEntity extends BaseEntity {
   @Column({ length: 512, nullable: true })
   comment: string;
 
-  @OneToOne(() => EmployeeEntity, (employee) => employee.interview, {
+  @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',
     cascade: true,
     onDelete: 'CASCADE',
