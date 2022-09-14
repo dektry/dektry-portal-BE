@@ -23,6 +23,7 @@ import {
   interviewIsOver,
   IAnswer,
   interviewWasNotDeleted,
+  interviewsNotFound,
 } from 'candidates/utils/constants';
 import {
   employeeNotFound,
@@ -304,7 +305,7 @@ export class EmployeeInterviewService {
       if (interviews?.length) {
         return interviews;
       }
-      throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+      throw new HttpException(interviewsNotFound, HttpStatus.BAD_REQUEST);
     } catch (error) {
       console.error('[GET_ALL_INTERVIEWS_ERROR]', error);
       Logger.error(error);

@@ -52,7 +52,7 @@ export class EmployeeInterviewsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':employeeId')
+  @Get(':employeeId/all')
   getAllInterviews(
     @Param('employeeId') employeeId: string,
   ): Promise<InterviewEntity[]> {
