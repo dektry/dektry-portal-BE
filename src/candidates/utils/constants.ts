@@ -78,6 +78,8 @@ export interface ISoftInterviewResultResponse {
 
 export const candidateNotFound = 'Candidate not found';
 export const interviewIsOver = 'The interview is over!';
+export const interviewsNotFound = 'The interviews not found';
+export const interviewWasNotDeleted = 'The interview was not deleted';
 export const positionNotFound = 'Position not found';
 export const levelNotFound = 'Level not found';
 export const softSkillInterviewExist = 'Soft skill interview already exists!';

@@ -4,6 +4,9 @@ export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
   answers?: IAnswer[];
 }
+export interface IDeletedInterviewResponse {
+  answer: string;
+}
 export interface ICompleteInterview {
   employeeId: string;
   levelId: string;

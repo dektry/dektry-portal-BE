@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "01a96bf6-8393-464a-af57-23fd37e35b44",
+		"_postman_id": "1559b0d8-836e-4b97-bd77-6f914887ab62",
 		"name": "Dektry portal",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12511064"
 	},
 	"item": [
 		{
@@ -136,7 +137,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -1674,6 +1677,16 @@
 						{
 							"name": "Complete soft skill interview",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjMWExMGE4LWFkNGUtNGY1My1iYTYwLTFlOTc3MGFmYWI2MyIsImZpcnN0TmFtZSI6IlZlcm9uaWthIiwibGFzdE5hbWUiOiJNb3NlaWNoaWsiLCJlbWFpbCI6Im1vc2Vpa3VzQGdtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiI5OWE5OWFiMS05N2M1LTQ2OWEtYmU2ZC1mNGUwNWY0ZmY4ZjQiLCJwZXJtaXNzaW9ucyI6W3siaWQiOiIyYjI3Y2JmYi1hYWI2LTQ2NjUtOGNjZC01MWExOTk0ZTE3YmQiLCJuYW1lIjoiREVMRVRFX1VTRVJTIn0seyJpZCI6ImZmOGI3MjNkLTExNDktNGRhNy04OWFhLTQ1MWI5YjcyYWE5OSIsIm5hbWUiOiJDUkVBVEVfVVNFUiJ9LHsiaWQiOiJkODJhNTgyZi03YThmLTQzODktODU2MS0wNmJmYTcwMmI3OTIiLCJuYW1lIjoiR0VUX1VTRVIifSx7ImlkIjoiMjQ3MzliNmMtZjI5ZC00MDdjLTk2ZTktNzcyNmNhZTg3Yjc0IiwibmFtZSI6IkdFVF9BTExfVVNFUlMifSx7ImlkIjoiZTc4Nzc0MTYtZWZhYy00ZTBkLWE1M2QtZGY1MzlkNjk0YzU4IiwibmFtZSI6IkdFVF9BTExfUk9MRVMifSx7ImlkIjoiNTllMGUzYTAtYjUyYS00ODE3LTliYWItMmY1M2E3ZDk2NmUzIiwibmFtZSI6IkdFVF9ST0xFX0JZX05BTUUifSx7ImlkIjoiYjljMzVlYWQtOGU4Ny00MDIwLTg0MGItNzViNWFkNzczM2JiIiwibmFtZSI6IkNSRUFURV9ST0xFIn0seyJpZCI6IjgwYjQ3MjkyLTU0OWMtNDQ0MS1hMDY0LWMyYWYxMDYyOTM3NyIsIm5hbWUiOiJVUERBVEVfUk9MRSJ9LHsiaWQiOiJmZWJiMTI1Ny1lMWQ1LTQxOWUtYmM2My04ZWRhYzYyMDc5ZmYiLCJuYW1lIjoiREVMRVRFX1JPTEUifSx7ImlkIjoiODIzNDk4OTktZjRkYS00MTY5LWEyZTQtMTJjYTEwMGJkYjkyIiwibmFtZSI6IkdFVF9QRVJNSVNTSU9OX0JZX05BTUUifSx7ImlkIjoiODI1YTQxMzgtYmI1My00NzY4LWFiZmUtZGZkZDQyYTNmNjNjIiwibmFtZSI6IkNSRUFURV9QRVJNSVNTSU9OIn0seyJpZCI6IjI1MzhmYmE0LTFjZDEtNGIwOC05YzI4LWFjODc4YzM1NTNjMSIsIm5hbWUiOiJDUkVBVEVfUE9TSVRJT04ifSx7ImlkIjoiMDJjYTA2OTctMzZlNS00YzE5LWE2MWEtYjg5MWY0Y2IwNTY3IiwibmFtZSI6IkdFVF9BTExfUE9TSVRJT05TIn0seyJpZCI6IjQ5NTIwM2Y5LTAwMDItNDJjMC05OTNjLTFiNWQwNTk3MTViYSIsIm5hbWUiOiJVUERBVEVfUE9TSVRJT04ifSx7ImlkIjoiNGZmMDY4NWQtNTdmMi00MmNjLWIwZmQtNGMwNDAxMGQ4ZTIwIiwibmFtZSI6IkRFTEVURV9QT1NJVElPTiJ9LHsiaWQiOiJiMWZmY2ZjMS03YjgwLTQ5MmQtOTdkZi1hZTRlMTdjODdjNjAiLCJuYW1lIjoiR0VUX0FMTF9BUlRJQ0xFUyJ9LHsiaWQiOiI3NjcxODM1Ny1hMTEyLTQ3MzQtYmIzNi0xNzY1YTIwYjY5MWEiLCJuYW1lIjoiR0VUX0FSVElDTEUifSx7ImlkIjoiMWIyOTNjNTMtZGVhMi00M2NjLWFjMmItOTQ4YTUyOGRhZjNiIiwibmFtZSI6IlVQREFURV9BUlRJQ0xFIn0seyJpZCI6ImI0Njc3NWZkLTBiNjctNGVlMS1hNzc5LWNhMzkwMzg1MzEzNSIsIm5hbWUiOiJSRUFEX0FSVElDTEUifSx7ImlkIjoiNTQ5MmU2MDItNGRiOC00OGViLWFhMDMtNTgyYzBlMzFmNTc2IiwibmFtZSI6IkNSRUFURV9BUlRJQ0xFIn0seyJpZCI6IjE3MDBiZDJlLWY5ZWMtNGYyZi05ODAzLWQ2MjQzZWYxNTVhMyIsIm5hbWUiOiJERUxFVEVfQVJUSUNMRSJ9LHsiaWQiOiI4YzRiZmUxZC1kMGJhLTQ4NTYtODNiMC00ZWNlZGRhZjA3MGQiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfQVJUSUNMRSJ9LHsiaWQiOiI2ZTAyNDkxYS02NTc3LTRiMDctYmY3OC1kZDA1MGM0MjBlZDMiLCJuYW1lIjoiQ1JFQVRFX1BST0pFQ1QifSx7ImlkIjoiYTliM2Q4ZTctNGEyNS00MjNlLTkxMDUtODZlYmJiMGQwYWM1IiwibmFtZSI6IkdFVF9BTExfUFJPSkVDVFMifSx7ImlkIjoiMjQ3M2VmMjUtMmY2NC00MTc0LTg5OGEtNWIwMGM2ZDU4YjE1IiwibmFtZSI6IkRFTEVURV9QUk9KRUNUIn0seyJpZCI6IjgyMzUwYmIyLTcxNDctNDhjYi1iMDM2LTU4MGZmNjQ3MjA0MiIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiZDYyMmMyNzctZmUxZi00ZTM5LTkwMGQtODNmNmEzMTAzMzJmIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiZmU0ZDM1NDktOWE0OC00ZTU1LTgyMDYtYjU3ZGMwYmMzMmQ1IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiZWU5NjdmMjktMGUzNC00M2EwLTk5NzItYzgyYjAyNTJjMjE4IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn0seyJpZCI6Ijk3YzMxODQxLTNiYmMtNGEyZi1hZWIyLTM5NGI2NjkxZDY5ZiIsIm5hbWUiOiJHRVRfQUxMX1ZBQ0FUSU9OUyJ9LHsiaWQiOiJkZGQ1OTY3MC1hMzk1LTQ0NGQtODJhZC1mN2ZkZjc5MzRlNzUiLCJuYW1lIjoiVVBEQVRFX1ZBQ0FUSU9OIn0seyJpZCI6IjExMDY1Nzc2LTAyYjMtNGEzMy04M2VmLTExMGM5MjQ3NTdmNiIsIm5hbWUiOiJDUkVBVEVfVkFDQVRJT04ifSx7ImlkIjoiNzQ5ODdhYmQtZGRmNC00MzYxLTlhODUtMDVlYTg3ZGFhODEzIiwibmFtZSI6IkRFTEVURV9WQUNBVElPTiJ9LHsiaWQiOiJhODg2NDg1OS00MDU1LTRjYWEtYjk3NS0wOGZiNGM3MWU1YjUiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfVkFDQVRJT05TIn1dLCJuYW1lIjoiYWRtaW4ifSwiY2FyZWVyIjpbXSwiaWF0IjoxNjYyNjIxNTQ5LCJleHAiOjE2NjUyMTM1NDl9.aMHKGLfwyjaiSEBbxDTzJIH3xHkm4ud9nLEmrbqLeFU",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1684,7 +1697,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"hobby\": \"Some text body\",\n    \"comment\": \"Some comment\",\n    \"candidateId\": \"058fe4d5-72f8-459e-8560-627f01897b76\",\n    \"softSkills\": [\n         {\n            \"id\": \"2eeca6a5-8a06-436a-a812-7ac4d1ad718a\",\n            \"value\": \"Communication\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment1\"\n        },\n        {\n            \"id\": \"b90fcd2f-01ea-4415-ba61-dc1dbc795c86\",\n            \"value\": \"Listening\",\n          \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"fb30791b-9368-46a8-b9ad-d5b8fa445f7b\",\n            \"value\": \"Time management\",\n         \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"2fe3e6a0-3ac7-4fef-a0c4-e8851ca4bf68\",\n            \"value\": \"Leadership\",\n           \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"45399caa-65b7-4c74-8bf0-670d50a64662\",\n            \"value\": \"Teamwork\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"1aac9795-3410-42d5-ab52-c9ba5cd91e84\",\n            \"value\": \"Initiative\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"a79ccafa-291c-406c-93f7-302f6f129f6d\",\n            \"value\": \"Attention to details\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"ee863bca-4634-4518-89d4-62a3efdf7ada\",\n            \"value\": \"Deadline focus\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"01975d2c-013b-455b-83fc-9872bf074c18\",\n            \"value\": \"Motivation\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"129b9ad7-36fd-4d6b-85c2-f09ec73ac47d\",\n            \"value\": \"Communication 1\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"d4aa38c5-84c9-4659-b22e-8d8ff2d0b976\",\n            \"value\": \"Communication 2\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"b5541cbc-b555-4669-9586-d89ad2e419fe\",\n            \"value\": \"Communication 3\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"5661b039-47b5-4ccf-a6cd-7f71dfbfe0ac\",\n            \"value\": \"Communication 4\",\n            \"comment\": \"Some comment\"\n        }\n    ]\n}",
+									"raw": "{\n    \"hobby\": \"Some text body\",\n    \"comment\": \"Some comment\",\n    \"candidateId\": \"4fb45730-1797-4568-8082-68697cd1ebf1\",\n    \"softSkills\": [\n         {\n            \"id\": \"2eeca6a5-8a06-436a-a812-7ac4d1ad718a\",\n            \"value\": \"Communication\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment1\"\n        },\n        {\n            \"id\": \"b90fcd2f-01ea-4415-ba61-dc1dbc795c86\",\n            \"value\": \"Listening\",\n          \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"fb30791b-9368-46a8-b9ad-d5b8fa445f7b\",\n            \"value\": \"Time management\",\n         \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"2fe3e6a0-3ac7-4fef-a0c4-e8851ca4bf68\",\n            \"value\": \"Leadership\",\n           \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"45399caa-65b7-4c74-8bf0-670d50a64662\",\n            \"value\": \"Teamwork\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"1aac9795-3410-42d5-ab52-c9ba5cd91e84\",\n            \"value\": \"Initiative\",\n            \"softSkillScoreId\": \"5bfc6d63-5a7d-4a23-867e-c4a841304403\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"a79ccafa-291c-406c-93f7-302f6f129f6d\",\n            \"value\": \"Attention to details\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"ee863bca-4634-4518-89d4-62a3efdf7ada\",\n            \"value\": \"Deadline focus\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"01975d2c-013b-455b-83fc-9872bf074c18\",\n            \"value\": \"Motivation\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"129b9ad7-36fd-4d6b-85c2-f09ec73ac47d\",\n            \"value\": \"Communication 1\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"d4aa38c5-84c9-4659-b22e-8d8ff2d0b976\",\n            \"value\": \"Communication 2\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"b5541cbc-b555-4669-9586-d89ad2e419fe\",\n            \"value\": \"Communication 3\",\n            \"comment\": \"Some comment\"\n        },\n        {\n            \"id\": \"5661b039-47b5-4ccf-a6cd-7f71dfbfe0ac\",\n            \"value\": \"Communication 4\",\n            \"comment\": \"Some comment\"\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2038,6 +2051,37 @@
 									"port": "3000",
 									"path": [
 										"employee-interviews"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all interviews",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjMWExMGE4LWFkNGUtNGY1My1iYTYwLTFlOTc3MGFmYWI2MyIsImZpcnN0TmFtZSI6IlZlcm9uaWthIiwibGFzdE5hbWUiOiJNb3NlaWNoaWsiLCJlbWFpbCI6Im1vc2Vpa3VzQGdtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiI5OWE5OWFiMS05N2M1LTQ2OWEtYmU2ZC1mNGUwNWY0ZmY4ZjQiLCJwZXJtaXNzaW9ucyI6W3siaWQiOiIyYjI3Y2JmYi1hYWI2LTQ2NjUtOGNjZC01MWExOTk0ZTE3YmQiLCJuYW1lIjoiREVMRVRFX1VTRVJTIn0seyJpZCI6ImZmOGI3MjNkLTExNDktNGRhNy04OWFhLTQ1MWI5YjcyYWE5OSIsIm5hbWUiOiJDUkVBVEVfVVNFUiJ9LHsiaWQiOiJkODJhNTgyZi03YThmLTQzODktODU2MS0wNmJmYTcwMmI3OTIiLCJuYW1lIjoiR0VUX1VTRVIifSx7ImlkIjoiMjQ3MzliNmMtZjI5ZC00MDdjLTk2ZTktNzcyNmNhZTg3Yjc0IiwibmFtZSI6IkdFVF9BTExfVVNFUlMifSx7ImlkIjoiZTc4Nzc0MTYtZWZhYy00ZTBkLWE1M2QtZGY1MzlkNjk0YzU4IiwibmFtZSI6IkdFVF9BTExfUk9MRVMifSx7ImlkIjoiNTllMGUzYTAtYjUyYS00ODE3LTliYWItMmY1M2E3ZDk2NmUzIiwibmFtZSI6IkdFVF9ST0xFX0JZX05BTUUifSx7ImlkIjoiYjljMzVlYWQtOGU4Ny00MDIwLTg0MGItNzViNWFkNzczM2JiIiwibmFtZSI6IkNSRUFURV9ST0xFIn0seyJpZCI6IjgwYjQ3MjkyLTU0OWMtNDQ0MS1hMDY0LWMyYWYxMDYyOTM3NyIsIm5hbWUiOiJVUERBVEVfUk9MRSJ9LHsiaWQiOiJmZWJiMTI1Ny1lMWQ1LTQxOWUtYmM2My04ZWRhYzYyMDc5ZmYiLCJuYW1lIjoiREVMRVRFX1JPTEUifSx7ImlkIjoiODIzNDk4OTktZjRkYS00MTY5LWEyZTQtMTJjYTEwMGJkYjkyIiwibmFtZSI6IkdFVF9QRVJNSVNTSU9OX0JZX05BTUUifSx7ImlkIjoiODI1YTQxMzgtYmI1My00NzY4LWFiZmUtZGZkZDQyYTNmNjNjIiwibmFtZSI6IkNSRUFURV9QRVJNSVNTSU9OIn0seyJpZCI6IjI1MzhmYmE0LTFjZDEtNGIwOC05YzI4LWFjODc4YzM1NTNjMSIsIm5hbWUiOiJDUkVBVEVfUE9TSVRJT04ifSx7ImlkIjoiMDJjYTA2OTctMzZlNS00YzE5LWE2MWEtYjg5MWY0Y2IwNTY3IiwibmFtZSI6IkdFVF9BTExfUE9TSVRJT05TIn0seyJpZCI6IjQ5NTIwM2Y5LTAwMDItNDJjMC05OTNjLTFiNWQwNTk3MTViYSIsIm5hbWUiOiJVUERBVEVfUE9TSVRJT04ifSx7ImlkIjoiNGZmMDY4NWQtNTdmMi00MmNjLWIwZmQtNGMwNDAxMGQ4ZTIwIiwibmFtZSI6IkRFTEVURV9QT1NJVElPTiJ9LHsiaWQiOiJiMWZmY2ZjMS03YjgwLTQ5MmQtOTdkZi1hZTRlMTdjODdjNjAiLCJuYW1lIjoiR0VUX0FMTF9BUlRJQ0xFUyJ9LHsiaWQiOiI3NjcxODM1Ny1hMTEyLTQ3MzQtYmIzNi0xNzY1YTIwYjY5MWEiLCJuYW1lIjoiR0VUX0FSVElDTEUifSx7ImlkIjoiMWIyOTNjNTMtZGVhMi00M2NjLWFjMmItOTQ4YTUyOGRhZjNiIiwibmFtZSI6IlVQREFURV9BUlRJQ0xFIn0seyJpZCI6ImI0Njc3NWZkLTBiNjctNGVlMS1hNzc5LWNhMzkwMzg1MzEzNSIsIm5hbWUiOiJSRUFEX0FSVElDTEUifSx7ImlkIjoiNTQ5MmU2MDItNGRiOC00OGViLWFhMDMtNTgyYzBlMzFmNTc2IiwibmFtZSI6IkNSRUFURV9BUlRJQ0xFIn0seyJpZCI6IjE3MDBiZDJlLWY5ZWMtNGYyZi05ODAzLWQ2MjQzZWYxNTVhMyIsIm5hbWUiOiJERUxFVEVfQVJUSUNMRSJ9LHsiaWQiOiI4YzRiZmUxZC1kMGJhLTQ4NTYtODNiMC00ZWNlZGRhZjA3MGQiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfQVJUSUNMRSJ9LHsiaWQiOiI2ZTAyNDkxYS02NTc3LTRiMDctYmY3OC1kZDA1MGM0MjBlZDMiLCJuYW1lIjoiQ1JFQVRFX1BST0pFQ1QifSx7ImlkIjoiYTliM2Q4ZTctNGEyNS00MjNlLTkxMDUtODZlYmJiMGQwYWM1IiwibmFtZSI6IkdFVF9BTExfUFJPSkVDVFMifSx7ImlkIjoiMjQ3M2VmMjUtMmY2NC00MTc0LTg5OGEtNWIwMGM2ZDU4YjE1IiwibmFtZSI6IkRFTEVURV9QUk9KRUNUIn0seyJpZCI6IjgyMzUwYmIyLTcxNDctNDhjYi1iMDM2LTU4MGZmNjQ3MjA0MiIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiZDYyMmMyNzctZmUxZi00ZTM5LTkwMGQtODNmNmEzMTAzMzJmIiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiZmU0ZDM1NDktOWE0OC00ZTU1LTgyMDYtYjU3ZGMwYmMzMmQ1IiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiZWU5NjdmMjktMGUzNC00M2EwLTk5NzItYzgyYjAyNTJjMjE4IiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn0seyJpZCI6Ijk3YzMxODQxLTNiYmMtNGEyZi1hZWIyLTM5NGI2NjkxZDY5ZiIsIm5hbWUiOiJHRVRfQUxMX1ZBQ0FUSU9OUyJ9LHsiaWQiOiJkZGQ1OTY3MC1hMzk1LTQ0NGQtODJhZC1mN2ZkZjc5MzRlNzUiLCJuYW1lIjoiVVBEQVRFX1ZBQ0FUSU9OIn0seyJpZCI6IjExMDY1Nzc2LTAyYjMtNGEzMy04M2VmLTExMGM5MjQ3NTdmNiIsIm5hbWUiOiJDUkVBVEVfVkFDQVRJT04ifSx7ImlkIjoiNzQ5ODdhYmQtZGRmNC00MzYxLTlhODUtMDVlYTg3ZGFhODEzIiwibmFtZSI6IkRFTEVURV9WQUNBVElPTiJ9LHsiaWQiOiJhODg2NDg1OS00MDU1LTRjYWEtYjk3NS0wOGZiNGM3MWU1YjUiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfVkFDQVRJT05TIn1dLCJuYW1lIjoiYWRtaW4ifSwiY2FyZWVyIjpbXSwiaWF0IjoxNjYyNjIxNTQ5LCJleHAiOjE2NjUyMTM1NDl9.aMHKGLfwyjaiSEBbxDTzJIH3xHkm4ud9nLEmrbqLeFU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/employee-interviews/e066a1e1-c2c1-48c0-8c4b-14922362ca50/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"employee-interviews",
+										"e066a1e1-c2c1-48c0-8c4b-14922362ca50",
+										"all"
 									]
 								}
 							},

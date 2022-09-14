@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -9,10 +10,14 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { InterviewEntity } from '../entity/interview.entity';
 
-import { InterviewService } from '../services/interview.service';
+import { EmployeeInterviewService } from '../services/interview.service';
 
-import { ICompletedInterviewResponse } from '../utils/constants';
+import {
+  ICompletedInterviewResponse,
+  IDeletedInterviewResponse,
+} from '../utils/constants';
 import {
   CompleteInterviewsDto,
   EditInterviewsDto,
@@ -20,7 +25,7 @@ import {
 
 @Controller('employee-interviews')
 export class EmployeeInterviewsController {
-  constructor(private InterviewService: InterviewService) {}
+  constructor(private InterviewService: EmployeeInterviewService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -30,6 +35,7 @@ export class EmployeeInterviewsController {
     return this.InterviewService.completeInterview(completeInterviewDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
   editInterview(
     @Body() editInterviewDto: EditInterviewsDto,
@@ -38,10 +44,26 @@ export class EmployeeInterviewsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':employeeId')
+  @Get(':interviewId')
   getInterviewResult(
-    @Param('employeeId') employeeId: string,
+    @Param('interviewId') interviewId: string,
   ): Promise<ICompletedInterviewResponse> {
-    return this.InterviewService.getInterviewResult(employeeId);
+    return this.InterviewService.getInterviewResult(interviewId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId/all')
+  getAllInterviews(
+    @Param('employeeId') employeeId: string,
+  ): Promise<InterviewEntity[]> {
+    return this.InterviewService.getAllInterviews(employeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':employeeId')
+  deleteInterviewResult(
+    @Param('employeeId') employeeId: string,
+  ): Promise<IDeletedInterviewResponse> {
+    return this.InterviewService.deleteInterviewResult(employeeId);
   }
 }
