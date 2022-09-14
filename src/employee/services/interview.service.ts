@@ -301,7 +301,7 @@ export class EmployeeInterviewService {
         },
       );
 
-      if (interviews.length) {
+      if (interviews?.length) {
         return interviews;
       }
       throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
