@@ -44,11 +44,11 @@ export class EmployeeInterviewsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':employeeId')
+  @Get(':interviewId')
   getInterviewResult(
-    @Param('employeeId') employeeId: string,
+    @Param('interviewId') interviewId: string,
   ): Promise<ICompletedInterviewResponse> {
-    return this.InterviewService.getInterviewResult(employeeId);
+    return this.InterviewService.getInterviewResult(interviewId);
   }
 
   @UseGuards(JwtAuthGuard)

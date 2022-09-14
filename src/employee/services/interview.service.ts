@@ -245,21 +245,15 @@ export class EmployeeInterviewService {
   }
 
   async getInterviewResult(
-    employeeId: string,
+    interviewId: string,
   ): Promise<ICompletedInterviewResponse> {
     try {
-      const employee: EmployeeEntity = await this.employeeRepository.findOne(
-        employeeId,
-      );
-      if (!employee)
-        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
-
       const helper = new Helper();
 
       const interview: InterviewEntity = await this.interviewRepository.findOne(
         {
           where: {
-            employee: employee,
+            id: interviewId,
           },
           relations: ['level', 'position'],
         },
