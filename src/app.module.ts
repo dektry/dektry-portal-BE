@@ -11,6 +11,7 @@ import { VacationsModule } from './vacations/vacations.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CandidatesModule } from './candidates/candidates.module';
 import { EmployeeModule } from './employee/employee.module';
+import { CVGenerationModule } from './cv-generation/cv-generation.module';
 
 @Module({
   imports: [
@@ -25,8 +26,9 @@ import { EmployeeModule } from './employee/employee.module';
     VacationsModule,
     CandidatesModule,
     EmployeeModule,
+    CVGenerationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
