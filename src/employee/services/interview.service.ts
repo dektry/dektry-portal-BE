@@ -63,16 +63,6 @@ export class EmployeeInterviewService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const isInterview: InterviewEntity =
-        await this.interviewRepository.findOne({
-          where: {
-            employee: employee,
-          },
-        });
-
-      if (isInterview)
-        throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
-
       const dateNow = moment().format();
       const helper = new Helper();
 
@@ -304,8 +294,9 @@ export class EmployeeInterviewService {
 
       if (interviews?.length) {
         return interviews;
+      } else {
+        return [];
       }
-      throw new HttpException(interviewsNotFound, HttpStatus.BAD_REQUEST);
     } catch (error) {
       console.error('[GET_ALL_INTERVIEWS_ERROR]', error);
       Logger.error(error);
