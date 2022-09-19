@@ -33,6 +33,7 @@ export class CVGenerationService {
       // headless: false,
     });
     const page = await browser.newPage();
+    // the width and height are the same as the width and height in the template
     await page.setViewport({ width: 595, height: 842 });
 
     await page.setContent(template);

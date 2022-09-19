@@ -25,13 +25,13 @@ export class CVGenerationController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'attachment; filename="cv.pdf"')
   async generatePdf(
     @Body() { template }: { template: string },
     @Res() res: Response,
   ) {
     const file = await this.cvGenerationService.generatePdf(template);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="cv.pdf"');
     file.pipe(res);
   }
 }
