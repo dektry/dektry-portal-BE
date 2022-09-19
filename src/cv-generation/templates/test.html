@@ -1,0 +1,43 @@
+<div
+  style="
+    color: black;
+    padding: 40px;
+    width: 1000px;
+    box-sizing: border-box;
+    font-family: 'Andale Mono';
+  "
+>
+  <div>
+    <p class="editable-field">{{name}} | {{position}}</p>
+  </div>
+  <div>
+    <p class="editable-field">{{introduction}}</p>
+  </div>
+  <div>
+    <p>Skills</p>
+    <ul class="editable-field list">
+      {{#each skills}}
+      <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
+  <div>
+    <p>Projects</p>
+    <div class="editable-field list">
+      {{#each projects}}
+      <div
+        style="
+          border: 1px solid mediumvioletred;
+          padding: 5px;
+          margin-top: 15px;
+        "
+      >
+        <h3>Project name: {{this.name}}</h3>
+        <h3>Position: {{this.position}}</h3>
+        <h3>Team size: {{this.size}}</h3>
+        <h3>Duration: {{this.duration}}</h3>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
