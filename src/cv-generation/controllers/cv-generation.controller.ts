@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { Response } from 'express';
 
 import { CVGenerationService } from '../services/cv-generation.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
@@ -15,7 +25,13 @@ export class CVGenerationController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async generatePdf(@Body() { template }: { template: string }) {
-    return await this.cvGenerationService.generatePdf(template);
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'attachment; filename="cv.pdf"')
+  async generatePdf(
+    @Body() { template }: { template: string },
+    @Res() res: Response,
+  ) {
+    const file = await this.cvGenerationService.generatePdf(template);
+    file.pipe(res);
   }
 }

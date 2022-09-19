@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Readable } from 'typeorm/platform/PlatformTools';
 import * as fs from 'fs';
 import * as path from 'path';
 import { promisify } from 'util';
@@ -23,10 +24,8 @@ export class CVGenerationService {
   }
 
   async generatePdf(template: string) {
-    console.log(template);
     if (!template) {
       throw new HttpException(noTemplate, HttpStatus.BAD_REQUEST);
-      return;
     }
 
     const browser = await puppeteer.launch({
@@ -42,6 +41,6 @@ export class CVGenerationService {
 
     await browser.close();
 
-    return pdf;
+    return Readable.from(pdf);
   }
 }
