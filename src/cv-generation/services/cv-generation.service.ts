@@ -38,9 +38,12 @@ export class CVGenerationService {
       // the width and height are the same as the width and height in the template
       await page.setViewport({ width: 595, height: 842 });
 
+      // somebody will try to inject script (I tried)
+      await page.setJavaScriptEnabled(false);
+
       await page.setContent(template);
 
-      const pdf = await page.pdf();
+      const pdf = await page.pdf({ timeout: 10000 });
 
       await browser.close();
 
