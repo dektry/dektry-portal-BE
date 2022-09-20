@@ -5,7 +5,7 @@ import * as path from 'path';
 import { promisify } from 'util';
 import puppeteer from 'puppeteer';
 
-import { noTemplate, templateNotFound } from '../constants/messages';
+import { templateNotFound } from '../constants/messages';
 
 const readFile = promisify(fs.readFile);
 
@@ -13,7 +13,8 @@ const readFile = promisify(fs.readFile);
 export class CVGenerationService {
   async getTemplate(name: string) {
     try {
-      const templatePath = path.resolve(
+      const templatePath = path.join(
+        process.cwd(),
         `./src/cv-generation/templates/${name}.html`,
       );
       return await readFile(templatePath, 'utf8');
@@ -25,33 +26,23 @@ export class CVGenerationService {
   }
 
   async generatePdf(template: string) {
-    if (!template) {
-      throw new HttpException(noTemplate, HttpStatus.BAD_REQUEST);
-    }
+    const browser = await puppeteer.launch({
+      // might be useful for debugging
+      // headless: false,
+    });
+    const page = await browser.newPage();
+    // the width and height are the same as the width and height in the template
+    await page.setViewport({ width: 595, height: 842 });
 
-    try {
-      const browser = await puppeteer.launch({
-        // might be useful for debugging
-        // headless: false,
-      });
-      const page = await browser.newPage();
-      // the width and height are the same as the width and height in the template
-      await page.setViewport({ width: 595, height: 842 });
+    // somebody will try to inject script (I tried)
+    await page.setJavaScriptEnabled(false);
 
-      // somebody will try to inject script (I tried)
-      await page.setJavaScriptEnabled(false);
+    await page.setContent(template);
 
-      await page.setContent(template);
+    const pdf = await page.pdf({ timeout: 10000 });
 
-      const pdf = await page.pdf({ timeout: 10000 });
+    await browser.close();
 
-      await browser.close();
-
-      return Readable.from(pdf);
-    } catch (error) {
-      Logger.error(error);
-
-      throw new HttpException('', HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    return Readable.from(pdf);
   }
 }
