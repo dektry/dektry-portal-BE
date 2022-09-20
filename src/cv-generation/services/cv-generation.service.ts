@@ -15,7 +15,10 @@ export class CVGenerationService {
     try {
       const templatePath = path.join(
         process.cwd(),
-        `./src/cv-generation/templates/${name}.html`,
+        'src',
+        'cv-generation',
+        'templates',
+        `${name}.html`,
       );
       return await readFile(templatePath, 'utf8');
     } catch (error) {
