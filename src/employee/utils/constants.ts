@@ -21,3 +21,15 @@ export interface IEditInterviewBody extends ICompleteInterview {
 }
 
 export const employeeNotFound = 'Employee not found!';
+
+export interface ISoftSkill {
+  id: string;
+  value: string;
+  softSkillScoreId: string;
+  comment: string;
+}
+
+export interface ISoftSkillQuestion {
+  id: string;
+  value: string;
+}
