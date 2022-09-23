@@ -1,3 +1,4 @@
+
 import {
   Body,
   Controller,
@@ -12,6 +13,7 @@ import { Response } from 'express';
 import { CVGenerationService } from '../services/cv-generation.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { CvGenerationDto } from '../dto/cv-generation.dto';
+
 
 @Controller('cv-generation')
 export class CVGenerationController {
