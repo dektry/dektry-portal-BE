@@ -14,9 +14,9 @@ export interface ICompleteInterview {
   answers: {
     [key: string]: string;
   };
+  comment?: string;
 }
 export interface IEditInterviewBody extends ICompleteInterview {
-  comment?: string;
   isApproved: boolean;
 }
 

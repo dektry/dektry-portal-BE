@@ -84,6 +84,7 @@ export class EmployeeInterviewService {
         createdAt: datetimeOfCreation || dateNow,
         position,
         level,
+        comment: interview.comment ?? null,
       });
 
       const interviewSkills: SkillToInterviewEntity[] = filteredSkills.map(
