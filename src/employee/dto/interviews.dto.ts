@@ -22,12 +22,12 @@ export class CompleteInterviewsDto {
   answers: {
     [key: string]: string;
   };
-}
-export class EditInterviewsDto extends CompleteInterviewsDto {
+
   @IsOptional()
   @MaxLength(512, { message: 'Comment is too long' })
   comment?: string;
-
+}
+export class EditInterviewsDto extends CompleteInterviewsDto {
   @IsNotEmpty({
     message: 'isApproved must not be empty',
   })
