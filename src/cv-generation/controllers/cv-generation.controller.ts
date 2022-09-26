@@ -21,8 +21,10 @@ export class CVGenerationController {
 
   @UseGuards(JwtAuthGuard)
   @Get('template/:name')
-  async getTemplate(@Param('name') name: string) {
-    return await this.cvGenerationService.getTemplate(name);
+  async getTemplate(@Param('name') name: string, @Res() res: Response) {
+    res.setHeader('Content-Type', 'text/plain');
+    const template = await this.cvGenerationService.getTemplate(name);
+    res.send(template);
   }
 
   @UseGuards(JwtAuthGuard)
