@@ -1,4 +1,3 @@
-
 import {
   Body,
   Controller,
@@ -10,10 +9,9 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-import { CVGenerationService } from '../services/cv-generation.service';
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { CvGenerationDto } from '../dto/cv-generation.dto';
-
+import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
+import { CVGenerationService } from 'cv-generation/services/cv-generation.service';
+import { CvGenerationDto } from 'cv-generation/dto/cv-generation.dto';
 
 @Controller('cv-generation')
 export class CVGenerationController {
@@ -21,8 +19,10 @@ export class CVGenerationController {
 
   @UseGuards(JwtAuthGuard)
   @Get('template/:name')
-  async getTemplate(@Param('name') name: string) {
-    return await this.cvGenerationService.getTemplate(name);
+  async getTemplate(@Param('name') name: string, @Res() res: Response) {
+    res.setHeader('Content-Type', 'text/plain');
+    const template = await this.cvGenerationService.getTemplate(name);
+    template.pipe(res);
   }
 
   @UseGuards(JwtAuthGuard)
