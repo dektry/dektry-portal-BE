@@ -1,15 +1,10 @@
-
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Readable } from 'typeorm/platform/PlatformTools';
-import * as fs from 'fs';
+import { createReadStream } from 'fs';
 import * as path from 'path';
-import { promisify } from 'util';
 import puppeteer from 'puppeteer';
 
-
-import { templateNotFound } from '../constants/messages';
-
-const readFile = promisify(fs.readFile);
+import { templateNotFound } from 'cv-generation/constants/messages';
 
 @Injectable()
 export class CVGenerationService {
@@ -22,7 +17,7 @@ export class CVGenerationService {
         'templates',
         `${name}.html`,
       );
-      return await readFile(templatePath, 'utf8');
+      return await createReadStream(templatePath, 'utf8');
     } catch (error) {
       Logger.error(error);
 
