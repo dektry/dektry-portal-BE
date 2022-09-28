@@ -5,15 +5,13 @@
 />
 <style>
   body {
-    background-color: #f0f0f0;
     font-family: Roboto;
     font-size: 12px;
   }
   .container {
     width: 595px;
-    height: 842px;
+    max-height: 842px;
     display: flex;
-    background: white;
     padding: 24px;
     box-sizing: border-box;
     position: relative;
@@ -67,7 +65,6 @@
   .soft-skills {
     margin-top: 40px;
   }
-
   .soft-skills-list-el {
     display: inline-block;
     border: 1px solid #000;
@@ -80,8 +77,9 @@
   }
   .prof-skills-list {
     column-count: 2;
+    column-fill: auto;
     gap: 40px;
-    height: 250px;
+    height: 220px;
     width: 394px;
   }
   .prof-skills-el {

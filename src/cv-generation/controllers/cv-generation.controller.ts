@@ -32,8 +32,7 @@ export class CVGenerationController {
     @Res() res: Response,
   ) {
     const file = await this.cvGenerationService.generatePdf(template);
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="cv.pdf"');
+    res.setHeader('Content-Type', 'binary/octet-stream');
     file.pipe(res);
   }
 }

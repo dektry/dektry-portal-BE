@@ -30,16 +30,34 @@ export class CVGenerationService {
       // might be useful for debugging
       // headless: false,
     });
+
     const page = await browser.newPage();
-    // the width and height are the same as the width and height in the template
-    await page.setViewport({ width: 595, height: 842 });
+    // the width and height are the same as the width and height of the pdf document
+    await page.setViewport({ width: 794, height: 1123 });
 
     // somebody will try to inject script (I tried)
     await page.setJavaScriptEnabled(false);
 
     await page.setContent(template);
 
-    const pdf = await page.pdf({ timeout: 10000 });
+    const pdfPxWidth = 794;
+    // pdfPxWidth is always the same but temple width can be adjusted
+    const templateWidth = 595;
+
+    // await new Promise((resolve) => setTimeout(resolve, 250000));
+
+    const pdf = await page.pdf({
+      scale: pdfPxWidth / templateWidth,
+      width: 794,
+      height: 1123,
+      timeout: 10000,
+      margin: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
+    });
 
     await browser.close();
 
