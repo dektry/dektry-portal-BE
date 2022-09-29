@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 
 import { InterviewEntity } from './interview.entity';
+import { SoftAssessmentEntity } from './softAssessment.entity';
 
 @Entity({ name: 'employee' })
 export class EmployeeEntity extends BaseEntity {
@@ -91,4 +92,10 @@ export class EmployeeEntity extends BaseEntity {
 
   @OneToOne(() => InterviewEntity, (interview) => interview.employee)
   interview: InterviewEntity;
+
+  @OneToOne(
+    () => SoftAssessmentEntity,
+    (softAssessment) => softAssessment.employee,
+  )
+  softAssessment: SoftAssessmentEntity;
 }
