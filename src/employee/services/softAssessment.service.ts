@@ -18,11 +18,12 @@ import {
   softSkillAssessmentNotFound,
   softSkillAssessmentCantEdit,
   softSkillAssessmentExist,
+  softSkillAssessmentsNotFound,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
 @Injectable()
-export class SoftInterviewService {
+export class EmployeeSoftAssessmentService {
   constructor(
     @InjectRepository(employeeRepository)
     private employeeRepository: employeeRepository,
@@ -32,7 +33,7 @@ export class SoftInterviewService {
     private softAssessmentRepository: softAssessmentRepository,
   ) {}
 
-  async completeInterview(softAssessment: ICompleteSoftAssessmentBody) {
+  async completeAssessment(softAssessment: ICompleteSoftAssessmentBody) {
     try {
       const dateNow = moment().format();
 
@@ -41,18 +42,6 @@ export class SoftInterviewService {
       );
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
-
-      const isSoftInerviewExist = await this.softAssessmentRepository.findOne({
-        where: {
-          employee: softAssessment.employeeId,
-        },
-      });
-
-      if (isSoftInerviewExist)
-        throw new HttpException(
-          softSkillAssessmentExist,
-          HttpStatus.BAD_REQUEST,
-        );
 
       const savedInterview = await this.softAssessmentRepository.save({
         employee,
@@ -84,12 +73,14 @@ export class SoftInterviewService {
     }
   }
 
-  async getInterviewResult(emplyeeId: string): Promise<SoftAssessmentEntity> {
+  async getAssessmentResult(
+    assessmentId: string,
+  ): Promise<SoftAssessmentEntity> {
     try {
       const softAssessment: SoftAssessmentEntity =
         await this.softAssessmentRepository.findOne({
           where: {
-            employee: emplyeeId,
+            id: assessmentId,
           },
           relations: ['skills', 'skills.soft_skill_id'],
         });
@@ -114,7 +105,40 @@ export class SoftInterviewService {
     }
   }
 
-  async editInterviewResult(
+  async getSoftAssessments(
+    employeeId: string,
+  ): Promise<SoftAssessmentEntity[]> {
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne({
+        id: employeeId,
+      });
+      if (!employee)
+        throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
+
+      const softAssessments: SoftAssessmentEntity[] =
+        await this.softAssessmentRepository.find({
+          where: {
+            employee: employee,
+          },
+          relations: ['skills', 'skills.soft_skill_id'],
+        });
+
+      return softAssessments;
+    } catch (err) {
+      console.error('[SOFT_SKILL_ASSESSMENTS_GET_ERROR]', err);
+      Logger.error(err);
+
+      if (err?.response) return err?.response;
+
+      throw new HttpException(
+        softSkillAssessmentNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async editAssessmentResult(
+    assessmentId: string,
     softAssessment: IEditSoftAssessmentBody,
   ): Promise<SoftAssessmentEntity> {
     try {
@@ -125,7 +149,7 @@ export class SoftInterviewService {
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
       await this.softAssessmentRepository.update(
-        { employee: employee },
+        { id: assessmentId },
         {
           comment: softAssessment.comment,
         },
@@ -146,9 +170,9 @@ export class SoftInterviewService {
         );
       }
 
-      return await this.getInterviewResult(softAssessment.employeeId);
+      return await this.getAssessmentResult(softAssessment.id);
     } catch (err) {
-      console.error('[EDIT_SOFT_SKILL_INTERVIEW_ERROR]', err);
+      console.error('[EDIT_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
 
       if (err?.response) return err?.response;

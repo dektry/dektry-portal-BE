@@ -11,7 +11,7 @@ import {
 import { EmployeeEntity } from './employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from './softSkillToSoftAssessment.entity';
 
-@Entity({ name: 'soft_interview' })
+@Entity({ name: 'soft_assessment' })
 export class SoftAssessmentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -50,6 +50,7 @@ export interface ICompleteSoftAssessmentBody {
 }
 
 export interface IEditSoftAssessmentBody {
+  id: string;
   employeeId: string;
   comment?: string;
   softSkills: Array<ISoftSkill>;
@@ -72,6 +73,7 @@ export interface ISoftAssessmentResultResponse {
 }
 
 export const softSkillAssessmentNotFound = 'Soft skill assessment not found!';
+export const softSkillAssessmentsNotFound = 'Soft skill assessments not found!';
 export const softSkillAssessmentCantComplete =
   'Soft skill assessment cant be complete!';
 export const softSkillAssessmentCantEdit =
