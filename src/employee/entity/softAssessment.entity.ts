@@ -6,6 +6,7 @@ import {
   JoinColumn,
   OneToOne,
   OneToMany,
+  CreateDateColumn,
 } from 'typeorm';
 
 import { EmployeeEntity } from './employee.entity';
@@ -16,7 +17,7 @@ export class SoftAssessmentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'timestamptz' })
+  @CreateDateColumn()
   createdAt: Date;
 
   @Column({ length: 512, nullable: true })

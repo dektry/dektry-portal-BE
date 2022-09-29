@@ -1,4 +1,10 @@
-import { IsOptional, MaxLength, IsNotEmpty } from 'class-validator';
+import {
+  IsOptional,
+  MaxLength,
+  IsNotEmpty,
+  IsArray,
+  ArrayMaxSize,
+} from 'class-validator';
 
 import { ISoftSkill } from '../utils/constants';
 
@@ -19,7 +25,9 @@ export class EditSoftInterviewsDto {
   @IsNotEmpty({
     message: 'Soft Skills must not be empty',
   })
-  softSkills: Array<ISoftSkill>;
+  @IsArray()
+  @ArrayMaxSize(256, { message: 'Array max length exceeded' })
+  softSkills: ISoftSkill[];
 }
 export class CompleteSoftInterviewsDto extends EditSoftInterviewsDto {
   @IsOptional()

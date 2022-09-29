@@ -1,7 +1,6 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-
-import * as moment from 'moment';
+import { In } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { softSkillToSoftAssessmentRepository } from '../repositories/softSkilltoSoftAssessment.repository';
@@ -17,8 +16,6 @@ import {
   employeeNotFound,
   softSkillAssessmentNotFound,
   softSkillAssessmentCantEdit,
-  softSkillAssessmentExist,
-  softSkillAssessmentsNotFound,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
@@ -35,8 +32,6 @@ export class EmployeeSoftAssessmentService {
 
   async completeAssessment(softAssessment: ICompleteSoftAssessmentBody) {
     try {
-      const dateNow = moment().format();
-
       const employee: EmployeeEntity = await this.employeeRepository.findOne(
         softAssessment.employeeId,
       );
@@ -45,7 +40,6 @@ export class EmployeeSoftAssessmentService {
 
       const savedInterview = await this.softAssessmentRepository.save({
         employee,
-        createdAt: dateNow,
         comment: softAssessment.comment,
       });
 
@@ -64,7 +58,12 @@ export class EmployeeSoftAssessmentService {
       console.error('[COMPLETE_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
 
       throw new HttpException(
         softSkillAssessmentCantComplete,
@@ -96,7 +95,12 @@ export class EmployeeSoftAssessmentService {
       console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
 
       throw new HttpException(
         softSkillAssessmentNotFound,
@@ -128,7 +132,12 @@ export class EmployeeSoftAssessmentService {
       console.error('[SOFT_SKILL_ASSESSMENTS_GET_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
 
       throw new HttpException(
         softSkillAssessmentNotFound,
@@ -155,14 +164,13 @@ export class EmployeeSoftAssessmentService {
         },
       );
 
+      const softSkillsIds = softAssessment.softSkills.map((skill) => skill.id);
+
       for (const activeSkillToUpdate of softAssessment.softSkills) {
-        const { id } = await this.softSkillToSoftAssessmentRepository.findOne({
-          where: {
-            soft_skill_id: activeSkillToUpdate.id,
-          },
-        });
         await this.softSkillToSoftAssessmentRepository.update(
-          { id },
+          {
+            id: In(softSkillsIds),
+          },
           {
             softSkillScoreId: activeSkillToUpdate.softSkillScoreId,
             comment: activeSkillToUpdate.comment,
@@ -170,12 +178,17 @@ export class EmployeeSoftAssessmentService {
         );
       }
 
-      return await this.getAssessmentResult(softAssessment.id);
+      return await this.getAssessmentResult(assessmentId);
     } catch (err) {
       console.error('[EDIT_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
 
       throw new HttpException(
         softSkillAssessmentCantEdit,
