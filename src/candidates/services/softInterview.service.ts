@@ -84,6 +84,7 @@ export class SoftInterviewService {
       );
     }
   }
+
   async getInterviewResult(
     candidateId: string,
   ): Promise<ISoftInterviewResultResponse> {
@@ -115,6 +116,7 @@ export class SoftInterviewService {
       );
     }
   }
+
   async editInterviewResult(
     softInerview: IEditSoftInterviewBody,
   ): Promise<ISoftInterviewResultResponse> {
