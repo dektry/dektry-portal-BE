@@ -5,6 +5,8 @@ import {
   IsArray,
   ArrayMaxSize,
 } from 'class-validator';
+import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
+import { PositionEntity } from 'users/entity/position.entity';
 
 import { ISoftSkill } from '../utils/constants';
 
@@ -31,8 +33,8 @@ export class EditSoftInterviewsDto {
 }
 export class CompleteSoftInterviewsDto extends EditSoftInterviewsDto {
   @IsOptional()
-  positionId?: string;
+  position?: PositionEntity;
 
   @IsOptional()
-  levelId?: string;
+  level?: CareerLevelEntity;
 }

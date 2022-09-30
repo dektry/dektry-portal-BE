@@ -7,10 +7,13 @@ import {
   OneToOne,
   OneToMany,
   CreateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 import { EmployeeEntity } from './employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from './softSkillToSoftAssessment.entity';
+import { PositionEntity } from 'users/entity/position.entity';
+import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
 
 @Entity({ name: 'soft_assessment' })
 export class SoftAssessmentEntity extends BaseEntity {
@@ -23,7 +26,7 @@ export class SoftAssessmentEntity extends BaseEntity {
   @Column({ length: 512, nullable: true })
   comment: string;
 
-  @OneToOne(() => EmployeeEntity, (employee) => employee.interview, {
+  @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',
     cascade: true,
     onDelete: 'CASCADE',
@@ -40,4 +43,18 @@ export class SoftAssessmentEntity extends BaseEntity {
   )
   @JoinColumn()
   skills: SoftSkillToSoftAssessmentEntity[];
+
+  @ManyToOne(() => CareerLevelEntity, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'level_id' })
+  level: CareerLevelEntity;
+
+  @ManyToOne(() => PositionEntity, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'position_id' })
+  position: PositionEntity;
 }
