@@ -71,3 +71,5 @@ export const softSkillAssessmentCantComplete =
 export const softSkillAssessmentCantEdit =
   'Soft skill assessment cant be edit!';
 export const softSkillAssessmentExist = 'Soft skill assessment already exists!';
+export const positionNotFound = 'Position not found!';
+export const levelNotFound = 'Level not found!';

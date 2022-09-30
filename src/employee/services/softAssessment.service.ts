@@ -20,6 +20,8 @@ import {
   employeeNotFound,
   softSkillAssessmentNotFound,
   softSkillAssessmentCantEdit,
+  positionNotFound,
+  levelNotFound,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
@@ -49,9 +51,16 @@ export class EmployeeSoftAssessmentService {
       const position: PositionEntity = await this.positionRepository.findOne(
         softAssessment.positionId,
       );
+
+      if (!position)
+        throw new HttpException(positionNotFound, HttpStatus.BAD_REQUEST);
+
       const level: CareerLevelEntity = await this.levelRepository.findOne(
         softAssessment.levelId,
       );
+
+      if (!level)
+        throw new HttpException(levelNotFound, HttpStatus.BAD_REQUEST);
 
       const savedInterview = await this.softAssessmentRepository.save({
         employee,
