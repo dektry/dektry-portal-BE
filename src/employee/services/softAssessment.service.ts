@@ -5,9 +5,13 @@ import { In } from 'typeorm';
 import { employeeRepository } from '../repositories/employee.repository';
 import { softSkillToSoftAssessmentRepository } from '../repositories/softSkilltoSoftAssessment.repository';
 import { softAssessmentRepository } from '../repositories/softAssessment.repository';
+import { positionRepository } from 'users/repositories/position.repository';
+import { levelRepository } from 'users/repositories/level.repository';
 
 import { EmployeeEntity } from 'employee/entity/employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from 'employee/entity/softSkillToSoftAssessment.entity';
+import { PositionEntity } from 'users/entity/position.entity';
+import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
 
 import {
   ICompleteSoftAssessmentBody,
@@ -16,6 +20,8 @@ import {
   employeeNotFound,
   softSkillAssessmentNotFound,
   softSkillAssessmentCantEdit,
+  positionNotFound,
+  levelNotFound,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
@@ -28,6 +34,10 @@ export class EmployeeSoftAssessmentService {
     private softSkillToSoftAssessmentRepository: softSkillToSoftAssessmentRepository,
     @InjectRepository(softAssessmentRepository)
     private softAssessmentRepository: softAssessmentRepository,
+    @InjectRepository(positionRepository)
+    private positionRepository: positionRepository,
+    @InjectRepository(levelRepository)
+    private levelRepository: levelRepository,
   ) {}
 
   async completeAssessment(softAssessment: ICompleteSoftAssessmentBody) {
@@ -38,9 +48,25 @@ export class EmployeeSoftAssessmentService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
+      const position: PositionEntity = await this.positionRepository.findOne(
+        softAssessment.positionId,
+      );
+
+      if (!position)
+        throw new HttpException(positionNotFound, HttpStatus.BAD_REQUEST);
+
+      const level: CareerLevelEntity = await this.levelRepository.findOne(
+        softAssessment.levelId,
+      );
+
+      if (!level)
+        throw new HttpException(levelNotFound, HttpStatus.BAD_REQUEST);
+
       const savedInterview = await this.softAssessmentRepository.save({
         employee,
         comment: softAssessment.comment,
+        position,
+        level,
       });
 
       const assessmentSkills: SoftSkillToSoftAssessmentEntity[] =

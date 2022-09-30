@@ -8,7 +8,6 @@ import {
 } from 'typeorm';
 import { SoftAssessmentEntity } from './softAssessment.entity';
 import { SoftSkillEntity } from '../../users/entity/softSkill.entity';
-import { SoftSkillScoreEntity } from 'users/entity/softSkillScore.entity';
 
 @Entity({ name: 'soft_skill_to_assessment' })
 export class SoftSkillToSoftAssessmentEntity extends BaseEntity {
