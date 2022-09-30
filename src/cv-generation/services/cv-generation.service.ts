@@ -38,7 +38,14 @@ export class CVGenerationService {
     // somebody will try to inject script (I tried)
     await page.setJavaScriptEnabled(false);
 
-    await page.setContent(template);
+    const normalizer = `
+      <style>
+        body {
+          margin: 0;
+        }
+      </style>
+        `;
+    await page.setContent(normalizer + template);
 
     const pdfPxWidth = 794;
     // pdfPxWidth is always the same but temple width can be adjusted
