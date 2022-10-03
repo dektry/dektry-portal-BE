@@ -155,118 +155,50 @@
     </div>
   </div>
   <p class="title">Projects</p>
+  {{#each projects}}
   <div class="project-box">
     <div class="project-header">
       <div>
         <p class="field-name">Project name</p>
-        <p>Zialik</p>
+        <p>{{name}}</p>
       </div>
       <div>
         <p class="field-name">Duration</p>
-        <p>8 months</p>
+        <p>{{duration}} months</p>
       </div>
       <div>
         <p class="field-name">Project role</p>
-        <p>Leader developer</p>
+        <p>{{position}}</p>
       </div>
       <div>
         <p class="field-name">Project team size</p>
-        <p>20 members</p>
+        <p>{{teamSize}} members</p>
       </div>
     </div>
     <div class="project-body">
       <div>
         <p class="field-name">Project description</p>
         <p class="project-description">
-          Transport Management system that brings optimisation of a large number
-          of fleets in Intermodal and Interbranch use case
+          {{description}}
         </p>
       </div>
       <div>
         <p class="field-name">Responsibilities</p>
         <ul class="responsibility-list">
-          <li>
-            Implementing visual component using React React hooks and less
-          </li>
-          <li>
-            Creating connection to Shopify, google analytics, and Google Ads
-          </li>
-          <li>
-            Creating components for visual presentation of information using
-            Highcharts (diagrams, maps)
-          </li>
-          <li>Requirements and estimation</li>
-          <li>Bug fixing</li>
+          {{#each responsibilities}}
+          <li>{{this}}</li>
+          {{/each}}
         </ul>
       </div>
     </div>
     <div class="project-footer">
       <p class="field-name">Tools & Technologies</p>
       <div class="tool-n-tech">
-        <p>React</p>
-        <p>Redux</p>
-        <p>React hooks</p>
-        <p>Less</p>
-        <p>Highcharts</p>
-        <p>Shopify</p>
-        <p>Google analytics</p>
-        <p>Google Ads</p>
+        {{#each tools}}
+        <p>{{this}}</p>
+        {{/each}}
       </div>
     </div>
   </div>
-  <div class="project-box">
-    <div class="project-header">
-      <div>
-        <p class="field-name">Project name</p>
-        <p>Zialik</p>
-      </div>
-      <div>
-        <p class="field-name">Duration</p>
-        <p>8 months</p>
-      </div>
-      <div>
-        <p class="field-name">Project role</p>
-        <p>Leader developer</p>
-      </div>
-      <div>
-        <p class="field-name">Project team size</p>
-        <p>20 members</p>
-      </div>
-    </div>
-    <div class="project-body">
-      <div>
-        <p class="field-name">Project description</p>
-        <p class="project-description">
-          Transport Management system that brings optimisation of a large number
-          of fleets in Intermodal and Interbranch use case
-        </p>
-      </div>
-      <div>
-        <p class="field-name">Responsibilities</p>
-        <ul class="responsibility-list">
-          <li>
-            Implementing visual component using React React hooks and less
-          </li>
-          <li>
-            Creating connection to Shopify, google analytics, and Google Ads
-          </li>
-          <li>Requirements and estimation</li>
-          <li>Bug fixing</li>
-        </ul>
-      </div>
-    </div>
-    <div class="project-footer">
-      <p class="field-name">Tools & Technologies</p>
-      <div class="tool-n-tech">
-        <p>React</p>
-        <p>Redux</p>
-        <p>React hooks</p>
-        <p>Less</p>
-        <p>Highcharts</p>
-        <p>Shopify</p>
-        <p>Google analytics</p>
-        <p>Google Ads</p>
-      </div>
-    </div>
-  </div>
+  {{/each}}
 </div>
