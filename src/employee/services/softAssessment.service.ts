@@ -107,7 +107,7 @@ export class EmployeeSoftAssessmentService {
           where: {
             id: assessmentId,
           },
-          relations: ['skills', 'skills.soft_skill_id'],
+          relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
         });
 
       if (!softAssessment)
@@ -150,7 +150,7 @@ export class EmployeeSoftAssessmentService {
           where: {
             employee: employee,
           },
-          relations: ['skills', 'skills.soft_skill_id'],
+          relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
         });
 
       return softAssessments;
