@@ -54,7 +54,10 @@ export class CVGenerationService {
     // await new Promise((resolve) => setTimeout(resolve, 250000));
 
     const pdf = await page.pdf({
+      // enable this to prevent empty page in the end of the pdf
+      // pageRanges: '1-3',
       scale: pdfPxWidth / templateWidth,
+      printBackground: true,
       width: 794,
       height: 1123,
       timeout: 10000,

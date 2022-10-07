@@ -8,63 +8,63 @@
   p {
     margin: 0;
   }
-  .container {
+  .s-page.container {
     font-family: Roboto, sans-serif;
     font-size: 12px;
     width: 595px;
-    max-height: 842px;
+    height: 842px;
     padding: 24px;
     box-sizing: border-box;
     position: relative;
   }
-  .header {
+  .s-page .header {
     height: 40px;
     width: 100%;
     border-bottom: 1px solid #e5e9f2;
     margin-bottom: 24px;
   }
-  .logo-page-count-box {
+  .s-page .logo-page-count-box {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .logo {
+  .s-page .logo {
     width: 54px;
     height: 24px;
   }
-  .page-count {
+  .s-page .page-count {
     color: #aab2c3;
     font-size: 10px;
   }
-  .prof-skills {
+  .s-page .prof-skills {
   }
-  .prof-skills-list {
+  .s-page .prof-skills-list {
     column-count: 2;
     column-fill: auto;
     gap: 24px;
   }
-  .prof-skills-el {
+  .s-page .prof-skills-el {
     width: 260px;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #E5E9F2;
+    border-bottom: 1px solid #e5e9f2;
     margin-bottom: 12px;
   }
-  .prof-skills-el p {
+  .s-page .prof-skills-el p {
     line-height: 18px;
     margin: 2px 0;
     text-overflow: ellipsis;
   }
-  .prof-skills-el p:first-child {
+  .s-page .prof-skills-el p:first-child {
     max-width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .prof-skills-el p:last-child {
+  .s-page .prof-skills-el p:last-child {
     font-weight: 700;
     text-transform: capitalize;
   }
-  .title {
+  .s-page .title {
     font-size: 20px;
     font-weight: 500;
     line-height: 24px;
@@ -72,77 +72,86 @@
     margin-top: 24px;
     text-transform: uppercase;
   }
-  .sub-title {
+  .s-page .sub-title {
     font-size: 16px;
+    height: 19px;
     font-weight: 700;
     margin: 0 0 12px;
   }
+  .s-page .without-prof-skills {
+    border: 0.1px solid rgba(0, 0, 0, 0);
+  }
 </style>
-<div class="container">
-  <div class="header">
-    <div class="logo-page-count-box">
-      <svg
-        class="logo"
-        viewBox="0 0 476 216"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M321.509 215.843C381.212 215.843 429.612 167.524 429.612 107.921C429.612 48.318 381.212 0 321.509 0C261.805 0 213.406 48.318 213.406 107.921C213.406 167.524 261.805 215.843 321.509 215.843Z"
-          fill="url(#paint0_linear_32_12336)"
-        />
-        <path
-          d="M16.1368 64.1556H1.0603V82.8993H7.46781H15.8777C39.4348 82.8993 47.609 92.9881 47.609 108.227C47.609 125.043 38.5395 135.884 15.8777 135.884H7.46781H1.0603V154.627H14.2051C52.2731 154.627 68.3154 134.073 68.3154 108.227C68.3154 84.5688 54.9823 64.1556 16.1368 64.1556Z"
-          fill="black"
-        />
-        <path
-          d="M82.8036 64.1556H152.061V82.8993H102.874V99.714H148.834V117.799H102.874V135.884H153.239V154.627H82.8036V64.1556Z"
-          fill="black"
-        />
-        <path
-          d="M172.369 64.1556H192.439V99.432L227.257 64.1556H253.405L214.065 104.23L256.02 154.651H229.612L198.917 117.681L192.439 124.266V154.651H172.369V64.1556Z"
-          fill="black"
-        />
-        <path
-          d="M310.388 64.1556H261.319V82.8993H290.318V154.627H310.388V64.1556Z"
-          fill="white"
-        />
-        <path
-          d="M361.532 120.127C372.415 115.87 379.27 105.264 379.27 93.6232C379.27 78.619 371.497 64.1556 342.639 64.1556H326.055V82.8993H342.239C355.054 82.8993 358.422 87.1557 358.422 93.6232C358.422 100.867 352.863 105.006 343.016 105.006H326.055V123.749H340.425L362.568 154.651H386.761L361.532 120.127Z"
-          fill="white"
-        />
-        <path
-          d="M438.939 122.197V154.651H418.868V122.197L382.497 64.1556H406.453L429.234 100.349L452.531 64.1556H475.713L438.939 122.197Z"
-          fill="black"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_32_12336"
-            x1="245.067"
-            y1="184.226"
-            x2="397.685"
-            y2="31.3513"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#F6856C" />
-            <stop offset="1" stop-color="#B727D9" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <p class="page-count">Page {{ currentPage }}/{{ pageCount }}</p>
+<div class="container s-page">
+  <div class="without-prof-skills">
+    <div class="header">
+      <div class="logo-page-count-box">
+        <svg
+          class="logo"
+          viewBox="0 0 476 216"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M321.509 215.843C381.212 215.843 429.612 167.524 429.612 107.921C429.612 48.318 381.212 0 321.509 0C261.805 0 213.406 48.318 213.406 107.921C213.406 167.524 261.805 215.843 321.509 215.843Z"
+            fill="url(#paint0_linear_32_12336)"
+          />
+          <path
+            d="M16.1368 64.1556H1.0603V82.8993H7.46781H15.8777C39.4348 82.8993 47.609 92.9881 47.609 108.227C47.609 125.043 38.5395 135.884 15.8777 135.884H7.46781H1.0603V154.627H14.2051C52.2731 154.627 68.3154 134.073 68.3154 108.227C68.3154 84.5688 54.9823 64.1556 16.1368 64.1556Z"
+            fill="black"
+          />
+          <path
+            d="M82.8036 64.1556H152.061V82.8993H102.874V99.714H148.834V117.799H102.874V135.884H153.239V154.627H82.8036V64.1556Z"
+            fill="black"
+          />
+          <path
+            d="M172.369 64.1556H192.439V99.432L227.257 64.1556H253.405L214.065 104.23L256.02 154.651H229.612L198.917 117.681L192.439 124.266V154.651H172.369V64.1556Z"
+            fill="black"
+          />
+          <path
+            d="M310.388 64.1556H261.319V82.8993H290.318V154.627H310.388V64.1556Z"
+            fill="white"
+          />
+          <path
+            d="M361.532 120.127C372.415 115.87 379.27 105.264 379.27 93.6232C379.27 78.619 371.497 64.1556 342.639 64.1556H326.055V82.8993H342.239C355.054 82.8993 358.422 87.1557 358.422 93.6232C358.422 100.867 352.863 105.006 343.016 105.006H326.055V123.749H340.425L362.568 154.651H386.761L361.532 120.127Z"
+            fill="white"
+          />
+          <path
+            d="M438.939 122.197V154.651H418.868V122.197L382.497 64.1556H406.453L429.234 100.349L452.531 64.1556H475.713L438.939 122.197Z"
+            fill="black"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear_32_12336"
+              x1="245.067"
+              y1="184.226"
+              x2="397.685"
+              y2="31.3513"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stop-color="#F6856C" />
+              <stop offset="1" stop-color="#B727D9" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <p class="page-count">Page {{ currentPage }}/{{ pageCount }}</p>
+      </div>
     </div>
+    <p class="title">Professional skills</p>
   </div>
-  <p class="title">Professional skills</p>
   <div class="prof-skills">
     {{#each profSkills}}
+    {{#if groupName}}
     <p class="sub-title">{{groupName}}</p>
-    {{#each this}}
+    {{/if}}
     <div class="prof-skills-list">
+      {{#each skills}}
       <div class="prof-skills-el">
         <p>{{name}}</p>
         <p>{{level}}</p>
       </div>
+      {{/each}}
     </div>
-    {{/each}} {{/each}}
+    {{/each}}
   </div>
 </div>
