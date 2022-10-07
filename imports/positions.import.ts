@@ -1,8 +1,8 @@
 import { createConnection, Connection } from 'typeorm';
-import { PositionEntity } from '../src/users/entity/position.entity';
+import { PositionEntity } from 'users/entity/position.entity';
 import { positionSeed } from './seeds/position.seed';
 import { difference } from 'lodash';
-import { PositionGroupEntity } from '../src/users/entity/positionGroup.entity';
+import { PositionGroupEntity } from 'users/entity/positionGroup.entity';
 
 const importPositions = async () => {
   const connection: Connection = await createConnection('data-import');
