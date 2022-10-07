@@ -2,7 +2,8 @@
   "name": "backend-boilerplate",
   "version": "0.0.1",
   "engines": {
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.17",
+    "node": "17.7.1"
   },
   "description": "Vlad Leo backend boilerplate",
   "author": "Vlad-Leo",
