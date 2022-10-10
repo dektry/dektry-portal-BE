@@ -20,14 +20,16 @@ const importSoftSkills = async () => {
     console.log(`Soft skill ${element.value} is already exist!`);
   });
 
-  // const сreatedSoftSkills = await connection
-  //   .getRepository(SoftSkillEntity)
-  //   .save(
-  //     newSoftSkills.map((softSkill) => {
-  //       return connection.getRepository(SoftSkillEntity).create(softSkill);
-  //     }),
-  //   );
-  // console.log(`Added ${сreatedSoftSkills.length} new soft skills!`);
+  const createdSoftSkills = await connection
+    .getRepository(SoftSkillEntity)
+    .save(
+      newSoftSkills.map((softSkill) => {
+        return connection
+          .getRepository(SoftSkillEntity)
+          .create({ value: softSkill.value });
+      }),
+    );
+  console.log(`Added ${createdSoftSkills.length} new soft skills!`);
   await connection.close();
 };
 

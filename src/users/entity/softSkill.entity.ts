@@ -6,7 +6,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
-import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
+import { QuestionToSoftSkillEntity } from '../../employee/entity/questionToSoftSkill.entity';
 
 @Entity({ name: 'soft_skill' })
 export class SoftSkillEntity extends BaseEntity {
