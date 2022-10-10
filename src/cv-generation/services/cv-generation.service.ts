@@ -4,7 +4,10 @@ import { createReadStream } from 'fs';
 import * as path from 'path';
 import puppeteer from 'puppeteer';
 
-import { templateNotFound } from 'cv-generation/constants/messages';
+import {
+  failedToLaunchBrowser,
+  templateNotFound,
+} from 'cv-generation/constants/messages';
 
 @Injectable()
 export class CVGenerationService {
@@ -30,13 +33,15 @@ export class CVGenerationService {
 
     try {
       browser = await puppeteer.launch({
+        // required for heroku
+        args: ['--no-sandbox'],
         // might be useful for debugging
         // headless: false,
       });
     } catch (error) {
       Logger.error(error);
       throw new HttpException(
-        `Can't launch browser`,
+        failedToLaunchBrowser,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
