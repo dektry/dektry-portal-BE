@@ -33,7 +33,7 @@ export class CVGenerationService {
 
     try {
       browser = await puppeteer.launch({
-        // required for heroku
+        // required  for heroku
         args: ['--no-sandbox'],
         // might be useful for debugging
         // headless: false,
