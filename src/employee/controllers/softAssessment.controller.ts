@@ -15,6 +15,7 @@ import { EmployeeSoftAssessmentService } from 'employee/services/softAssessment.
 import {
   ICompleteSoftAssessmentBody,
   IEditSoftAssessmentBody,
+  ISoftAssessmentResultResponse,
 } from 'employee/utils/constants';
 
 @Controller('softassessments')
@@ -36,7 +37,7 @@ export class EmployeeSoftAssessmentController {
   editAssessmentResult(
     @Param('assessmentId') assessmentId: string,
     @Body() editAssessmentBody: IEditSoftAssessmentBody,
-  ): Promise<SoftAssessmentEntity> {
+  ): Promise<ISoftAssessmentResultResponse> {
     return this.SoftAssessmentService.editAssessmentResult(
       assessmentId,
       editAssessmentBody,
@@ -47,7 +48,7 @@ export class EmployeeSoftAssessmentController {
   @Get(':assessmentId')
   getAssessmentResult(
     @Param('assessmentId') assessmentId: string,
-  ): Promise<SoftAssessmentEntity> {
+  ): Promise<ISoftAssessmentResultResponse> {
     return this.SoftAssessmentService.getAssessmentResult(assessmentId);
   }
 
@@ -55,7 +56,7 @@ export class EmployeeSoftAssessmentController {
   @Get(':employeeId/all')
   getSoftAssessments(
     @Param('employeeId') emloyeeId: string,
-  ): Promise<SoftAssessmentEntity[]> {
+  ): Promise<ISoftAssessmentResultResponse[]> {
     return this.SoftAssessmentService.getSoftAssessments(emloyeeId);
   }
 }

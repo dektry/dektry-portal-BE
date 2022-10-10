@@ -7,6 +7,7 @@ import { softSkillToSoftAssessmentRepository } from '../repositories/softSkillto
 import { softAssessmentRepository } from '../repositories/softAssessment.repository';
 import { positionRepository } from 'users/repositories/position.repository';
 import { levelRepository } from 'users/repositories/level.repository';
+import { questionToSoftSkillRepository } from 'employee/repositories/questionToSkill.repository';
 
 import { EmployeeEntity } from 'employee/entity/employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from 'employee/entity/softSkillToSoftAssessment.entity';
@@ -22,8 +23,11 @@ import {
   softSkillAssessmentCantEdit,
   positionNotFound,
   levelNotFound,
+  ISoftSkill,
+  ISoftAssessmentResultResponse,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
+import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
 
 @Injectable()
 export class EmployeeSoftAssessmentService {
@@ -38,6 +42,8 @@ export class EmployeeSoftAssessmentService {
     private positionRepository: positionRepository,
     @InjectRepository(levelRepository)
     private levelRepository: levelRepository,
+    @InjectRepository(questionToSoftSkillRepository)
+    private questionToSoftSkillRepository: questionToSoftSkillRepository,
   ) {}
 
   async completeAssessment(softAssessment: ICompleteSoftAssessmentBody) {
@@ -69,6 +75,8 @@ export class EmployeeSoftAssessmentService {
         level,
       });
 
+      const assessmentQuestions: Partial<QuestionToSoftSkillEntity>[] = [];
+
       const assessmentSkills: SoftSkillToSoftAssessmentEntity[] =
         softAssessment.softSkills.map((skill) => {
           return this.softSkillToSoftAssessmentRepository.create({
@@ -80,6 +88,31 @@ export class EmployeeSoftAssessmentService {
         });
 
       await this.softSkillToSoftAssessmentRepository.save(assessmentSkills);
+
+      const savedSkills = await this.softSkillToSoftAssessmentRepository.find({
+        where: {
+          soft_assessment_id: savedInterview,
+        },
+        relations: ['soft_skill_id'],
+      });
+
+      for (let i = 0; i < savedSkills.length; i++) {
+        const skill = softAssessment.softSkills.find(
+          (el) => el.value === savedSkills[i].soft_skill_id.value,
+        );
+
+        if (skill && skill.questions) {
+          skill.questions.forEach((el) => {
+            assessmentQuestions.push({
+              id: el.id,
+              soft_skill_id: savedSkills[i],
+              value: el.value,
+            });
+          });
+        }
+      }
+
+      await this.questionToSoftSkillRepository.save(assessmentQuestions);
     } catch (err) {
       console.error('[COMPLETE_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
@@ -100,7 +133,7 @@ export class EmployeeSoftAssessmentService {
 
   async getAssessmentResult(
     assessmentId: string,
-  ): Promise<SoftAssessmentEntity> {
+  ): Promise<ISoftAssessmentResultResponse> {
     try {
       const softAssessment: SoftAssessmentEntity =
         await this.softAssessmentRepository.findOne({
@@ -116,7 +149,27 @@ export class EmployeeSoftAssessmentService {
           HttpStatus.BAD_REQUEST,
         );
 
-      return softAssessment;
+      const processedSkills: ISoftSkill[] = [];
+      for (const skill of softAssessment.skills) {
+        const questions = await this.questionToSoftSkillRepository.find({
+          where: {
+            soft_skill_id: skill.id,
+          },
+        });
+        processedSkills.push({
+          ...skill,
+          questions: questions,
+          value: skill.soft_skill_id.value,
+        });
+      }
+      const processedAssessment = {
+        id: softAssessment.id,
+        comment: softAssessment.comment,
+        createdAt: softAssessment.createdAt,
+        skills: processedSkills,
+      };
+
+      return processedAssessment;
     } catch (err) {
       console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
       Logger.error(err);
@@ -137,7 +190,7 @@ export class EmployeeSoftAssessmentService {
 
   async getSoftAssessments(
     employeeId: string,
-  ): Promise<SoftAssessmentEntity[]> {
+  ): Promise<ISoftAssessmentResultResponse[]> {
     try {
       const employee: EmployeeEntity = await this.employeeRepository.findOne({
         id: employeeId,
@@ -153,7 +206,31 @@ export class EmployeeSoftAssessmentService {
           relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
         });
 
-      return softAssessments;
+      const processedAssessments = [];
+      for (const assessment of softAssessments) {
+        const processedSkills = [];
+        for (const skill of assessment.skills) {
+          const questions = await this.questionToSoftSkillRepository.find({
+            where: {
+              soft_skill_id: skill.id,
+            },
+          });
+          processedSkills.push({
+            id: skill.id,
+            softSkillScoreId: skill.softSkillScoreId,
+            value: skill.soft_skill_id.value,
+            questions: questions,
+          });
+        }
+        processedAssessments.push({
+          id: assessment.id,
+          comment: assessment.comment,
+          createdAt: assessment.createdAt,
+          skills: processedSkills,
+        });
+      }
+
+      return processedAssessments;
     } catch (err) {
       console.error('[SOFT_SKILL_ASSESSMENTS_GET_ERROR]', err);
       Logger.error(err);
@@ -175,7 +252,7 @@ export class EmployeeSoftAssessmentService {
   async editAssessmentResult(
     assessmentId: string,
     softAssessment: IEditSoftAssessmentBody,
-  ): Promise<SoftAssessmentEntity> {
+  ): Promise<ISoftAssessmentResultResponse> {
     try {
       const employee: EmployeeEntity = await this.employeeRepository.findOne(
         softAssessment.employeeId,
@@ -202,6 +279,17 @@ export class EmployeeSoftAssessmentService {
             comment: activeSkillToUpdate.comment,
           },
         );
+
+        for (const questionToUpdate of activeSkillToUpdate.questions) {
+          await this.questionToSoftSkillRepository.update(
+            {
+              id: questionToUpdate.id,
+            },
+            {
+              value: questionToUpdate.value,
+            },
+          );
+        }
       }
 
       return await this.getAssessmentResult(assessmentId);

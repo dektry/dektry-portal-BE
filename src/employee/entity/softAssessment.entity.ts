@@ -4,7 +4,6 @@ import {
   Column,
   BaseEntity,
   JoinColumn,
-  OneToOne,
   OneToMany,
   CreateDateColumn,
   ManyToOne,
