@@ -12,7 +12,7 @@
     font-family: Roboto, sans-serif;
     font-size: 12px;
     width: 595px;
-    max-height: 842px;
+    height: 842px;
     padding: 24px;
     box-sizing: border-box;
     position: relative;
@@ -63,6 +63,7 @@
     width: 184px;
   }
   .project-description {
+    width: 150px;
   }
   .responsibility-list {
     padding-left: 15px;
@@ -99,8 +100,12 @@
     color: #aab2c3;
     margin-bottom: 4px;
   }
+  .p-page .without-projects {
+    border: 0.1px solid rgba(0, 0, 0, 0);
+  }
 </style>
-<div class="container">
+<div class="container p-page">
+  <div class="without-projects">
   <div class="header">
     <div class="logo-page-count-box">
       <svg
@@ -155,6 +160,7 @@
     </div>
   </div>
   <p class="title">Projects</p>
+  </div>
   {{#each projects}}
   <div class="project-box">
     <div class="project-header">
@@ -164,7 +170,7 @@
       </div>
       <div>
         <p class="field-name">Duration</p>
-        <p>{{duration}} months</p>
+        <p>{{duration}}</p>
       </div>
       <div>
         <p class="field-name">Project role</p>
