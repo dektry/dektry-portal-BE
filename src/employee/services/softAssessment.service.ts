@@ -164,6 +164,8 @@ export class EmployeeSoftAssessmentService {
       }
       const processedAssessment = {
         id: softAssessment.id,
+        position: softAssessment.position,
+        level: softAssessment.level,
         comment: softAssessment.comment,
         createdAt: softAssessment.createdAt,
         skills: processedSkills,
@@ -225,6 +227,8 @@ export class EmployeeSoftAssessmentService {
         processedAssessments.push({
           id: assessment.id,
           comment: assessment.comment,
+          position: assessment.position,
+          level: assessment.level,
           createdAt: assessment.createdAt,
           skills: processedSkills,
         });
