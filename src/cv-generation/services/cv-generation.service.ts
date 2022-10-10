@@ -26,10 +26,20 @@ export class CVGenerationService {
   }
 
   async generatePdf(template: string) {
-    const browser = await puppeteer.launch({
-      // might be useful for debugging
-      // headless: false,
-    });
+    let browser;
+
+    try {
+      browser = await puppeteer.launch({
+        // might be useful for debugging
+        // headless: false,
+      });
+    } catch (error) {
+      Logger.error(error);
+      throw new HttpException(
+        `Can't launch browser`,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
 
     const page = await browser.newPage();
     // the width and height are the same as the width and height of the pdf document
