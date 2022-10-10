@@ -12,8 +12,8 @@ import {
 
 import { EmployeeEntity } from './employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from './softSkillToSoftAssessment.entity';
-import { PositionEntity } from 'users/entity/position.entity';
-import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
+import { PositionEntity } from '../../users/entity/position.entity';
+import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
 
 @Entity({ name: 'soft_assessment' })
 export class SoftAssessmentEntity extends BaseEntity {
