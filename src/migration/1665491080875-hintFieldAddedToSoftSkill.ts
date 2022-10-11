@@ -39,15 +39,9 @@ export class hintFieldAddedToSoftSkill1665491080875
     await queryRunner.query(
       `ALTER TABLE "soft_skill_to_assessment" ADD CONSTRAINT "FK_16399fff3c5bdaf0287a4a53568" FOREIGN KEY ("soft_assessment_id") REFERENCES "soft_assessment"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
-    await queryRunner.query(
-      `ALTER TABLE "soft_skill_question" ADD CONSTRAINT "FK_a176f743828d817ca1103a2236c" FOREIGN KEY ("soft_skill_id") REFERENCES "soft_skill"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "soft_skill_question" DROP CONSTRAINT "FK_a176f743828d817ca1103a2236c"`,
-    );
     await queryRunner.query(
       `ALTER TABLE "soft_skill_to_assessment" DROP CONSTRAINT "FK_16399fff3c5bdaf0287a4a53568"`,
     );
