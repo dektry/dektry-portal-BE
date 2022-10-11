@@ -25,6 +25,9 @@ export class SoftAssessmentEntity extends BaseEntity {
   @Column({ length: 512, nullable: true })
   comment: string;
 
+  @Column({ nullable: true })
+  successfullySaved: boolean;
+
   @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',
     cascade: true,

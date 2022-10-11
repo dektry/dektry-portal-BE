@@ -17,6 +17,9 @@ export class SoftSkillToSoftAssessmentEntity extends BaseEntity {
   @Column({ nullable: true })
   softSkillScoreId: string;
 
+  @Column({ nullable: true })
+  value: string;
+
   @Column({ length: 512, nullable: true })
   comment: string;
 

@@ -73,6 +73,7 @@ export class EmployeeSoftAssessmentService {
         comment: softAssessment.comment,
         position,
         level,
+        successfullySaved: true,
       });
 
       const assessmentQuestions: Partial<QuestionToSoftSkillEntity>[] = [];
@@ -81,9 +82,10 @@ export class EmployeeSoftAssessmentService {
         softAssessment.softSkills.map((skill) => {
           return this.softSkillToSoftAssessmentRepository.create({
             soft_assessment_id: savedInterview,
-            soft_skill_id: { id: skill.id, value: skill.value },
+            soft_skill_id: { id: skill.id, value: skill.value || '' },
             comment: skill.comment,
             softSkillScoreId: skill.softSkillScoreId,
+            value: '',
           });
         });
 
