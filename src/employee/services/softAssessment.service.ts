@@ -114,6 +114,8 @@ export class EmployeeSoftAssessmentService {
       }
 
       await this.questionToSoftSkillRepository.save(assessmentQuestions);
+
+      return savedInterview;
     } catch (err) {
       console.error('[COMPLETE_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
@@ -315,26 +317,33 @@ export class EmployeeSoftAssessmentService {
 
       const softSkillsIds = softAssessment.softSkills.map((skill) => skill.id);
 
-      for (const activeSkillToUpdate of softAssessment.softSkills) {
-        await this.softSkillToSoftAssessmentRepository.update(
-          {
-            id: In(softSkillsIds),
-          },
-          {
-            softSkillScoreId: activeSkillToUpdate.softSkillScoreId,
-            comment: activeSkillToUpdate.comment,
-          },
-        );
-
-        for (const questionToUpdate of activeSkillToUpdate.questions) {
-          await this.questionToSoftSkillRepository.update(
+      if (softAssessment.softSkills && softAssessment.softSkills.length) {
+        for (const activeSkillToUpdate of softAssessment.softSkills) {
+          await this.softSkillToSoftAssessmentRepository.update(
             {
-              id: questionToUpdate.id,
+              id: In(softSkillsIds),
             },
             {
-              value: questionToUpdate.value,
+              softSkillScoreId: activeSkillToUpdate.softSkillScoreId,
+              comment: activeSkillToUpdate.comment,
             },
           );
+
+          if (
+            activeSkillToUpdate.questions &&
+            activeSkillToUpdate.questions.length
+          ) {
+            for (const questionToUpdate of activeSkillToUpdate.questions) {
+              await this.questionToSoftSkillRepository.update(
+                {
+                  id: questionToUpdate.id,
+                },
+                {
+                  value: questionToUpdate.value,
+                },
+              );
+            }
+          }
         }
       }
 
