@@ -264,6 +264,47 @@ export class EmployeeSoftAssessmentService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
+      const existingAssessment = await this.softAssessmentRepository.findOne({
+        where: {
+          id: assessmentId,
+        },
+        relations: ['skills'],
+      });
+
+      if (!existingAssessment)
+        throw new HttpException(
+          softSkillAssessmentNotFound,
+          HttpStatus.BAD_REQUEST,
+        );
+
+      for (const skill of existingAssessment.skills) {
+        const skillRemaining = softAssessment.softSkills.find(
+          (el) => el.id === skill.id,
+        );
+
+        if (!skillRemaining) {
+          await this.softSkillToSoftAssessmentRepository.delete(skill.id);
+        }
+
+        const existingQuestions = await this.questionToSoftSkillRepository.find(
+          {
+            where: {
+              soft_skill_id: skill.id,
+            },
+          },
+        );
+
+        for (const question of existingQuestions) {
+          const questionRemaining = skillRemaining.questions.find(
+            (el) => el.id === question.id,
+          );
+
+          if (!questionRemaining) {
+            await this.questionToSoftSkillRepository.delete(question.id);
+          }
+        }
+      }
+
       await this.softAssessmentRepository.update(
         { id: assessmentId },
         {
