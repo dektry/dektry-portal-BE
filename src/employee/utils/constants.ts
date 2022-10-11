@@ -1,5 +1,6 @@
 import { InterviewEntity } from '../entity/interview.entity';
 import { IAnswer } from '../../candidates/utils/constants';
+import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
 export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
@@ -38,14 +39,14 @@ export interface ICompleteSoftAssessmentBody {
   positionId?: string;
   levelId?: string;
   comment?: string;
-  softSkills: Array<ISoftSkill>;
+  softSkills: ISoftSkill[];
 }
 
 export interface IEditSoftAssessmentBody {
   id: string;
   employeeId: string;
   comment?: string;
-  softSkills: Array<ISoftSkill>;
+  softSkills: ISoftSkill[];
 }
 
 export interface ISoftSkill {

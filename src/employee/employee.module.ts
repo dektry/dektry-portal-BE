@@ -17,6 +17,7 @@ import { levelRepository } from '../users/repositories/level.repository';
 import { skillRepository } from '../users/repositories/skill.repository';
 import { softSkillToSoftAssessmentRepository } from './repositories/softSkilltoSoftAssessment.repository';
 import { softAssessmentRepository } from './repositories/softAssessment.repository';
+import { questionToSoftSkillRepository } from './repositories/questionToSkill.repository';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { softAssessmentRepository } from './repositories/softAssessment.reposito
       positionRepository,
       levelRepository,
       skillRepository,
+      questionToSoftSkillRepository,
     ]),
   ],
   controllers: [
