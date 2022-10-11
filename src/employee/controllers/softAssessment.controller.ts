@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
+import { ISoftAssessment } from '../utils/constants';
 
 import { EmployeeSoftAssessmentService } from 'employee/services/softAssessment.service';
 import {
@@ -49,7 +49,7 @@ export class EmployeeSoftAssessmentController {
   @Get(':assessmentId')
   getAssessmentResult(
     @Param('assessmentId') assessmentId: string,
-  ): Promise<ISoftAssessmentResultResponse> {
+  ): Promise<ISoftAssessment> {
     return this.SoftAssessmentService.getAssessmentResult(assessmentId);
   }
 

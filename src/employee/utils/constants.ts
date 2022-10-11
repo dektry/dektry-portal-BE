@@ -59,6 +59,11 @@ export interface ISoftSkill {
 }
 
 export interface ISoftAssessmentResultResponse {
+  assessment: SoftAssessmentEntity;
+  questions: ISoftSkillQuestion[];
+}
+
+export interface ISoftAssessment {
   id: string;
   createdAt: Date;
   comment: string;

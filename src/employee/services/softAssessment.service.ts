@@ -25,6 +25,7 @@ import {
   levelNotFound,
   ISoftSkill,
   ISoftAssessmentResultResponse,
+  ISoftAssessment,
 } from '../utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
@@ -113,9 +114,20 @@ export class EmployeeSoftAssessmentService {
         }
       }
 
-      await this.questionToSoftSkillRepository.save(assessmentQuestions);
+      const savedQuestions = await this.questionToSoftSkillRepository.save(
+        assessmentQuestions,
+      );
+      const savedSoftAssessment = await this.softAssessmentRepository.findOne({
+        where: {
+          id: savedInterview.id,
+        },
+        relations: ['skills'],
+      });
 
-      return savedInterview;
+      return {
+        assessment: savedSoftAssessment,
+        questions: savedQuestions,
+      };
     } catch (err) {
       console.error('[COMPLETE_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
@@ -134,9 +146,7 @@ export class EmployeeSoftAssessmentService {
     }
   }
 
-  async getAssessmentResult(
-    assessmentId: string,
-  ): Promise<ISoftAssessmentResultResponse> {
+  async getAssessmentResult(assessmentId: string): Promise<ISoftAssessment> {
     try {
       const softAssessment: SoftAssessmentEntity =
         await this.softAssessmentRepository.findOne({
@@ -347,7 +357,20 @@ export class EmployeeSoftAssessmentService {
         }
       }
 
-      return await this.getAssessmentResult(assessmentId);
+      const savedSoftAssessment = await this.softAssessmentRepository.findOne({
+        where: {
+          id: existingAssessment.id,
+        },
+        relations: ['skills'],
+      });
+      const allSkillsIds = savedSoftAssessment.skills.map((skill) => skill.id);
+      const savedQuestions = await this.questionToSoftSkillRepository.find({
+        id: In(allSkillsIds),
+      });
+      return {
+        assessment: savedSoftAssessment,
+        questions: savedQuestions,
+      };
     } catch (err) {
       console.error('[EDIT_SOFT_SKILL_ASSESSMENT_ERROR]', err);
       Logger.error(err);
