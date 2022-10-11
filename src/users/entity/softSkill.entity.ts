@@ -14,6 +14,9 @@ export class SoftSkillEntity extends BaseEntity {
   id: string;
 
   @Column({ default: '' })
+  hintText: string;
+
+  @Column({ default: '' })
   value: string;
 
   @Column({ length: 512, default: '' })
