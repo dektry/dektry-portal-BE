@@ -7,9 +7,6 @@ export class hintFieldAddedToSoftSkill1665491080875
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "soft_skill_to_assessment" DROP COLUMN "successfullySaved"`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "soft_skill_to_assessment" DROP COLUMN "soft_skill_id"`,
     );
     await queryRunner.query(
@@ -81,9 +78,6 @@ export class hintFieldAddedToSoftSkill1665491080875
     );
     await queryRunner.query(
       `ALTER TABLE "soft_skill_to_assessment" ADD "soft_skill_id" uuid`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "soft_skill_to_assessment" ADD "successfullySaved" boolean`,
     );
   }
 }
