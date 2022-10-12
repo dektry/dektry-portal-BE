@@ -25,7 +25,7 @@ export class UpdateEmployeeDto {
   @IsOptional()
   @MaxLength(255, { message: 'Personal email is too long' })
   presonalEmail?: null | string;
-  
+
   @IsOptional()
   @MaxLength(255, { message: 'Mobile number is too long' })
   mobileNumber: string;
@@ -37,7 +37,7 @@ export class UpdateEmployeeDto {
   @IsOptional()
   @MaxLength(255, { message: 'Gender is too long' })
   gender: string;
-  
+
   @IsOptional()
   @MaxLength(1000, { message: 'Avatar URL is too long' })
   avatarUrl: string;

@@ -3,10 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import { InterviewEntity } from './interview.entity';
+import { EmployeeProjectEntity } from './employeeProject.entity';
 import { SoftAssessmentEntity } from './softAssessment.entity';
 
 @Entity({ name: 'employee' })
@@ -90,10 +91,13 @@ export class EmployeeEntity extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   department: string;
 
-  @OneToOne(() => InterviewEntity, (interview) => interview.employee)
+  @OneToMany(() => InterviewEntity, (interview) => interview.employee)
   interview: InterviewEntity;
 
-  @OneToOne(
+  @OneToMany(() => EmployeeProjectEntity, (project) => project.employee)
+  project: EmployeeProjectEntity;
+
+  @OneToMany(
     () => SoftAssessmentEntity,
     (softAssessment) => softAssessment.employee,
   )

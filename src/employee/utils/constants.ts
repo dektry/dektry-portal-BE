@@ -70,6 +70,11 @@ export interface ISoftAssessment {
   skills: ISoftSkill[];
 }
 
+export interface ITechnology {
+  id?: string;
+  name: string;
+}
+
 export const softSkillAssessmentNotFound = 'Soft skill assessment not found!';
 export const softSkillAssessmentsNotFound = 'Soft skill assessments not found!';
 export const softSkillAssessmentCantComplete =
@@ -79,3 +84,10 @@ export const softSkillAssessmentCantEdit =
 export const softSkillAssessmentExist = 'Soft skill assessment already exists!';
 export const positionNotFound = 'Position not found!';
 export const levelNotFound = 'Level not found!';
+
+export const employeeProjectCantBeSaved = 'Project can not be saved!';
+export const projectNotFound = 'Project is not found!';
+export const projectsNotFound = 'Projects are not found!';
+export const cantDeleteProject = 'Can not delete project!';
+
+export const technologyNotFound = 'Technology is not found!';
