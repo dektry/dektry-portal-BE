@@ -12,27 +12,27 @@ import {
 import { EmployeeEntity } from './employee.entity';
 import { TechnologyEntity } from './technology.entity';
 
-@Entity({ name: 'employee_projects' })
-export class EmployeeProjectEntity extends BaseEntity {
+@Entity({ name: 'project' })
+export class ProjectEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column({ default: '' })
+  @Column({ nullable: false })
   name: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: false })
   duration: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: false })
   role: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: false })
   team_size: string;
 
-  @Column({ default: '' })
+  @Column({ nullable: false })
   description: string;
 
   @Column('text', { array: true })
@@ -45,7 +45,7 @@ export class EmployeeProjectEntity extends BaseEntity {
   @JoinTable()
   technologies: TechnologyEntity[];
 
-  @ManyToOne(() => EmployeeEntity, (employee) => employee.project, {
+  @ManyToOne(() => EmployeeEntity, (employee) => employee.projects, {
     orphanedRowAction: 'delete',
     cascade: true,
     onDelete: 'CASCADE',

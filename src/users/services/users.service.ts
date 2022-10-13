@@ -12,8 +12,6 @@ import { careerRepository } from '../repositories/career.repository';
 import { accessRepository } from '../repositories/access.repository';
 import { roleRepository } from '../repositories/role.repository';
 import { positionGroupRepository } from '../repositories/positionGroup.repository';
-import { projectsRepository } from '../../projects/repositories/projects.repository';
-import { projectsHistoryRepository } from '../../projects/repositories/projectsHistory.repository';
 import { getHashPassword } from '../../../utils/hashPassword';
 import { DeleteResult } from 'typeorm';
 import * as fs from 'fs';
@@ -28,10 +26,6 @@ export class UsersService {
     private roleRepository: roleRepository,
     @InjectRepository(careerRepository)
     private careerRepository: careerRepository,
-    @InjectRepository(projectsRepository)
-    private projectsRepository: projectsRepository,
-    @InjectRepository(projectsHistoryRepository)
-    private projectsHistoryRepository: projectsHistoryRepository,
     @InjectRepository(positionGroupRepository)
     private positionGroupRepository: positionGroupRepository,
     @InjectRepository(accessRepository)
@@ -55,29 +49,9 @@ export class UsersService {
         firstName: 'ASC',
       },
     });
-    const allProjects = await this.projectsRepository.find();
-    const allProjectsHistory = await this.projectsHistoryRepository.find({
-      relations: ['userId', 'projectId'],
-    });
-    const users = _.map(usersFromPage, (user) => {
-      const userProjects = _.filter(
-        allProjects,
-        (project) =>
-          _.includes(project.users, user.id) ||
-          _.includes(project.managers, user.id),
-      );
-      const projectsHistory = _.filter(
-        allProjectsHistory,
-        (history) => history.userId && history.userId.id === user.id,
-      );
-      return {
-        ...user,
-        projects: userProjects,
-        projectsHistory: projectsHistory,
-      };
-    });
+
     return {
-      results: users,
+      results: usersFromPage,
       total: _.size(allUsers),
       currentPage: page,
       next: page + 1,
@@ -201,29 +175,9 @@ export class UsersService {
         'career.position.group',
       ],
     });
-    const allProjects = await this.projectsRepository.find();
-    const allProjectsHistory = await this.projectsHistoryRepository.find({
-      relations: ['userId', 'projectId'],
-    });
-    const results = _.map(users, (user) => {
-      const userProjects = _.filter(
-        allProjects,
-        (project) =>
-          _.includes(project.users, user.id) ||
-          _.includes(project.managers, user.id),
-      );
-      const projectsHistory = _.filter(
-        allProjectsHistory,
-        (history) => history.userId && history.userId.id === user.id,
-      );
-      return {
-        ...user,
-        projects: userProjects,
-        projectsHistory: projectsHistory,
-      };
-    });
+
     return {
-      results: results,
+      results: users,
       total: _.size(allUsers),
       currentPage: page,
       next: page + 1,

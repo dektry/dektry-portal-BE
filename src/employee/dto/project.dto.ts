@@ -1,7 +1,7 @@
 import { IsArray, ArrayMaxSize, IsNotEmpty, MaxLength } from 'class-validator';
 import { ITechnology } from 'employee/utils/constants';
 
-export class EmployeeProjectDto {
+export class ProjectDto {
   id?: string;
 
   @IsNotEmpty({

@@ -5,32 +5,32 @@ import { In, getRepository } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { technologyRepository } from '../repositories/technology.repository';
-import { employeeProjectRepository } from '../repositories/employeeProject.repository';
+import { projectRepository } from '../repositories/project.repository';
 
 import { EmployeeEntity } from '../entity/employee.entity';
-import { EmployeeProjectDto } from 'employee/dto/employeeProject.dto';
+import { ProjectDto } from '../dto/project.dto';
 
 import {
-  employeeProjectCantBeSaved,
+  projectCantBeSaved,
   employeeNotFound,
   projectNotFound,
   cantDeleteProject,
   projectsNotFound,
-} from 'employee/utils/constants';
-import { EmployeeProjectEntity } from 'employee/entity/employeeProject.entity';
+} from '../utils/constants';
+import { ProjectEntity } from '../entity/project.entity';
 
 @Injectable()
-export class EmployeeProjectService {
+export class ProjectService {
   constructor(
-    @InjectRepository(employeeProjectRepository)
-    private employeeProjectRepository: employeeProjectRepository,
+    @InjectRepository(projectRepository)
+    private projectRepository: projectRepository,
     @InjectRepository(employeeRepository)
     private employeeRepository: employeeRepository,
     @InjectRepository(technologyRepository)
     private technologyRepository: technologyRepository,
   ) {}
 
-  async createProject(project: EmployeeProjectDto) {
+  async createProject(project: ProjectDto) {
     try {
       const employee: EmployeeEntity = await this.employeeRepository.findOne(
         project.employeeId,
@@ -38,14 +38,20 @@ export class EmployeeProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const existingTechnologies = await this.technologyRepository.find();
+      const technologiesNames = project.technologies.map((el) => el.name);
+
+      const existingTechnologies = await this.technologyRepository.find({
+        where: {
+          name: In(technologiesNames),
+        },
+      });
 
       const newTechnologies = project.technologies
         .filter((el) => {
           const isExisting = existingTechnologies.some(
-            (technology) => technology.name === el.name,
+            (technology) =>
+              technology.name.toUpperCase() === el.name.toUpperCase(),
           );
-
           return !isExisting;
         })
         .map((el) => {
@@ -56,38 +62,37 @@ export class EmployeeProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
-      const technologiesNames = project.technologies.map((el) => el.name);
-
       const techInCurrentProject = await this.technologyRepository.find({
         where: {
           name: In(technologiesNames),
         },
       });
-      delete project.employeeId;
-      return await this.employeeProjectRepository.save({
-        ...project,
+
+      const projectToSave = {
+        name: project.name,
+        duration: project.duration,
+        role: project.role,
+        team_size: project.team_size,
+        description: project.description,
+        responsibilities: project.responsibilities,
         employee,
         technologies: techInCurrentProject,
-      });
+      };
+
+      return await this.projectRepository.save(projectToSave);
     } catch (err) {
-      console.error('[CREATE_EMPLOYEE_PROJECT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) {
-        throw new HttpException(
-          { status: err?.status, message: err?.response },
-          err?.status,
-        );
-      }
-
       throw new HttpException(
-        employeeProjectCantBeSaved,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : projectCantBeSaved,
+        err?.status,
       );
     }
   }
 
-  async editProject(project: EmployeeProjectDto) {
+  async editProject(project: ProjectDto) {
     try {
       const employee: EmployeeEntity = await this.employeeRepository.findOne(
         project.employeeId,
@@ -95,14 +100,26 @@ export class EmployeeProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const existingProject = await this.employeeProjectRepository.findOne(
-        project.id,
-      );
+      const existingProject = await this.projectRepository.findOne(project.id);
       if (!existingProject)
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
 
+      const technologiesNames = project.technologies.map((el) => el.name);
+
+      const existingTechnologies = await this.technologyRepository.find({
+        where: {
+          name: In(technologiesNames),
+        },
+      });
+
       const newTechnologies = project.technologies
-        .filter((el) => !el.id)
+        .filter((el) => {
+          const isExisting = existingTechnologies.some(
+            (technology) =>
+              technology.name.toUpperCase() === el.name.toUpperCase(),
+          );
+          return !isExisting;
+        })
         .map((el) => {
           return this.technologyRepository.create({
             name: el.name,
@@ -111,80 +128,67 @@ export class EmployeeProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
-      const technologiesNames = project.technologies.map((el) => el.name);
-
       const techInCurrentProject = await this.technologyRepository.find({
         where: {
           name: In(technologiesNames),
         },
       });
 
-      const actualRelationships = await getRepository(EmployeeProjectEntity)
+      const actualRelationships = await getRepository(ProjectEntity)
         .createQueryBuilder()
-        .relation(EmployeeProjectEntity, 'technologies')
+        .relation(ProjectEntity, 'technologies')
         .of(project)
         .loadMany();
 
-      await getRepository(EmployeeProjectEntity)
+      await getRepository(ProjectEntity)
         .createQueryBuilder()
-        .relation(EmployeeProjectEntity, 'technologies')
+        .relation(ProjectEntity, 'technologies')
         .of(project)
         .addAndRemove(techInCurrentProject, actualRelationships);
 
-      delete project.technologies;
-      delete project.employeeId;
+      const projectToUpdate = {
+        name: project.name,
+        duration: project.duration,
+        role: project.role,
+        team_size: project.team_size,
+        description: project.description,
+        responsibilities: project.responsibilities,
+        employee,
+      };
 
-      await this.employeeProjectRepository.update(
-        { id: project.id },
-        {
-          ...project,
-          employee,
-        },
-      );
+      await this.projectRepository.update({ id: project.id }, projectToUpdate);
 
-      return await this.employeeProjectRepository.findOne(project.id);
+      return await this.projectRepository.findOne(project.id);
     } catch (err) {
-      console.error('[EDIT_EMPLOYEE_PROJECT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) {
-        throw new HttpException(
-          { status: err?.status, message: err?.response },
-          err?.status,
-        );
-      }
-
       throw new HttpException(
-        employeeProjectCantBeSaved,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : projectCantBeSaved,
+        err?.status,
       );
     }
   }
 
   async deleteProject(id: string) {
     try {
-      return await this.employeeProjectRepository.delete(id);
+      return await this.projectRepository.delete(id);
     } catch (err) {
-      console.error('[DELETE_EMPLOYEE_PROJECT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) {
-        throw new HttpException(
-          { status: err?.status, message: err?.response },
-          err?.status,
-        );
-      }
-
       throw new HttpException(
-        cantDeleteProject,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : cantDeleteProject,
+        err?.status,
       );
     }
   }
 
   async getProject(id: string) {
     try {
-      const project = await this.employeeProjectRepository.findOne({
+      const project = await this.projectRepository.findOne({
         where: {
           id: id,
         },
@@ -195,19 +199,13 @@ export class EmployeeProjectService {
 
       return project;
     } catch (err) {
-      console.error('[EDIT_EMPLOYEE_PROJECT_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) {
-        throw new HttpException(
-          { status: err?.status, message: err?.response },
-          err?.status,
-        );
-      }
-
       throw new HttpException(
-        projectNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : projectNotFound,
+        err?.status,
       );
     }
   }
@@ -220,28 +218,21 @@ export class EmployeeProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const projects = await this.employeeProjectRepository.find({
+      const projects = await this.projectRepository.find({
         where: {
           employee,
         },
       });
-      console.log(projects);
-      
+
       return projects;
     } catch (err) {
-      console.error('[GET_EMPLOYEE_PROJECT_LIST_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) {
-        throw new HttpException(
-          { status: err?.status, message: err?.response },
-          err?.status,
-        );
-      }
-
       throw new HttpException(
-        projectsNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : projectsNotFound,
+        err?.status,
       );
     }
   }

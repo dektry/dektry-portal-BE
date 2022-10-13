@@ -4,12 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmployeeController } from './controllers/employee.controller';
 import { EmployeeInterviewsController } from './controllers/interviews.controller';
 import { EmployeeSoftAssessmentController } from './controllers/softAssessment.controller';
-import { EmployeeProjectController } from './controllers/employeeProject.controller';
+import { ProjectsController } from './controllers/projects.controller';
 
 import { EmployeeService } from './services/employee.service';
 import { EmployeeInterviewService } from './services/interview.service';
 import { EmployeeSoftAssessmentService } from './services/softAssessment.service';
-import { EmployeeProjectService } from './services/employeeProject.service';
+import { ProjectService } from './services/project.service';
 
 import { employeeRepository } from './repositories/employee.repository';
 import { employeeInterviewRepository } from './repositories/interview.repository';
@@ -21,7 +21,9 @@ import { softSkillToSoftAssessmentRepository } from './repositories/softSkilltoS
 import { softAssessmentRepository } from './repositories/softAssessment.repository';
 import { questionToSoftSkillRepository } from './repositories/questionToSkill.repository';
 import { technologyRepository } from './repositories/technology.repository';
-import { employeeProjectRepository } from './repositories/employeeProject.repository';
+import { projectRepository } from './repositories/project.repository';
+import { TechnologyController } from './controllers/technology.controller';
+import { TechnologyService } from './services/technology.service';
 
 @Module({
   imports: [
@@ -36,20 +38,22 @@ import { employeeProjectRepository } from './repositories/employeeProject.reposi
       skillRepository,
       questionToSoftSkillRepository,
       technologyRepository,
-      employeeProjectRepository,
+      projectRepository,
     ]),
   ],
   controllers: [
     EmployeeController,
     EmployeeInterviewsController,
     EmployeeSoftAssessmentController,
-    EmployeeProjectController,
+    ProjectsController,
+    TechnologyController,
   ],
   providers: [
     EmployeeService,
     EmployeeInterviewService,
     EmployeeSoftAssessmentService,
-    EmployeeProjectService,
+    ProjectService,
+    TechnologyService,
   ],
 })
 export class EmployeeModule {}

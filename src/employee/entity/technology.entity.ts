@@ -3,13 +3,10 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  JoinTable,
-  ManyToMany,
   CreateDateColumn,
 } from 'typeorm';
-import { EmployeeProjectEntity } from './employeeProject.entity';
 
-@Entity({ name: 'technologies' })
+@Entity({ name: 'technology' })
 export class TechnologyEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

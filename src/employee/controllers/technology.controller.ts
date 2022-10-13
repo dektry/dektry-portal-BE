@@ -1,21 +1,23 @@
 import {
   Controller,
   DefaultValuePipe,
+  Delete,
   Get,
   ParseIntPipe,
   Query,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { TechnologyService } from '../services/technology.service';
 
-@Controller('employee_projects')
-export class EmployeeProjectController {
+@Controller('technologies')
+export class TechnologyController {
   constructor(private TechnologyService: TechnologyService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get(':projectId')
+  @Get()
   getProject(
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
     @Query('order') order?: 'ASC' | 'DESC',
@@ -26,5 +28,11 @@ export class EmployeeProjectController {
       order,
       query,
     });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':technologyId')
+  deleteTechnology(@Param('technologyId') technologyId: string) {
+    return this.TechnologyService.deleteTechnology(technologyId);
   }
 }

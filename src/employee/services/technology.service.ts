@@ -49,4 +49,20 @@ export class TechnologyService {
       );
     }
   }
+
+  async deleteTechnology(id: string) {
+    try {
+      return await this.technologyRepository.delete(id);
+    } catch (err) {
+      console.error('[DELETE_TECHNOLOGY_ERROR]', err);
+      Logger.error(err);
+
+      if (err?.response) return err?.response;
+
+      throw new HttpException(
+        technologyNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

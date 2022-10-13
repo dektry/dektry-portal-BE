@@ -2262,7 +2262,7 @@
 					"name": "Projects",
 					"item": [
 						{
-							"name": "POST /employee_projects",
+							"name": "POST /projects",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2276,22 +2276,31 @@
 								},
 								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"employeeId\": \"6ac39483-514c-48f6-8a53-bf807913cea4\",\n    \"name\": \"Cool project\",\n    \"duration\": \"1 year\",\n    \"role\": \"Middle backend developer\",\n    \"team_size\": \"5 members\",\n    \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras malesuada scelerisque urna, vitae convallis ipsum ornare vitae. Sed maximus odio ut lacinia feugiat. Proin lacinia lacus risus. Aliquam viverra eleifend ornare. Sed vel iaculis lorem, vel tempor odio. Phasellus mi orci, scelerisque nec cursus suscipit, fringilla in lorem. Donec at dolor et dolor semper congue elementum eleifend arcu. Nulla facilisi. Nam blandit fermentum laoreet. Sed venenatis enim in turpis tristique auctor. Quisque luctus commodo sodales. Curabitur tristique accumsan varius. Suspendisse rhoncus tincidunt magna, id venenatis orci luctus a. Sed blandit ipsum neque, ac elementum tellus pellentesque sodales. Phasellus rutrum odio.\",\n    \"responsibilities\": [\"Create DB scheme\", \"Update DB scheme\", \"Build new tables\"],\n    \"technologies\": [{ \"name\": \"Node\" }, { \"name\": \"PostgreSQL\" }, { \"name\": \"NestJS\" }, { \"name\": \"TypeORM\" }, { \"name\": \"AWS\" }]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:3000/employee_projects",
+									"raw": "http://localhost:3000/projects",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
-										"employee_projects"
+										"projects"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "PUT /employee_projects",
+							"name": "PUT /projects",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2329,7 +2338,7 @@
 							"response": []
 						},
 						{
-							"name": "DELETE /employee_projects/:id",
+							"name": "DELETE /projects/:id",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2344,14 +2353,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/employee_projects/af0f6f57-23d3-42eb-974b-04c04dc4fddc",
+									"raw": "http://localhost:3000/projects/af0f6f57-23d3-42eb-974b-04c04dc4fddc",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
-										"employee_projects",
+										"projects",
 										"af0f6f57-23d3-42eb-974b-04c04dc4fddc"
 									]
 								}
@@ -2374,14 +2383,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/employee_projects/4f80f745-d69d-4c3c-b2ff-a245c8a989c1",
+									"raw": "http://localhost:3000/projects/4f80f745-d69d-4c3c-b2ff-a245c8a989c1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
-										"employee_projects",
+										"projects",
 										"4f80f745-d69d-4c3c-b2ff-a245c8a989c1"
 									]
 								}
@@ -2404,14 +2413,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/employee_projects/6ac39483-514c-48f6-8a53-bf807913cea4/all",
+									"raw": "http://localhost:3000/projects/6ac39483-514c-48f6-8a53-bf807913cea4/all",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
-										"employee_projects",
+										"projects",
 										"6ac39483-514c-48f6-8a53-bf807913cea4",
 										"all"
 									]
