@@ -13,6 +13,8 @@ import { EmployeeEntity } from 'employee/entity/employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from 'employee/entity/softSkillToSoftAssessment.entity';
 import { PositionEntity } from 'users/entity/position.entity';
 import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
+import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
+import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
 
 import {
   ICompleteSoftAssessmentBody,
@@ -27,8 +29,6 @@ import {
   ISoftAssessmentResultResponse,
   ISoftAssessment,
 } from '../utils/constants';
-import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
-import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
 
 @Injectable()
 export class EmployeeSoftAssessmentService {
