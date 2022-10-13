@@ -38,7 +38,9 @@ export class ProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const technologiesNames = project.technologies.map((el) => el.name);
+      const technologiesNames = project.technologies.map((el) =>
+        el.name.toLowerCase(),
+      );
 
       const existingTechnologies = await this.technologyRepository.find({
         where: {
@@ -46,19 +48,22 @@ export class ProjectService {
         },
       });
 
-      const newTechnologies = project.technologies
-        .filter((el) => {
-          const isExisting = existingTechnologies.some(
-            (technology) =>
-              technology.name.toUpperCase() === el.name.toUpperCase(),
+      const newTechnologies = [];
+      const hash = {};
+
+      for (const exists of existingTechnologies) {
+        hash[exists.name] = exists.id;
+      }
+
+      for (const technology of project.technologies) {
+        if (!hash[technology.name]) {
+          newTechnologies.push(
+            this.technologyRepository.create({
+              name: technology.name.toLowerCase(),
+            }),
           );
-          return !isExisting;
-        })
-        .map((el) => {
-          return this.technologyRepository.create({
-            name: el.name,
-          });
-        });
+        }
+      }
 
       await this.technologyRepository.save(newTechnologies);
 
@@ -104,7 +109,9 @@ export class ProjectService {
       if (!existingProject)
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
 
-      const technologiesNames = project.technologies.map((el) => el.name);
+      const technologiesNames = project.technologies.map((el) =>
+        el.name.toLowerCase(),
+      );
 
       const existingTechnologies = await this.technologyRepository.find({
         where: {
@@ -112,19 +119,22 @@ export class ProjectService {
         },
       });
 
-      const newTechnologies = project.technologies
-        .filter((el) => {
-          const isExisting = existingTechnologies.some(
-            (technology) =>
-              technology.name.toUpperCase() === el.name.toUpperCase(),
+      const newTechnologies = [];
+      const hash = {};
+
+      for (const exists of existingTechnologies) {
+        hash[exists.name] = exists.id;
+      }
+
+      for (const technology of project.technologies) {
+        if (!hash[technology.name.toLowerCase()]) {
+          newTechnologies.push(
+            this.technologyRepository.create({
+              name: technology.name.toLowerCase(),
+            }),
           );
-          return !isExisting;
-        })
-        .map((el) => {
-          return this.technologyRepository.create({
-            name: el.name,
-          });
-        });
+        }
+      }
 
       await this.technologyRepository.save(newTechnologies);
 
