@@ -4,8 +4,6 @@ export class projectAndTechnologiesRepo1665656269973 implements MigrationInterfa
     name = 'projectAndTechnologiesRepo1665656269973'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "projects_history"`);
-        await queryRunner.query(`DROP TABLE "projects"`);
         await queryRunner.query(`CREATE TABLE "technology" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "UQ_0e93116dd895bf20badb82d3ed6" UNIQUE ("name"), CONSTRAINT "PK_89f217a9ebf9b4bc1a0d74883ec" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "project" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "duration" character varying NOT NULL, "role" character varying NOT NULL, "team_size" character varying NOT NULL, "description" character varying NOT NULL, "responsibilities" text array NOT NULL, "employee" uuid, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "employee_projects" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL DEFAULT '', "duration" character varying NOT NULL DEFAULT '', "role" character varying NOT NULL DEFAULT '', "team_size" character varying NOT NULL DEFAULT '', "description" character varying NOT NULL DEFAULT '', "responsibilities" text array NOT NULL, "employee" uuid, CONSTRAINT "PK_9cff9b5e447ee44263b23a04be0" PRIMARY KEY ("id"))`);
@@ -32,8 +30,6 @@ export class projectAndTechnologiesRepo1665656269973 implements MigrationInterfa
         await queryRunner.query(`ALTER TABLE "employee_projects_technologies_technology" DROP CONSTRAINT "FK_00f6828aecbc13e5ca0f1e56e0f"`);
         await queryRunner.query(`ALTER TABLE "project_technologies_technology" DROP CONSTRAINT "FK_c7d578080e24a8249d6754d67b4"`);
         await queryRunner.query(`ALTER TABLE "project_technologies_technology" DROP CONSTRAINT "FK_2e780097cfd60204dd415ed7cfd"`);
-        await queryRunner.query(`ALTER TABLE "projects_history" DROP CONSTRAINT "FK_921bc60c72f95353a313e932340"`);
-        await queryRunner.query(`ALTER TABLE "projects_history" DROP CONSTRAINT "FK_43107ec2445d18063ca4ad37db0"`);
         await queryRunner.query(`ALTER TABLE "employee_projects" DROP CONSTRAINT "FK_17aa4ae3f6e8ee63240381cd878"`);
         await queryRunner.query(`ALTER TABLE "project" DROP CONSTRAINT "FK_74edad0b2911826795b3c30c8ad"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_d9f8d9eb8c7f255f7661ee3e96"`);
@@ -42,7 +38,6 @@ export class projectAndTechnologiesRepo1665656269973 implements MigrationInterfa
         await queryRunner.query(`DROP INDEX "public"."IDX_c7d578080e24a8249d6754d67b"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_2e780097cfd60204dd415ed7cf"`);
         await queryRunner.query(`DROP TABLE "project_technologies_technology"`);
-        await queryRunner.query(`DROP TABLE "projects_history"`);
         await queryRunner.query(`DROP TABLE "projects"`);
         await queryRunner.query(`DROP TABLE "employee_projects"`);
         await queryRunner.query(`DROP TABLE "project"`);
