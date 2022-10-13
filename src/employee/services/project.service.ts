@@ -38,8 +38,8 @@ export class ProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const technologiesNames = project.technologies.map((el) =>
-        el.name.toLowerCase(),
+      const technologiesNames = project.technologies?.map((el) =>
+        el.name?.toLowerCase(),
       );
 
       const existingTechnologies = await this.technologyRepository.find({
@@ -59,7 +59,7 @@ export class ProjectService {
         if (!hash[technology.name]) {
           newTechnologies.push(
             this.technologyRepository.create({
-              name: technology.name.toLowerCase(),
+              name: technology.name?.toLowerCase(),
             }),
           );
         }
@@ -110,7 +110,7 @@ export class ProjectService {
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
 
       const technologiesNames = project.technologies.map((el) =>
-        el.name.toLowerCase(),
+        el.name?.toLowerCase(),
       );
 
       const existingTechnologies = await this.technologyRepository.find({
@@ -127,10 +127,10 @@ export class ProjectService {
       }
 
       for (const technology of project.technologies) {
-        if (!hash[technology.name.toLowerCase()]) {
+        if (!hash[technology.name?.toLowerCase()]) {
           newTechnologies.push(
             this.technologyRepository.create({
-              name: technology.name.toLowerCase(),
+              name: technology.name?.toLowerCase(),
             }),
           );
         }
