@@ -4,6 +4,9 @@ export class projectAndTechnologiesRepo1665656269973 implements MigrationInterfa
     name = 'projectAndTechnologiesRepo1665656269973'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`DROP TABLE "project_technologies_technology"`);
+        await queryRunner.query(`DROP TABLE "projects_history"`);
+        await queryRunner.query(`DROP TABLE "projects"`);
         await queryRunner.query(`CREATE TABLE "technology" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "UQ_0e93116dd895bf20badb82d3ed6" UNIQUE ("name"), CONSTRAINT "PK_89f217a9ebf9b4bc1a0d74883ec" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "project" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, "duration" character varying NOT NULL, "role" character varying NOT NULL, "team_size" character varying NOT NULL, "description" character varying NOT NULL, "responsibilities" text array NOT NULL, "employee" uuid, CONSTRAINT "PK_4d68b1358bb5b766d3e78f32f57" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "employee_projects" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL DEFAULT '', "duration" character varying NOT NULL DEFAULT '', "role" character varying NOT NULL DEFAULT '', "team_size" character varying NOT NULL DEFAULT '', "description" character varying NOT NULL DEFAULT '', "responsibilities" text array NOT NULL, "employee" uuid, CONSTRAINT "PK_9cff9b5e447ee44263b23a04be0" PRIMARY KEY ("id"))`);
