@@ -4,7 +4,6 @@ export class projectAndTechnologiesRepo1665656269973 implements MigrationInterfa
     name = 'projectAndTechnologiesRepo1665656269973'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE "project_technologies_technology"`);
         await queryRunner.query(`DROP TABLE "projects_history"`);
         await queryRunner.query(`DROP TABLE "projects"`);
         await queryRunner.query(`CREATE TABLE "technology" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "name" character varying NOT NULL, CONSTRAINT "UQ_0e93116dd895bf20badb82d3ed6" UNIQUE ("name"), CONSTRAINT "PK_89f217a9ebf9b4bc1a0d74883ec" PRIMARY KEY ("id"))`);
