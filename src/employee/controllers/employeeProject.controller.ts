@@ -36,7 +36,7 @@ export class EmployeeProjectController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':employeeId')
+  @Get(':employeeId/all')
   getProjectsList(@Param('employeeId') employeeId: string) {
     return this.EmployeeProjectService.getProjectsList(employeeId);
   }

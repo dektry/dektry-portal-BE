@@ -1,4 +1,4 @@
-import { IsArray, ArrayMaxSize, IsNotEmpty } from 'class-validator';
+import { IsArray, ArrayMaxSize, IsNotEmpty, MaxLength } from 'class-validator';
 import { ITechnology } from 'employee/utils/constants';
 
 export class EmployeeProjectDto {
@@ -32,6 +32,7 @@ export class EmployeeProjectDto {
   @IsNotEmpty({
     message: 'Project name must not be empty',
   })
+  @MaxLength(1000, { message: 'Description is too long' })
   description: string;
 
   @IsNotEmpty({

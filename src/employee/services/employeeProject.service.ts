@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { In } from 'typeorm';
+import { In, getRepository } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { technologyRepository } from '../repositories/technology.repository';
@@ -17,6 +17,7 @@ import {
   cantDeleteProject,
   projectsNotFound,
 } from 'employee/utils/constants';
+import { EmployeeProjectEntity } from 'employee/entity/employeeProject.entity';
 
 @Injectable()
 export class EmployeeProjectService {
@@ -55,14 +56,17 @@ export class EmployeeProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
+      const technologiesNames = project.technologies.map((el) => el.name);
+
       const techInCurrentProject = await this.technologyRepository.find({
         where: {
-          name: In(project.technologies),
+          name: In(technologiesNames),
         },
       });
-
+      delete project.employeeId;
       return await this.employeeProjectRepository.save({
         ...project,
+        employee,
         technologies: techInCurrentProject,
       });
     } catch (err) {
@@ -97,16 +101,8 @@ export class EmployeeProjectService {
       if (!existingProject)
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
 
-      const existingTechnologies = await this.technologyRepository.find();
-
       const newTechnologies = project.technologies
-        .filter((el) => {
-          const isExisting = existingTechnologies.some(
-            (technology) => technology.name === el.name,
-          );
-
-          return !isExisting;
-        })
+        .filter((el) => !el.id)
         .map((el) => {
           return this.technologyRepository.create({
             name: el.name,
@@ -115,19 +111,38 @@ export class EmployeeProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
+      const technologiesNames = project.technologies.map((el) => el.name);
+
       const techInCurrentProject = await this.technologyRepository.find({
         where: {
-          name: In(project.technologies),
+          name: In(technologiesNames),
         },
       });
 
-      return await this.employeeProjectRepository.update(
+      const actualRelationships = await getRepository(EmployeeProjectEntity)
+        .createQueryBuilder()
+        .relation(EmployeeProjectEntity, 'technologies')
+        .of(project)
+        .loadMany();
+
+      await getRepository(EmployeeProjectEntity)
+        .createQueryBuilder()
+        .relation(EmployeeProjectEntity, 'technologies')
+        .of(project)
+        .addAndRemove(techInCurrentProject, actualRelationships);
+
+      delete project.technologies;
+      delete project.employeeId;
+
+      await this.employeeProjectRepository.update(
         { id: project.id },
         {
           ...project,
-          technologies: techInCurrentProject,
+          employee,
         },
       );
+
+      return await this.employeeProjectRepository.findOne(project.id);
     } catch (err) {
       console.error('[EDIT_EMPLOYEE_PROJECT_ERROR]', err);
       Logger.error(err);
@@ -199,11 +214,20 @@ export class EmployeeProjectService {
 
   async getProjectsList(employeeId: string) {
     try {
-      return await this.employeeProjectRepository.find({
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
+
+      const projects = await this.employeeProjectRepository.find({
         where: {
-          employee: employeeId,
+          employee,
         },
       });
+      console.log(projects);
+      
+      return projects;
     } catch (err) {
       console.error('[GET_EMPLOYEE_PROJECT_LIST_ERROR]', err);
       Logger.error(err);

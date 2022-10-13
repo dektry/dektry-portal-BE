@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   JoinColumn,
+  JoinTable,
   ManyToOne,
   ManyToMany,
 } from 'typeorm';
@@ -37,10 +38,11 @@ export class EmployeeProjectEntity extends BaseEntity {
   @Column('text', { array: true })
   responsibilities: string[];
 
-  @ManyToMany(() => TechnologyEntity, (technology) => technology.projects, {
+  @ManyToMany(() => TechnologyEntity, {
     eager: true,
+    cascade: true,
   })
-  @JoinColumn({ name: 'technology_id' })
+  @JoinTable()
   technologies: TechnologyEntity[];
 
   @ManyToOne(() => EmployeeEntity, (employee) => employee.project, {
@@ -48,6 +50,6 @@ export class EmployeeProjectEntity extends BaseEntity {
     cascade: true,
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'employee_id' })
+  @JoinColumn({ name: 'employee' })
   employee: EmployeeEntity;
 }

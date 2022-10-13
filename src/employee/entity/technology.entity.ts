@@ -3,7 +3,7 @@ import {
   BaseEntity,
   PrimaryGeneratedColumn,
   Column,
-  JoinColumn,
+  JoinTable,
   ManyToMany,
   CreateDateColumn,
 } from 'typeorm';
@@ -17,13 +17,6 @@ export class TechnologyEntity extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
-
-  @ManyToMany(
-    () => EmployeeProjectEntity,
-    (technology) => technology.technologies,
-  )
-  @JoinColumn({ name: 'project_id' })
-  projects: EmployeeProjectEntity[];
 }
