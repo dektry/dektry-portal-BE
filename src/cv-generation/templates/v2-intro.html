@@ -131,6 +131,8 @@
     max-width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .i-page .prof-skills-el p:last-child {
     font-weight: 700;
@@ -149,9 +151,13 @@
     height: 19px;
     font-weight: 700;
     margin: 0 0 12px;
+    max-width: 360px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .without-prof-skills {
-    border: 0.5px solid rgba(0,0,0,0);
+    border: 0.5px solid rgba(0, 0, 0, 0);
   }
 </style>
 <div class="container i-page">
