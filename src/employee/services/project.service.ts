@@ -48,15 +48,18 @@ export class ProjectService {
         },
       });
 
+      
+      
       const newTechnologies = [];
       const hash = {};
-
+      
       for (const exists of existingTechnologies) {
         hash[exists.name] = exists.id;
       }
-
+      
+      console.log(hash);
       for (const technology of project.technologies) {
-        if (!hash[technology.name]) {
+        if (!hash[technology.name?.toLowerCase()]) {
           newTechnologies.push(
             this.technologyRepository.create({
               name: technology.name?.toLowerCase(),
@@ -202,7 +205,7 @@ export class ProjectService {
         where: {
           id: id,
         },
-        relations: ['technologies'],
+        relations: ['technologies', 'employee'],
       });
       if (!project)
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
@@ -232,6 +235,7 @@ export class ProjectService {
         where: {
           employee,
         },
+        relations: ['technologies', 'employee']
       });
 
       return projects;
