@@ -18,7 +18,7 @@ export class TechnologyController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getProject(
+  getTechnologiesList(
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
     @Query('order') order?: 'ASC' | 'DESC',
     @Query('query') query?: string,

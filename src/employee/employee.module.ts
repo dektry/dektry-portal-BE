@@ -24,6 +24,9 @@ import { technologyRepository } from './repositories/technology.repository';
 import { projectRepository } from './repositories/project.repository';
 import { TechnologyController } from './controllers/technology.controller';
 import { TechnologyService } from './services/technology.service';
+import { softSkillToCvRepository } from './repositories/softSkillToCv.repository';
+import { SoftSkillToCvController } from './controllers/softSkillToCv.controller';
+import { SoftSkillToCvService } from './services/softSkillToCv.service';
 
 @Module({
   imports: [
@@ -39,6 +42,7 @@ import { TechnologyService } from './services/technology.service';
       questionToSoftSkillRepository,
       technologyRepository,
       projectRepository,
+      softSkillToCvRepository,
     ]),
   ],
   controllers: [
@@ -47,6 +51,7 @@ import { TechnologyService } from './services/technology.service';
     EmployeeSoftAssessmentController,
     ProjectsController,
     TechnologyController,
+    SoftSkillToCvController,
   ],
   providers: [
     EmployeeService,
@@ -54,6 +59,7 @@ import { TechnologyService } from './services/technology.service';
     EmployeeSoftAssessmentService,
     ProjectService,
     TechnologyService,
+    SoftSkillToCvService,
   ],
 })
 export class EmployeeModule {}
