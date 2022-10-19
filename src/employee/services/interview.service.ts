@@ -31,6 +31,8 @@ import {
   ICompleteInterview,
   IEditInterviewBody,
   IDeletedInterviewResponse,
+  techAssessmentCantBeSaved,
+  techAssessmentIsNotFound,
 } from '../utils/constants';
 
 import { Helper } from 'utils/helpers';
@@ -109,15 +111,14 @@ export class EmployeeInterviewService {
         interview: savedInterview,
         answers,
       };
-    } catch (error) {
-      console.error('[COMPLETE_EMPLOYEE_INTERVIEW_ERROR]', error);
-      Logger.error(error);
-
-      if (error?.response) return error?.response;
+    } catch (err) {
+      Logger.error(err);
 
       throw new HttpException(
-        employeeNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : techAssessmentCantBeSaved,
+        err?.status,
       );
     }
   }
@@ -223,15 +224,14 @@ export class EmployeeInterviewService {
         interview: savedInterview,
         answers,
       };
-    } catch (error) {
-      console.error('[EDIT_EMPLOYEE_INTERVIEW_ERROR]', error);
-      Logger.error(error);
-
-      if (error?.response) return error?.response;
+    } catch (err) {
+      Logger.error(err);
 
       throw new HttpException(
-        employeeNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : techAssessmentCantBeSaved,
+        err?.status,
       );
     }
   }
@@ -263,15 +263,14 @@ export class EmployeeInterviewService {
         };
       }
       throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
-    } catch (error) {
-      console.error('[GET_EMPLOYEE_INTERVIEW_ERROR]', error);
-      Logger.error(error);
-
-      if (error?.response) return error?.response;
+    } catch (err) {
+      Logger.error(err);
 
       throw new HttpException(
-        employeeNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : techAssessmentIsNotFound,
+        err?.status,
       );
     }
   }
@@ -298,15 +297,14 @@ export class EmployeeInterviewService {
       } else {
         return [];
       }
-    } catch (error) {
-      console.error('[GET_ALL_INTERVIEWS_ERROR]', error);
-      Logger.error(error);
-
-      if (error?.response) return error?.response;
+    } catch (err) {
+      Logger.error(err);
 
       throw new HttpException(
-        employeeNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : techAssessmentIsNotFound,
+        err?.status,
       );
     }
   }
@@ -332,15 +330,14 @@ export class EmployeeInterviewService {
         };
       }
       throw new HttpException(interviewWasNotDeleted, HttpStatus.BAD_REQUEST);
-    } catch (error) {
-      console.error('[DELETE_EMPLOYEE_INTERVIEW_ERROR]', error);
-      Logger.error(error);
-
-      if (error?.response) return error?.response;
+    } catch (err) {
+      Logger.error(err);
 
       throw new HttpException(
-        employeeNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : techAssessmentIsNotFound,
+        err?.status,
       );
     }
   }

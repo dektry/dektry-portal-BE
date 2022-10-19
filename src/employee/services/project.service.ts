@@ -48,16 +48,13 @@ export class ProjectService {
         },
       });
 
-      
-      
       const newTechnologies = [];
       const hash = {};
-      
+
       for (const exists of existingTechnologies) {
         hash[exists.name] = exists.id;
       }
-      
-      console.log(hash);
+
       for (const technology of project.technologies) {
         if (!hash[technology.name?.toLowerCase()]) {
           newTechnologies.push(
@@ -235,7 +232,7 @@ export class ProjectService {
         where: {
           employee,
         },
-        relations: ['technologies', 'employee']
+        relations: ['technologies', 'employee'],
       });
 
       return projects;
