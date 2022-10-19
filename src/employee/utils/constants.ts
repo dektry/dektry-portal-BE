@@ -75,6 +75,9 @@ export interface ITechnology {
   name: string;
 }
 
+export const techAssessmentCantBeSaved =
+  'Technical assessment can not be saved';
+export const techAssessmentIsNotFound = 'Technical assessment is not found';
 export const softSkillAssessmentNotFound = 'Soft skill assessment not found!';
 export const softSkillAssessmentsNotFound = 'Soft skill assessments not found!';
 export const softSkillAssessmentCantComplete =

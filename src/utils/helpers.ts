@@ -35,7 +35,7 @@ export class Helper {
         skill: skill.skill_id.value,
         actual: skill.value,
         desired: desiredSkill.value,
-        id: skill.id,
+        id: skill.skill_id.id,
       };
     });
 
