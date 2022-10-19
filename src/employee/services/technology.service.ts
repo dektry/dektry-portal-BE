@@ -38,14 +38,13 @@ export class TechnologyService {
         )
         .getManyAndCount();
     } catch (err) {
-      console.error('[GET_TECHNOLOGIES_LIST_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
-
       throw new HttpException(
-        technologyNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : technologyNotFound,
+        err?.status,
       );
     }
   }
@@ -54,14 +53,13 @@ export class TechnologyService {
     try {
       return await this.technologyRepository.delete(id);
     } catch (err) {
-      console.error('[DELETE_TECHNOLOGY_ERROR]', err);
       Logger.error(err);
 
-      if (err?.response) return err?.response;
-
       throw new HttpException(
-        technologyNotFound,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : technologyNotFound,
+        err?.status,
       );
     }
   }

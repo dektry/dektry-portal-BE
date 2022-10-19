@@ -94,3 +94,6 @@ export const projectsNotFound = 'Projects are not found!';
 export const cantDeleteProject = 'Can not delete project!';
 
 export const technologyNotFound = 'Technology is not found!';
+
+export const softSkillToCvNotFound = 'Soft skill not found!';
+export const softSkillsToCvCantBeCreated = 'Soft skills can not be created';

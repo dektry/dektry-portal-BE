@@ -4,11 +4,14 @@ import {
   Column,
   BaseEntity,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { InterviewEntity } from './interview.entity';
 import { ProjectEntity } from './project.entity';
 import { SoftAssessmentEntity } from './softAssessment.entity';
+import { SoftSkillToCvEntity } from './softSkillToCV.entity';
 
 @Entity({ name: 'employee' })
 export class EmployeeEntity extends BaseEntity {
@@ -102,4 +105,11 @@ export class EmployeeEntity extends BaseEntity {
     (softAssessment) => softAssessment.employee,
   )
   softAssessment: SoftAssessmentEntity;
+
+  @ManyToMany(() => SoftSkillToCvEntity, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinTable()
+  softSkillsToCv: SoftSkillToCvEntity[];
 }
