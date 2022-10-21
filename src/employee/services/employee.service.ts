@@ -94,6 +94,25 @@ export class EmployeeService {
 
       const updateResult = await this.employeeRepository.update(id, updateInfo);
 
+      const softSkillsToCvOfCurrentEmployee =
+        await this.softSkillToCvRepository.find({
+          where: {
+            name: In(updatedEmployee.softSkillsToCv),
+          },
+        });
+
+      const actualRelationships = await getRepository(EmployeeEntity)
+        .createQueryBuilder()
+        .relation(EmployeeEntity, 'softSkillsToCv')
+        .of(employee)
+        .loadMany();
+
+      await getRepository(EmployeeEntity)
+        .createQueryBuilder()
+        .relation(EmployeeEntity, 'softSkillsToCv')
+        .of(employee)
+        .addAndRemove(softSkillsToCvOfCurrentEmployee, actualRelationships);
+
       if (!updateResult.affected) return updateResult;
 
       const resultEmployee = await this.employeeRepository.findOne(id);
