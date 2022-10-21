@@ -1,41 +1,59 @@
-import { IsOptional, MaxLength } from 'class-validator';
+import { IsOptional, MaxLength, IsNotEmpty, IsArray } from 'class-validator';
+import {
+  descriptionMaxLength,
+  employeeTextFieldDefaultMaxLength,
+  levelMaxLength,
+} from 'employee/utils/constants';
 
 export class UpdateEmployeeDto {
   @IsOptional()
-  @MaxLength(255, { message: 'Name is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, { message: 'Name is too long' })
   fullName: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Position is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Position is too long',
+  })
   position: string;
 
   @IsOptional()
-  @MaxLength(40, { message: 'Level is too long' })
+  @MaxLength(levelMaxLength, { message: 'Level is too long' })
   level: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Location is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Location is too long',
+  })
   location: string;
 
-  // not presented in db yet, but is in UI
   @IsOptional()
-  @MaxLength(255, { message: 'Email is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Email is too long',
+  })
   email: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Personal email is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Personal email is too long',
+  })
   presonalEmail?: null | string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Mobile number is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Mobile number is too long',
+  })
   mobileNumber: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Date of birth is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Date of birth is too long',
+  })
   dateOfBirth: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Gender is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Gender is too long',
+  })
   gender: string;
 
   @IsOptional()
@@ -43,27 +61,39 @@ export class UpdateEmployeeDto {
   avatarUrl: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Hired on is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Hired on is too long',
+  })
   hiredOn: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Skype username is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Skype username is too long',
+  })
   skypeUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Slack username is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Slack username is too long',
+  })
   slackUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Twitter username is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Twitter username is too long',
+  })
   twitterUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Facebook URL is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Facebook URL is too long',
+  })
   facebookUrl: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Linkedin URL is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Linkedin URL is too long',
+  })
   linkedinUrl: string;
 
   @IsOptional()
@@ -71,44 +101,74 @@ export class UpdateEmployeeDto {
   timezone: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Languages is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Languages is too long',
+  })
   languages: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Formal education is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Formal education is too long',
+  })
   formalEducation: string;
+
+  @IsOptional()
+  @MaxLength(descriptionMaxLength, { message: 'Description is too long' })
+  description: string;
+
+  @IsNotEmpty({
+    message: 'Soft skills to CV must not be empty',
+  })
+  @IsArray()
+  softSkillsToCv: string[];
 }
 
 export class UpdateEmployeeDtoPF {
   @IsOptional()
-  @MaxLength(255, { message: 'First name is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'First name is too long',
+  })
   first_name: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Last name is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Last name is too long',
+  })
   last_name: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Email is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Email is too long',
+  })
   email: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Date of birth is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Date of birth is too long',
+  })
   dateOfBirth: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Hired on is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Hired on is too long',
+  })
   hiredOn: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Gender is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Gender is too long',
+  })
   gender: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Personal email is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Personal email is too long',
+  })
   presonalEmail?: null | string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Mobile number is too long' })
+  @MaxLength(employeeTextFieldDefaultMaxLength, {
+    message: 'Mobile number is too long',
+  })
   mobileNumber: string;
 }

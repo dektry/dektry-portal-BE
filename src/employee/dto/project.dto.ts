@@ -43,7 +43,7 @@ export class ProjectDto {
   responsibilities: string[];
 
   @IsNotEmpty({
-    message: 'Responsibilities must not be empty',
+    message: 'Technologies must not be empty',
   })
   @IsArray()
   @ArrayMaxSize(15, { message: 'Technologies array max length exceeded' })
