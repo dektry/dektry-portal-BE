@@ -97,3 +97,7 @@ export const technologyNotFound = 'Technology is not found!';
 
 export const softSkillToCvNotFound = 'Soft skill not found!';
 export const softSkillsToCvCantBeCreated = 'Soft skills can not be created';
+
+export const descriptionMaxLength = 1024;
+export const employeeTextFieldDefaultMaxLength = 255;
+export const levelMaxLength = 40;
