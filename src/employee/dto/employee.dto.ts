@@ -1,4 +1,4 @@
-import { IsOptional, MaxLength } from 'class-validator';
+import { IsOptional, MaxLength, IsNotEmpty, IsArray } from 'class-validator';
 
 export class UpdateEmployeeDto {
   @IsOptional()
@@ -17,7 +17,6 @@ export class UpdateEmployeeDto {
   @MaxLength(255, { message: 'Location is too long' })
   location: string;
 
-  // not presented in db yet, but is in UI
   @IsOptional()
   @MaxLength(255, { message: 'Email is too long' })
   email: string;
@@ -81,6 +80,12 @@ export class UpdateEmployeeDto {
   @IsOptional()
   @MaxLength(1024, { message: 'Description is too long' })
   description: string;
+
+  @IsNotEmpty({
+    message: 'Soft skills to CV must not be empty',
+  })
+  @IsArray()
+  softSkillsToCv: string[];
 }
 
 export class UpdateEmployeeDtoPF {

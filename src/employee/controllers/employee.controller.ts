@@ -14,6 +14,7 @@ import { UpdateResult } from 'typeorm';
 import { EmployeeService } from '../services/employee.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UpdateEmployeeDto } from '../dto/employee.dto';
+import { EmployeeEntity } from '../entity/employee.entity';
 
 @Controller('employee')
 export class EmployeeController {
@@ -48,7 +49,7 @@ export class EmployeeController {
   updateEmployee(
     @Param('id') id: string,
     @Body() updatedEmployee: UpdateEmployeeDto,
-  ): Promise<UpdateEmployeeDto | UpdateResult> {
+  ): Promise<EmployeeEntity | UpdateResult> {
     return this.EmployeeService.updateEmployee(id, updatedEmployee);
   }
 }
