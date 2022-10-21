@@ -1,13 +1,12 @@
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateResult, getRepository, In } from 'typeorm';
+import { UpdateResult } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { softSkillToCvRepository } from '../repositories/softSkillToCv.repository';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { UpdateEmployeeDto } from '../dto/employee.dto';
-import { employeeNotFound } from '../utils/constants';
-import { updateEmployeePF } from './employee';
+import { employeeNotFound, employeeCantBeSaved } from '../utils/constants';
 import { formatUpdatedEmployee } from '../utils/formatUpdatedEmployee';
 
 type getEmployeesListParams = {
@@ -110,6 +109,36 @@ export class EmployeeService {
       throw new HttpException(
         employeeNotFound,
         HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async deleteEmployee(id: string) {
+    try {
+      await this.employeeRepository.delete(id);
+    } catch (err) {
+      Logger.error(err);
+
+      throw new HttpException(
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : employeeNotFound,
+        err?.status,
+      );
+    }
+  }
+
+  async createEmployee(employee: UpdateEmployeeDto) {
+    try {
+
+    } catch (err) {
+      Logger.error(err);
+
+      throw new HttpException(
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : employeeCantBeSaved,
+        err?.status,
       );
     }
   }

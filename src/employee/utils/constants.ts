@@ -22,8 +22,6 @@ export interface IEditInterviewBody extends ICompleteInterview {
   isApproved: boolean;
 }
 
-export const employeeNotFound = 'Employee not found!';
-
 export interface ISoftSkillQuestion {
   id: string;
   value: string;
@@ -74,6 +72,9 @@ export interface ITechnology {
   id?: string;
   name: string;
 }
+
+export const employeeNotFound = 'Employee not found!';
+export const employeeCantBeSaved = 'Employee can not be saved!';
 
 export const techAssessmentCantBeSaved =
   'Technical assessment can not be saved';
