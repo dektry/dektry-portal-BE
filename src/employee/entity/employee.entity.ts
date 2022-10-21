@@ -84,6 +84,9 @@ export class EmployeeEntity extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   formalEducation: string;
 
+  @Column({ length: 1024, nullable: true })
+  description: string;
+
   // The date from which the employee's work experience is calculated
   @Column({ type: 'timestamp', nullable: true })
   startingPoint: string;

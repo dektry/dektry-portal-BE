@@ -87,7 +87,11 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.name === CustomFieldNames.interests,
     )?.value,
   });
-  if (employeeId) newEmployee.id = employeeId.id;
+  if (employeeId) {
+    newEmployee.id = employeeId.id;
+    newEmployee.description = employeeId.description;
+    newEmployee.softSkillsToCv = employeeId.softSkillsToCv;
+  }
   return newEmployee;
 };
 

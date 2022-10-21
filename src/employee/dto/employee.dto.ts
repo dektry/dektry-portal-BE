@@ -77,6 +77,10 @@ export class UpdateEmployeeDto {
   @IsOptional()
   @MaxLength(255, { message: 'Formal education is too long' })
   formalEducation: string;
+
+  @IsOptional()
+  @MaxLength(1024, { message: 'Description is too long' })
+  description: string;
 }
 
 export class UpdateEmployeeDtoPF {
