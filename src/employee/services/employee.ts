@@ -73,13 +73,6 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.group === CustomFieldGroupNames.additionalInformation &&
         el.name === CustomFieldNames.languages,
     )?.value,
-    formalEducation: parseStr(
-      employee.custom_fields.find(
-        (el) =>
-          el.group === CustomFieldGroupNames.additionalInformation &&
-          el.name === CustomFieldNames.education,
-      )?.value,
-    ),
     startingPoint: startingPointStr ? startingPointStr + ' 00:00:00' : null,
     interests: employee.custom_fields.find(
       (el) =>

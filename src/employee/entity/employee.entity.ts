@@ -12,6 +12,7 @@ import { InterviewEntity } from './interview.entity';
 import { ProjectEntity } from './project.entity';
 import { SoftAssessmentEntity } from './softAssessment.entity';
 import { SoftSkillToCvEntity } from './softSkillToCV.entity';
+import { EducationEntity } from './education.entity';
 
 @Entity({ name: 'employee' })
 export class EmployeeEntity extends BaseEntity {
@@ -81,9 +82,6 @@ export class EmployeeEntity extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   languages: string;
 
-  @Column({ type: 'json', nullable: true })
-  formalEducation: string;
-
   @Column({ length: 1024, nullable: true })
   description: string;
 
@@ -115,4 +113,7 @@ export class EmployeeEntity extends BaseEntity {
   })
   @JoinTable()
   softSkillsToCv: SoftSkillToCvEntity[];
+
+  @OneToMany(() => EducationEntity, (education) => education.employee)
+  education: EducationEntity;
 }
