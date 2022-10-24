@@ -11,6 +11,7 @@ import {
   educationCantBeSaved,
   employeeNotFound,
 } from '../utils/constants';
+import { formatEducation } from 'employee/utils/formatEducation';
 
 @Injectable()
 export class EducationService {
@@ -63,8 +64,14 @@ export class EducationService {
 
   async editEducation(education: EducationDto) {
     try {
-      //TODO: write formatter to get rid of employeeId field
-      await this.educationRepository.update(education.id, education);
+      const employee = await this.employeeRepository.findOne(
+        education.employeeId,
+      );
+      if (!employee)
+        throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
+
+      const formattedEducation = formatEducation(education, employee);
+      await this.educationRepository.update(education.id, formattedEducation);
     } catch (err) {
       Logger.error(err);
 
@@ -79,11 +86,18 @@ export class EducationService {
 
   async createEducation(education: EducationDto) {
     try {
-      const employee = this.employeeRepository.findOne(education.employeeId);
+      const employee = await this.employeeRepository.findOne(
+        education.employeeId,
+      );
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
-      //TODO: write formatter to process data before create
-      // await this.educationRepository.create();
+
+      const formattedEducation = formatEducation(education, employee);
+
+      const created = await this.educationRepository
+        .create(formattedEducation)
+        .save();
+      return created;
     } catch (err) {
       Logger.error(err);
 
