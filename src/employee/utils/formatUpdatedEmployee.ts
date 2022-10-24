@@ -18,7 +18,6 @@ export function formatUpdatedEmployee(updatedEmployee: UpdateEmployeeDto) {
     linkedinUrl: updatedEmployee.linkedinUrl,
     timezone: updatedEmployee.timezone,
     languages: updatedEmployee.languages,
-    formalEducation: updatedEmployee.formalEducation,
     description: updatedEmployee.description,
   };
 }

@@ -15,7 +15,6 @@ export class educationTable1666591717939 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "name"`);
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "subject"`);
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "description"`);
-        await queryRunner.query(`ALTER TABLE "employee" DROP COLUMN "formalEducation"`);
         await queryRunner.query(`ALTER TABLE "education" ADD "university" character varying(255) NOT NULL`);
         await queryRunner.query(`ALTER TABLE "education" ADD "specialization" character varying(255) NOT NULL`);
         await queryRunner.query(`ALTER TABLE "education" ADD "startYear" integer NOT NULL`);
@@ -33,7 +32,6 @@ export class educationTable1666591717939 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "startYear"`);
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "specialization"`);
         await queryRunner.query(`ALTER TABLE "education" DROP COLUMN "university"`);
-        await queryRunner.query(`ALTER TABLE "employee" ADD "formalEducation" json`);
         await queryRunner.query(`ALTER TABLE "education" ADD "description" character varying NOT NULL DEFAULT ''`);
         await queryRunner.query(`ALTER TABLE "education" ADD "subject" character varying NOT NULL`);
         await queryRunner.query(`ALTER TABLE "education" ADD "name" character varying NOT NULL`);

@@ -107,12 +107,6 @@ export class UpdateEmployeeDto {
   languages: string;
 
   @IsOptional()
-  @MaxLength(defaultMaxLength, {
-    message: 'Formal education is too long',
-  })
-  formalEducation: string;
-
-  @IsOptional()
   @MaxLength(descriptionMaxLength, { message: 'Description is too long' })
   description: string;
 
