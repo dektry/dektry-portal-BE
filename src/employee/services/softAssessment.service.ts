@@ -7,14 +7,14 @@ import { softSkillToSoftAssessmentRepository } from '../repositories/softSkillto
 import { softAssessmentRepository } from '../repositories/softAssessment.repository';
 import { positionRepository } from 'users/repositories/position.repository';
 import { levelRepository } from 'users/repositories/level.repository';
-import { questionToSoftSkillRepository } from 'employee/repositories/questionToSkill.repository';
+import { questionToSoftSkillRepository } from '../repositories/questionToSkill.repository';
 
-import { EmployeeEntity } from 'employee/entity/employee.entity';
-import { SoftSkillToSoftAssessmentEntity } from 'employee/entity/softSkillToSoftAssessment.entity';
+import { EmployeeEntity } from '../entity/employee.entity';
+import { SoftSkillToSoftAssessmentEntity } from '../entity/softSkillToSoftAssessment.entity';
 import { PositionEntity } from 'users/entity/position.entity';
 import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
-import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
-import { QuestionToSoftSkillEntity } from 'employee/entity/questionToSoftSkill.entity';
+import { SoftAssessmentEntity } from '../entity/softAssessment.entity';
+import { QuestionToSoftSkillEntity } from '../entity/questionToSoftSkill.entity';
 
 import {
   ICompleteSoftAssessmentBody,

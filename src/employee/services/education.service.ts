@@ -11,7 +11,7 @@ import {
   educationCantBeSaved,
   employeeNotFound,
 } from '../utils/constants';
-import { formatEducation } from 'employee/utils/formatEducation';
+import { formatEducation } from '../utils/formatEducation';
 
 @Injectable()
 export class EducationService {
