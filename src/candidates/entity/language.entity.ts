@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { CandidateEntity } from './candidate.entity';
 
-@Entity({ name: 'language' })
+@Entity({ name: 'candidate_language' })
 @Unique(['level', 'code'])
 export class LanguageEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')

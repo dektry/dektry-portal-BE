@@ -4,6 +4,7 @@ import {
   defaultMaxLength,
   levelMaxLength,
 } from 'employee/utils/constants';
+import { LanguageEntity } from '../entity/language.entity';
 
 export class UpdateEmployeeDto {
   @IsOptional()
@@ -104,7 +105,7 @@ export class UpdateEmployeeDto {
   @MaxLength(defaultMaxLength, {
     message: 'Languages is too long',
   })
-  languages: string;
+  languages: LanguageEntity[];
 
   @IsOptional()
   @MaxLength(descriptionMaxLength, { message: 'Description is too long' })
