@@ -99,5 +99,8 @@ export const softSkillToCvNotFound = 'Soft skill not found!';
 export const softSkillsToCvCantBeCreated = 'Soft skills can not be created';
 
 export const descriptionMaxLength = 1024;
-export const employeeTextFieldDefaultMaxLength = 255;
+export const defaultMaxLength = 255;
 export const levelMaxLength = 40;
+
+export const educationNotFound = 'Education not found!';
+export const educationCantBeSaved = 'Education can not be saved!';
