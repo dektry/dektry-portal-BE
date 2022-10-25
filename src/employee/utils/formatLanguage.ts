@@ -6,8 +6,8 @@ export function formatLanguage(
   employee: EmployeeEntity,
 ) {
   const formattedLanguage = {
-    language: language.language,
-    languageLevel: language.languageLevel,
+    value: language.value,
+    level: language.level,
     employee,
   };
 

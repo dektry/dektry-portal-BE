@@ -69,7 +69,7 @@ export class CandidatesService {
 
   async getCandidate(id): Promise<CandidateEntity> {
     return await this.candidateRepository.findOne(id, {
-      relations: ['languages', 'education', 'experience'],
+      relations: ['education', 'experience'],
     });
   }
 

@@ -9,22 +9,18 @@ import {
 
 import { EmployeeEntity } from './employee.entity';
 
-import {
-  defaultMaxLength,
-  languageLevels,
-  languages,
-} from '../utils/constants';
+import { defaultMaxLength } from '../utils/constants';
 
 @Entity({ name: 'language' })
 export class LanguageEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  language: languages;
+  @Column({ length: defaultMaxLength })
+  value: string;
 
-  @Column()
-  languageLevel: languageLevels;
+  @Column({ length: 5 })
+  level: string;
 
   @ManyToOne(() => EmployeeEntity, (employee) => employee.languages, {
     orphanedRowAction: 'delete',

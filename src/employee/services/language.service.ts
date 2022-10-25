@@ -10,6 +10,9 @@ import {
   languageNotFound,
   languageCantBeSaved,
   employeeNotFound,
+  languages,
+  languageLevels,
+  languageOrLevelIsWrong,
 } from '../utils/constants';
 import { formatLanguage } from '../utils/formatLanguage';
 
@@ -70,6 +73,9 @@ export class LanguageService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
+      if (!languages[language.value] || !languageLevels[language.level])
+        throw new HttpException(languageOrLevelIsWrong, HttpStatus.BAD_REQUEST);
+
       const formattedLanguage = formatLanguage(language, employee);
       await this.languageRepository.update(language.id, formattedLanguage);
     } catch (err) {
@@ -91,6 +97,13 @@ export class LanguageService {
       );
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
+
+      if (
+        !languages[language.value] ||
+        (!languageLevels[language.level] &&
+          languageLevels[language.level] !== 0)
+      )
+        throw new HttpException(languageOrLevelIsWrong, HttpStatus.BAD_REQUEST);
 
       const formattedLanguage = formatLanguage(language, employee);
 

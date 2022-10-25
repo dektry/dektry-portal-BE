@@ -16,31 +16,31 @@ import { LanguageService } from '../services/language.service';
 
 @Controller('language')
 export class LanguageController {
-  constructor(private EducationService: EducationService) {}
+  constructor(private LanguageService: LanguageService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeId')
-  getEducation(
+  getLanguages(
     @Param('employeeId') employeeId: string,
-  ): Promise<EducationEntity[]> {
-    return this.EducationService.getEducation(employeeId);
+  ): Promise<LanguageEntity[]> {
+    return this.LanguageService.getLanguages(employeeId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  createEducation(@Body() createEducationBody: EducationDto) {
-    return this.EducationService.createEducation(createEducationBody);
+  createLanguage(@Body() createLanguageBody: LanguageDto) {
+    return this.LanguageService.createLanguage(createLanguageBody);
   }
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  editEducation(@Body() editEducationBody: EducationDto) {
-    return this.EducationService.editEducation(editEducationBody);
+  editLanguage(@Body() editLanguageBody: LanguageDto) {
+    return this.LanguageService.editLanguage(editLanguageBody);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':educationId')
-  deleteEducation(@Param('educationId') educationId: string) {
-    return this.EducationService.deleteEducation(educationId);
+  @Delete(':languageId')
+  deleteLanguage(@Param('languageId') languageId: string) {
+    return this.LanguageService.deleteLanguage(languageId);
   }
 }

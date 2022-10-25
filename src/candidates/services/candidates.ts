@@ -1,7 +1,6 @@
 import { EntityTarget, getRepository, In, Not } from 'typeorm';
 import { EducationEntity } from '../entity/education.entity';
 import { ExperienceEntity } from '../entity/experience.entity';
-import { LanguageEntity } from '../entity/language.entity';
 import { CandidateEntity } from '../entity/candidate.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { UpdateCandidateDto, UpdateCandidatePFdto } from '../dto/candidate.dto';
@@ -32,7 +31,6 @@ const formatCandidate = async (
     email: candidate.email,
     location: candidate.location,
     timezone: '1',
-    languages: formatFields(candidate.languages, LanguageEntity),
     education: formatFields(education, EducationEntity),
     experience: formatFields(experience, ExperienceEntity),
   });
@@ -52,9 +50,6 @@ export const getCandidates = async () => {
     });
     await getRepository(ExperienceEntity).clear();
     await getRepository(EducationEntity).clear();
-    await getRepository(LanguageEntity).query(
-      `TRUNCATE TABLE "language" CASCADE`,
-    );
 
     if (candidates.length)
       for (const candidate of candidates) {
@@ -74,20 +69,12 @@ export const getCandidates = async () => {
           experience,
         );
 
-        const {
-          experience: formattedExp,
-          education: formattedEdc,
-          languages: formattedLang,
-        } = formattedCandidate;
+        const { experience: formattedExp, education: formattedEdc } =
+          formattedCandidate;
 
         await getRepository(EducationEntity).save(formattedEdc);
 
         await getRepository(ExperienceEntity).save(formattedExp);
-
-        await getRepository(LanguageEntity).upsert(formattedLang, {
-          conflictPaths: ['level', 'code'],
-          skipUpdateIfNoValuesChanged: true,
-        });
 
         await getRepository(CandidateEntity).save(formattedCandidate);
       }

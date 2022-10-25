@@ -12,7 +12,6 @@ import {
 
 import { ExperienceEntity } from './experience.entity';
 import { EducationEntity } from './education.entity';
-import { LanguageEntity } from './language.entity';
 import { InterviewEntity } from './interview.entity';
 import { SoftInterviewEntity } from './softInterview.entity';
 
@@ -56,10 +55,6 @@ export class CandidateEntity extends BaseEntity {
   })
   @JoinColumn()
   education: EducationEntity[];
-
-  @ManyToMany(() => LanguageEntity, (lang) => lang.candidates)
-  @JoinTable({ name: 'candidate_language' })
-  languages: LanguageEntity[];
 
   @OneToOne(() => InterviewEntity, (interview) => interview.candidate)
   interview: InterviewEntity;

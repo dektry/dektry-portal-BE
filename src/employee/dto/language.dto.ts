@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, MaxLength } from 'class-validator';
 
-import { languageLevels, languages } from '../utils/constants';
+import { defaultMaxLength } from '../utils/constants';
 
 export class LanguageDto {
   @IsOptional()
@@ -12,8 +12,10 @@ export class LanguageDto {
   employeeId: string;
 
   @IsNotEmpty({ message: 'Language name must not be empty' })
-  language: languages;
+  @MaxLength(defaultMaxLength, { message: 'Language name is too long' })
+  value: string;
 
   @IsNotEmpty({ message: 'Language level name must not be empty' })
-  languageLevel: languageLevels;
+  @MaxLength(5, { message: 'Language level name is too long' })
+  level: string;
 }

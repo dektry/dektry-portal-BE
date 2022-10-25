@@ -30,6 +30,9 @@ import { SoftSkillToCvService } from './services/softSkillToCv.service';
 import { educationRepository } from './repositories/education.repository';
 import { EducationController } from './controllers/education.controller';
 import { EducationService } from './services/education.service';
+import { languageRepository } from './repositories/language.repository';
+import { LanguageController } from './controllers/language.controller';
+import { LanguageService } from './services/language.service';
 
 @Module({
   imports: [
@@ -47,6 +50,7 @@ import { EducationService } from './services/education.service';
       projectRepository,
       softSkillToCvRepository,
       educationRepository,
+      languageRepository,
     ]),
   ],
   controllers: [
@@ -57,6 +61,7 @@ import { EducationService } from './services/education.service';
     TechnologyController,
     SoftSkillToCvController,
     EducationController,
+    LanguageController,
   ],
   providers: [
     EmployeeService,
@@ -66,6 +71,7 @@ import { EducationService } from './services/education.service';
     TechnologyService,
     SoftSkillToCvService,
     EducationService,
+    LanguageService,
   ],
 })
 export class EmployeeModule {}

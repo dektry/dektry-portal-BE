@@ -303,3 +303,4 @@ export const educationCantBeSaved = 'Education can not be saved!';
 
 export const languageNotFound = 'Language not found!';
 export const languageCantBeSaved = 'Language can not be saved!';
+export const languageOrLevelIsWrong = 'Language or level value is incorrect';

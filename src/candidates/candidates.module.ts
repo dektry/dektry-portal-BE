@@ -7,7 +7,6 @@ import { SoftInterviewsController } from './controllers/softInterviews.controlle
 
 import { CandidatesService } from './services/candidates.service';
 import { EducationService } from './services/education.service';
-import { LanguageService } from './services/language.service';
 import { ExperienceService } from './services/experience.service';
 import { InterviewService } from './services/interview.service';
 import { SoftInterviewService } from './services/softInterview.service';
@@ -19,7 +18,6 @@ import { skillRepository } from '../users/repositories/skill.repository';
 import { candidateRepository } from './repositories/candidate.repository';
 import { educationRepository } from './repositories/education.repository';
 import { experienceRepository } from './repositories/experience.repository';
-import { languageRepository } from './repositories/language.repository';
 import { skillToInterviewRepository } from './repositories/skillToInterview.repository';
 import { interviewRepository } from './repositories/interview.repository';
 import { softInterviewRepository } from './repositories/softInerview.repository';
@@ -32,7 +30,6 @@ import { softSkillRepository } from '../users/repositories/softSkill.repository'
       candidateRepository,
       educationRepository,
       experienceRepository,
-      languageRepository,
       interviewRepository,
       skillToInterviewRepository,
       skillsToLevelsRepository,
@@ -52,7 +49,6 @@ import { softSkillRepository } from '../users/repositories/softSkill.repository'
   providers: [
     CandidatesService,
     EducationService,
-    LanguageService,
     ExperienceService,
     InterviewService,
     SoftInterviewService,
