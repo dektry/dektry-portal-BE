@@ -1,5 +1,5 @@
-import { EducationDto } from 'employee/dto/education.dto';
-import { EmployeeEntity } from 'employee/entity/employee.entity';
+import { EducationDto } from '../dto/education.dto';
+import { EmployeeEntity } from '../entity/employee.entity';
 
 export function formatEducation(
   education: EducationDto,

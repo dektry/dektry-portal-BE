@@ -300,3 +300,6 @@ export const levelMaxLength = 40;
 
 export const educationNotFound = 'Education not found!';
 export const educationCantBeSaved = 'Education can not be saved!';
+
+export const languageNotFound = 'Language not found!';
+export const languageCantBeSaved = 'Language can not be saved!';
