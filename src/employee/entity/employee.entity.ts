@@ -115,5 +115,5 @@ export class EmployeeEntity extends BaseEntity {
   softSkillsToCv: SoftSkillToCvEntity[];
 
   @OneToMany(() => EducationEntity, (education) => education.employee)
-  education: EducationEntity;
+  educations: EducationEntity[];
 }

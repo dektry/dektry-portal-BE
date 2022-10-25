@@ -27,7 +27,7 @@ export class EducationEntity extends BaseEntity {
   @Column()
   endYear: number;
 
-  @ManyToOne(() => EmployeeEntity, (employee) => employee.education, {
+  @ManyToOne(() => EmployeeEntity, (employee) => employee.educations, {
     orphanedRowAction: 'delete',
     cascade: true,
     onDelete: 'CASCADE',
