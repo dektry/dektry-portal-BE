@@ -5,6 +5,8 @@ import {
   levelMaxLength,
 } from 'employee/utils/constants';
 import { LanguageEntity } from '../entity/language.entity';
+import { ProjectEntity } from '../entity/project.entity';
+import { EducationEntity } from '../entity/education.entity';
 
 export class UpdateEmployeeDto {
   @IsOptional()
@@ -37,7 +39,7 @@ export class UpdateEmployeeDto {
   @MaxLength(defaultMaxLength, {
     message: 'Personal email is too long',
   })
-  presonalEmail?: null | string;
+  personalEmail?: null | string;
 
   @IsOptional()
   @MaxLength(defaultMaxLength, {
@@ -102,20 +104,37 @@ export class UpdateEmployeeDto {
   timezone: string;
 
   @IsOptional()
-  @MaxLength(defaultMaxLength, {
-    message: 'Languages is too long',
-  })
-  languages: LanguageEntity[];
-
-  @IsOptional()
   @MaxLength(descriptionMaxLength, { message: 'Description is too long' })
   description: string;
 
+  @IsOptional()
+  yearsOfExperience: number;
+}
+
+export class CreateEmployeeDto extends UpdateEmployeeDto {
   @IsNotEmpty({
     message: 'Soft skills to CV must not be empty',
   })
   @IsArray()
   softSkillsToCv: string[];
+
+  @IsNotEmpty({
+    message: 'Languages must not be empty',
+  })
+  @IsArray()
+  languages: LanguageEntity[];
+
+  @IsNotEmpty({
+    message: 'Projects must not be empty',
+  })
+  @IsArray()
+  projects: ProjectEntity[];
+
+  @IsNotEmpty({
+    message: 'Education must not be empty',
+  })
+  @IsArray()
+  educations: EducationEntity[];
 }
 
 export class UpdateEmployeeDtoPF {

@@ -8,12 +8,14 @@ import {
   Query,
   UseGuards,
   Body,
+  Post,
+  Delete,
 } from '@nestjs/common';
 import { UpdateResult } from 'typeorm';
 
 import { EmployeeService } from '../services/employee.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-import { UpdateEmployeeDto } from '../dto/employee.dto';
+import { CreateEmployeeDto, UpdateEmployeeDto } from '../dto/employee.dto';
 import { EmployeeEntity } from '../entity/employee.entity';
 
 @Controller('employee')
@@ -51,5 +53,17 @@ export class EmployeeController {
     @Body() updatedEmployee: UpdateEmployeeDto,
   ): Promise<EmployeeEntity | UpdateResult> {
     return this.EmployeeService.updateEmployee(id, updatedEmployee);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  createEmployee(@Body() createEmployeeDto: CreateEmployeeDto): Promise<void> {
+    return this.EmployeeService.createEmployee(createEmployeeDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':employeeId')
+  deleteEmployee(@Param('employeeId') employeeId: string) {
+    return this.EmployeeService.deleteEmployee(employeeId);
   }
 }

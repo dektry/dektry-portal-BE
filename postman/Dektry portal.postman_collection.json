@@ -2848,6 +2848,16 @@
 				{
 					"name": "Get employee list",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzZlYjJlLTY2ZjctNGU5NC1hNTY3LTBmODEwMTRjYjY5NCIsImZpcnN0TmFtZSI6IlZlcm9uaWthIiwibGFzdE5hbWUiOiJNb3NlaWNoaWsiLCJlbWFpbCI6Im1vc2Vpa3VzQGdtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiI0Y2I3ZDRkYS0zMThhLTQ1ODktOGE0NS1mMTYwMzkzNmMwMGIiLCJwZXJtaXNzaW9ucyI6W3siaWQiOiI2M2E2NTI5Ny1iZmUyLTQxZmUtOTdjMC1iYzBjMGFlNTU1NzAiLCJuYW1lIjoiREVMRVRFX1VTRVJTIn0seyJpZCI6ImRhZjc0ZGM4LTEzOWQtNDM4NS04ZWRlLTMzOGQxOWJiOWQxMCIsIm5hbWUiOiJDUkVBVEVfVVNFUiJ9LHsiaWQiOiI5NzdmNTZmYS02MzViLTQzOTctYjk0OC05YWViYmVkNTc5NmMiLCJuYW1lIjoiR0VUX1VTRVIifSx7ImlkIjoiNGNlYTYyYzMtOTliNS00NDc5LTk4YWMtNmYyYzM2NjhmYjQ3IiwibmFtZSI6IkdFVF9BTExfVVNFUlMifSx7ImlkIjoiMDIwNTUwOGEtNmUyZi00MzM0LWIxNWUtYjQzYTliYWJkNjVjIiwibmFtZSI6IkdFVF9BTExfUk9MRVMifSx7ImlkIjoiOWYwZmQzMTQtN2U4Ni00YTQyLTkxMmQtODk0OTBhYmFmNmYyIiwibmFtZSI6IkdFVF9ST0xFX0JZX05BTUUifSx7ImlkIjoiNzg5MWVkMWEtNWUwNS00YjNlLThiMjctZDY5Nzg2YmY5MWIxIiwibmFtZSI6IkNSRUFURV9ST0xFIn0seyJpZCI6ImZmNTRkNDdiLWQ5M2EtNGNmOS1hMzY4LTNlYzQwMWFiMzgzNiIsIm5hbWUiOiJVUERBVEVfUk9MRSJ9LHsiaWQiOiIwODQzNzEyMy1mMzQ2LTQwYjYtYTJiMy0wZGRjYzg5Yzk1M2UiLCJuYW1lIjoiREVMRVRFX1JPTEUifSx7ImlkIjoiOTQzOTZjNzAtOGY0Yy00ODllLWEyM2YtMmQ0YzRkMjJhZmRmIiwibmFtZSI6IkdFVF9QRVJNSVNTSU9OX0JZX05BTUUifSx7ImlkIjoiZGZjM2QxYWEtNmQwZi00ZDUxLTk0NmItOTBjZGQ5MWMwYjcyIiwibmFtZSI6IkNSRUFURV9QRVJNSVNTSU9OIn0seyJpZCI6IjY4NjYyNzI4LWQzYWEtNDY3OC1iZDhiLTE1OGY1MThhMDcwNCIsIm5hbWUiOiJDUkVBVEVfUE9TSVRJT04ifSx7ImlkIjoiOGJjZDkxZTktMWMwYS00MDFhLWI3ODktMzdjZTRkMmNhNGE0IiwibmFtZSI6IkdFVF9BTExfUE9TSVRJT05TIn0seyJpZCI6ImIyYTA5OGE5LTBlYTYtNGEwNS05ZDQ1LTEzMjJjZWRlMTczNyIsIm5hbWUiOiJVUERBVEVfUE9TSVRJT04ifSx7ImlkIjoiNDExYWI3MDgtYmRjYy00M2UwLTkxMjctOTM2YjYyMTM0ZWQxIiwibmFtZSI6IkRFTEVURV9QT1NJVElPTiJ9LHsiaWQiOiI5OTM1MjY1NC03Yjg0LTQyMmItODI0Yy1jZmRlNTdkZWNhZDQiLCJuYW1lIjoiR0VUX0FMTF9BUlRJQ0xFUyJ9LHsiaWQiOiJmNWQ1YjY1MC1iYzg3LTQ2MjQtYWJiNS02NGMxNjhiNDg2YmIiLCJuYW1lIjoiR0VUX0FSVElDTEUifSx7ImlkIjoiZmEyMjkwMzItYjc5YS00MTQxLThmNjAtZjE0ZTdmOWJkM2Y3IiwibmFtZSI6IlVQREFURV9BUlRJQ0xFIn0seyJpZCI6IjgxY2ZmYmFhLTdmOTktNGM2NS1hZTQ4LTRlOWNjNzQ4OGM5OCIsIm5hbWUiOiJSRUFEX0FSVElDTEUifSx7ImlkIjoiNmZhODUwY2UtNjYzMS00MjJhLWIyMWItYzZmMWQzYzY1MGE2IiwibmFtZSI6IkNSRUFURV9BUlRJQ0xFIn0seyJpZCI6Ijk0ZGQ2NDFiLWNkYTctNDJiOS1iZGE5LWJmMzAyMTg1Y2VhMSIsIm5hbWUiOiJERUxFVEVfQVJUSUNMRSJ9LHsiaWQiOiIxOWIyMjA0MC1kMWNkLTRiNDAtOTE1Mi1mZWI4YjE2MTgxYWYiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfQVJUSUNMRSJ9LHsiaWQiOiI1MGQ2MGFiOS0xYWUzLTQ4YmQtOWIzNy02OGY0N2ZlYTUzYjgiLCJuYW1lIjoiQ1JFQVRFX1BST0pFQ1QifSx7ImlkIjoiMDIyMTM5OGMtZGUzNi00ZTcwLTg4OGItZTgzMmYwYjIxMWNlIiwibmFtZSI6IkdFVF9BTExfUFJPSkVDVFMifSx7ImlkIjoiMGEwN2JlZWYtODNhOS00MTBmLTk1MTYtMWE2OTkwMmFkYzhmIiwibmFtZSI6IkRFTEVURV9QUk9KRUNUIn0seyJpZCI6ImRkNmRhMWY1LThjZjItNDVjZS1hYmRhLTdjMzk1MTQwMDZlZSIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiM2NlNDhlOGYtYTM0YS00ZTc4LTk1ZGItYzM2Y2FhOGI0MzY3IiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiNDczOTcwMTUtNzdkNC00ODU5LTg5NjItYWVkZDUwMDk3OTAyIiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiZDljMGIyZWMtNzZlNS00NWMyLTg1OWYtMmQ1ZjBlOTE5ZjNmIiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn0seyJpZCI6IjNmNDlkMmMxLTcxZjMtNDY0ZC04N2M0LWQ5MTYwZGQzODM5NyIsIm5hbWUiOiJHRVRfQUxMX1ZBQ0FUSU9OUyJ9LHsiaWQiOiIwMzk2MGRiNi1jNzkxLTRhYjQtYmZhMC0zYThjMWUwMTg2OGMiLCJuYW1lIjoiVVBEQVRFX1ZBQ0FUSU9OIn0seyJpZCI6ImI4NzAyYjVmLTcyMjMtNGE2YS1iZjc0LTlkZjZiY2UzM2ExNSIsIm5hbWUiOiJDUkVBVEVfVkFDQVRJT04ifSx7ImlkIjoiZmM4NjdmNGItZTA1NS00YmVkLTgyZDAtODAwYzllNDY4MTY1IiwibmFtZSI6IkRFTEVURV9WQUNBVElPTiJ9LHsiaWQiOiJkZDEyNzVlNS0yMDRjLTQyYjEtOGUyZi05YzQ0ZDc3ODZhYzIiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfVkFDQVRJT05TIn1dLCJuYW1lIjoiYWRtaW4ifSwiY2FyZWVyIjpbXSwiaWF0IjoxNjY1Mzk1ODEzLCJleHAiOjE2Njc5ODc4MTN9.mLabNVPMEFryP99zpTlkxaRBe9dhj_2X055LJLb8qxE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2940,6 +2950,74 @@
 							"path": [
 								"employee",
 								"fa7cf95a-13df-4005-8c57-088f3ae1b2c3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzZlYjJlLTY2ZjctNGU5NC1hNTY3LTBmODEwMTRjYjY5NCIsImZpcnN0TmFtZSI6IlZlcm9uaWthIiwibGFzdE5hbWUiOiJNb3NlaWNoaWsiLCJlbWFpbCI6Im1vc2Vpa3VzQGdtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiI0Y2I3ZDRkYS0zMThhLTQ1ODktOGE0NS1mMTYwMzkzNmMwMGIiLCJwZXJtaXNzaW9ucyI6W3siaWQiOiI2M2E2NTI5Ny1iZmUyLTQxZmUtOTdjMC1iYzBjMGFlNTU1NzAiLCJuYW1lIjoiREVMRVRFX1VTRVJTIn0seyJpZCI6ImRhZjc0ZGM4LTEzOWQtNDM4NS04ZWRlLTMzOGQxOWJiOWQxMCIsIm5hbWUiOiJDUkVBVEVfVVNFUiJ9LHsiaWQiOiI5NzdmNTZmYS02MzViLTQzOTctYjk0OC05YWViYmVkNTc5NmMiLCJuYW1lIjoiR0VUX1VTRVIifSx7ImlkIjoiNGNlYTYyYzMtOTliNS00NDc5LTk4YWMtNmYyYzM2NjhmYjQ3IiwibmFtZSI6IkdFVF9BTExfVVNFUlMifSx7ImlkIjoiMDIwNTUwOGEtNmUyZi00MzM0LWIxNWUtYjQzYTliYWJkNjVjIiwibmFtZSI6IkdFVF9BTExfUk9MRVMifSx7ImlkIjoiOWYwZmQzMTQtN2U4Ni00YTQyLTkxMmQtODk0OTBhYmFmNmYyIiwibmFtZSI6IkdFVF9ST0xFX0JZX05BTUUifSx7ImlkIjoiNzg5MWVkMWEtNWUwNS00YjNlLThiMjctZDY5Nzg2YmY5MWIxIiwibmFtZSI6IkNSRUFURV9ST0xFIn0seyJpZCI6ImZmNTRkNDdiLWQ5M2EtNGNmOS1hMzY4LTNlYzQwMWFiMzgzNiIsIm5hbWUiOiJVUERBVEVfUk9MRSJ9LHsiaWQiOiIwODQzNzEyMy1mMzQ2LTQwYjYtYTJiMy0wZGRjYzg5Yzk1M2UiLCJuYW1lIjoiREVMRVRFX1JPTEUifSx7ImlkIjoiOTQzOTZjNzAtOGY0Yy00ODllLWEyM2YtMmQ0YzRkMjJhZmRmIiwibmFtZSI6IkdFVF9QRVJNSVNTSU9OX0JZX05BTUUifSx7ImlkIjoiZGZjM2QxYWEtNmQwZi00ZDUxLTk0NmItOTBjZGQ5MWMwYjcyIiwibmFtZSI6IkNSRUFURV9QRVJNSVNTSU9OIn0seyJpZCI6IjY4NjYyNzI4LWQzYWEtNDY3OC1iZDhiLTE1OGY1MThhMDcwNCIsIm5hbWUiOiJDUkVBVEVfUE9TSVRJT04ifSx7ImlkIjoiOGJjZDkxZTktMWMwYS00MDFhLWI3ODktMzdjZTRkMmNhNGE0IiwibmFtZSI6IkdFVF9BTExfUE9TSVRJT05TIn0seyJpZCI6ImIyYTA5OGE5LTBlYTYtNGEwNS05ZDQ1LTEzMjJjZWRlMTczNyIsIm5hbWUiOiJVUERBVEVfUE9TSVRJT04ifSx7ImlkIjoiNDExYWI3MDgtYmRjYy00M2UwLTkxMjctOTM2YjYyMTM0ZWQxIiwibmFtZSI6IkRFTEVURV9QT1NJVElPTiJ9LHsiaWQiOiI5OTM1MjY1NC03Yjg0LTQyMmItODI0Yy1jZmRlNTdkZWNhZDQiLCJuYW1lIjoiR0VUX0FMTF9BUlRJQ0xFUyJ9LHsiaWQiOiJmNWQ1YjY1MC1iYzg3LTQ2MjQtYWJiNS02NGMxNjhiNDg2YmIiLCJuYW1lIjoiR0VUX0FSVElDTEUifSx7ImlkIjoiZmEyMjkwMzItYjc5YS00MTQxLThmNjAtZjE0ZTdmOWJkM2Y3IiwibmFtZSI6IlVQREFURV9BUlRJQ0xFIn0seyJpZCI6IjgxY2ZmYmFhLTdmOTktNGM2NS1hZTQ4LTRlOWNjNzQ4OGM5OCIsIm5hbWUiOiJSRUFEX0FSVElDTEUifSx7ImlkIjoiNmZhODUwY2UtNjYzMS00MjJhLWIyMWItYzZmMWQzYzY1MGE2IiwibmFtZSI6IkNSRUFURV9BUlRJQ0xFIn0seyJpZCI6Ijk0ZGQ2NDFiLWNkYTctNDJiOS1iZGE5LWJmMzAyMTg1Y2VhMSIsIm5hbWUiOiJERUxFVEVfQVJUSUNMRSJ9LHsiaWQiOiIxOWIyMjA0MC1kMWNkLTRiNDAtOTE1Mi1mZWI4YjE2MTgxYWYiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfQVJUSUNMRSJ9LHsiaWQiOiI1MGQ2MGFiOS0xYWUzLTQ4YmQtOWIzNy02OGY0N2ZlYTUzYjgiLCJuYW1lIjoiQ1JFQVRFX1BST0pFQ1QifSx7ImlkIjoiMDIyMTM5OGMtZGUzNi00ZTcwLTg4OGItZTgzMmYwYjIxMWNlIiwibmFtZSI6IkdFVF9BTExfUFJPSkVDVFMifSx7ImlkIjoiMGEwN2JlZWYtODNhOS00MTBmLTk1MTYtMWE2OTkwMmFkYzhmIiwibmFtZSI6IkRFTEVURV9QUk9KRUNUIn0seyJpZCI6ImRkNmRhMWY1LThjZjItNDVjZS1hYmRhLTdjMzk1MTQwMDZlZSIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiM2NlNDhlOGYtYTM0YS00ZTc4LTk1ZGItYzM2Y2FhOGI0MzY3IiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiNDczOTcwMTUtNzdkNC00ODU5LTg5NjItYWVkZDUwMDk3OTAyIiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiZDljMGIyZWMtNzZlNS00NWMyLTg1OWYtMmQ1ZjBlOTE5ZjNmIiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn0seyJpZCI6IjNmNDlkMmMxLTcxZjMtNDY0ZC04N2M0LWQ5MTYwZGQzODM5NyIsIm5hbWUiOiJHRVRfQUxMX1ZBQ0FUSU9OUyJ9LHsiaWQiOiIwMzk2MGRiNi1jNzkxLTRhYjQtYmZhMC0zYThjMWUwMTg2OGMiLCJuYW1lIjoiVVBEQVRFX1ZBQ0FUSU9OIn0seyJpZCI6ImI4NzAyYjVmLTcyMjMtNGE2YS1iZjc0LTlkZjZiY2UzM2ExNSIsIm5hbWUiOiJDUkVBVEVfVkFDQVRJT04ifSx7ImlkIjoiZmM4NjdmNGItZTA1NS00YmVkLTgyZDAtODAwYzllNDY4MTY1IiwibmFtZSI6IkRFTEVURV9WQUNBVElPTiJ9LHsiaWQiOiJkZDEyNzVlNS0yMDRjLTQyYjEtOGUyZi05YzQ0ZDc3ODZhYzIiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfVkFDQVRJT05TIn1dLCJuYW1lIjoiYWRtaW4ifSwiY2FyZWVyIjpbXSwiaWF0IjoxNjY1Mzk1ODEzLCJleHAiOjE2Njc5ODc4MTN9.mLabNVPMEFryP99zpTlkxaRBe9dhj_2X055LJLb8qxE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"Jhon Dow\",\n    \"position\": \"Full-stack developer (JS) –– Full-stack developer (JS)\",\n    \"level\": \"Middle\",\n    \"location\": \"USA / New York\",\n    \"email\": \"jhondow2022@gmail.com\",\n    \"personalEmail\": \"jhondow2022@gmail.com\",\n    \"mobileNumber\": \"+123456789\",\n    \"dateOfBirth\": \"13.03.1992\",\n    \"yearsOfExperience\": 22,\n    \"gender\": \"male\",\n    \"avatarUrl\": \"https://dektry.peopleforce.io/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNFZKRmc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--b9d021702f1aadf1d3f9cd4758fea7025a5c6c45/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDVG9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2QzNKbGMybDZaVWtpRFRJd01IZ3lNREJlQmpzR1ZEb01aM0poZG1sMGVVa2lDMk5sYm5SbGNnWTdCbFE2Q1dOeWIzQkpJaEF5TURCNE1qQXdLekFyTUFZN0JsUT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--0156be931876844adeadf5050213f02655b502c2/Screenshot%20at%20Apr%2015%2018-15-54.png\",\n    \"hiredOn\": \"26.10.2022\",\n    \"skypeUsername\": \"@jhondow1992\",\n    \"slackUsername\": \"@jhondow1992\",\n    \"facebookUrl\": \"@jhondow1992\",\n    \"linkedinUrl\": \"@jhondow1992\",\n    \"twitterUsername\": \"@jhondow1992\",\n    \"timezone\": \"GMT +5\",\n    \"description\": \"Lorem ipsum\",\n    \"softSkillsToCv\": [\n        \"intellect\",\n        \"empathy\",\n        \"bgfdbfgbfgb\"\n    ],\n    \"projects\": [\n        {\n            \"name\": \"Project new\",\n            \"duration\": \"1 year\",\n            \"role\": \"Middle backend developer\",\n            \"team_size\": \"5 members\",\n            \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras malesuada scelerisque urna, vitae convallis ipsum ornare vitae. Sed maximus odio ut lacinia feugiat. Proin lacinia lacus risus. Aliquam viverra eleifend ornare. Sed vel iaculis lorem, vel tempor odio. Phasellus mi orci, scelerisque nec cursus suscipit, fringilla in lorem. Donec at dolor et dolor semper congue elementum eleifend arcu. Nulla facilisi. Nam blandit fermentum laoreet. Sed venenatis enim in turpis tristique auctor. Quisque luctus commodo sodales. Curabitur tristique accumsan varius. Suspendisse rhoncus tincidunt magna, id venenatis orci luctus a. Sed blandit ipsum neque, ac elementum tellus pellentesque sodales. Phasellus rutrum odio.\",\n            \"responsibilities\": [\n                \"Create DB scheme\",\n                \"Update DB scheme\",\n                \"Build new tables\"\n            ],\n            \"technologies\": [\n                {\n                    \"name\": \"Heroku\"\n                },\n                {\n                    \"name\": \"Docker\"\n                },\n                {\n                    \"name\": \"SQL\"\n                },\n                {\n                    \"name\": \"Reddis\"\n                },\n                {\n                    \"name\": \"RabbitMQ\"\n                }\n            ]\n        }\n    ],\n    \"languages\": [\n        {\n            \"value\": \"Hindi\",\n            \"level\": \"A1\"\n        },\n        {\n            \"value\": \"English\",\n            \"level\": \"B1+\"\n        }\n    ],\n    \"educations\": [\n        {\n            \"university\": \"MSU\",\n            \"specialization\": \"Geography\",\n            \"startYear\": 2008,\n            \"endYear\": 2017\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE employee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxYzZlYjJlLTY2ZjctNGU5NC1hNTY3LTBmODEwMTRjYjY5NCIsImZpcnN0TmFtZSI6IlZlcm9uaWthIiwibGFzdE5hbWUiOiJNb3NlaWNoaWsiLCJlbWFpbCI6Im1vc2Vpa3VzQGdtYWlsLmNvbSIsInJvbGUiOnsiaWQiOiI0Y2I3ZDRkYS0zMThhLTQ1ODktOGE0NS1mMTYwMzkzNmMwMGIiLCJwZXJtaXNzaW9ucyI6W3siaWQiOiI2M2E2NTI5Ny1iZmUyLTQxZmUtOTdjMC1iYzBjMGFlNTU1NzAiLCJuYW1lIjoiREVMRVRFX1VTRVJTIn0seyJpZCI6ImRhZjc0ZGM4LTEzOWQtNDM4NS04ZWRlLTMzOGQxOWJiOWQxMCIsIm5hbWUiOiJDUkVBVEVfVVNFUiJ9LHsiaWQiOiI5NzdmNTZmYS02MzViLTQzOTctYjk0OC05YWViYmVkNTc5NmMiLCJuYW1lIjoiR0VUX1VTRVIifSx7ImlkIjoiNGNlYTYyYzMtOTliNS00NDc5LTk4YWMtNmYyYzM2NjhmYjQ3IiwibmFtZSI6IkdFVF9BTExfVVNFUlMifSx7ImlkIjoiMDIwNTUwOGEtNmUyZi00MzM0LWIxNWUtYjQzYTliYWJkNjVjIiwibmFtZSI6IkdFVF9BTExfUk9MRVMifSx7ImlkIjoiOWYwZmQzMTQtN2U4Ni00YTQyLTkxMmQtODk0OTBhYmFmNmYyIiwibmFtZSI6IkdFVF9ST0xFX0JZX05BTUUifSx7ImlkIjoiNzg5MWVkMWEtNWUwNS00YjNlLThiMjctZDY5Nzg2YmY5MWIxIiwibmFtZSI6IkNSRUFURV9ST0xFIn0seyJpZCI6ImZmNTRkNDdiLWQ5M2EtNGNmOS1hMzY4LTNlYzQwMWFiMzgzNiIsIm5hbWUiOiJVUERBVEVfUk9MRSJ9LHsiaWQiOiIwODQzNzEyMy1mMzQ2LTQwYjYtYTJiMy0wZGRjYzg5Yzk1M2UiLCJuYW1lIjoiREVMRVRFX1JPTEUifSx7ImlkIjoiOTQzOTZjNzAtOGY0Yy00ODllLWEyM2YtMmQ0YzRkMjJhZmRmIiwibmFtZSI6IkdFVF9QRVJNSVNTSU9OX0JZX05BTUUifSx7ImlkIjoiZGZjM2QxYWEtNmQwZi00ZDUxLTk0NmItOTBjZGQ5MWMwYjcyIiwibmFtZSI6IkNSRUFURV9QRVJNSVNTSU9OIn0seyJpZCI6IjY4NjYyNzI4LWQzYWEtNDY3OC1iZDhiLTE1OGY1MThhMDcwNCIsIm5hbWUiOiJDUkVBVEVfUE9TSVRJT04ifSx7ImlkIjoiOGJjZDkxZTktMWMwYS00MDFhLWI3ODktMzdjZTRkMmNhNGE0IiwibmFtZSI6IkdFVF9BTExfUE9TSVRJT05TIn0seyJpZCI6ImIyYTA5OGE5LTBlYTYtNGEwNS05ZDQ1LTEzMjJjZWRlMTczNyIsIm5hbWUiOiJVUERBVEVfUE9TSVRJT04ifSx7ImlkIjoiNDExYWI3MDgtYmRjYy00M2UwLTkxMjctOTM2YjYyMTM0ZWQxIiwibmFtZSI6IkRFTEVURV9QT1NJVElPTiJ9LHsiaWQiOiI5OTM1MjY1NC03Yjg0LTQyMmItODI0Yy1jZmRlNTdkZWNhZDQiLCJuYW1lIjoiR0VUX0FMTF9BUlRJQ0xFUyJ9LHsiaWQiOiJmNWQ1YjY1MC1iYzg3LTQ2MjQtYWJiNS02NGMxNjhiNDg2YmIiLCJuYW1lIjoiR0VUX0FSVElDTEUifSx7ImlkIjoiZmEyMjkwMzItYjc5YS00MTQxLThmNjAtZjE0ZTdmOWJkM2Y3IiwibmFtZSI6IlVQREFURV9BUlRJQ0xFIn0seyJpZCI6IjgxY2ZmYmFhLTdmOTktNGM2NS1hZTQ4LTRlOWNjNzQ4OGM5OCIsIm5hbWUiOiJSRUFEX0FSVElDTEUifSx7ImlkIjoiNmZhODUwY2UtNjYzMS00MjJhLWIyMWItYzZmMWQzYzY1MGE2IiwibmFtZSI6IkNSRUFURV9BUlRJQ0xFIn0seyJpZCI6Ijk0ZGQ2NDFiLWNkYTctNDJiOS1iZGE5LWJmMzAyMTg1Y2VhMSIsIm5hbWUiOiJERUxFVEVfQVJUSUNMRSJ9LHsiaWQiOiIxOWIyMjA0MC1kMWNkLTRiNDAtOTE1Mi1mZWI4YjE2MTgxYWYiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfQVJUSUNMRSJ9LHsiaWQiOiI1MGQ2MGFiOS0xYWUzLTQ4YmQtOWIzNy02OGY0N2ZlYTUzYjgiLCJuYW1lIjoiQ1JFQVRFX1BST0pFQ1QifSx7ImlkIjoiMDIyMTM5OGMtZGUzNi00ZTcwLTg4OGItZTgzMmYwYjIxMWNlIiwibmFtZSI6IkdFVF9BTExfUFJPSkVDVFMifSx7ImlkIjoiMGEwN2JlZWYtODNhOS00MTBmLTk1MTYtMWE2OTkwMmFkYzhmIiwibmFtZSI6IkRFTEVURV9QUk9KRUNUIn0seyJpZCI6ImRkNmRhMWY1LThjZjItNDVjZS1hYmRhLTdjMzk1MTQwMDZlZSIsIm5hbWUiOiJHRVRfVVNFUl9DQVJFRVIifSx7ImlkIjoiM2NlNDhlOGYtYTM0YS00ZTc4LTk1ZGItYzM2Y2FhOGI0MzY3IiwibmFtZSI6IkNSRUFURV9DQVJFRVIifSx7ImlkIjoiNDczOTcwMTUtNzdkNC00ODU5LTg5NjItYWVkZDUwMDk3OTAyIiwibmFtZSI6IkRFTEVURV9DQVJFRVIifSx7ImlkIjoiZDljMGIyZWMtNzZlNS00NWMyLTg1OWYtMmQ1ZjBlOTE5ZjNmIiwibmFtZSI6Ik9OQk9BUkRJTkdfVEVNUExBVEVTIn0seyJpZCI6IjNmNDlkMmMxLTcxZjMtNDY0ZC04N2M0LWQ5MTYwZGQzODM5NyIsIm5hbWUiOiJHRVRfQUxMX1ZBQ0FUSU9OUyJ9LHsiaWQiOiIwMzk2MGRiNi1jNzkxLTRhYjQtYmZhMC0zYThjMWUwMTg2OGMiLCJuYW1lIjoiVVBEQVRFX1ZBQ0FUSU9OIn0seyJpZCI6ImI4NzAyYjVmLTcyMjMtNGE2YS1iZjc0LTlkZjZiY2UzM2ExNSIsIm5hbWUiOiJDUkVBVEVfVkFDQVRJT04ifSx7ImlkIjoiZmM4NjdmNGItZTA1NS00YmVkLTgyZDAtODAwYzllNDY4MTY1IiwibmFtZSI6IkRFTEVURV9WQUNBVElPTiJ9LHsiaWQiOiJkZDEyNzVlNS0yMDRjLTQyYjEtOGUyZi05YzQ0ZDc3ODZhYzIiLCJuYW1lIjoiRlVMTF9BQ0NFU1NfVkFDQVRJT05TIn1dLCJuYW1lIjoiYWRtaW4ifSwiY2FyZWVyIjpbXSwiaWF0IjoxNjY1Mzk1ODEzLCJleHAiOjE2Njc5ODc4MTN9.mLabNVPMEFryP99zpTlkxaRBe9dhj_2X055LJLb8qxE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/employee/69b1b8e5-10f7-442a-b096-56f8f61502ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee",
+								"69b1b8e5-10f7-442a-b096-56f8f61502ac"
 							]
 						}
 					},

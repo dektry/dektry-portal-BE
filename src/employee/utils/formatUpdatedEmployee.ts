@@ -7,6 +7,7 @@ export function formatUpdatedEmployee(updatedEmployee: UpdateEmployeeDto) {
     level: updatedEmployee.level,
     location: updatedEmployee.location,
     email: updatedEmployee.email,
+    personalEmail: updatedEmployee.personalEmail || null,
     mobileNumber: updatedEmployee.mobileNumber,
     dateOfBirth: updatedEmployee.dateOfBirth,
     gender: updatedEmployee.gender,
@@ -16,7 +17,9 @@ export function formatUpdatedEmployee(updatedEmployee: UpdateEmployeeDto) {
     slackUsername: updatedEmployee.slackUsername,
     facebookUrl: updatedEmployee.facebookUrl,
     linkedinUrl: updatedEmployee.linkedinUrl,
+    twitterUsername: updatedEmployee.twitterUsername,
     timezone: updatedEmployee.timezone,
     description: updatedEmployee.description,
+    yearsOfExperience: updatedEmployee.yearsOfExperience,
   };
 }
