@@ -1,13 +1,23 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateResult, getRepository, In } from 'typeorm';
+import { UpdateResult } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
-import { softSkillToCvRepository } from '../repositories/softSkillToCv.repository';
+
+import { ProjectService } from './project.service';
+import { EducationService } from './education.service';
+import { LanguageService } from './language.service';
+import { SoftSkillToCvService } from './softSkillToCv.service';
+
 import { EmployeeEntity } from '../entity/employee.entity';
-import { UpdateEmployeeDto } from '../dto/employee.dto';
-import { employeeNotFound } from '../utils/constants';
-import { updateEmployeePF } from './employee';
+import { CreateEmployeeDto, UpdateEmployeeDto } from '../dto/employee.dto';
+import { employeeNotFound, employeeCantBeSaved } from '../utils/constants';
 import { formatUpdatedEmployee } from '../utils/formatUpdatedEmployee';
 
 type getEmployeesListParams = {
@@ -23,8 +33,14 @@ export class EmployeeService {
   constructor(
     @InjectRepository(employeeRepository)
     private employeeRepository: employeeRepository,
-    @InjectRepository(softSkillToCvRepository)
-    private softSkillToCvRepository: softSkillToCvRepository,
+    @Inject(EducationService)
+    private readonly educationService: EducationService,
+    @Inject(ProjectService)
+    private readonly projectsService: ProjectService,
+    @Inject(LanguageService)
+    private readonly languageService: LanguageService,
+    @Inject(SoftSkillToCvService)
+    private readonly softSkillToCvService: SoftSkillToCvService,
   ) {}
 
   async getEmployeesList({
@@ -110,6 +126,70 @@ export class EmployeeService {
       throw new HttpException(
         employeeNotFound,
         HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async deleteEmployee(id: string) {
+    try {
+      await this.employeeRepository.delete(id);
+    } catch (err) {
+      Logger.error(err);
+
+      throw new HttpException(
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : employeeNotFound,
+        err?.status,
+      );
+    }
+  }
+
+  async createEmployee(employee: CreateEmployeeDto) {
+    try {
+      const employeeInfo = formatUpdatedEmployee(employee);
+
+      const createdEmployee = await this.employeeRepository
+        .create(employeeInfo)
+        .save();
+
+      for (const project of employee.projects) {
+        const projectToSave = {
+          ...project,
+          employeeId: createdEmployee.id,
+        };
+        await this.projectsService.createProject(projectToSave);
+      }
+
+      for (const education of employee.educations) {
+        const educationToSave = {
+          ...education,
+          employeeId: createdEmployee.id,
+        };
+        await this.educationService.createEducation(educationToSave);
+      }
+
+      for (const language of employee.languages) {
+        const languageToSave = {
+          ...language,
+          employeeId: createdEmployee.id,
+        };
+
+        await this.languageService.createLanguage(languageToSave);
+      }
+
+      await this.softSkillToCvService.createSoftSkillsToCv(
+        employee.softSkillsToCv,
+        createdEmployee.id,
+      );
+    } catch (err) {
+      Logger.error(err);
+
+      throw new HttpException(
+        err?.response
+          ? { status: err?.status, message: err?.response }
+          : employeeCantBeSaved,
+        err?.status,
       );
     }
   }

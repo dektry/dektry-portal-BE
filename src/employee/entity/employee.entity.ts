@@ -20,7 +20,7 @@ export class EmployeeEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   pfId: number;
 
   @Column({ nullable: true })
@@ -92,6 +92,9 @@ export class EmployeeEntity extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   department: string;
+
+  @Column({ nullable: true })
+  yearsOfExperience: number;
 
   @OneToMany(() => InterviewEntity, (interview) => interview.employee)
   interview: InterviewEntity;

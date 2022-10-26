@@ -22,8 +22,6 @@ export interface IEditInterviewBody extends ICompleteInterview {
   isApproved: boolean;
 }
 
-export const employeeNotFound = 'Employee not found!';
-
 export interface ISoftSkillQuestion {
   id: string;
   value: string;
@@ -270,6 +268,9 @@ export enum languages {
   'Zhuang',
   'Zulu',
 }
+
+export const employeeNotFound = 'Employee not found!';
+export const employeeCantBeSaved = 'Employee can not be saved!';
 
 export const techAssessmentCantBeSaved =
   'Technical assessment can not be saved';
