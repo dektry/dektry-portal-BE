@@ -9,7 +9,7 @@ import {
   softSkillToCvNotFound,
   employeeNotFound,
   softSkillsToCvCantBeCreated,
-} from 'employee/utils/constants';
+} from '../utils/constants';
 
 type getSoftSkillsToCvListParams = {
   limit: number;

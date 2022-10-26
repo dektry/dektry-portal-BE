@@ -17,8 +17,6 @@ export function formatUpdatedEmployee(updatedEmployee: UpdateEmployeeDto) {
     facebookUrl: updatedEmployee.facebookUrl,
     linkedinUrl: updatedEmployee.linkedinUrl,
     timezone: updatedEmployee.timezone,
-    languages: updatedEmployee.languages,
-    formalEducation: updatedEmployee.formalEducation,
     description: updatedEmployee.description,
   };
 }

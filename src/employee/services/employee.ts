@@ -2,10 +2,7 @@ import { getRepository, In, Not } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { CustomFieldGroupNames, CustomFieldNames } from 'enums/employee.enum';
-import {
-  UpdateEmployeeDtoPF,
-  UpdateEmployeeDto,
-} from 'employee/dto/employee.dto';
+import { UpdateEmployeeDtoPF, UpdateEmployeeDto } from '../dto/employee.dto';
 import { endpoints } from '../utils/endpoints';
 
 // Parsing an html-like string and getting text inside the tags
@@ -73,13 +70,6 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.group === CustomFieldGroupNames.additionalInformation &&
         el.name === CustomFieldNames.languages,
     )?.value,
-    formalEducation: parseStr(
-      employee.custom_fields.find(
-        (el) =>
-          el.group === CustomFieldGroupNames.additionalInformation &&
-          el.name === CustomFieldNames.education,
-      )?.value,
-    ),
     startingPoint: startingPointStr ? startingPointStr + ' 00:00:00' : null,
     interests: employee.custom_fields.find(
       (el) =>
