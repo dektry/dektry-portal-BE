@@ -16,10 +16,10 @@ export class LanguageEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: defaultMaxLength })
+  @Column({ length: defaultMaxLength, nullable: true })
   value: string;
 
-  @Column({ length: 5 })
+  @Column({ length: 5, nullable: true })
   level: string;
 
   @ManyToOne(() => EmployeeEntity, (employee) => employee.languages, {
