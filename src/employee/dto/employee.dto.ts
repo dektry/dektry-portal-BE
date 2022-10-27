@@ -112,27 +112,12 @@ export class UpdateEmployeeDto {
 }
 
 export class CreateEmployeeDto extends UpdateEmployeeDto {
-  @IsNotEmpty({
-    message: 'Soft skills to CV must not be empty',
-  })
-  @IsArray()
-  softSkillsToCv: string[];
-
-  @IsNotEmpty({
-    message: 'Languages must not be empty',
-  })
   @IsArray()
   languages: LanguageEntity[];
 
-  @IsNotEmpty({
-    message: 'Projects must not be empty',
-  })
   @IsArray()
   projects: ProjectEntity[];
 
-  @IsNotEmpty({
-    message: 'Education must not be empty',
-  })
   @IsArray()
   educations: EducationEntity[];
 }
