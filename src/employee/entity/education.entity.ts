@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { EmployeeEntity } from './employee.entity';
-import { defaultMaxLength } from 'employee/utils/constants';
+import { defaultMaxLength } from '../utils/constants';
 
 @Entity({ name: 'education' })
 export class EducationEntity extends BaseEntity {
