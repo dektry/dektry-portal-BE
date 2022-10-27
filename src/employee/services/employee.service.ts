@@ -13,7 +13,6 @@ import { employeeRepository } from '../repositories/employee.repository';
 import { ProjectService } from './project.service';
 import { EducationService } from './education.service';
 import { LanguageService } from './language.service';
-import { SoftSkillToCvService } from './softSkillToCv.service';
 
 import { EmployeeEntity } from '../entity/employee.entity';
 import { CreateEmployeeDto, UpdateEmployeeDto } from '../dto/employee.dto';
@@ -39,8 +38,6 @@ export class EmployeeService {
     private readonly projectsService: ProjectService,
     @Inject(LanguageService)
     private readonly languageService: LanguageService,
-    @Inject(SoftSkillToCvService)
-    private readonly softSkillToCvService: SoftSkillToCvService,
   ) {}
 
   async getEmployeesList({
@@ -177,11 +174,6 @@ export class EmployeeService {
 
         await this.languageService.createLanguage(languageToSave);
       }
-
-      await this.softSkillToCvService.createSoftSkillsToCv(
-        employee.softSkillsToCv,
-        createdEmployee.id,
-      );
     } catch (err) {
       Logger.error(err);
 
