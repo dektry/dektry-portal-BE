@@ -5,11 +5,11 @@ export class langFieldsNullable1666863316538 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "language" ADD "value" character varying(255)`,
+      `ALTER TABLE "language" ALTER COLUMN "value" character varying(255)`,
     );
     await queryRunner.query(`ALTER TABLE "language" ADD "employee_id" uuid`);
     await queryRunner.query(
-      `ALTER TABLE "language" ADD "level" character varying(5)`,
+      `ALTER TABLE "language" ALTER COLUMN "level" character varying(5)`,
     );
     await queryRunner.query(
       `ALTER TABLE "language" ADD CONSTRAINT "FK_86e3d2644703d9f89cc3db67aa9" FOREIGN KEY ("employee_id") REFERENCES "employee"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -20,9 +20,9 @@ export class langFieldsNullable1666863316538 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE "language" DROP COLUMN "level"`);
     await queryRunner.query(`ALTER TABLE "language" DROP COLUMN "employee_id"`);
     await queryRunner.query(`ALTER TABLE "language" DROP COLUMN "value"`);
-    await queryRunner.query(`ALTER TABLE "language" ADD "employee_id" uuid`);
+    await queryRunner.query(`ALTER TABLE "language" DROP COLUMN "employee_id"`);
     await queryRunner.query(
-      `ALTER TABLE "language" ADD CONSTRAINT "FK_86e3d2644703d9f89cc3db67aa9" FOREIGN KEY ("employee_id") REFERENCES "employee"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
+      `ALTER TABLE "language" DROP CONSTRAINT "FK_86e3d2644703d9f89cc3db67aa9"`,
     );
   }
 }
