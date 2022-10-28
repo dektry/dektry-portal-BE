@@ -10,6 +10,9 @@ export class softSkillsAssessmentCRUD1664436703538
       `ALTER TABLE "soft_interview" DROP CONSTRAINT "FK_a137161ef9bd0571eceb6c32b2c"`,
     );
     await queryRunner.query(
+      `CREATE TABLE "soft_assessment" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "comment" character varying(512), "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "employee_id" uuid, CONSTRAINT "FK_9d8b2057a6196249ceb5fe43690" FOREIGN KEY ("employee_id") REFERENCES "employee"("id") ON DELETE CASCADE ON UPDATE NO ACTION)`,
+    );
+    await queryRunner.query(
       `CREATE TABLE "soft_skill_to_assessment" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "softSkillScoreId" character varying, "comment" character varying(512), "soft_skill_id" uuid, "soft_assessment_id" uuid, CONSTRAINT "PK_d7edf5d036eab4be00e437e9a53" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
