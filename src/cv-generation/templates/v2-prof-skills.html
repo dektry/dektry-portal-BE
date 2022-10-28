@@ -39,15 +39,17 @@
   .s-page .prof-skills {
   }
   .s-page .prof-skills-list {
-    column-count: 2;
-    column-fill: auto;
-    gap: 24px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
   }
   .s-page .prof-skills-el {
     width: 260px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e5e9f2;
+  }
+  .s-page .prof-skills-el:last-child {
     margin-bottom: 12px;
   }
   .s-page .prof-skills-el p {
@@ -59,7 +61,6 @@
     max-width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
   }
   .s-page .prof-skills-el p:last-child {

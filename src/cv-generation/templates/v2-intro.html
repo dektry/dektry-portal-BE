@@ -110,9 +110,9 @@
   .i-page .prof-skills {
   }
   .i-page .prof-skills-list {
-    column-count: 2;
-    column-fill: auto;
-    gap: 24px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
     width: 395px;
   }
   .i-page .prof-skills-el {
@@ -120,6 +120,8 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e5e9f2;
+  }
+  .i-page .prof-skills-el:last-child {
     margin-bottom: 12px;
   }
   .i-page .prof-skills-el p {
@@ -131,7 +133,6 @@
     max-width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
   }
   .i-page .prof-skills-el p:last-child {
