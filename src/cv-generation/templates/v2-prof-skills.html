@@ -152,12 +152,12 @@
     <p class="sub-title">{{groupName}}</p>
     {{/if}}
     <div class="prof-skills-list">
-      {{#each skills}}
+      {{#if skills}} {{#each skills}}
       <div class="prof-skills-el">
         <p>{{name}}</p>
         <p>{{level}}</p>
       </div>
-      {{/each}}
+      {{/each}} {{else}}<div></div> {{/if}}
     </div>
     {{/each}}
   </div>
