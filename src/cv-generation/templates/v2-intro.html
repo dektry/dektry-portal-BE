@@ -450,19 +450,19 @@
       {{/if}}
       <p class="title">LANGUAGE</p>
       <div class="language-box">
-        {{#each languages}}
+        {{#if languages}} {{#each languages}}
         <p>{{ this }}</p>
-        {{/each}}
+        {{/each}}{{/if}}
       </div>
       <p class="title">EDUCATION</p>
       <div class="education-box">
-        {{#each education}}
+        {{#if education}} {{#each education}}
         <div>
           {{#each this}}
           <p>{{ this }}</p>
           {{/each}}
         </div>
-        {{/each}}
+        {{/each}} {{/if}}
       </div>
     </div>
     <div class="second-column">
@@ -479,9 +479,11 @@
         <p class="description">{{ description }}</p>
         <p class="title">Soft skills</p>
         <div class="soft-skills">
-          {{#each softSkills}}
+          {{#if softSkills}} {{#each softSkills}}
           <p class="soft-skills-list-el">{{this}}</p>
-          {{/each}}
+          {{/each}}{{else}}
+          <div></div>
+          {{/if}}
         </div>
         <p class="title">Professional skills</p>
       </div>
