@@ -67,7 +67,7 @@ export class SkillGroupService {
     positionId: string,
     levelId: string,
   ): Promise<SkillGroupEntity[]> {
-    const unsortedSkillGroups = await this.skillGroupRepository
+    const skillGroups = await this.skillGroupRepository
       .createQueryBuilder('sg')
       .where({ position_id: positionId })
       .andWhere('sl."level_id" = :id', { id: levelId })
@@ -77,7 +77,7 @@ export class SkillGroupService {
       .leftJoin('s.levels', 'sl')
       .getMany();
 
-    return sortSkillGroups(unsortedSkillGroups);
+    return sortSkillGroups(skillGroups);
   }
 
   async updateSkillGroup({
