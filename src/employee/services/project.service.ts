@@ -18,6 +18,7 @@ import {
   projectsNotFound,
 } from '../utils/constants';
 import { ProjectEntity } from '../entity/project.entity';
+import { TechnologyEntity } from 'employee/entity/technology.entity';
 
 @Injectable()
 export class ProjectService {
@@ -38,28 +39,23 @@ export class ProjectService {
       if (!employee)
         throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
 
-      const technologiesNames = project.technologies?.map((el) =>
-        el.name?.toLowerCase(),
-      );
-
-      const existingTechnologies = await this.technologyRepository.find({
-        where: {
-          name: In(technologiesNames),
-        },
-      });
-
-      const newTechnologies = [];
-      const hash = {};
-
-      for (const exists of existingTechnologies) {
-        hash[exists.name] = exists.id;
-      }
+      const existingTechnologies: TechnologyEntity[] = [];
+      const newTechnologies: TechnologyEntity[] = [];
 
       for (const technology of project.technologies) {
-        if (!hash[technology.name?.toLowerCase()]) {
+        const exists = await this.technologyRepository
+          .createQueryBuilder('technology')
+          .where('LOWER(technology.name) ILIKE :name', {
+            name: `%${technology.name.toLowerCase()}%`,
+          })
+          .getOne();
+
+        if (exists) {
+          existingTechnologies.push(exists);
+        } else {
           newTechnologies.push(
             this.technologyRepository.create({
-              name: technology.name?.toLowerCase(),
+              name: technology.name,
             }),
           );
         }
@@ -67,11 +63,17 @@ export class ProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
-      const techInCurrentProject = await this.technologyRepository.find({
-        where: {
-          name: In(technologiesNames),
-        },
-      });
+      const techInCurrentProject: TechnologyEntity[] = [];
+      for (const technology of project.technologies) {
+        const exists = await this.technologyRepository
+          .createQueryBuilder('technology')
+          .where('LOWER(technology.name) ILIKE :name', {
+            name: `%${technology.name.toLowerCase()}%`,
+          })
+          .getOne();
+
+        techInCurrentProject.push(exists);
+      }
 
       const projectToSave = {
         name: project.name,
@@ -109,28 +111,23 @@ export class ProjectService {
       if (!existingProject)
         throw new HttpException(projectNotFound, HttpStatus.BAD_REQUEST);
 
-      const technologiesNames = project.technologies.map((el) =>
-        el.name?.toLowerCase(),
-      );
-
-      const existingTechnologies = await this.technologyRepository.find({
-        where: {
-          name: In(technologiesNames),
-        },
-      });
-
-      const newTechnologies = [];
-      const hash = {};
-
-      for (const exists of existingTechnologies) {
-        hash[exists.name] = exists.id;
-      }
+      const existingTechnologies: TechnologyEntity[] = [];
+      const newTechnologies: TechnologyEntity[] = [];
 
       for (const technology of project.technologies) {
-        if (!hash[technology.name?.toLowerCase()]) {
+        const exists = await this.technologyRepository
+          .createQueryBuilder('technology')
+          .where('LOWER(technology.name) ILIKE :name', {
+            name: `%${technology.name.toLowerCase()}%`,
+          })
+          .getOne();
+
+        if (exists) {
+          existingTechnologies.push(exists);
+        } else {
           newTechnologies.push(
             this.technologyRepository.create({
-              name: technology.name?.toLowerCase(),
+              name: technology.name,
             }),
           );
         }
@@ -138,11 +135,18 @@ export class ProjectService {
 
       await this.technologyRepository.save(newTechnologies);
 
-      const techInCurrentProject = await this.technologyRepository.find({
-        where: {
-          name: In(technologiesNames),
-        },
-      });
+      const techInCurrentProject: TechnologyEntity[] = [];
+
+      for (const technology of project.technologies) {
+        const exists = await this.technologyRepository
+          .createQueryBuilder('technology')
+          .where('LOWER(technology.name) ILIKE :name', {
+            name: `%${technology.name.toLowerCase()}%`,
+          })
+          .getOne();
+
+        techInCurrentProject.push(exists);
+      }
 
       const actualRelationships = await getRepository(ProjectEntity)
         .createQueryBuilder()
