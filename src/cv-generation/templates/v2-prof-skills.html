@@ -39,16 +39,15 @@
   .s-page .prof-skills {
   }
   .s-page .prof-skills-list {
-    column-count: 2;
-    column-fill: auto;
-    gap: 24px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
   }
   .s-page .prof-skills-el {
     width: 260px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e5e9f2;
-    margin-bottom: 12px;
   }
   .s-page .prof-skills-el p {
     line-height: 18px;
@@ -59,7 +58,6 @@
     max-width: 125px;
     overflow: hidden;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
   }
   .s-page .prof-skills-el p:last-child {
@@ -83,6 +81,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 12px;
+  }
+  .s-page .sub-title:first-child {
+    margin-top: 0;
   }
   .s-page .without-prof-skills {
     border: 0.1px solid rgba(0, 0, 0, 0);
@@ -151,12 +153,12 @@
     <p class="sub-title">{{groupName}}</p>
     {{/if}}
     <div class="prof-skills-list">
-      {{#each skills}}
+      {{#if skills}} {{#each skills}}
       <div class="prof-skills-el">
         <p>{{name}}</p>
         <p>{{level}}</p>
       </div>
-      {{/each}}
+      {{/each}} {{else}}<div></div> {{/if}}
     </div>
     {{/each}}
   </div>

@@ -1,338 +1,262 @@
 export const skillsSeed = [
   {
-    value: 'Core algorithms',
-    skillGroup: 'Core algorithms',
-  },
-  {
-    value: 'Data structures',
-    skillGroup: 'Data structures',
-  },
-  {
-    value: 'Patterns',
-    skillGroup: 'Patterns',
-  },
-  {
-    value: 'GIT',
-    skillGroup: 'GIT',
-  },
-  {
-    value: 'HTML',
-    skillGroup: 'HTML',
-  },
-  {
-    value: 'CSS',
-    skillGroup: 'CSS',
-  },
-  {
-    value: 'Closures',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Сontext',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Scopes',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Inheritance',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Event loop',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Types (primitives + object)',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'Data Structures JS',
-    skillGroup: 'Vanilla JS',
-  },
-  {
-    value: 'WebWorkers / ServiceWorkers',
-    skillGroup: 'WebWorkers / ServiceWorkers',
+    value: 'Java Script',
+    skillGroup: 'Programming languages',
   },
   {
     value: 'Typescript',
-    skillGroup: 'Typescript',
+    skillGroup: 'Programming languages',
   },
   {
-    value: 'React',
-    skillGroup: 'React',
+    value: 'HTML/HTML5',
+    skillGroup: 'UI',
   },
   {
-    value: 'React hooks',
-    skillGroup: 'React',
+    value: 'CSS/CSS3',
+    skillGroup: 'UI',
   },
   {
-    value: 'React router',
-    skillGroup: 'React',
+    value: 'Stylus',
+    skillGroup: 'UI',
   },
   {
-    value: 'Context Store management',
-    skillGroup: 'Context Store management',
+    value: 'Sass',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'PostCSS',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Material UI',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Semantic UI',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Bootstrap',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Less',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Styled components',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Tailwind',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'React.js',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Next.js',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
     value: 'Redux',
-    skillGroup: 'Context Store management',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'MobX',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Redux-saga',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Node.js',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Express.js',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Nest.js',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'React Native',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Formik',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Bootstrap',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Lodash',
+    skillGroup: 'Frameworks/Libraries',
+  },
+  {
+    value: 'Moment.js',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
     value: 'Reselect',
-    skillGroup: 'Context Store management',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'Mobix',
-    skillGroup: 'Context Store management',
+    value: 'Immutable.js',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'Sagas',
-    skillGroup: 'Context Store management',
+    value: 'Vue.js',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'RXjs',
-    skillGroup: 'RXjs',
+    value: 'Angular JS',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'Websocket',
-    skillGroup: 'Websocket',
+    value: 'Redux saga',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'GraphQL (JS)',
-    skillGroup: 'GraphQL (JS)',
+    value: 'Redux thunk',
+    skillGroup: 'Frameworks/Libraries',
   },
   {
-    value: 'Browser storages (LocalStorage and etc)',
-    skillGroup: 'Browser storages (LocalStorage and etc)',
+    value: 'Jira',
+    skillGroup: 'Software engineering management',
   },
   {
-    value: 'Cross tabs communication',
-    skillGroup: 'Cross tabs communication',
+    value: 'TFC',
+    skillGroup: 'Software engineering management',
   },
   {
-    value: 'UI libraries (MaterialUI, react-botstrap)',
-    skillGroup: 'UI libraries (MaterialUI, react-botstrap)',
+    value: 'Trello',
+    skillGroup: 'Software engineering management',
   },
   {
-    value: 'CSS frameworks (TailWind, bootstrap)',
-    skillGroup: 'CSS frameworks (TailWind, bootstrap)',
-  },
-  {
-    value: 'Dev tools',
-    skillGroup: 'Dev tools',
-  },
-  {
-    value: 'Logging',
-    skillGroup: 'Logging',
-  },
-  {
-    value: 'Cross-browser problems',
-    skillGroup: 'Cross-browser problems',
-  },
-  {
-    value: 'Tests',
-    skillGroup: 'Tests',
-  },
-  {
-    value: 'Canvas',
-    skillGroup: 'Canvas',
-  },
-  {
-    value: 'Multithread/multiprocess',
-    skillGroup: 'Multithread/multiprocess',
-  },
-  {
-    value: 'File api',
-    skillGroup: 'File api',
-  },
-  {
-    value: 'Stream',
-    skillGroup: 'Stream',
-  },
-  {
-    value: 'Cron',
-    skillGroup: 'Cron',
-  },
-  {
-    value: 'Express',
-    skillGroup: 'Express',
-  },
-  {
-    value: 'Express Routing',
-    skillGroup: 'Express',
-  },
-  {
-    value: 'Middlewares',
-    skillGroup: 'Express',
-  },
-  {
-    value: 'NestJs',
-    skillGroup: 'Express',
-  },
-  {
-    value: 'ORM',
-    skillGroup: 'DB (JS)',
-  },
-  {
-    value: 'DB (JS)',
-    skillGroup: 'DB (JS)',
-  },
-  {
-    value: 'Non-relative DB',
-    skillGroup: 'DB (JS)',
-  },
-  {
-    value: 'Relative DB',
-    skillGroup: 'DB (JS)',
-  },
-  {
-    value: 'Oauth2',
-    skillGroup: 'Oauth2',
-  },
-  {
-    value: 'Google Firebase',
-    skillGroup: 'Google Firebase',
-  },
-  {
-    value: 'AWS',
-    skillGroup: 'AWS',
-  },
-  {
-    value: 'Jenkins',
-    skillGroup: 'Jenkins',
-  },
-  {
-    value: 'CircleCI',
-    skillGroup: 'CircleCI',
-  },
-  {
-    value: 'Docker',
-    skillGroup: 'Docker',
-  },
-  {
-    value: 'Memory managment',
-    skillGroup: 'Memory managment',
-  },
-  {
-    value: 'Design Principles',
-    skillGroup: 'Design Principles',
-  },
-  {
-    value: 'Design Patterns',
-    skillGroup: 'Design Patterns',
-  },
-  {
-    value: 'OOP',
-    skillGroup: 'OOP',
-  },
-  {
-    value: 'FRP',
-    skillGroup: 'FRP',
-  },
-  {
-    value: 'Objective-C',
-    skillGroup: 'Objective-C',
-  },
-  {
-    value: 'Swift',
-    skillGroup: 'Swift',
-  },
-  {
-    value: 'SwitfUI',
-    skillGroup: 'SwitfUI',
-  },
-  {
-    value: 'UIKit',
-    skillGroup: 'UIKit',
-  },
-  {
-    value: 'Foundation',
-    skillGroup: 'Foundation',
-  },
-  {
-    value: 'GCD',
-    skillGroup: 'GCD',
-  },
-  {
-    value: 'StoreKit',
-    skillGroup: 'StoreKit',
-  },
-  {
-    value: 'Push Notifications',
-    skillGroup: 'Push Notifications',
-  },
-  {
-    value: 'Quartz',
-    skillGroup: 'Quartz',
-  },
-  {
-    value: 'AVFoundation',
-    skillGroup: 'AVFoundation',
-  },
-  {
-    value: 'DB (Swift)',
-    skillGroup: 'DB (Swift)',
+    value: 'Toggle',
+    skillGroup: 'Software engineering management',
   },
   {
     value: 'REST',
-    skillGroup: 'REST',
+    skillGroup: 'Network technologies',
   },
   {
-    value: 'GraphQL (Swift)',
-    skillGroup: 'GraphQL (Swift)',
+    value: 'WebSocket',
+    skillGroup: 'Network technologies',
   },
   {
-    value: 'Crashlytics',
-    skillGroup: 'Crashlytics',
+    value: 'Ajax',
+    skillGroup: 'Network technologies',
   },
   {
-    value: 'Profiling & Debuging',
-    skillGroup: 'Profiling & Debuging',
+    value: 'GraphQL',
+    skillGroup: 'Network technologies',
   },
   {
-    value: 'Unit Testing',
-    skillGroup: 'Unit Testing',
+    value: 'Windows',
+    skillGroup: 'Operating systems',
   },
   {
-    value: 'RxSwift',
-    skillGroup: 'RxSwift',
+    value: 'Linux',
+    skillGroup: 'Operating systems',
   },
   {
-    value: 'Combine',
-    skillGroup: 'Combine',
+    value: 'MacOS',
+    skillGroup: 'Operating systems',
   },
   {
-    value: 'Alamofire',
-    skillGroup: 'Alamofire',
+    value: 'Git',
+    skillGroup: 'SCM',
   },
   {
-    value: 'Kingfisher',
-    skillGroup: 'Kingfisher',
+    value: 'Github',
+    skillGroup: 'SCM',
   },
   {
-    value: 'Cocoapods',
-    skillGroup: 'Cocoapods',
+    value: 'Bitbucket',
+    skillGroup: 'SCM',
   },
   {
-    value: 'SPM',
-    skillGroup: 'SPM',
+    value: 'Webpack',
+    skillGroup: 'Builders and tasks runners',
   },
   {
-    value: 'Carthage',
-    skillGroup: 'Carthage',
+    value: 'Grunt',
+    skillGroup: 'Builders and tasks runners',
   },
   {
-    value: 'Jenkins (Swift)',
-    skillGroup: 'Jenkins (Swift)',
+    value: 'Gulp',
+    skillGroup: 'Builders and tasks runners',
   },
   {
-    value: 'Fastlane',
-    skillGroup: 'Fastlane',
+    value: 'Docker',
+    skillGroup: 'Builders and tasks runners',
   },
   {
-    value: 'CircleCI (Swift)',
-    skillGroup: 'CircleCI (Swift)',
+    value: 'VS Code',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'WebStorm',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'Atom',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'Sublime Text 3',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'MySQL',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'PostgreSQL',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'MongoDB',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Redis',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'SQLite',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'AWS',
+    skillGroup: 'Cloud computing technologies',
+  },
+  {
+    value: 'Firebase',
+    skillGroup: 'Cloud computing technologies',
+  },
+  {
+    value: 'Microsoft Azure',
+    skillGroup: 'Cloud computing technologies',
+  },
+  {
+    value: 'Jest',
+    skillGroup: 'Test utilities',
+  },
+  {
+    value: 'MochaJS',
+    skillGroup: 'Test utilities',
+  },
+  {
+    value: 'ChaiJS',
+    skillGroup: 'Test utilities',
   },
 ];

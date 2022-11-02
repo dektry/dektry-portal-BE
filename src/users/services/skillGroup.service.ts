@@ -6,6 +6,8 @@ import { questionRepository } from '../repositories/question.repository';
 import { skillsToLevelsRepository } from '../repositories/skillsToLevels.repository';
 import { SkillGroupEntity } from '../entity/skillGroup.entity';
 
+import { sortSkillGroups } from '../utils/sortSkillGroups';
+
 @Injectable()
 export class SkillGroupService {
   constructor(
@@ -58,14 +60,14 @@ export class SkillGroupService {
       })),
     }));
 
-    return skillGroups;
+    return sortSkillGroups(skillGroups);
   }
 
   async getSkillGroupsByIds(
     positionId: string,
     levelId: string,
   ): Promise<SkillGroupEntity[]> {
-    return await this.skillGroupRepository
+    const skillGroups = await this.skillGroupRepository
       .createQueryBuilder('sg')
       .where({ position_id: positionId })
       .andWhere('sl."level_id" = :id', { id: levelId })
@@ -74,6 +76,8 @@ export class SkillGroupService {
       .leftJoin('s.questions', 'q')
       .leftJoin('s.levels', 'sl')
       .getMany();
+
+    return sortSkillGroups(skillGroups);
   }
 
   async updateSkillGroup({
