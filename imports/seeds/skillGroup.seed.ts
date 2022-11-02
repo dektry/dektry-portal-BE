@@ -1,6 +1,6 @@
 export const skillGroupSeed = [
   {
-    value: 'Programming languages',
+    value: 'Programming languages / Technologies',
     careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Full stack developer'],
   },
@@ -15,7 +15,7 @@ export const skillGroupSeed = [
     positions: ['Full stack developer'],
   },
   {
-    value: 'Frameworks/Libraries',
+    value: 'Frameworks / Libraries',
     careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Full stack developer'],
   },
@@ -55,12 +55,42 @@ export const skillGroupSeed = [
     positions: ['Full stack developer'],
   },
   {
-    value: 'Cloud computing technologies',
+    value: 'Cloudbase and DevOps technologies',
     careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Full stack developer'],
   },
   {
     value: 'Test utilities',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Design Technologies',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Dependency managers',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Automation technologies',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Technical Skills Apps',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Message brokers',
+    careerLevels: ['Middle', 'Middle+', 'Senior'],
+    positions: ['Full stack developer'],
+  },
+  {
+    value: 'Other',
     careerLevels: ['Middle', 'Middle+', 'Senior'],
     positions: ['Full stack developer'],
   },

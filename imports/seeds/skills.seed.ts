@@ -1,11 +1,88 @@
 export const skillsSeed = [
   {
     value: 'Java Script',
-    skillGroup: 'Programming languages',
+    skillGroup: 'Programming languages / Technologies',
   },
   {
     value: 'Typescript',
-    skillGroup: 'Programming languages',
+    skillGroup: 'Programming languages / Technologies',
+  },
+
+  {
+    value: 'ES5',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ES6',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ES7',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ES8',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ES9',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ES20',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Python',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Solidity',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'PHP',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'C#',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Java',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Swift',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Objective C',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'C',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'C++',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'ASM',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Ruby',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Vhdl',
+    skillGroup: 'Programming languages / Technologies',
+  },
+  {
+    value: 'Delphi',
+    skillGroup: 'Programming languages / Technologies',
   },
   {
     value: 'HTML/HTML5',
@@ -44,88 +121,247 @@ export const skillsSeed = [
     skillGroup: 'UI',
   },
   {
-    value: 'Styled components',
+    value: 'Styled-components',
     skillGroup: 'UI',
   },
   {
-    value: 'Tailwind',
+    value: 'TailwindCSS',
+    skillGroup: 'UI',
+  },
+
+  {
+    value: 'JSS',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'ESLint',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'Expo',
+    skillGroup: 'UI',
+  },
+  {
+    value: 'SCSS',
     skillGroup: 'UI',
   },
   {
     value: 'React.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Next.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Redux',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'MobX',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Redux-saga',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Node.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Express.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Nest.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'React Native',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Formik',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Bootstrap',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Lodash',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Moment.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Reselect',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Immutable.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
     value: 'Vue.js',
-    skillGroup: 'Frameworks/Libraries',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
-    value: 'Angular JS',
-    skillGroup: 'Frameworks/Libraries',
+    value: 'AngularJS',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
-    value: 'Redux saga',
-    skillGroup: 'Frameworks/Libraries',
+    value: 'Redux-saga',
+    skillGroup: 'Frameworks / Libraries',
   },
   {
-    value: 'Redux thunk',
-    skillGroup: 'Frameworks/Libraries',
+    value: 'Redux-thunk',
+    skillGroup: 'Frameworks / Libraries',
+  },
+
+  {
+    value: 'Electron.js',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'React Big Calendar',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'TensorFlow.js',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'ONNX.js',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Flask',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Cocoa',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Uikit',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'RxSwift',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'StoreKit',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Moya',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Alamofire',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'QuartzCore',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'CoreImage',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'UserNotifications / PushKit',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'AWS Amplify',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Combine',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Date-fns',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'i18next',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Leaflet',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Redux-form',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'SwiftUI',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Puppeteer',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'RxJS',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Storybook',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Flow',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Mongoose',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'Knex.js',
+    skillGroup: 'Frameworks / Libraries',
+  },
+  {
+    value: 'TypeORM',
+    skillGroup: 'Frameworks / Libraries',
+  },
+
+  {
+    value: 'Node.js',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'Nest.js',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'Express.js',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'Postman',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'Sails.js',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'Serverless',
+    skillGroup: 'Back-end technologies',
+  },
+  {
+    value: 'GraphQL',
+    skillGroup: 'Back-end technologies',
   },
   {
     value: 'Jira',
@@ -144,6 +380,18 @@ export const skillsSeed = [
     skillGroup: 'Software engineering management',
   },
   {
+    value: 'Asana',
+    skillGroup: 'Software engineering management',
+  },
+  {
+    value: 'Zeplin',
+    skillGroup: 'Software engineering management',
+  },
+  {
+    value: 'Redmine',
+    skillGroup: 'Software engineering management',
+  },
+  {
     value: 'REST',
     skillGroup: 'Network technologies',
   },
@@ -159,6 +407,27 @@ export const skillsSeed = [
     value: 'GraphQL',
     skillGroup: 'Network technologies',
   },
+  {
+    value: 'Web3.js',
+    skillGroup: 'Network technologies',
+  },
+  {
+    value: 'Web Push',
+    skillGroup: 'Network technologies',
+  },
+  {
+    value: 'MVC',
+    skillGroup: 'Network technologies',
+  },
+  {
+    value: 'Microservices',
+    skillGroup: 'Network technologies',
+  },
+  {
+    value: 'Axios',
+    skillGroup: 'Network technologies',
+  },
+
   {
     value: 'Windows',
     skillGroup: 'Operating systems',
@@ -181,6 +450,10 @@ export const skillsSeed = [
   },
   {
     value: 'Bitbucket',
+    skillGroup: 'SCM',
+  },
+  {
+    value: 'GitLab',
     skillGroup: 'SCM',
   },
   {
@@ -214,6 +487,50 @@ export const skillsSeed = [
   {
     value: 'Sublime Text 3',
     skillGroup: 'Development tools',
+  },
+  {
+    value: 'Visual Studio',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'Xcode',
+    skillGroup: 'Development tools',
+  },
+  {
+    value: 'Relational Database',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Non Relational Database',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'SQL',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Sequelize',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Realm',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Firestore',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'TypeORM',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'Mongoose',
+    skillGroup: 'Database technologies',
+  },
+  {
+    value: 'AWS DynamoDB',
+    skillGroup: 'Database technologies',
   },
   {
     value: 'MySQL',
@@ -258,5 +575,166 @@ export const skillsSeed = [
   {
     value: 'ChaiJS',
     skillGroup: 'Test utilities',
+  },
+  {
+    value: 'Jasmine',
+    skillGroup: 'Test utilities',
+  },
+  {
+    value: 'React Testing Library',
+    skillGroup: 'Test utilities',
+  },
+  {
+    value: 'Pytest',
+    skillGroup: 'Test utilities',
+  },
+  {
+    value: 'AWS Services',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'Google Cloud',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'Firebase',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'Microsoft Azure',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'Bluemix',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'Kubernetes',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+  {
+    value: 'AWS CloudFormation',
+    skillGroup: 'Cloudbase and DevOps technologies',
+  },
+
+  {
+    value: 'Figma',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Sketch',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Adobe Photoshop',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Adobe Illustrator',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Adobe After Effects',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Adobe XD',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Tilda',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Procreate',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Miro',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: '3D Max',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Blender',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Zbrush',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Substance Painter',
+    skillGroup: 'Design Technologies',
+  },
+  {
+    value: 'Cocoapods',
+    skillGroup: 'Dependency managers',
+  },
+  {
+    value: 'Carthage',
+    skillGroup: 'Dependency managers',
+  },
+  {
+    value: 'Swift PM',
+    skillGroup: 'Dependency managers',
+  },
+  {
+    value: 'Jenkins',
+    skillGroup: 'Automation technologies',
+  },
+  {
+    value: 'Fastlane',
+    skillGroup: 'Automation technologies',
+  },
+  {
+    value: 'Gitlab CI',
+    skillGroup: 'Automation technologies',
+  },
+  {
+    value: 'AppFollow',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'Asodesk',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'Amplitude',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'Appbooster',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'AdvertMobile',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'App Store Connect',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'App Search Ads',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'Hubstaff',
+    skillGroup: 'Technical Skills Apps',
+  },
+  {
+    value: 'RabbitMQ',
+    skillGroup: 'Message brokers',
+  },
+  {
+    value: 'Google Cloud Platform',
+    skillGroup: 'Other',
+  },
+  {
+    value: 'Google Places API',
+    skillGroup: 'Other',
   },
 ];
