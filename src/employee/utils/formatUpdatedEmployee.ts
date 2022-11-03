@@ -2,7 +2,8 @@ import { UpdateEmployeeDto } from 'employee/dto/employee.dto';
 
 export function formatUpdatedEmployee(updatedEmployee: UpdateEmployeeDto) {
   return {
-    fullName: updatedEmployee.fullName,
+    firstName: updatedEmployee.firstName,
+    lastName: updatedEmployee.lastName,
     position: updatedEmployee.position,
     level: updatedEmployee.level,
     location: updatedEmployee.location,

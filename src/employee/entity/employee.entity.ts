@@ -27,7 +27,10 @@ export class EmployeeEntity extends BaseEntity {
   pfUpdatedAt: string;
 
   @Column({ length: 255, nullable: true })
-  fullName: string;
+  firstName: string;
+
+  @Column({ length: 255, nullable: true })
+  lastName: string;
 
   @Column({ length: 255, nullable: true })
   email: string;
