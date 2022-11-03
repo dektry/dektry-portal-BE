@@ -1,4 +1,4 @@
-import { IsOptional, MaxLength, IsNotEmpty, IsArray } from 'class-validator';
+import { IsOptional, MaxLength, IsArray } from 'class-validator';
 import {
   descriptionMaxLength,
   defaultMaxLength,
@@ -10,8 +10,12 @@ import { EducationEntity } from '../entity/education.entity';
 
 export class UpdateEmployeeDto {
   @IsOptional()
-  @MaxLength(defaultMaxLength, { message: 'Name is too long' })
-  fullName: string;
+  @MaxLength(defaultMaxLength, { message: 'First name is too long' })
+  firstName: string;
+
+  @IsOptional()
+  @MaxLength(defaultMaxLength, { message: 'Last name is too long' })
+  lastName: string;
 
   @IsOptional()
   @MaxLength(defaultMaxLength, {

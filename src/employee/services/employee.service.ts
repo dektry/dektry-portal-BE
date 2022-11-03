@@ -50,9 +50,10 @@ export class EmployeeService {
     try {
       return await this.employeeRepository
         .createQueryBuilder('employee')
-        .where('employee.fullName ILIKE :query', {
-          query: `%${query ? query.trim() : ''}%`,
-        })
+        .where('employee.firstName ILIKE :query')
+        .orWhere('employee.lastName ILIKE :query')
+        .orWhere('employee.position ILIKE :query')
+        .setParameter('query', `%${query ? query.trim() : ''}%`)
         .skip(limit * (page - 1))
         .take(limit)
         .orderBy(
