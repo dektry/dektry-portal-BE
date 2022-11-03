@@ -32,6 +32,6 @@ async function bootstrap() {
 bootstrap();
 
 candidatesCron.start();
-// employeeCron.start();
+employeeCron.start();
 
 console.log(`Serving at http://localhost:${process.env.PORT || 5000}`);
