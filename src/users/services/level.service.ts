@@ -2,18 +2,21 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CareerLevelEntity } from '../entity/careerLevel.entity';
-import { levelRepository } from '../repositories/level.repository';
-import { DeleteResult } from 'typeorm';
-import { LevelProps } from '../controllers/level.controller';
+} from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CareerLevelEntity } from "../entity/careerLevel.entity";
+import { levelRepository } from "../repositories/level.repository";
+import { careerRepository } from "../repositories/career.repository";
+import { DeleteResult } from "typeorm";
+import { LevelProps } from "../controllers/level.controller";
 
 @Injectable()
 export class LevelsService {
   constructor(
     @InjectRepository(levelRepository)
     private careerLevelRepository: levelRepository,
+    @InjectRepository(careerRepository)
+    private careerRepository: careerRepository
   ) {}
 
   async getAll(): Promise<CareerLevelEntity[]> {
@@ -34,7 +37,7 @@ export class LevelsService {
 
   async updateLevel(
     id: string,
-    newRoleProps: LevelProps,
+    newRoleProps: LevelProps
   ): Promise<CareerLevelEntity> {
     const level = await this.careerLevelRepository.findOne(id);
     if (!level) {
@@ -48,13 +51,23 @@ export class LevelsService {
 
   async deleteLevel(id: string): Promise<DeleteResult> {
     try {
-      const deletedLevel = await this.careerLevelRepository.findOne({
-        name: 'Deleted level',
+      const allLevelsWithThisPosition = await this.careerRepository.find({
+        where: { level: id },
       });
 
+      const deletedLevel = await this.careerLevelRepository.findOne({
+        name: "Deleted level",
+      });
+      const changedLevel = allLevelsWithThisPosition.map((level) => {
+        return this.careerRepository.create({
+          ...level,
+          level: deletedLevel,
+        });
+      });
       if (deletedLevel.id === id) {
         throw new ConflictException(`You can't remove deleted level!`);
       }
+      await this.careerRepository.save(changedLevel);
 
       const result = await this.careerLevelRepository.delete(id);
       if (!result.affected) {
@@ -62,7 +75,7 @@ export class LevelsService {
       }
       return result;
     } catch (error) {
-      console.log(error, 'huy');
+      console.log(error, "huy");
       return error;
     }
   }

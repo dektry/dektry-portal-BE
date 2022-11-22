@@ -5,6 +5,8 @@ import {
   BaseEntity,
   JoinColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
   OneToOne,
 } from 'typeorm';
 
