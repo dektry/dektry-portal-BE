@@ -6,6 +6,9 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'users/users.module';
+import { usersRepository } from '../users/repositories/users.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import dotEnv = require('dotenv');
 
 dotEnv.config();
@@ -13,6 +16,7 @@ dotEnv.config();
   imports: [
     UsersModule,
     PassportModule,
+    TypeOrmModule.forFeature([usersRepository]),
     JwtModule.register({
       secret: process.env.JWT_KEY,
       signOptions: { expiresIn: '30d' },
