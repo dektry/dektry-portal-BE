@@ -4,6 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ArticleModule } from './articles/articles.module';
+import { OnboardingModule } from './onboarding/onboarding.module';
+import { VacationsModule } from './vacations/vacations.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CandidatesModule } from './candidates/candidates.module';
 import { EmployeeModule } from './employee/employee.module';
@@ -15,6 +18,10 @@ import { CVGenerationModule } from './cv-generation/cv-generation.module';
     ScheduleModule.forRoot(),
     UsersModule,
     AuthModule,
+    ArticleModule,
+    OnboardingModule,
+    OnboardingModule,
+    VacationsModule,
     CandidatesModule,
     EmployeeModule,
     CVGenerationModule,
