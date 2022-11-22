@@ -2,18 +2,31 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as _ from 'lodash';
 import { comparePassword } from '../../utils/hashPassword';
-import { UsersService } from 'users/services/users.service';
-import { RequestUser, IAuthUser } from './auth.interfaces';
+import { usersRepository } from '../users/repositories/users.repository';
+import { InjectRepository } from '@nestjs/typeorm';
+import { RequestUser } from './auth.interfaces';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
     private jwtService: JwtService,
+    @InjectRepository(usersRepository)
+    private usersRepository: usersRepository,
   ) {}
 
+  private async findByEmail(email: string) {
+    const currentUser = await this.usersRepository.findOne({
+      where: { email },
+    });
+
+    if (!currentUser) {
+      throw new NotFoundException(`User with email '${email}' not found`);
+    }
+    return currentUser;
+  }
+
   async validateUser(email: string, pass: string): Promise<RequestUser> {
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.findByEmail(email);
     if (!user) {
       throw new NotFoundException(`User with email '${email}' is not found!`);
     }
@@ -27,19 +40,13 @@ export class AuthService {
 
   async auth(token: string): Promise<any> {
     const { email } = <RequestUser>this.jwtService.decode(token);
-    const user = await this.usersService.findByEmail(email);
+    const user = await this.findByEmail(email);
 
     const payload = {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      role: {
-        id: user.role.id,
-        permissions: user.role.permissions,
-        name: user.role.name,
-      },
-      career: [],
     };
 
     return { payload, jwt: { access_token: this.jwtService.sign(payload) } };
@@ -51,12 +58,6 @@ export class AuthService {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
-      role: {
-        id: user.role.id,
-        permissions: user.role.permissions,
-        name: user.role.name,
-      },
-      career: [],
     };
     return {
       access_token: this.jwtService.sign(payload),

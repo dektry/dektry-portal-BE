@@ -23,7 +23,6 @@ const formatCandidate = async (
   const candidateId = await getRepository(CandidateEntity).findOne({
     pfId: candidate.id,
   });
-
   const newCandidate = getRepository(CandidateEntity).create({
     pfId: candidate.id,
     pfUpdatedAt: candidate.updated_at,
