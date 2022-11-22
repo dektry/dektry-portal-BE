@@ -8,7 +8,6 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { PositionEntity } from './position.entity';
-import { AccessEntity } from './access.entity';
 
 @Entity({ name: 'positionGroup' })
 export class PositionGroupEntity extends BaseEntity {
@@ -27,7 +26,4 @@ export class PositionGroupEntity extends BaseEntity {
 
   @Column({ length: 255 })
   color: string;
-
-  @ManyToOne(() => AccessEntity, (access) => access.positionsGroups)
-  access: AccessEntity[];
 }

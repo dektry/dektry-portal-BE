@@ -6,8 +6,6 @@ import { InterviewsController } from './controllers/interviews.controller';
 import { SoftInterviewsController } from './controllers/softInterviews.controller';
 
 import { CandidatesService } from './services/candidates.service';
-import { EducationService } from './services/education.service';
-import { ExperienceService } from './services/experience.service';
 import { InterviewService } from './services/interview.service';
 import { SoftInterviewService } from './services/softInterview.service';
 
@@ -46,12 +44,6 @@ import { softSkillRepository } from '../users/repositories/softSkill.repository'
     InterviewsController,
     SoftInterviewsController,
   ],
-  providers: [
-    CandidatesService,
-    EducationService,
-    ExperienceService,
-    InterviewService,
-    SoftInterviewService,
-  ],
+  providers: [CandidatesService, InterviewService, SoftInterviewService],
 })
 export class CandidatesModule {}
