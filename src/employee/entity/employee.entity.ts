@@ -3,24 +3,34 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  OneToOne,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 import { InterviewEntity } from './interview.entity';
+import { ProjectEntity } from './project.entity';
+import { SoftAssessmentEntity } from './softAssessment.entity';
+import { SoftSkillToCvEntity } from './softSkillToCV.entity';
+import { EducationEntity } from './education.entity';
+import { LanguageEntity } from './language.entity';
 
 @Entity({ name: 'employee' })
 export class EmployeeEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   pfId: number;
 
   @Column({ nullable: true })
   pfUpdatedAt: string;
 
   @Column({ length: 255, nullable: true })
-  fullName: string;
+  firstName: string;
+
+  @Column({ length: 255, nullable: true })
+  lastName: string;
 
   @Column({ length: 255, nullable: true })
   email: string;
@@ -73,11 +83,8 @@ export class EmployeeEntity extends BaseEntity {
   @Column({ length: 40, nullable: true })
   timezone: string;
 
-  @Column({ type: 'json', nullable: true })
-  languages: string;
-
-  @Column({ type: 'json', nullable: true })
-  formalEducation: string;
+  @Column({ length: 1024, nullable: true })
+  description: string;
 
   // The date from which the employee's work experience is calculated
   @Column({ type: 'timestamp', nullable: true })
@@ -89,6 +96,31 @@ export class EmployeeEntity extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   department: string;
 
-  @OneToOne(() => InterviewEntity, (interview) => interview.employee)
+  @Column({ nullable: true })
+  yearsOfExperience: number;
+
+  @OneToMany(() => InterviewEntity, (interview) => interview.employee)
   interview: InterviewEntity;
+
+  @OneToMany(() => ProjectEntity, (project) => project.employee)
+  projects: ProjectEntity[];
+
+  @OneToMany(
+    () => SoftAssessmentEntity,
+    (softAssessment) => softAssessment.employee,
+  )
+  softAssessment: SoftAssessmentEntity;
+
+  @ManyToMany(() => SoftSkillToCvEntity, {
+    eager: true,
+    cascade: true,
+  })
+  @JoinTable()
+  softSkillsToCv: SoftSkillToCvEntity[];
+
+  @OneToMany(() => EducationEntity, (education) => education.employee)
+  educations: EducationEntity;
+
+  @OneToMany(() => LanguageEntity, (language) => language.employee)
+  languages: LanguageEntity[];
 }

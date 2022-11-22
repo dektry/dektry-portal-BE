@@ -28,8 +28,6 @@ export class CompleteInterviewsDto {
   comment?: string;
 }
 export class EditInterviewsDto extends CompleteInterviewsDto {
-  @IsNotEmpty({
-    message: 'isApproved must not be empty',
-  })
+  @IsOptional()
   isApproved: boolean;
 }

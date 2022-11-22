@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { CandidateEntity } from './candidate.entity';
 
-@Entity({ name: 'education' })
+@Entity({ name: 'candidate_education' })
 export class EducationEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -1,9 +1,6 @@
 {
   "name": "backend-boilerplate",
   "version": "0.0.1",
-  "engines": {
-    "yarn": "^1.22.17"
-  },
   "description": "Vlad Leo backend boilerplate",
   "author": "Vlad-Leo",
   "private": true,
@@ -114,5 +111,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": "17.7.1"
   }
 }

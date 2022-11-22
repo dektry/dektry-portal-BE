@@ -23,8 +23,6 @@ import { SoftSkillService } from './services/softSkill.service';
 
 import { careerRepository } from './repositories/career.repository';
 import { positionGroupRepository } from './repositories/positionGroup.repository';
-import { projectsRepository } from '../projects/repositories/projects.repository';
-import { projectsHistoryRepository } from '../projects/repositories/projectsHistory.repository';
 import { accessRepository } from './repositories/access.repository';
 import { skillGroupRepository } from './repositories/skillGroup.repository';
 import { skillRepository } from './repositories/skill.repository';
@@ -41,8 +39,6 @@ import { levelRepository } from './repositories/level.repository';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      projectsRepository,
-      projectsHistoryRepository,
       usersRepository,
       roleRepository,
       permissionRepository,

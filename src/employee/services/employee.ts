@@ -2,10 +2,7 @@ import { getRepository, In, Not } from 'typeorm';
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PFAxios } from '../../../utils/pfAxios';
 import { CustomFieldGroupNames, CustomFieldNames } from 'enums/employee.enum';
-import {
-  UpdateEmployeeDtoPF,
-  UpdateEmployeeDto,
-} from 'employee/dto/employee.dto';
+import { UpdateEmployeeDtoPF, UpdateEmployeeDto } from '../dto/employee.dto';
 import { endpoints } from '../utils/endpoints';
 
 // Parsing an html-like string and getting text inside the tags
@@ -43,7 +40,8 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
   const newEmployee = getRepository(EmployeeEntity).create({
     pfId: employee.id,
     pfUpdatedAt: employee.updated_at,
-    fullName: employee.full_name,
+    firstName: employee.first_name,
+    lastName: employee.last_name,
     email: employee.email,
     personalEmail: employee.personal_email,
     mobileNumber: employee.mobile_number,
@@ -73,13 +71,6 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.group === CustomFieldGroupNames.additionalInformation &&
         el.name === CustomFieldNames.languages,
     )?.value,
-    formalEducation: parseStr(
-      employee.custom_fields.find(
-        (el) =>
-          el.group === CustomFieldGroupNames.additionalInformation &&
-          el.name === CustomFieldNames.education,
-      )?.value,
-    ),
     startingPoint: startingPointStr ? startingPointStr + ' 00:00:00' : null,
     interests: employee.custom_fields.find(
       (el) =>
@@ -87,7 +78,11 @@ const formatEmployee = async (employee): Promise<EmployeeEntity> => {
         el.name === CustomFieldNames.interests,
     )?.value,
   });
-  if (employeeId) newEmployee.id = employeeId.id;
+  if (employeeId) {
+    newEmployee.id = employeeId.id;
+    newEmployee.description = employeeId.description;
+    newEmployee.softSkillsToCv = employeeId.softSkillsToCv;
+  }
   return newEmployee;
 };
 
@@ -123,8 +118,8 @@ export const updateEmployeePF = async (
   try {
     const updatedCandidatePF: UpdateEmployeeDtoPF = {
       ...updatedEmployee,
-      first_name: updatedEmployee.fullName.split(' ')[0],
-      last_name: updatedEmployee.fullName.split(' ')[1],
+      first_name: updatedEmployee.firstName,
+      last_name: updatedEmployee.lastName,
     };
 
     await PFAxios.put(`${endpoints.employeeUpdate}${id}`, updatedCandidatePF);

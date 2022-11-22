@@ -1,69 +1,106 @@
-import { IsOptional, MaxLength } from 'class-validator';
+import { IsOptional, MaxLength, IsArray } from 'class-validator';
+import {
+  descriptionMaxLength,
+  defaultMaxLength,
+  levelMaxLength,
+} from 'employee/utils/constants';
+import { LanguageEntity } from '../entity/language.entity';
+import { ProjectEntity } from '../entity/project.entity';
+import { EducationEntity } from '../entity/education.entity';
 
 export class UpdateEmployeeDto {
   @IsOptional()
-  @MaxLength(255, { message: 'Name is too long' })
-  fullName: string;
+  @MaxLength(defaultMaxLength, { message: 'First name is too long' })
+  firstName: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Position is too long' })
+  @MaxLength(defaultMaxLength, { message: 'Last name is too long' })
+  lastName: string;
+
+  @IsOptional()
+  @MaxLength(defaultMaxLength, {
+    message: 'Position is too long',
+  })
   position: string;
 
   @IsOptional()
-  @MaxLength(40, { message: 'Level is too long' })
+  @MaxLength(levelMaxLength, { message: 'Level is too long' })
   level: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Location is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Location is too long',
+  })
   location: string;
 
-  // not presented in db yet, but is in UI
   @IsOptional()
-  @MaxLength(255, { message: 'Email is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Email is too long',
+  })
   email: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Personal email is too long' })
-  presonalEmail?: null | string;
-  
+  @MaxLength(defaultMaxLength, {
+    message: 'Personal email is too long',
+  })
+  personalEmail?: null | string;
+
   @IsOptional()
-  @MaxLength(255, { message: 'Mobile number is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Mobile number is too long',
+  })
   mobileNumber: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Date of birth is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Date of birth is too long',
+  })
   dateOfBirth: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Gender is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Gender is too long',
+  })
   gender: string;
-  
+
   @IsOptional()
   @MaxLength(1000, { message: 'Avatar URL is too long' })
   avatarUrl: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Hired on is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Hired on is too long',
+  })
   hiredOn: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Skype username is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Skype username is too long',
+  })
   skypeUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Slack username is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Slack username is too long',
+  })
   slackUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Twitter username is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Twitter username is too long',
+  })
   twitterUsername: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Facebook URL is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Facebook URL is too long',
+  })
   facebookUrl: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Linkedin URL is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Linkedin URL is too long',
+  })
   linkedinUrl: string;
 
   @IsOptional()
@@ -71,44 +108,70 @@ export class UpdateEmployeeDto {
   timezone: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Languages is too long' })
-  languages: string;
+  @MaxLength(descriptionMaxLength, { message: 'Description is too long' })
+  description: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Formal education is too long' })
-  formalEducation: string;
+  yearsOfExperience: number;
+}
+
+export class CreateEmployeeDto extends UpdateEmployeeDto {
+  @IsArray()
+  languages: LanguageEntity[];
+
+  @IsArray()
+  projects: ProjectEntity[];
+
+  @IsArray()
+  educations: EducationEntity[];
 }
 
 export class UpdateEmployeeDtoPF {
   @IsOptional()
-  @MaxLength(255, { message: 'First name is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'First name is too long',
+  })
   first_name: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Last name is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Last name is too long',
+  })
   last_name: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Email is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Email is too long',
+  })
   email: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Date of birth is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Date of birth is too long',
+  })
   dateOfBirth: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Hired on is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Hired on is too long',
+  })
   hiredOn: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Gender is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Gender is too long',
+  })
   gender: string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Personal email is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Personal email is too long',
+  })
   presonalEmail?: null | string;
 
   @IsOptional()
-  @MaxLength(255, { message: 'Mobile number is too long' })
+  @MaxLength(defaultMaxLength, {
+    message: 'Mobile number is too long',
+  })
   mobileNumber: string;
 }

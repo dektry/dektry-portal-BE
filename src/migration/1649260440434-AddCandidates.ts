@@ -50,25 +50,10 @@ export class AddCandidates1649260440434 implements MigrationInterface {
       `CREATE TABLE "education" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "pfId" integer NOT NULL, "school" character varying NOT NULL, "name" character varying NOT NULL, "from_year" integer, "to_year" integer, "subject" character varying NOT NULL, "description" character varying NOT NULL DEFAULT '', "candidate" uuid, CONSTRAINT "UQ_87ba7f2e2900bcbaa0d233d8cfa" UNIQUE ("pfId"), CONSTRAINT "PK_bf3d38701b3030a8ad634d43bd6" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "language" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "pfId" integer NOT NULL, "code" character varying(40) NOT NULL, "level" character varying(40) NOT NULL, CONSTRAINT "UQ_7032779f9862923a1f4f315b726" UNIQUE ("level", "code"), CONSTRAINT "PK_cc0a99e710eb3733f6fb42b1d4c" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_465b3173cdddf0ac2d3fe73a33" ON "language" ("code") `,
-    );
-    await queryRunner.query(
       `CREATE TABLE "candidate" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "pfId" integer NOT NULL, "pfUpdatedAt" character varying, "fullName" character varying(255), "position" character varying(255), "level" character varying(40), "location" character varying(255), "timezone" character varying(40), CONSTRAINT "UQ_c26b5fd50d17ccea9ada0e415f9" UNIQUE ("pfId"), CONSTRAINT "PK_b0ddec158a9a60fbc785281581b" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "experience" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "pfId" integer NOT NULL, "title" character varying NOT NULL, "company" character varying NOT NULL, "starts_on" TIMESTAMP NOT NULL, "ends_on" TIMESTAMP, "location" character varying, "description" character varying NOT NULL DEFAULT '', "candidate" uuid, CONSTRAINT "UQ_916c6a039ed1dfcb5d961dbea21" UNIQUE ("pfId"), CONSTRAINT "PK_5e8d5a534100e1b17ee2efa429a" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
-      `CREATE TABLE "candidate_language" ("candidateId" uuid NOT NULL, "languageId" uuid NOT NULL, CONSTRAINT "PK_7fc9d3496505b4626dc16989530" PRIMARY KEY ("candidateId", "languageId"))`,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_02375f084ac86684735249c3be" ON "candidate_language" ("candidateId") `,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_6119545076df5a8f1d0f73e30e" ON "candidate_language" ("languageId") `,
     );
     await queryRunner.query(
       `ALTER TABLE "education" ADD CONSTRAINT "FK_2e2a112e7de4ffcde1a85565ea4" FOREIGN KEY ("candidate") REFERENCES "candidate"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -113,12 +98,6 @@ export class AddCandidates1649260440434 implements MigrationInterface {
       `ALTER TABLE "level_positions" ADD CONSTRAINT "FK_6a5586d5d2c4abd945a6914b85f" FOREIGN KEY ("careersLevelsId") REFERENCES "careersLevels"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
     await queryRunner.query(
-      `ALTER TABLE "candidate_language" ADD CONSTRAINT "FK_02375f084ac86684735249c3be7" FOREIGN KEY ("candidateId") REFERENCES "candidate"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "candidate_language" ADD CONSTRAINT "FK_6119545076df5a8f1d0f73e30e1" FOREIGN KEY ("languageId") REFERENCES "language"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "role_permissions" ADD CONSTRAINT "FK_0cb93c5877d37e954e2aa59e52c" FOREIGN KEY ("rolesId") REFERENCES "roles"("id") ON DELETE CASCADE ON UPDATE CASCADE`,
     );
     await queryRunner.query(
@@ -132,12 +111,6 @@ export class AddCandidates1649260440434 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "role_permissions" DROP CONSTRAINT "FK_0cb93c5877d37e954e2aa59e52c"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "candidate_language" DROP CONSTRAINT "FK_6119545076df5a8f1d0f73e30e1"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "candidate_language" DROP CONSTRAINT "FK_02375f084ac86684735249c3be7"`,
     );
     await queryRunner.query(
       `ALTER TABLE "level_positions" DROP CONSTRAINT "FK_6a5586d5d2c4abd945a6914b85f"`,
@@ -187,13 +160,12 @@ export class AddCandidates1649260440434 implements MigrationInterface {
     await queryRunner.query(
       `DROP INDEX "public"."IDX_02375f084ac86684735249c3be"`,
     );
-    await queryRunner.query(`DROP TABLE "candidate_language"`);
+
     await queryRunner.query(`DROP TABLE "experience"`);
     await queryRunner.query(`DROP TABLE "candidate"`);
     await queryRunner.query(
       `DROP INDEX "public"."IDX_465b3173cdddf0ac2d3fe73a33"`,
     );
-    await queryRunner.query(`DROP TABLE "language"`);
     await queryRunner.query(`DROP TABLE "education"`);
     await queryRunner.query(
       `ALTER TABLE "role_permissions" ADD CONSTRAINT "FK_d422dabc78ff74a8dab6583da02" FOREIGN KEY ("permissionsId") REFERENCES "permissions"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
