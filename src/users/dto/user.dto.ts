@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, Length, IsOptional } from 'class-validator';
+import { CareerEntity } from 'users/entity/career.entity';
 
 export class UserDto {
   @IsNotEmpty()
@@ -34,4 +35,7 @@ export class UserDto {
 
   @IsNotEmpty()
   birthday: Date;
+
+  @IsNotEmpty()
+  career: CareerEntity[];
 }

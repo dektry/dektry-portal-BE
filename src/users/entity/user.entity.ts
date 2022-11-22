@@ -5,7 +5,11 @@ import {
   ManyToOne,
   BaseEntity,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import { RoleEntity } from './role.entity';
+import { CareerEntity } from './career.entity';
+import { VacationsEntity } from '../../vacations/entity/vacations.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
 
 @Entity({ name: 'users' })
@@ -37,10 +41,27 @@ export class UserEntity extends BaseEntity {
   @Column({ default: 160 })
   balance: number;
 
+  @ManyToOne(() => RoleEntity, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'role' })
+  role: RoleEntity;
+
   @ManyToOne(() => CareerLevelEntity, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'level' })
   level: CareerLevelEntity;
+
+  @OneToMany(() => CareerEntity, (career) => career.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  career: CareerEntity[];
+
+  @OneToMany(() => VacationsEntity, (vacation) => vacation.user)
+  vacations: VacationsEntity[];
 }
