@@ -12,8 +12,9 @@ export class AuthController {
   @Post('/login')
   async login(@Req() req) {
     const jwt = await this.authService.login(req.user);
+
     return {
-      user: req.user,
+      user: { ...req.user, role: { permissions: [] }, career: [] },
       jwt: jwt,
     };
   }
