@@ -2,12 +2,18 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  HttpException,
+  HttpStatus,
+  Logger,
 } from '@nestjs/common';
+
+import { DeleteResult } from 'typeorm';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { PositionEntity } from '../entity/position.entity';
 import { positionRepository } from '../repositories/position.repository';
-import { DeleteResult } from 'typeorm';
-import { PositionProps } from '../controllers/position.controller';
+
+import { PositionDto } from '../dto/position.dto';
 
 @Injectable()
 export class PositionService {
@@ -17,37 +23,76 @@ export class PositionService {
   ) {}
 
   async getAll(): Promise<PositionEntity[]> {
-    const allPositions = await this.positionRepository.find({
-      relations: ['group'],
-    });
-    return allPositions;
+    try {
+      const allPositions = await this.positionRepository.find({});
+
+      return allPositions;
+    } catch (error) {
+      console.error('[POSITION_GET_ERROR]', error);
+      Logger.error(error);
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  async createPosition(positionProps: PositionProps): Promise<PositionEntity> {
-    const { name } = positionProps;
-    const isExist = await this.positionRepository.findOne({
-      name,
-    });
-    if (isExist) {
-      throw new ConflictException(`Position '${name}' is already exist!`);
+  async createPosition(positionProps: PositionDto): Promise<PositionEntity> {
+    try {
+      const { name } = positionProps;
+
+      const isExist = await this.positionRepository.findOne({
+        name,
+      });
+
+      if (isExist) {
+        throw new ConflictException(`Position '${name}' is already exist!`);
+      }
+
+      const newPositionEntity = this.positionRepository.create(positionProps);
+
+      return this.positionRepository.save(newPositionEntity);
+    } catch (error) {
+      console.error('[POSITION_CREATION_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const newPositionEntity = this.positionRepository.create(positionProps);
-    return this.positionRepository.save(newPositionEntity);
   }
 
   async updatePosition(
     id: string,
-    newRoleProps: PositionProps,
+    newPositionProps: PositionDto,
   ): Promise<PositionEntity> {
-    const position = await this.positionRepository.findOne(id);
-    if (!position) {
-      throw new NotFoundException(`Position with ID ${id} not found`);
+    try {
+      const position = await this.positionRepository.findOne(id);
+
+      if (!position) {
+        throw new NotFoundException(`Position with ID ${id} not found`);
+      }
+      const result = await this.positionRepository.save({
+        ...position,
+        ...newPositionProps,
+      });
+      return result;
+    } catch (error) {
+      console.error('[POSITION_UPDATE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const result = await this.positionRepository.save({
-      ...position,
-      ...newRoleProps,
-    });
-    return result;
   }
 
   async deletePosition(id: string): Promise<DeleteResult> {
@@ -56,7 +101,7 @@ export class PositionService {
         name: 'Deleted position',
       });
 
-      if (deletedPosition.id === id) {
+      if (deletedPosition?.id === id) {
         throw new ConflictException(`You can't remove deleted position!`);
       }
 
@@ -66,7 +111,17 @@ export class PositionService {
       }
       return result;
     } catch (error) {
-      return error;
+      console.error('[POSITION_DELETE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

@@ -6,6 +6,7 @@ import importSkills from './skills.import';
 import importSkillLevels from './skillLevels.import';
 import importSoftSkills from './softSkill.imports';
 import importSoftSkillsScore from './softSkillScore.import';
+import importPositions from './positions.import';
 
 const importData = async () => {
   const target = process.argv[2];
@@ -17,6 +18,7 @@ const importData = async () => {
       await importSkillLevels();
       await importUsers();
       await importSoftSkillsScore();
+      await importPositions();
       break;
     default:
       console.log(`No import function found for ${target}`);

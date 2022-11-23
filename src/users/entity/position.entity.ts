@@ -3,14 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  ManyToOne,
   OneToMany,
   ManyToMany,
   JoinTable,
   JoinColumn,
 } from 'typeorm';
 
-import { PositionGroupEntity } from './positionGroup.entity';
 import { CareerLevelEntity } from './careerLevel.entity';
 import { SkillGroupEntity } from './skillGroup.entity';
 import { InterviewEntity } from '../../candidates/entity/interview.entity';
@@ -22,24 +20,6 @@ export class PositionEntity extends BaseEntity {
 
   @Column({ length: 255 })
   name: string;
-
-  @Column()
-  duties: string;
-
-  @Column()
-  requirements: string;
-
-  @Column()
-  salaryMinLimit: number;
-
-  @Column()
-  salaryMaxLimit: number;
-
-  @ManyToOne(
-    () => PositionGroupEntity,
-    (positionGroup) => positionGroup.positions,
-  )
-  group: PositionGroupEntity;
 
   @ManyToMany(() => CareerLevelEntity, (level) => level.name, {
     cascade: true,
