@@ -2,12 +2,15 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  HttpException,
+  HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CareerLevelEntity } from '../entity/careerLevel.entity';
 import { levelRepository } from '../repositories/level.repository';
 import { DeleteResult } from 'typeorm';
-import { LevelProps } from '../controllers/level.controller';
+import { LevelDto } from '../dto/level.dto';
 
 @Injectable()
 export class LevelsService {
@@ -17,33 +20,75 @@ export class LevelsService {
   ) {}
 
   async getAll(): Promise<CareerLevelEntity[]> {
-    return await this.careerLevelRepository.find({});
+    try {
+      return await this.careerLevelRepository.find({});
+    } catch (error) {
+      console.error('[LEVELS_GET_ERROR]', error);
+      Logger.error(error);
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
-  async createLevel(levelProps: LevelProps): Promise<CareerLevelEntity> {
-    const { name } = levelProps;
-    const isExist = await this.careerLevelRepository.findOne({
-      name,
-    });
-    if (isExist) {
-      throw new ConflictException(`Level '${name}' is already exist!`);
+  async createLevel(levelProps: LevelDto): Promise<CareerLevelEntity> {
+    try {
+      const { name } = levelProps;
+
+      const isExist = await this.careerLevelRepository.findOne({
+        name,
+      });
+
+      if (isExist) {
+        throw new ConflictException(`Level '${name}' is already exist!`);
+      }
+
+      const newCareerLevelEntity =
+        this.careerLevelRepository.create(levelProps);
+
+      return this.careerLevelRepository.save(newCareerLevelEntity);
+    } catch (error) {
+      console.error('[LEVELS_CREATION_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const newCareerLevelEntity = this.careerLevelRepository.create(levelProps);
-    return this.careerLevelRepository.save(newCareerLevelEntity);
   }
 
   async updateLevel(
     id: string,
-    newRoleProps: LevelProps,
+    newRoleProps: LevelDto,
   ): Promise<CareerLevelEntity> {
-    const level = await this.careerLevelRepository.findOne(id);
-    if (!level) {
-      throw new NotFoundException(`Level with ID ${id} not found`);
+    try {
+      const level = await this.careerLevelRepository.findOne(id);
+
+      if (!level) {
+        throw new NotFoundException(`Level with ID ${id} not found`);
+      }
+
+      return await this.careerLevelRepository.save({
+        ...level,
+        ...newRoleProps,
+      });
+    } catch (error) {
+      console.error('[LEVELS_UPDATE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return await this.careerLevelRepository.save({
-      ...level,
-      ...newRoleProps,
-    });
   }
 
   async deleteLevel(id: string): Promise<DeleteResult> {
@@ -52,18 +97,28 @@ export class LevelsService {
         name: 'Deleted level',
       });
 
-      if (deletedLevel.id === id) {
+      if (deletedLevel?.id === id) {
         throw new ConflictException(`You can't remove deleted level!`);
       }
 
       const result = await this.careerLevelRepository.delete(id);
+
       if (!result.affected) {
         throw new NotFoundException(`Level with ID '${id}' not found`);
       }
       return result;
     } catch (error) {
-      console.log(error, 'huy');
-      return error;
+      console.error('[LEVELS_DELETE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }
