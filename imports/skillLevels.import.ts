@@ -20,10 +20,10 @@ const importSkillLevels = async () => {
     for (const existLevel of currentSkillLevels) {
       const existLevelSkillValue = existSkills.find(
         (skill) => skill.id === existLevel.skill_id.id,
-      ).value;
+      )?.value;
       const existLevelCareerValue = existCarrerLevels.find(
         (careerLevel) => careerLevel.id === existLevel.level_id.id,
-      ).name;
+      )?.name;
       if (
         newLevel.value === existLevel.value &&
         newLevel.skill === existLevelSkillValue &&
@@ -44,7 +44,7 @@ const importSkillLevels = async () => {
   const newSkillLevelsWithSkillGroupAndCareerLevels = [];
   newSkillLevels.forEach((newLevel) => {
     const existPositionEntity = existCarrerLevels.find(
-      (existPosition) => existPosition.name === newLevel.level,
+      (existPosition) => existPosition?.name === newLevel?.level,
     );
 
     const existSkillEntity = existSkills.filter(
