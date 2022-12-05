@@ -5,11 +5,13 @@ import { PositionController } from './controllers/position.controller';
 import { SkillGroupController } from './controllers/skillGroup.controller';
 import { SoftSkillController } from './controllers/softSkill.controller';
 import { LevelsController } from './controllers/level.controller';
+import { HardSkillMatrixController } from './controllers/hardSkillMatrix.controller';
 
 import { SkillGroupService } from './services/skillGroup.service';
 import { PositionService } from './services/position.service';
 import { SoftSkillService } from './services/softSkill.service';
 import { LevelsService } from './services/level.service';
+import { HardSkillMatrixService } from './services/hardSkillMatrix.service';
 
 import { skillGroupRepository } from './repositories/skillGroup.repository';
 import { skillRepository } from './repositories/skill.repository';
@@ -20,6 +22,7 @@ import { softSkillScoreRepository } from './repositories/softSkillScore.reposito
 import { usersRepository } from './repositories/users.repository';
 import { positionRepository } from './repositories/position.repository';
 import { levelRepository } from './repositories/level.repository';
+import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.repository';
 
 @Module({
   imports: [
@@ -33,6 +36,7 @@ import { levelRepository } from './repositories/level.repository';
       skillsToLevelsRepository,
       softSkillRepository,
       softSkillScoreRepository,
+      hardSkillMatrixRepository,
     ]),
   ],
   providers: [
@@ -40,12 +44,14 @@ import { levelRepository } from './repositories/level.repository';
     SoftSkillService,
     PositionService,
     LevelsService,
+    HardSkillMatrixService,
   ],
   controllers: [
     PositionController,
     SkillGroupController,
     SoftSkillController,
     LevelsController,
+    HardSkillMatrixController,
   ],
   exports: [],
 })
