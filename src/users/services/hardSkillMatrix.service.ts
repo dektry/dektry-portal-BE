@@ -23,6 +23,7 @@ import {
   HardSkillMatrixGetDto,
   HardSkillMatrixGetDetailsDto,
   HardSkillMatrixUpdateDto,
+  HardSkillMatrixCopyDto,
 } from '../dto/hardSkillMatrix.dto';
 
 @Injectable()
@@ -426,6 +427,70 @@ export class HardSkillMatrixService {
       return result;
     } catch (error) {
       console.error('[HARD_SKILL_MATRIX_DELETE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async copy(payload: HardSkillMatrixCopyDto) {
+    try {
+      const position = await this.positionRepository.findOne({
+        where: { id: payload.positionId },
+      });
+
+      if (!position) {
+        throw new NotFoundException(
+          `Position with such id '${payload.positionId}' not found`,
+        );
+      }
+
+      const isMatrixWithSuchPositionExist =
+        await this.hardSkillMatrixRepository.findOne({
+          where: {
+            position,
+          },
+        });
+
+      if (isMatrixWithSuchPositionExist) {
+        throw new ConflictException(
+          `Matrix with such position(${position.name}) is already exist!`,
+        );
+      }
+
+      const matrix = await this.hardSkillMatrixRepository.save({ position });
+      const copiedMatrix: HardSkillMatrixGetDetailsDto = await this.getDetails(
+        payload.hardSkillMatrixId,
+      );
+
+      for (let skillGroup of copiedMatrix?.skillGroups) {
+        let createdSkillGroup = await this.skillGroupRepository.save({
+          value: skillGroup.value,
+          hardSkillMatrix: matrix,
+        });
+        for (let skill of skillGroup.skills) {
+          let createdSkill = await this.skillRepository.save({
+            value: skill.value,
+            skill_group_id: createdSkillGroup,
+          });
+
+          for (let question of skill.questions) {
+            await this.questionRepository.save({
+              value: question.value,
+              skill_id: createdSkill,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[HARD_SKILL_MATRIX_COPY_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) {

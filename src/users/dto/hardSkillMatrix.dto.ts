@@ -113,3 +113,13 @@ export class HardSkillMatrixUpdateDto extends PartialType(
   @ApiProperty({ type: 'string' })
   positionId: string;
 }
+
+export class HardSkillMatrixCopyDto {
+  @MaxLength(36)
+  @ApiProperty({ type: 'string' })
+  positionId: string;
+
+  @MaxLength(36)
+  @ApiProperty({ type: 'string' })
+  hardSkillMatrixId: string;
+}
