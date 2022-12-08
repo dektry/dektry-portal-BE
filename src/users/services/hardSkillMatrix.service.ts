@@ -274,6 +274,9 @@ export class HardSkillMatrixService {
               const skillFromDB = oldGroup.skills.filter(
                 (item) => item.id === skillFromPayload[0].id,
               );
+              const currentQuestionsIds = skillFromPayload[0].questions.map(
+                (item) => item.id,
+              );
 
               if (
                 skillFromPayload.length &&
@@ -283,6 +286,64 @@ export class HardSkillMatrixService {
                   { id: skillFromPayload[0].id },
                   { value: skillFromPayload[0].value },
                 );
+              }
+
+              const deletedQuestionIds = skillFromDB[0].questions
+                .filter((que) => !currentQuestionsIds.includes(que.id))
+                .map((item) => item.id);
+              const newQuestions = skillFromPayload[0].questions.filter(
+                (que) =>
+                  !skillFromDB[0]?.questions
+                    .map((item) => item.id)
+                    .includes(que.id),
+              );
+
+              //delete question
+              if (deletedQuestionIds.length) {
+                await this.questionRepository.query(
+                  `
+                    DELETE FROM public.question
+                        WHERE public.question.id = ANY($1)
+              `,
+                  [deletedQuestionIds],
+                );
+              }
+
+              //add new question
+              if (newQuestions.length) {
+                for (let newQuestion of newQuestions)
+                  await this.questionRepository.save({
+                    value: newQuestion.value,
+                    skill_id: { id: skillFromPayload[0].id },
+                  });
+              }
+
+              const newAndDeletedQuestionsIds = [
+                ...deletedQuestionIds,
+                ...newQuestions.map((que) => que.id),
+              ];
+              const questionsWithoutNewAndDeletedQuestions =
+                skillFromPayload[0].questions.filter(
+                  (item) => !newAndDeletedQuestionsIds.includes(item.id),
+                );
+
+              //edit questions
+              if (questionsWithoutNewAndDeletedQuestions.length) {
+                for (let oldQuestion of questionsWithoutNewAndDeletedQuestions) {
+                  const questionFromDb = skillFromDB[0].questions.filter(
+                    (item) => item.id === oldQuestion.id,
+                  );
+
+                  if (
+                    questionFromDb.length &&
+                    questionFromDb[0].value !== oldQuestion.value
+                  ) {
+                    await this.questionRepository.update(
+                      { id: oldQuestion.id },
+                      { value: oldQuestion.value },
+                    );
+                  }
+                }
               }
             }
           }
