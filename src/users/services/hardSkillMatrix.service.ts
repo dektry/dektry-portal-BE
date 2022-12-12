@@ -15,6 +15,7 @@ import { positionRepository } from '../repositories/position.repository';
 import { skillGroupRepository } from '../repositories/skillGroup.repository';
 import { skillRepository } from '../repositories/skill.repository';
 import { questionRepository } from '../repositories/question.repository';
+import { skillsToLevelsRepository } from '../repositories/skillsToLevels.repository';
 
 import { SkillGroupEntity } from '../entity/skillGroup.entity';
 
@@ -39,6 +40,8 @@ export class HardSkillMatrixService {
     private questionRepository: questionRepository,
     @InjectRepository(skillRepository)
     private skillRepository: skillRepository,
+    @InjectRepository(skillsToLevelsRepository)
+    private skillsToLevelsRepository: skillsToLevelsRepository,
   ) {}
 
   async create(payload: HardSkillMatrixCreateDto) {
@@ -78,6 +81,17 @@ export class HardSkillMatrixService {
             value: skill.value,
             skill_group_id: createdSkillGroup,
           });
+
+          //add skill grades
+          await this.skillsToLevelsRepository.save(
+            skill.grades.map((grade) => {
+              return this.skillsToLevelsRepository.create({
+                skill_id: { id: createdSkill.id },
+                level_id: { id: grade.levelId },
+                value: grade.value,
+              });
+            }),
+          );
 
           for (let question of skill.questions) {
             await this.questionRepository.save({
@@ -393,6 +407,8 @@ export class HardSkillMatrixService {
           'position',
           'skillGroups',
           'skillGroups.skills',
+          'skillGroups.skills.levels',
+          'skillGroups.skills.levels.level_id',
           'skillGroups.skills.questions',
         ],
       });
