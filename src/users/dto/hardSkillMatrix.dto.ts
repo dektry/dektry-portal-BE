@@ -169,7 +169,7 @@ export class HardSkillMatrixGetDetailsDto extends HardSkillMatrixGetDto {
 }
 
 export class HardSkillMatrixUpdateDto extends PartialType(
-  OmitType(HardSkillMatrixGetDetailsDto, ['position'] as const),
+  OmitType(HardSkillMatrixGetDetailsDto, ['position', 'id'] as const),
 ) {
   @MaxLength(36)
   @ApiProperty({ type: 'string' })
