@@ -25,6 +25,7 @@ import {
   HardSkillMatrixGetDetailsDto,
   HardSkillMatrixUpdateDto,
   HardSkillMatrixCopyDto,
+  HardSkillMatrixCopyResponseDto,
 } from '../dto/hardSkillMatrix.dto';
 
 @Injectable()
@@ -456,7 +457,9 @@ export class HardSkillMatrixService {
     }
   }
 
-  async copy(payload: HardSkillMatrixCopyDto) {
+  async copy(
+    payload: HardSkillMatrixCopyDto,
+  ): Promise<HardSkillMatrixCopyResponseDto> {
     try {
       const position = await this.positionRepository.findOne({
         where: { id: payload.positionId },
@@ -497,6 +500,17 @@ export class HardSkillMatrixService {
             skill_group_id: createdSkillGroup,
           });
 
+          //add skill grades
+          await this.skillsToLevelsRepository.save(
+            skill.levels.map((grade) => {
+              return this.skillsToLevelsRepository.create({
+                skill_id: { id: createdSkill.id },
+                level_id: { id: grade.level_id.id },
+                value: grade.value,
+              });
+            }),
+          );
+
           for (let question of skill.questions) {
             await this.questionRepository.save({
               value: question.value,
@@ -505,6 +519,8 @@ export class HardSkillMatrixService {
           }
         }
       }
+
+      return { hardSkillMatrixId: matrix.id };
     } catch (error) {
       console.error('[HARD_SKILL_MATRIX_COPY_ERROR]', error);
       Logger.error(error);

@@ -185,3 +185,8 @@ export class HardSkillMatrixCopyDto {
   @ApiProperty({ type: 'string' })
   hardSkillMatrixId: string;
 }
+
+export class HardSkillMatrixCopyResponseDto extends OmitType(
+  HardSkillMatrixCopyDto,
+  ['positionId'] as const,
+) {}

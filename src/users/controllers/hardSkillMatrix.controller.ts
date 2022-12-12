@@ -26,6 +26,7 @@ import {
   HardSkillMatrixGetDetailsDto,
   HardSkillMatrixUpdateDto,
   HardSkillMatrixCopyDto,
+  HardSkillMatrixCopyResponseDto,
 } from '../dto/hardSkillMatrix.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
@@ -53,7 +54,12 @@ export class HardSkillMatrixController {
   @Post('copy')
   @ApiBody({ type: HardSkillMatrixCopyDto })
   @UseGuards(JwtAuthGuard)
-  copy(@Body() payload: HardSkillMatrixCopyDto) {
+  @ApiOkResponse({
+    type: HardSkillMatrixCopyResponseDto,
+  })
+  copy(
+    @Body() payload: HardSkillMatrixCopyDto,
+  ): Promise<HardSkillMatrixCopyResponseDto> {
     return this.HardSkillMatrixService.copy(payload);
   }
 
