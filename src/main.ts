@@ -10,7 +10,7 @@ import { employeeCron } from './cron/employee';
 
 const corsOrigins =
   process.env.NODE_ENV === 'production'
-    ? [/\.web\.app$/, /\.herokuapp\.com$/]
+    ? process.env.FE_ORIGIN
     : [
         /\.web\.app$/,
         /\.herokuapp\.com$/,
