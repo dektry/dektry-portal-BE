@@ -7,8 +7,10 @@ import {
   OneToMany,
   ManyToOne,
 } from 'typeorm';
+
 import { SkillEntity } from './skill.entity';
 import { PositionEntity } from './position.entity';
+import { HardSkillMatrix } from '../entity/hardSkillMatrix.entity';
 
 @Entity({ name: 'skillGroup' })
 export class SkillGroupEntity extends BaseEntity {
@@ -32,4 +34,11 @@ export class SkillGroupEntity extends BaseEntity {
   })
   @JoinColumn({ name: 'position_id' })
   position_id: PositionEntity;
+
+  @ManyToOne(() => HardSkillMatrix, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'hard_skill_matrix_id' })
+  hardSkillMatrix: HardSkillMatrix;
 }
