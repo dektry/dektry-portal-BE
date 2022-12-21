@@ -451,7 +451,9 @@
       <p class="title">LANGUAGE</p>
       <div class="language-box">
         {{#if languages}} {{#each languages}}
-        <p>{{ this }}</p>
+        <div>
+          <p>{{ this.value }} -  {{ this.level }}</p>
+        </div>
         {{/each}}{{/if}}
       </div>
       <p class="title">EDUCATION</p>
