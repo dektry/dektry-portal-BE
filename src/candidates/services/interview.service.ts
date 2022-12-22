@@ -105,7 +105,7 @@ export class InterviewService {
 
       await this.skillToInterviewRepository.save(interviewSkills);
 
-      const answers: IAnswer[] = await helper.getInterviewAnswers(
+      const answers: any = await helper.getInterviewAnswers(
         savedInterview,
         SkillToInterviewEntity,
         SkillsToLevelsEntity,
@@ -228,7 +228,7 @@ export class InterviewService {
 
       await this.skillToInterviewRepository.save(interviewSkills);
 
-      const answers: IAnswer[] = await helper.getInterviewAnswers(
+      const answers: any = await helper.getInterviewAnswers(
         savedInterview,
         SkillToInterviewEntity,
         SkillsToLevelsEntity,
@@ -270,7 +270,7 @@ export class InterviewService {
     if (interview) {
       const helper = new Helper();
 
-      const answers = await helper.getInterviewAnswers(
+      const answers: any = await helper.getInterviewAnswers(
         interview,
         SkillToInterviewEntity,
         SkillsToLevelsEntity,

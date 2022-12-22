@@ -1,12 +1,29 @@
 import { getRepository, In } from 'typeorm';
-import { IAnswer } from '../candidates/utils/constants';
+import {
+  InterviewResultColors,
+  SkillLevelsOrder,
+} from '../employee/utils/constants';
+import { InterviewAnswers } from '../employee/dto/interviews.dto';
 
 export class Helper {
+  private getAnswerColor(assigned: string, required: string) {
+    const assignedOrder =
+      SkillLevelsOrder[assigned.replace(/\s/g, '').toLowerCase()];
+    const requiredOrder =
+      SkillLevelsOrder[required.replace(/\s/g, '').toLowerCase()];
+    console.log('requiredOrder', requiredOrder, 'assignedOrder', assignedOrder);
+    return assignedOrder === requiredOrder
+      ? InterviewResultColors.WHITE
+      : assignedOrder > requiredOrder
+      ? InterviewResultColors.GREEN
+      : InterviewResultColors.RED;
+  }
+
   public getInterviewAnswers = async (
     interview,
     SkillToInterviewEntity,
     SkillToLevelEntity,
-  ): Promise<IAnswer[]> => {
+  ): Promise<InterviewAnswers[]> => {
     const interviewSkills = await getRepository(SkillToInterviewEntity).find({
       where: {
         interview_id: interview?.id,
@@ -26,16 +43,16 @@ export class Helper {
       relations: ['skill_id'],
     });
 
-    const answers: IAnswer[] = interviewSkills.map((skill: any) => {
+    const answers: InterviewAnswers[] = interviewSkills.map((skill: any) => {
       const desiredSkill: any = positionSkills.find(
         (item: any) => item.skill_id.id === skill?.skill_id.id,
       );
 
       return {
         skill: skill.skill_id.value,
-        actual: skill.value,
-        desired: desiredSkill.value,
-        id: skill.skill_id.id,
+        assigned: skill.value,
+        required: desiredSkill.value,
+        color: this.getAnswerColor(skill.value, desiredSkill.value),
       };
     });
 

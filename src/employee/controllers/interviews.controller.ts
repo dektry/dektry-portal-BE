@@ -8,6 +8,14 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiTags,
+  ApiParam,
+  ApiResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
 import { InterviewEntity } from '../entity/interview.entity';
@@ -20,42 +28,65 @@ import {
 } from '../utils/constants';
 import {
   CompleteInterviewsDto,
+  InterviewResultDto,
   EditInterviewsDto,
+  GetAllInterviewsDto,
 } from './../dto/interviews.dto';
 
 @Controller('employee-interviews')
+@ApiBearerAuth()
+@ApiTags('employee-interviews-assessment')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad Request',
+})
 export class EmployeeInterviewsController {
   constructor(private InterviewService: EmployeeInterviewService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiBody({ type: CompleteInterviewsDto })
+  @ApiOkResponse({
+    type: InterviewResultDto,
+  })
   completeInterview(
     @Body() completeInterviewDto: CompleteInterviewsDto,
-  ): Promise<ICompletedInterviewResponse> {
+  ): Promise<InterviewResultDto> {
     return this.InterviewService.completeInterview(completeInterviewDto);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put()
-  editInterview(
-    @Body() editInterviewDto: EditInterviewsDto,
-  ): Promise<ICompletedInterviewResponse> {
-    return this.InterviewService.editInterview(editInterviewDto);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Put()
+  // editInterview(
+  //   @Body() editInterviewDto: EditInterviewsDto,
+  // ): Promise<ICompletedInterviewResponse> {
+  //   return this.InterviewService.editInterview(editInterviewDto);
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Get(':interviewId')
+  @ApiOkResponse({
+    type: InterviewResultDto,
+  })
   getInterviewResult(
     @Param('interviewId') interviewId: string,
-  ): Promise<ICompletedInterviewResponse> {
+  ): Promise<InterviewResultDto> {
     return this.InterviewService.getInterviewResult(interviewId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeId/all')
+  @ApiOkResponse({
+    isArray: true,
+    type: GetAllInterviewsDto,
+  })
   getAllInterviews(
     @Param('employeeId') employeeId: string,
-  ): Promise<InterviewEntity[]> {
+  ): Promise<GetAllInterviewsDto[]> {
     return this.InterviewService.getAllInterviews(employeeId);
   }
 

@@ -9,11 +9,11 @@ import {
 } from 'class-validator';
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
-class Grade {
+export class Grade {
   @IsNotEmpty({
     message: 'Grade value must not be empty',
   })
-  @Length(64)
+  @MaxLength(64, { message: 'value is too long' })
   @ApiProperty({
     type: 'string',
     description: 'Grade name(Basic, Novice, Expert...)',
