@@ -72,6 +72,11 @@ class QuestionGet extends Question {
   id: string;
 }
 
+class currentSkillLevel extends QuestionGet {
+  @ApiProperty({ type: 'string' })
+  value: string;
+}
+
 class Skills {
   @IsNotEmpty({
     message: 'SkillName must not be empty',
@@ -100,6 +105,11 @@ class SkillsGet extends OmitType(Skills, ['questions', 'grades'] as const) {
 
   @ApiProperty({ isArray: true, type: QuestionGet })
   questions: QuestionGet[];
+}
+
+class SkillsGetForAssessment extends SkillsGet {
+  @ApiProperty({ type: currentSkillLevel })
+  currentSkillLevel: currentSkillLevel;
 }
 
 class HardSkillMatrix {
@@ -161,6 +171,17 @@ export class HardSkillMatrixGetDto {
 
   @ApiProperty({ type: Position })
   position: Position;
+}
+
+export class HardSkillMatrixGetForAssessment extends HardSkillMatrixGetDto {
+  @ApiProperty({ isArray: true, type: SkillsGetForAssessment })
+  skills: SkillsGetForAssessment[];
+
+  @ApiProperty({ type: 'string' })
+  comment: string;
+
+  @ApiProperty({ type: Date })
+  created: Date;
 }
 
 export class HardSkillMatrixGetDetailsDto extends HardSkillMatrixGetDto {

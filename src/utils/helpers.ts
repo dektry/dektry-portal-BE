@@ -11,7 +11,7 @@ export class Helper {
       SkillLevelsOrder[assigned.replace(/\s/g, '').toLowerCase()];
     const requiredOrder =
       SkillLevelsOrder[required.replace(/\s/g, '').toLowerCase()];
-    console.log('requiredOrder', requiredOrder, 'assignedOrder', assignedOrder);
+
     return assignedOrder === requiredOrder
       ? InterviewResultColors.WHITE
       : assignedOrder > requiredOrder

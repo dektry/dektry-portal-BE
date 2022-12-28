@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+  Inject,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import * as moment from 'moment';
@@ -10,6 +16,7 @@ import { employeeInterviewRepository } from '../repositories/interview.repositor
 import { employeeRepository } from '../repositories/employee.repository';
 import { levelRepository } from 'users/repositories/level.repository';
 import { skillRepository } from '../../users/repositories/skill.repository';
+import { hardSkillMatrixRepository } from '../../users/repositories/hardSkillMatrix.repository';
 
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PositionEntity } from 'users/entity/position.entity';
@@ -18,6 +25,8 @@ import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';
 import { InterviewEntity } from '../entity/interview.entity';
 import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
 import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
+
+import { HardSkillMatrixService } from '../../users/services/hardSkillMatrix.service';
 
 import {
   interviewIsOver,
@@ -58,6 +67,10 @@ export class EmployeeInterviewService {
     private levelRepository: levelRepository,
     @InjectRepository(skillRepository)
     private skillRepository: skillRepository,
+    @InjectRepository(hardSkillMatrixRepository)
+    private hardSkillMatrixRepository: hardSkillMatrixRepository,
+    @Inject(HardSkillMatrixService)
+    private readonly hardSkillMatrixService: HardSkillMatrixService,
   ) {}
 
   async getInterviewResult(interviewId: string): Promise<InterviewResultDto> {
@@ -343,6 +356,132 @@ export class EmployeeInterviewService {
           : techAssessmentIsNotFound,
         err?.status,
       );
+    }
+  }
+
+  async getAssessmentComparison(employeeId: string) {
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
+
+      const interviews = await this.interviewRepository.find({
+        where: {
+          employee: employee,
+        },
+        relations: [
+          'skills',
+          'skills.skill_id',
+          'skills.skill_id.skill_group_id',
+        ],
+      });
+      const tableHeader: Array<string> = ['Skill'];
+      const tableBody: Array<Array<string>> = [];
+
+      interviews.forEach((interview, index) => {
+        const tableBodyElement: Array<string> = [];
+
+        tableHeader.push(String(interview.created));
+
+        interview.skills.forEach((skill) => {
+          tableBodyElement.push(skill.skill_id.value);
+        });
+      });
+
+      return interviews;
+    } catch (error) {
+      console.error('[EMPLOYEE_ASSESSMENT_COMPARISON_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getInterviewById(interviewId: string) {
+    try {
+      const interviews: InterviewEntity =
+        await this.interviewRepository.findOne({
+          relations: [
+            'position',
+            'skills',
+            'skills.skill_id',
+            'skills.skill_id.skill_group_id',
+          ],
+          where: {
+            id: interviewId,
+          },
+        });
+
+      const matrixId = await this.hardSkillMatrixRepository.query(
+        `
+          SELECT id 
+              FROM public."hardSkillMatrix" WHERE position_id = $1
+        `,
+        [interviews.position.id],
+      );
+
+      if (!matrixId?.length)
+        throw new HttpException('Interview not found', HttpStatus.BAD_REQUEST);
+
+      const hardSkillMatrix = await this.hardSkillMatrixService.getDetails(
+        matrixId[0]?.id,
+      );
+
+      //formatting matrix for FE Interview edit page
+      for (let i = 0; i < interviews.skills.length; i++) {
+        for (let j = 0; j < hardSkillMatrix.skillGroups.length; j++) {
+          if (
+            hardSkillMatrix.skillGroups[j]?.id ===
+            interviews.skills[i]?.skill_id?.skill_group_id?.id
+          ) {
+            for (
+              let k = 0;
+              k < hardSkillMatrix.skillGroups[j].skills.length;
+              k++
+            ) {
+              if (
+                hardSkillMatrix.skillGroups[j].skills[k].id ===
+                interviews.skills[i]?.skill_id?.id
+              ) {
+                hardSkillMatrix.skillGroups[j].skills[k]['currentSkillLevel'] =
+                  {
+                    id: interviews.skills[i].id,
+                    value: interviews.skills[i].value,
+                  };
+              }
+            }
+          }
+        }
+      }
+
+      //added interview assessment comment
+      hardSkillMatrix['comment'] = interviews.comment;
+
+      //added interview assessment date created
+      hardSkillMatrix['created'] = interviews.created;
+
+      return hardSkillMatrix;
+    } catch (error) {
+      console.error('[EMPLOYEE_ASSESSMENT_EDIT_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

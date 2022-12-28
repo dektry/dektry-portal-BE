@@ -5,11 +5,19 @@ import { EmployeeController } from './controllers/employee.controller';
 import { EmployeeInterviewsController } from './controllers/interviews.controller';
 import { EmployeeSoftAssessmentController } from './controllers/softAssessment.controller';
 import { ProjectsController } from './controllers/projects.controller';
+import { TechnologyController } from './controllers/technology.controller';
+import { SoftSkillToCvController } from './controllers/softSkillToCv.controller';
+import { LanguageController } from './controllers/language.controller';
+import { EducationController } from './controllers/education.controller';
 
 import { EmployeeService } from './services/employee.service';
 import { EmployeeInterviewService } from './services/interview.service';
 import { EmployeeSoftAssessmentService } from './services/softAssessment.service';
 import { ProjectService } from './services/project.service';
+import { LanguageService } from './services/language.service';
+import { TechnologyService } from './services/technology.service';
+import { SoftSkillToCvService } from './services/softSkillToCv.service';
+import { EducationService } from './services/education.service';
 
 import { employeeRepository } from './repositories/employee.repository';
 import { employeeInterviewRepository } from './repositories/interview.repository';
@@ -22,20 +30,16 @@ import { softAssessmentRepository } from './repositories/softAssessment.reposito
 import { questionToSoftSkillRepository } from './repositories/questionToSkill.repository';
 import { technologyRepository } from './repositories/technology.repository';
 import { projectRepository } from './repositories/project.repository';
-import { TechnologyController } from './controllers/technology.controller';
-import { TechnologyService } from './services/technology.service';
-import { softSkillToCvRepository } from './repositories/softSkillToCv.repository';
-import { SoftSkillToCvController } from './controllers/softSkillToCv.controller';
-import { SoftSkillToCvService } from './services/softSkillToCv.service';
+import { hardSkillMatrixRepository } from '../users/repositories/hardSkillMatrix.repository';
 import { educationRepository } from './repositories/education.repository';
-import { EducationController } from './controllers/education.controller';
-import { EducationService } from './services/education.service';
 import { languageRepository } from './repositories/language.repository';
-import { LanguageController } from './controllers/language.controller';
-import { LanguageService } from './services/language.service';
+import { softSkillToCvRepository } from './repositories/softSkillToCv.repository';
+
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
+    UsersModule,
     TypeOrmModule.forFeature([
       employeeRepository,
       employeeInterviewRepository,
@@ -51,6 +55,7 @@ import { LanguageService } from './services/language.service';
       softSkillToCvRepository,
       educationRepository,
       languageRepository,
+      hardSkillMatrixRepository,
     ]),
   ],
   controllers: [

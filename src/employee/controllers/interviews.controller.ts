@@ -32,6 +32,7 @@ import {
   EditInterviewsDto,
   GetAllInterviewsDto,
 } from './../dto/interviews.dto';
+import { HardSkillMatrixGetForAssessment } from '../../users/dto/hardSkillMatrix.dto';
 
 @Controller('employee-interviews')
 @ApiBearerAuth()
@@ -68,7 +69,7 @@ export class EmployeeInterviewsController {
   // }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':interviewId')
+  @Get(':interviewId/result')
   @ApiOkResponse({
     type: InterviewResultDto,
   })
@@ -88,6 +89,25 @@ export class EmployeeInterviewsController {
     @Param('employeeId') employeeId: string,
   ): Promise<GetAllInterviewsDto[]> {
     return this.InterviewService.getAllInterviews(employeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId/comparison')
+  // @ApiOkResponse({
+  //   isArray: true,
+  //   type: GetAllInterviewsDto,
+  // })
+  getAssessmentComparison(@Param('employeeId') employeeId: string) {
+    return this.InterviewService.getAssessmentComparison(employeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':interviewId')
+  @ApiOkResponse({
+    type: HardSkillMatrixGetForAssessment,
+  })
+  getInterviewById(@Param('interviewId') interviewId: string) {
+    return this.InterviewService.getInterviewById(interviewId);
   }
 
   @UseGuards(JwtAuthGuard)
