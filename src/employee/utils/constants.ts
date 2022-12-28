@@ -3,8 +3,8 @@ import { IAnswer } from '../../candidates/utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
 export enum InterviewResultColors {
-  RED = '#D32F2F',
-  GREEN = '#2E7D32',
+  RED = 'rgba(211, 47, 47, 0.1)',
+  GREEN = 'rgba(46, 125, 50, 0.1)',
   WHITE = '#FFFFFF',
 }
 
