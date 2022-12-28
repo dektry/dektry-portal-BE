@@ -48,7 +48,9 @@ import {
   InterviewResultDto,
   InterviewAnswers,
   GetAllInterviewsDto,
+  EditInterviewDto,
 } from '../dto/interviews.dto';
+import { HardSkillMatrixGetForAssessment } from '../../users/dto/hardSkillMatrix.dto';
 
 import { Helper } from 'utils/helpers';
 
@@ -171,7 +173,7 @@ export class EmployeeInterviewService {
   }
 
   // async editInterview(
-  //   interview: IEditInterviewBody,
+  //   interview: EditInterviewDto,
   // ): Promise<ICompletedInterviewResponse> {
   //   try {
   //     const employee: EmployeeEntity = await this.employeeRepository.findOne(
@@ -412,6 +414,7 @@ export class EmployeeInterviewService {
         await this.interviewRepository.findOne({
           relations: [
             'position',
+            'level',
             'skills',
             'skills.skill_id',
             'skills.skill_id.skill_group_id',
@@ -468,6 +471,12 @@ export class EmployeeInterviewService {
 
       //added interview assessment date created
       hardSkillMatrix['created'] = interviews.created;
+
+      //added interview assessment level(middle/senior...)
+      hardSkillMatrix['level'] = {
+        id: interviews.level.id,
+        name: interviews.level.name,
+      };
 
       return hardSkillMatrix;
     } catch (error) {

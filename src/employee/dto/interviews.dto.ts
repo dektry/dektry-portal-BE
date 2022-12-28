@@ -32,6 +32,19 @@ class InterviewGrade extends OmitType(Grade, ['levelId'] as const) {
   skillId: string;
 }
 
+class InterviewGradeEditDto extends InterviewGrade {
+  @IsNotEmpty({
+    message: 'gradeId must not be empty',
+  })
+  @Length(36)
+  @ApiProperty({
+    type: 'string',
+    required: true,
+    description: 'This is id for None, Basic...',
+  })
+  gradeId: string;
+}
+
 export class InterviewAnswers {
   @ApiProperty({
     type: 'string',
@@ -109,6 +122,23 @@ export class CompleteInterviewsDto {
   @MaxLength(512, { message: 'Comment is too long' })
   @ApiPropertyOptional({ type: 'string' })
   comment?: string;
+}
+
+export class EditInterviewDto extends OmitType(CompleteInterviewsDto, [
+  'grades',
+] as const) {
+  @IsArray()
+  @ValidateNested()
+  @Type(() => InterviewGradeEditDto)
+  @ArrayMinSize(1)
+  @ArrayMaxSize(1000)
+  @ApiProperty({
+    type: InterviewGradeEditDto,
+    isArray: true,
+    description: 'Answers on questions',
+    required: true,
+  })
+  grades: InterviewGradeEditDto[];
 }
 
 export class InterviewResultDto {

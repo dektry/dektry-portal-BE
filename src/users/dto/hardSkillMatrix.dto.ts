@@ -156,6 +156,8 @@ class Position {
   name: string;
 }
 
+class Level extends Position {}
+
 export class HardSkillMatrixCreateDto {
   @IsNotEmpty({
     message: 'PositionId must not be empty',
@@ -189,6 +191,9 @@ export class HardSkillMatrixGetForAssessment extends HardSkillMatrixGetDto {
 
   @ApiProperty({ type: Date })
   created: Date;
+
+  @ApiProperty({ type: Level })
+  level: Level;
 }
 
 export class HardSkillMatrixGetDetailsDto extends HardSkillMatrixGetDto {
