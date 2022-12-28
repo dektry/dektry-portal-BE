@@ -141,6 +141,13 @@ class HardSkillMatrixGet extends OmitType(HardSkillMatrix, [
   skills: SkillsGet[];
 }
 
+class hardSkillMatrixGetAssesment extends OmitType(HardSkillMatrixGet, [
+  'skills',
+] as const) {
+  @ApiProperty({ isArray: true, type: SkillsGetForAssessment })
+  skills: SkillsGetForAssessment[];
+}
+
 class Position {
   @ApiProperty({ type: 'string' })
   id: string;
@@ -174,8 +181,8 @@ export class HardSkillMatrixGetDto {
 }
 
 export class HardSkillMatrixGetForAssessment extends HardSkillMatrixGetDto {
-  @ApiProperty({ isArray: true, type: SkillsGetForAssessment })
-  skills: SkillsGetForAssessment[];
+  @ApiProperty({ isArray: true, type: hardSkillMatrixGetAssesment })
+  skillGroups: hardSkillMatrixGetAssesment[];
 
   @ApiProperty({ type: 'string' })
   comment: string;
