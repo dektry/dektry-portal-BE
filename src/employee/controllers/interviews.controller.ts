@@ -29,7 +29,7 @@ import {
 import {
   CompleteInterviewsDto,
   InterviewResultDto,
-  EditInterviewsDto,
+  EditInterviewDto,
   GetAllInterviewsDto,
 } from './../dto/interviews.dto';
 import { HardSkillMatrixGetForAssessment } from '../../users/dto/hardSkillMatrix.dto';
@@ -60,13 +60,14 @@ export class EmployeeInterviewsController {
     return this.InterviewService.completeInterview(completeInterviewDto);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Put()
-  // editInterview(
-  //   @Body() editInterviewDto: EditInterviewsDto,
-  // ): Promise<ICompletedInterviewResponse> {
-  //   return this.InterviewService.editInterview(editInterviewDto);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Put(':interviewId')
+  editInterview(
+    @Body() editInterviewDto: EditInterviewDto,
+    @Param('interviewId') interviewId: string,
+  ) {
+    return this.InterviewService.editInterview(editInterviewDto, interviewId);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get(':interviewId/result')

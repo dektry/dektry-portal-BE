@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import * as moment from 'moment';
 import { DeleteResult, In } from 'typeorm';
 
 import { positionRepository } from 'users/repositories/position.repository';
@@ -20,7 +19,6 @@ import { hardSkillMatrixRepository } from '../../users/repositories/hardSkillMat
 
 import { EmployeeEntity } from '../entity/employee.entity';
 import { PositionEntity } from 'users/entity/position.entity';
-import { SkillEntity } from 'users/entity/skill.entity';
 import { SkillToInterviewEntity } from '../entity/skillToInterview.entity';
 import { InterviewEntity } from '../entity/interview.entity';
 import { CareerLevelEntity } from '../../users/entity/careerLevel.entity';
@@ -30,27 +28,19 @@ import { HardSkillMatrixService } from '../../users/services/hardSkillMatrix.ser
 
 import {
   interviewIsOver,
-  IAnswer,
   interviewWasNotDeleted,
-  interviewsNotFound,
 } from 'candidates/utils/constants';
 import {
   employeeNotFound,
-  ICompletedInterviewResponse,
-  ICompleteInterview,
-  IEditInterviewBody,
   IDeletedInterviewResponse,
-  techAssessmentCantBeSaved,
   techAssessmentIsNotFound,
 } from '../utils/constants';
 import {
   CompleteInterviewsDto,
   InterviewResultDto,
-  InterviewAnswers,
   GetAllInterviewsDto,
   EditInterviewDto,
 } from '../dto/interviews.dto';
-import { HardSkillMatrixGetForAssessment } from '../../users/dto/hardSkillMatrix.dto';
 
 import { Helper } from 'utils/helpers';
 
@@ -111,7 +101,10 @@ export class EmployeeInterviewService {
 
       if (error?.response) {
         throw new HttpException(
-          { status: error?.status, message: error?.response?.message },
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
           error?.status,
         );
       }
@@ -163,7 +156,10 @@ export class EmployeeInterviewService {
 
       if (error?.response) {
         throw new HttpException(
-          { status: error?.status, message: error?.response?.message },
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
           error?.status,
         );
       }
@@ -172,117 +168,66 @@ export class EmployeeInterviewService {
     }
   }
 
-  // async editInterview(
-  //   interview: EditInterviewDto,
-  // ): Promise<ICompletedInterviewResponse> {
-  //   try {
-  //     const employee: EmployeeEntity = await this.employeeRepository.findOne(
-  //       interview.employeeId,
-  //     );
-  //     if (!employee)
-  //       throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
+  async editInterview(interview: EditInterviewDto, interviewId: string) {
+    try {
+      const prevResultsOfInterview: InterviewEntity =
+        await this.interviewRepository.findOne({
+          where: {
+            id: interviewId,
+          },
+        });
 
-  //     const prevResultsOfInterview: InterviewEntity =
-  //       await this.interviewRepository.findOne({
-  //         where: {
-  //           employee: employee,
-  //         },
-  //       });
+      if (!prevResultsOfInterview)
+        throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
 
-  //     if (!prevResultsOfInterview)
-  //       throw new HttpException(interviewIsOver, HttpStatus.BAD_REQUEST);
+      if (prevResultsOfInterview.comment !== interview.comment) {
+        await this.interviewRepository.update(
+          { id: prevResultsOfInterview.id },
+          {
+            comment: interview.comment,
+          },
+        );
+      }
 
-  //     const helper = new Helper();
+      const interviewSkillsPrevGrades: SkillToInterviewEntity[] =
+        await this.skillToInterviewRepository.find({
+          where: {
+            id: In(interview.grades.map((grade) => grade.gradeId)),
+          },
+        });
 
-  //     const position: PositionEntity = await this.positionRepository.findOne(
-  //       interview.positionId,
-  //     );
-  //     const level: CareerLevelEntity = await this.levelRepository.findOne(
-  //       interview.levelId,
-  //     );
+      //update selected assessment skills grades (Basic, Expert...)
+      if (interviewSkillsPrevGrades.length) {
+        for (let grade of interviewSkillsPrevGrades) {
+          for (let gradeFromPayload of interview.grades) {
+            if (
+              grade.id === gradeFromPayload.gradeId &&
+              grade.value !== gradeFromPayload.value
+            ) {
+              await this.skillToInterviewRepository.update(
+                { id: grade.id },
+                { value: gradeFromPayload.value },
+              );
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[EMPLOYEE_INTERVIEW_EDIT_ERROR]', error);
+      Logger.error(error);
+      if (error?.response) {
+        throw new HttpException(
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
+          error?.status,
+        );
+      }
 
-  //     const filteredSkills: SkillEntity[] = await this.skillRepository.find({
-  //       where: {
-  //         id: In(Object.keys(interview.answers)),
-  //       },
-  //     });
-
-  //     await this.interviewRepository.update(
-  //       { id: prevResultsOfInterview.id },
-  //       {
-  //         employee,
-  //         position,
-  //         level,
-  //         comment: interview.comment ?? null,
-  //       },
-  //     );
-
-  //     const savedInterview: InterviewEntity =
-  //       await this.interviewRepository.findOne({
-  //         where: {
-  //           employee,
-  //         },
-  //         relations: ['level'],
-  //       });
-
-  //     const existingAnswers: SkillToInterviewEntity[] =
-  //       await this.skillToInterviewRepository.find({
-  //         where: {
-  //           interview_id: savedInterview,
-  //           skill_id: In(Object.keys(interview.answers)),
-  //         },
-  //         relations: ['skill_id'],
-  //       });
-
-  //     for (const answerToUpdate of existingAnswers) {
-  //       await this.skillToInterviewRepository.update(
-  //         { id: answerToUpdate.id },
-  //         {
-  //           value: interview.answers[answerToUpdate.skill_id.id],
-  //         },
-  //       );
-  //     }
-
-  //     const newSkills: SkillEntity[] = filteredSkills.filter((skill) => {
-  //       const isSkillRecorded = existingAnswers.find(
-  //         (answer) => answer.skill_id.id === skill.id,
-  //       );
-
-  //       return !isSkillRecorded;
-  //     });
-
-  //     const interviewSkills: SkillToInterviewEntity[] = newSkills.map(
-  //       (skill) => {
-  //         return this.skillToInterviewRepository.create({
-  //           interview_id: savedInterview,
-  //           skill_id: skill,
-  //           value: interview.answers[skill.id],
-  //         });
-  //       },
-  //     );
-
-  //     await this.skillToInterviewRepository.save(interviewSkills);
-
-  //     const answers: IAnswer[] = await helper.getInterviewAnswers(
-  //       savedInterview,
-  //       SkillToInterviewEntity,
-  //       SkillsToLevelsEntity,
-  //     );
-  //     return {
-  //       interview: savedInterview,
-  //       answers,
-  //     };
-  //   } catch (err) {
-  //     Logger.error(err);
-
-  //     throw new HttpException(
-  //       err?.response
-  //         ? { status: err?.status, message: err?.response }
-  //         : techAssessmentCantBeSaved,
-  //       err?.status,
-  //     );
-  //   }
-  // }
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   async getAllInterviews(employeeId: string): Promise<GetAllInterviewsDto[]> {
     try {
@@ -319,7 +264,10 @@ export class EmployeeInterviewService {
 
       if (error?.response) {
         throw new HttpException(
-          { status: error?.status, message: error?.response?.message },
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
           error?.status,
         );
       }
