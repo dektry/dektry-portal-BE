@@ -9,11 +9,11 @@ import {
 } from 'class-validator';
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
-class Grade {
+export class Grade {
   @IsNotEmpty({
     message: 'Grade value must not be empty',
   })
-  @Length(64)
+  @MaxLength(64, { message: 'value is too long' })
   @ApiProperty({
     type: 'string',
     description: 'Grade name(Basic, Novice, Expert...)',
@@ -72,6 +72,11 @@ class QuestionGet extends Question {
   id: string;
 }
 
+class currentSkillLevel extends QuestionGet {
+  @ApiProperty({ type: 'string' })
+  value: string;
+}
+
 class Skills {
   @IsNotEmpty({
     message: 'SkillName must not be empty',
@@ -100,6 +105,11 @@ class SkillsGet extends OmitType(Skills, ['questions', 'grades'] as const) {
 
   @ApiProperty({ isArray: true, type: QuestionGet })
   questions: QuestionGet[];
+}
+
+class SkillsGetForAssessment extends SkillsGet {
+  @ApiProperty({ type: currentSkillLevel })
+  currentSkillLevel: currentSkillLevel;
 }
 
 class HardSkillMatrix {
@@ -131,6 +141,13 @@ class HardSkillMatrixGet extends OmitType(HardSkillMatrix, [
   skills: SkillsGet[];
 }
 
+class hardSkillMatrixGetAssesment extends OmitType(HardSkillMatrixGet, [
+  'skills',
+] as const) {
+  @ApiProperty({ isArray: true, type: SkillsGetForAssessment })
+  skills: SkillsGetForAssessment[];
+}
+
 class Position {
   @ApiProperty({ type: 'string' })
   id: string;
@@ -138,6 +155,8 @@ class Position {
   @ApiProperty({ type: 'string' })
   name: string;
 }
+
+class Level extends Position {}
 
 export class HardSkillMatrixCreateDto {
   @IsNotEmpty({
@@ -161,6 +180,20 @@ export class HardSkillMatrixGetDto {
 
   @ApiProperty({ type: Position })
   position: Position;
+}
+
+export class HardSkillMatrixGetForAssessment extends HardSkillMatrixGetDto {
+  @ApiProperty({ isArray: true, type: hardSkillMatrixGetAssesment })
+  skillGroups: hardSkillMatrixGetAssesment[];
+
+  @ApiProperty({ type: 'string' })
+  comment: string;
+
+  @ApiProperty({ type: Date })
+  created: Date;
+
+  @ApiProperty({ type: Level })
+  level: Level;
 }
 
 export class HardSkillMatrixGetDetailsDto extends HardSkillMatrixGetDto {

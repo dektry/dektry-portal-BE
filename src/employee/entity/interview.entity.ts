@@ -6,6 +6,8 @@ import {
   JoinColumn,
   OneToMany,
   ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 import { EmployeeEntity } from './employee.entity';
@@ -18,14 +20,17 @@ export class InterviewEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'timestamptz' })
-  createdAt: Date;
+  @CreateDateColumn()
+  created: Date;
 
-  @Column({ type: 'boolean', nullable: true })
-  isApproved: boolean;
+  @UpdateDateColumn()
+  updated: Date;
 
   @Column({ length: 512, nullable: true })
   comment: string;
+
+  @Column({ length: 32, default: 'Assessment' })
+  type: string;
 
   @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',

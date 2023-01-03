@@ -53,6 +53,6 @@ import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.reposi
     LevelsController,
     HardSkillMatrixController,
   ],
-  exports: [],
+  exports: [HardSkillMatrixService],
 })
 export class UsersModule {}

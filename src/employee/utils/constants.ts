@@ -2,6 +2,31 @@ import { InterviewEntity } from '../entity/interview.entity';
 import { IAnswer } from '../../candidates/utils/constants';
 import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
 
+export enum InterviewResultColors {
+  RED = 'rgba(211, 47, 47, 0.1)',
+  GREEN = 'rgba(46, 125, 50, 0.1)',
+  WHITE = '#FFFFFF',
+}
+
+export const CareerLevelOrder = {
+  itern: 0,
+  junior: 1,
+  'junior+': 2,
+  middle: 3,
+  'middle+': 4,
+  senior: 5,
+  lead: 6,
+};
+
+export const SkillLevelsOrder = {
+  none: 0,
+  novice: 1,
+  basic: 2,
+  intermediate: 3,
+  advanced: 4,
+  expert: 5,
+};
+
 export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
   answers?: IAnswer[];
