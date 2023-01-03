@@ -316,16 +316,29 @@ export class EmployeeInterviewService {
       const tableBody: Array<Array<string>> = [];
 
       interviews.forEach((interview, index) => {
-        const tableBodyElement: Array<string> = [];
+        let tableBodyElement: Array<string> = [];
+        let currentSkillGradePosition = 0;
 
         tableHeader.push(String(interview.created));
 
-        interview.skills.forEach((skill) => {
-          tableBodyElement.push(skill.skill_id.value);
-          return;
-        });
-      });
+        for (let i = 0; i < interviews.length; i++) {
+          for (
+            let j = currentSkillGradePosition;
+            j < interview.skills.length;
+            j++
+          ) {
+            tableBodyElement.push(interviews[i]?.skills[j]?.skill_id?.value);
+            tableBodyElement.push(interviews[i]?.skills[j]?.value);
+            continue;
+          }
+        }
 
+        tableBody.push(tableBodyElement);
+
+        tableBodyElement = [];
+        currentSkillGradePosition += 1;
+      });
+      console.log(tableBody);
       return interviews;
     } catch (error) {
       console.error('[EMPLOYEE_ASSESSMENT_COMPARISON_ERROR]', error);
