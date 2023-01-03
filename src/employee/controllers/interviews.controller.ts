@@ -18,14 +18,9 @@ import {
 } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { InterviewEntity } from '../entity/interview.entity';
 
 import { EmployeeInterviewService } from '../services/interview.service';
 
-import {
-  ICompletedInterviewResponse,
-  IDeletedInterviewResponse,
-} from '../utils/constants';
 import {
   CompleteInterviewsDto,
   InterviewResultDto,
@@ -112,10 +107,8 @@ export class EmployeeInterviewsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':employeeId')
-  deleteInterviewResult(
-    @Param('employeeId') employeeId: string,
-  ): Promise<IDeletedInterviewResponse> {
-    return this.InterviewService.deleteInterviewResult(employeeId);
+  @Delete(':interviewId')
+  deleteInterviewResult(@Param('interviewId') interviewId: string) {
+    return this.InterviewService.deleteInterviewResult(interviewId);
   }
 }

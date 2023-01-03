@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  NotFoundException,
   Logger,
   Inject,
 } from '@nestjs/common';
@@ -26,15 +27,8 @@ import { SkillsToLevelsEntity } from 'users/entity/skillsToLevels.entity';
 
 import { HardSkillMatrixService } from '../../users/services/hardSkillMatrix.service';
 
-import {
-  interviewIsOver,
-  interviewWasNotDeleted,
-} from 'candidates/utils/constants';
-import {
-  employeeNotFound,
-  IDeletedInterviewResponse,
-  techAssessmentIsNotFound,
-} from '../utils/constants';
+import { interviewIsOver } from 'candidates/utils/constants';
+import { employeeNotFound, techAssessmentIsNotFound } from '../utils/constants';
 import {
   CompleteInterviewsDto,
   InterviewResultDto,
@@ -276,35 +270,26 @@ export class EmployeeInterviewService {
     }
   }
 
-  async deleteInterviewResult(
-    employeeId: string,
-  ): Promise<IDeletedInterviewResponse> {
+  async deleteInterviewResult(id: string) {
     try {
-      const employee: EmployeeEntity = await this.employeeRepository.findOne(
-        employeeId,
-      );
-      if (!employee)
-        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
-
       const interviewWasDeleted: DeleteResult =
-        await this.interviewRepository.delete({
-          employee,
-        });
+        await this.interviewRepository.delete(id);
 
-      if (interviewWasDeleted) {
-        return {
-          answer: 'Interview was deleted successfully',
-        };
+      if (!interviewWasDeleted.affected) {
+        throw new NotFoundException(`Intreview with ID '${id}' not found`);
       }
-      throw new HttpException(interviewWasNotDeleted, HttpStatus.BAD_REQUEST);
-    } catch (err) {
-      Logger.error(err);
+    } catch (error) {
+      console.error('[EMPLOYEE_INTERVIEW_DELETE_ERROR]', error);
+      Logger.error(error);
 
       throw new HttpException(
-        err?.response
-          ? { status: err?.status, message: err?.response }
+        error?.response
+          ? {
+              status: error?.status,
+              message: error?.response?.message ?? error?.response,
+            }
           : techAssessmentIsNotFound,
-        err?.status,
+        error?.status,
       );
     }
   }
@@ -337,6 +322,7 @@ export class EmployeeInterviewService {
 
         interview.skills.forEach((skill) => {
           tableBodyElement.push(skill.skill_id.value);
+          return;
         });
       });
 
