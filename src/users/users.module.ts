@@ -3,13 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PositionController } from './controllers/position.controller';
 import { SkillGroupController } from './controllers/skillGroup.controller';
-import { SoftSkillController } from './controllers/softSkill.controller';
+import { SoftSkillMatrixController } from './controllers/softSkillMatrix.controller';
 import { LevelsController } from './controllers/level.controller';
 import { HardSkillMatrixController } from './controllers/hardSkillMatrix.controller';
 
 import { SkillGroupService } from './services/skillGroup.service';
 import { PositionService } from './services/position.service';
-import { SoftSkillService } from './services/softSkill.service';
+import { SoftSkillMatrixService } from './services/softSkillMatrix.service';
 import { LevelsService } from './services/level.service';
 import { HardSkillMatrixService } from './services/hardSkillMatrix.service';
 
@@ -45,7 +45,7 @@ import { softSkillsToLevelsRepository } from './repositories/softSkillsToLevels.
   ],
   providers: [
     SkillGroupService,
-    SoftSkillService,
+    SoftSkillMatrixService,
     PositionService,
     LevelsService,
     HardSkillMatrixService,
@@ -53,7 +53,7 @@ import { softSkillsToLevelsRepository } from './repositories/softSkillsToLevels.
   controllers: [
     PositionController,
     SkillGroupController,
-    SoftSkillController,
+    SoftSkillMatrixController,
     LevelsController,
     HardSkillMatrixController,
   ],
