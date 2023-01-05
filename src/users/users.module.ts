@@ -23,6 +23,8 @@ import { usersRepository } from './repositories/users.repository';
 import { positionRepository } from './repositories/position.repository';
 import { levelRepository } from './repositories/level.repository';
 import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.repository';
+import { softSkillMatrixRepository } from './repositories/softSkillMatrix.repository';
+import { softSkillsToLevelsRepository } from './repositories/softSkillsToLevels.repository';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.reposi
       softSkillRepository,
       softSkillScoreRepository,
       hardSkillMatrixRepository,
+      softSkillMatrixRepository,
+      softSkillsToLevelsRepository,
     ]),
   ],
   providers: [
