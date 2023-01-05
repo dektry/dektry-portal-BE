@@ -108,6 +108,14 @@ export class SoftSkillMatrixCopyResponseDto extends OmitType(
   ['positionId'] as const,
 ) {}
 
+export class SoftSkillMatrixUpdateDto extends PartialType(
+  OmitType(SoftSkillMatrixGetDetailsDto, ['id', 'position'] as const),
+) {
+  @MaxLength(36)
+  @ApiProperty({ type: 'string' })
+  positionId: string;
+}
+
 export class SoftSkillDto {
   @IsNotEmpty()
   @Length(2, 20)

@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   UseGuards,
+  Put,
   Delete,
 } from '@nestjs/common';
 
@@ -31,6 +32,7 @@ import {
   SoftSkillMatrixGetDetailsDto,
   SoftSkillMatrixCopyDto,
   SoftSkillMatrixCopyResponseDto,
+  SoftSkillMatrixUpdateDto,
 } from '../dto/softSkillMatrix.dto';
 
 @Controller('soft-skill-matrix')
@@ -86,6 +88,14 @@ export class SoftSkillMatrixController {
     @Body() payload: SoftSkillMatrixCopyDto,
   ): Promise<SoftSkillMatrixCopyResponseDto> {
     return this.SoftSkillMatrixService.copy(payload);
+  }
+
+  @Put('/:id')
+  @ApiBody({ type: SoftSkillMatrixUpdateDto })
+  @ApiParam({ name: 'id', required: true, description: 'This is matrixId' })
+  @UseGuards(JwtAuthGuard)
+  update(@Param('id') id: string, @Body() payload: SoftSkillMatrixUpdateDto) {
+    return this.SoftSkillMatrixService.update(payload, id);
   }
 
   @Delete('/:id')
