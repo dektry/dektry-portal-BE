@@ -24,6 +24,8 @@ import {
   SoftSkillMatrixCreateDto,
   SoftSkillMatrixGetAllDto,
   SoftSkillMatrixGetDetailsDto,
+  SoftSkillMatrixCopyDto,
+  SoftSkillMatrixCopyResponseDto,
 } from '../dto/softSkillMatrix.dto';
 import { SoftSkillMatrix } from 'users/entity/softSkillMatrix.entity';
 
@@ -173,6 +175,76 @@ export class SoftSkillMatrixService {
       return result;
     } catch (error) {
       console.error('[SOFT_SKILL_MATRIX_DELETE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async copy(
+    payload: SoftSkillMatrixCopyDto,
+  ): Promise<SoftSkillMatrixCopyResponseDto> {
+    try {
+      const position = await this.positionRepository.findOne({
+        where: { id: payload.positionId },
+      });
+
+      if (!position) {
+        throw new NotFoundException(
+          `Position with such id '${payload.positionId}' not found`,
+        );
+      }
+
+      const isMatrixWithSuchPositionExist =
+        await this.softSkillMatrixRepository.findOne({
+          where: {
+            position,
+          },
+        });
+
+      if (isMatrixWithSuchPositionExist) {
+        throw new ConflictException(
+          `Matrix with such position(${position.name}) is already exist!`,
+        );
+      }
+
+      const matrix = await this.softSkillMatrixRepository.save({ position });
+      const copiedMatrix: SoftSkillMatrixGetDetailsDto = await this.getDetails(
+        payload.softSkillMatrixId,
+      );
+
+      for (let skill of copiedMatrix.skills) {
+        let createdSkill = await this.softSkillRepository.save({
+          value: skill.value,
+          softSkillMatrix: matrix,
+        });
+
+        //add skill grades
+        await this.softSkillsToLevelsRepository.save(
+          skill.levels.map((level) => {
+            return this.softSkillsToLevelsRepository.create({
+              skill_id: { id: createdSkill.id },
+              level_id: { id: level.level_id.id },
+              value: level.value,
+              description: level.description,
+            });
+          }),
+        );
+      }
+
+      return { softSkillMatrixId: matrix.id };
+    } catch (error) {
+      console.error('[SOFT_SKILL_MATRIX_COPY_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) {

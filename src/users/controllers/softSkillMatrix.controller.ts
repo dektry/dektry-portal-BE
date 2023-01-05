@@ -29,6 +29,8 @@ import {
   SoftSkillMatrixCreateDto,
   SoftSkillMatrixGetAllDto,
   SoftSkillMatrixGetDetailsDto,
+  SoftSkillMatrixCopyDto,
+  SoftSkillMatrixCopyResponseDto,
 } from '../dto/softSkillMatrix.dto';
 
 @Controller('soft-skill-matrix')
@@ -72,6 +74,18 @@ export class SoftSkillMatrixController {
   @ApiBody({ type: SoftSkillMatrixCreateDto })
   create(@Body() payload: SoftSkillMatrixCreateDto) {
     return this.SoftSkillMatrixService.create(payload);
+  }
+
+  @Post('copy')
+  @ApiBody({ type: SoftSkillMatrixCopyDto })
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({
+    type: SoftSkillMatrixCopyResponseDto,
+  })
+  copy(
+    @Body() payload: SoftSkillMatrixCopyDto,
+  ): Promise<SoftSkillMatrixCopyResponseDto> {
+    return this.SoftSkillMatrixService.copy(payload);
   }
 
   @Delete('/:id')

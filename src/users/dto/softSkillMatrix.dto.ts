@@ -15,6 +15,7 @@ import {
   CareerLevel,
   SkillsGet,
   HardSkillMatrixGetDto,
+  HardSkillMatrixCopyDto,
 } from './hardSkillMatrix.dto';
 
 class PartialCareerLevel extends OmitType(CareerLevel, ['name'] as const) {}
@@ -93,6 +94,19 @@ export class SoftSkillMatrixGetDetailsDto extends SoftSkillMatrixGetAllDto {
   @ApiProperty({ isArray: true, type: SoftSkillGet })
   skills: SoftSkillGet[];
 }
+
+export class SoftSkillMatrixCopyDto extends OmitType(HardSkillMatrixCopyDto, [
+  'hardSkillMatrixId',
+] as const) {
+  @MaxLength(36)
+  @ApiProperty({ type: 'string' })
+  softSkillMatrixId: string;
+}
+
+export class SoftSkillMatrixCopyResponseDto extends OmitType(
+  SoftSkillMatrixCopyDto,
+  ['positionId'] as const,
+) {}
 
 export class SoftSkillDto {
   @IsNotEmpty()
