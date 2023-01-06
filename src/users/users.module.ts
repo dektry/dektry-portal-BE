@@ -3,13 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PositionController } from './controllers/position.controller';
 import { SkillGroupController } from './controllers/skillGroup.controller';
-import { SoftSkillController } from './controllers/softSkill.controller';
+import { SoftSkillMatrixController } from './controllers/softSkillMatrix.controller';
 import { LevelsController } from './controllers/level.controller';
 import { HardSkillMatrixController } from './controllers/hardSkillMatrix.controller';
 
 import { SkillGroupService } from './services/skillGroup.service';
 import { PositionService } from './services/position.service';
-import { SoftSkillService } from './services/softSkill.service';
+import { SoftSkillMatrixService } from './services/softSkillMatrix.service';
 import { LevelsService } from './services/level.service';
 import { HardSkillMatrixService } from './services/hardSkillMatrix.service';
 
@@ -23,6 +23,8 @@ import { usersRepository } from './repositories/users.repository';
 import { positionRepository } from './repositories/position.repository';
 import { levelRepository } from './repositories/level.repository';
 import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.repository';
+import { softSkillMatrixRepository } from './repositories/softSkillMatrix.repository';
+import { softSkillsToLevelsRepository } from './repositories/softSkillsToLevels.repository';
 
 @Module({
   imports: [
@@ -37,11 +39,13 @@ import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.reposi
       softSkillRepository,
       softSkillScoreRepository,
       hardSkillMatrixRepository,
+      softSkillMatrixRepository,
+      softSkillsToLevelsRepository,
     ]),
   ],
   providers: [
     SkillGroupService,
-    SoftSkillService,
+    SoftSkillMatrixService,
     PositionService,
     LevelsService,
     HardSkillMatrixService,
@@ -49,7 +53,7 @@ import { hardSkillMatrixRepository } from './repositories/hardSkillMatrix.reposi
   controllers: [
     PositionController,
     SkillGroupController,
-    SoftSkillController,
+    SoftSkillMatrixController,
     LevelsController,
     HardSkillMatrixController,
   ],

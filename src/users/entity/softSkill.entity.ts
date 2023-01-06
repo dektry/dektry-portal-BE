@@ -5,8 +5,12 @@ import {
   BaseEntity,
   OneToMany,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
+
+import { SoftSkillsToLevelsEntity } from './softSkillsToLevels.entity';
 import { QuestionToSoftSkillEntity } from '../../employee/entity/questionToSoftSkill.entity';
+import { SoftSkillMatrix } from './softSkillMatrix.entity';
 
 @Entity({ name: 'soft_skill' })
 export class SoftSkillEntity extends BaseEntity {
@@ -14,21 +18,18 @@ export class SoftSkillEntity extends BaseEntity {
   id: string;
 
   @Column({ default: '' })
-  hintText: string;
-
-  @Column({ default: '' })
   value: string;
 
-  @Column({ length: 512, default: '' })
-  question: string;
-
-  @OneToMany(
-    () => QuestionToSoftSkillEntity,
-    (question) => question.soft_skill_id,
-    {
-      orphanedRowAction: 'delete',
-    },
-  )
+  @OneToMany(() => SoftSkillsToLevelsEntity, (stl) => stl.skill_id, {
+    orphanedRowAction: 'delete',
+  })
   @JoinColumn()
-  questions: QuestionToSoftSkillEntity[];
+  levels: SoftSkillsToLevelsEntity[];
+
+  @ManyToOne(() => SoftSkillMatrix, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'soft_skill_matrix_id' })
+  softSkillMatrix: SoftSkillMatrix;
 }

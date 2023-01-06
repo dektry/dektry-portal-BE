@@ -33,7 +33,7 @@ export class Grade {
   levelId: string;
 }
 
-class CareerLevel {
+export class CareerLevel {
   @ApiProperty({
     type: 'string',
   })
@@ -77,7 +77,7 @@ class currentSkillLevel extends QuestionGet {
   value: string;
 }
 
-class Skills {
+export class Skills {
   @IsNotEmpty({
     message: 'SkillName must not be empty',
   })
@@ -96,7 +96,10 @@ class Skills {
   questions: Question[];
 }
 
-class SkillsGet extends OmitType(Skills, ['questions', 'grades'] as const) {
+export class SkillsGet extends OmitType(Skills, [
+  'questions',
+  'grades',
+] as const) {
   @ApiProperty({ type: 'string' })
   id: string;
 
