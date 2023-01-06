@@ -78,4 +78,10 @@ export class EmployeeSoftAssessmentController {
   ): Promise<GetAllSoftInterviewsDto[]> {
     return this.SoftAssessmentService.getAllInterviews(emloyeeId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':interviewId')
+  deleteInterviewResult(@Param('interviewId') interviewId: string) {
+    return this.SoftAssessmentService.deleteInterviewResult(interviewId);
+  }
 }

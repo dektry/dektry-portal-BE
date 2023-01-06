@@ -1,6 +1,12 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In } from 'typeorm';
+import { In, DeleteResult } from 'typeorm';
 
 import { employeeRepository } from '../repositories/employee.repository';
 import { softSkillToSoftAssessmentRepository } from '../repositories/softSkilltoSoftAssessment.repository';
@@ -336,4 +342,28 @@ export class EmployeeSoftAssessmentService {
   //     );
   //   }
   // }
+
+  async deleteInterviewResult(id: string) {
+    try {
+      const interviewWasDeleted: DeleteResult =
+        await this.softAssessmentRepository.delete(id);
+
+      if (!interviewWasDeleted.affected) {
+        throw new NotFoundException(`Intreview with ID '${id}' not found`);
+      }
+    } catch (error) {
+      console.error('[EMPLOYEE_SOFT_INTERVIEW_DELETE_ERROR]', error);
+      Logger.error(error);
+
+      throw new HttpException(
+        error?.response
+          ? {
+              status: error?.status,
+              message: error?.response?.message ?? error?.response,
+            }
+          : 'Interview not found',
+        error?.status,
+      );
+    }
+  }
 }
