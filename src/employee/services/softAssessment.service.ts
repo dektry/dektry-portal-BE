@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Inject,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { softAssessmentRepository } from '../repositories/softAssessment.reposit
 import { positionRepository } from 'users/repositories/position.repository';
 import { levelRepository } from 'users/repositories/level.repository';
 import { questionToSoftSkillRepository } from '../repositories/questionToSkill.repository';
+import { softSkillMatrixRepository } from '../../users/repositories/softSkillMatrix.repository';
 
 import { EmployeeEntity } from '../entity/employee.entity';
 import { SoftSkillToSoftAssessmentEntity } from '../entity/softSkillToSoftAssessment.entity';
@@ -21,6 +23,8 @@ import { PositionEntity } from 'users/entity/position.entity';
 import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
 import { SoftAssessmentEntity } from '../entity/softAssessment.entity';
 import { QuestionToSoftSkillEntity } from '../entity/questionToSoftSkill.entity';
+
+import { SoftSkillMatrixService } from '../../users/services/softSkillMatrix.service';
 
 import {
   ICompleteSoftAssessmentBody,
@@ -54,6 +58,10 @@ export class EmployeeSoftAssessmentService {
     @InjectRepository(levelRepository)
     private levelRepository: levelRepository,
     @InjectRepository(questionToSoftSkillRepository)
+    @InjectRepository(softSkillMatrixRepository)
+    private softSkillMatrixRepository: softSkillMatrixRepository,
+    @Inject(SoftSkillMatrixService)
+    private readonly softSkillMatrixService: SoftSkillMatrixService,
     private questionToSoftSkillRepository: questionToSoftSkillRepository,
   ) {}
 
@@ -342,6 +350,72 @@ export class EmployeeSoftAssessmentService {
   //     );
   //   }
   // }
+
+  async getInterviewById(interviewId: string) {
+    try {
+      const interviews = await this.softAssessmentRepository.findOne({
+        relations: ['position', 'level', 'skills', 'skills.soft_skill_id'],
+        where: {
+          id: interviewId,
+        },
+      });
+
+      const matrixId = await this.softSkillMatrixRepository.query(
+        `
+          SELECT id 
+              FROM public."softSkillMatrix" WHERE position_id = $1
+        `,
+        [interviews.position.id],
+      );
+
+      if (!matrixId?.length)
+        throw new HttpException('Interview not found', HttpStatus.BAD_REQUEST);
+
+      const softSkillMatrix = await this.softSkillMatrixService.getDetails(
+        matrixId[0]?.id,
+      );
+
+      //formatting matrix for FE Interview edit page
+      for (let i = 0; i < interviews.skills.length; i++) {
+        for (let j = 0; j < softSkillMatrix.skills.length; j++) {
+          delete softSkillMatrix.skills[j].levels;
+          if (
+            softSkillMatrix.skills[j]?.id ===
+            interviews.skills[i]?.soft_skill_id.id
+          ) {
+            softSkillMatrix.skills[j]['currentSkillLevel'] = {
+              id: interviews.skills[i].id,
+              value: interviews.skills[i].value,
+              comment: interviews.skills[i].comment,
+            };
+          }
+        }
+      }
+
+      //added interview assessment date created
+      softSkillMatrix['created'] = interviews.created;
+
+      //added interview assessment level(middle/senior...)
+      softSkillMatrix['level'] = {
+        id: interviews.level.id,
+        name: interviews.level.name,
+      };
+
+      return softSkillMatrix;
+    } catch (error) {
+      console.error('[EMPLOYEE_GET_ONE_SOFT_ASSESSMENT_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          { status: error?.status, message: error?.response?.message },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
   async deleteInterviewResult(id: string) {
     try {

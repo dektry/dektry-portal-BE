@@ -25,6 +25,7 @@ import {
   CompleteSoftInterviewsDto,
   GetAllSoftInterviewsDto,
 } from '../dto/softAssessment.dto';
+import { SoftSkillMatrixGetForAssessment } from '../../users/dto/softSkillMatrix.dto';
 
 @Controller('employee-soft-assessments')
 @ApiBearerAuth()
@@ -83,5 +84,14 @@ export class EmployeeSoftAssessmentController {
   @Delete(':interviewId')
   deleteInterviewResult(@Param('interviewId') interviewId: string) {
     return this.SoftAssessmentService.deleteInterviewResult(interviewId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':interviewId')
+  @ApiOkResponse({
+    type: SoftSkillMatrixGetForAssessment,
+  })
+  getInterviewById(@Param('interviewId') interviewId: string) {
+    return this.SoftAssessmentService.getInterviewById(interviewId);
   }
 }

@@ -57,6 +57,6 @@ import { softSkillsToLevelsRepository } from './repositories/softSkillsToLevels.
     LevelsController,
     HardSkillMatrixController,
   ],
-  exports: [HardSkillMatrixService],
+  exports: [HardSkillMatrixService, SoftSkillMatrixService],
 })
 export class UsersModule {}
