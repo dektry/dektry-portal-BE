@@ -31,7 +31,7 @@ import { HardSkillMatrixGetForAssessment } from '../../users/dto/hardSkillMatrix
 
 @Controller('employee-interviews')
 @ApiBearerAuth()
-@ApiTags('employee-interviews-assessment')
+@ApiTags('Employee-interviews-assessment')
 @ApiResponse({
   status: 401,
   description: 'Unauthorized',

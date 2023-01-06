@@ -8,29 +8,43 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiTags,
+  ApiParam,
+  ApiResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { ISoftAssessment } from '../utils/constants';
 
 import { EmployeeSoftAssessmentService } from 'employee/services/softAssessment.service';
-import {
-  ICompleteSoftAssessmentBody,
-  IEditSoftAssessmentBody,
-  ISoftAssessmentResultResponse,
-} from 'employee/utils/constants';
 
-@Controller('softassessments')
+import {
+  CompleteSoftInterviewsDto,
+  GetAllSoftInterviewsDto,
+} from '../dto/softAssessment.dto';
+
+@Controller('employee-soft-assessments')
+@ApiBearerAuth()
+@ApiTags('Employee-soft-assessments')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad Request',
+})
 export class EmployeeSoftAssessmentController {
   constructor(private SoftAssessmentService: EmployeeSoftAssessmentService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  completeAssessment(
-    @Body() completeAssessmentBody: ICompleteSoftAssessmentBody,
-  ) {
-    return this.SoftAssessmentService.completeAssessment(
-      completeAssessmentBody,
-    );
+  @ApiBody({ type: CompleteSoftInterviewsDto })
+  completeAssessment(@Body() payload: CompleteSoftInterviewsDto) {
+    return this.SoftAssessmentService.completeAssessment(payload);
   }
 
   // @UseGuards(JwtAuthGuard)
@@ -53,11 +67,15 @@ export class EmployeeSoftAssessmentController {
   //   return this.SoftAssessmentService.getAssessmentResult(assessmentId);
   // }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get(':employeeId/all')
-  // getSoftAssessments(
-  //   @Param('employeeId') emloyeeId: string,
-  // ): Promise<ISoftAssessmentResultResponse[]> {
-  //   return this.SoftAssessmentService.getSoftAssessments(emloyeeId);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId/all')
+  @ApiOkResponse({
+    isArray: true,
+    type: GetAllSoftInterviewsDto,
+  })
+  getAllInterviews(
+    @Param('employeeId') emloyeeId: string,
+  ): Promise<GetAllSoftInterviewsDto[]> {
+    return this.SoftAssessmentService.getAllInterviews(emloyeeId);
+  }
 }
