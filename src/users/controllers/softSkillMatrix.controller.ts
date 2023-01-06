@@ -21,12 +21,9 @@ import { DeleteResult } from 'typeorm';
 
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
-import { SoftSkillEntity } from '../entity/softSkill.entity';
-import { SoftSkillScoreEntity } from '../entity/softSkillScore.entity';
 import { SoftSkillMatrixService } from '../services/softSkillMatrix.service';
 
 import {
-  SoftSkillDto,
   SoftSkillMatrixCreateDto,
   SoftSkillMatrixGetAllDto,
   SoftSkillMatrixGetDetailsDto,

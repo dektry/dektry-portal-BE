@@ -16,7 +16,7 @@ import { positionRepository } from '../repositories/position.repository';
 import { softSkillMatrixRepository } from '../repositories/softSkillMatrix.repository';
 import { softSkillsToLevelsRepository } from '../repositories/softSkillsToLevels.repository';
 
-import { SoftSkillEntity } from '../entity/softSkill.entity';
+//delete this table
 import { SoftSkillScoreEntity } from '../entity/softSkillScore.entity';
 
 import {
@@ -27,7 +27,6 @@ import {
   SoftSkillMatrixCopyResponseDto,
   SoftSkillMatrixUpdateDto,
 } from '../dto/softSkillMatrix.dto';
-import { SoftSkillMatrix } from 'users/entity/softSkillMatrix.entity';
 
 @Injectable()
 export class SoftSkillMatrixService {
