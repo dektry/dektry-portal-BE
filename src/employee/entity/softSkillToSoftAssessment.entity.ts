@@ -14,8 +14,8 @@ export class SoftSkillToSoftAssessmentEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
-  softSkillScoreId: string;
+  @Column({ default: '', length: 128 })
+  value: string;
 
   @Column({ length: 512, nullable: true })
   comment: string;

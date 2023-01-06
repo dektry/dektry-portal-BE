@@ -6,6 +6,7 @@ import {
   JoinColumn,
   OneToMany,
   CreateDateColumn,
+  UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
 
@@ -20,13 +21,10 @@ export class SoftAssessmentEntity extends BaseEntity {
   id: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  created: Date;
 
-  @Column({ length: 512, nullable: true })
-  comment: string;
-
-  @Column({ nullable: true })
-  successfullySaved: boolean;
+  @UpdateDateColumn()
+  updated: Date;
 
   @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',

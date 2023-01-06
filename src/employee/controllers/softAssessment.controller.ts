@@ -33,31 +33,31 @@ export class EmployeeSoftAssessmentController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Put(':assessmentId')
-  editAssessmentResult(
-    @Param('assessmentId') assessmentId: string,
-    @Body() editAssessmentBody: IEditSoftAssessmentBody,
-  ): Promise<ISoftAssessmentResultResponse> {
-    return this.SoftAssessmentService.editAssessmentResult(
-      assessmentId,
-      editAssessmentBody,
-    );
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Put(':assessmentId')
+  // editAssessmentResult(
+  //   @Param('assessmentId') assessmentId: string,
+  //   @Body() editAssessmentBody: IEditSoftAssessmentBody,
+  // ): Promise<ISoftAssessmentResultResponse> {
+  //   return this.SoftAssessmentService.editAssessmentResult(
+  //     assessmentId,
+  //     editAssessmentBody,
+  //   );
+  // }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':assessmentId')
-  getAssessmentResult(
-    @Param('assessmentId') assessmentId: string,
-  ): Promise<ISoftAssessment> {
-    return this.SoftAssessmentService.getAssessmentResult(assessmentId);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get(':assessmentId')
+  // getAssessmentResult(
+  //   @Param('assessmentId') assessmentId: string,
+  // ): Promise<ISoftAssessment> {
+  //   return this.SoftAssessmentService.getAssessmentResult(assessmentId);
+  // }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':employeeId/all')
-  getSoftAssessments(
-    @Param('employeeId') emloyeeId: string,
-  ): Promise<ISoftAssessmentResultResponse[]> {
-    return this.SoftAssessmentService.getSoftAssessments(emloyeeId);
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get(':employeeId/all')
+  // getSoftAssessments(
+  //   @Param('employeeId') emloyeeId: string,
+  // ): Promise<ISoftAssessmentResultResponse[]> {
+  //   return this.SoftAssessmentService.getSoftAssessments(emloyeeId);
+  // }
 }
