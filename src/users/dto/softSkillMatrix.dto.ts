@@ -86,9 +86,7 @@ class currentSkillLevel {
   comment: string;
 }
 
-class SoftSkillGetForAssessment extends OmitType(SoftSkillGet, [
-  'levels',
-] as const) {
+class SoftSkillGetForAssessment extends SoftSkillGet {
   @ApiProperty({ type: currentSkillLevel })
   currentSkillLevel: currentSkillLevel;
 }

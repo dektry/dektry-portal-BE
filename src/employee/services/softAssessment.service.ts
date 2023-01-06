@@ -378,7 +378,6 @@ export class EmployeeSoftAssessmentService {
       //formatting matrix for FE Interview edit page
       for (let i = 0; i < interviews.skills.length; i++) {
         for (let j = 0; j < softSkillMatrix.skills.length; j++) {
-          delete softSkillMatrix.skills[j].levels;
           if (
             softSkillMatrix.skills[j]?.id ===
             interviews.skills[i]?.soft_skill_id.id
