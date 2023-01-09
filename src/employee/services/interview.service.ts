@@ -37,6 +37,7 @@ import {
 } from '../dto/interviews.dto';
 
 import { Helper } from 'utils/helpers';
+import { formatTechAssessments } from '../utils/formatTechAssessments';
 
 @Injectable()
 export class EmployeeInterviewService {
@@ -192,8 +193,8 @@ export class EmployeeInterviewService {
 
       //update selected assessment skills grades (Basic, Expert...)
       if (interviewSkillsPrevGrades.length) {
-        for (let grade of interviewSkillsPrevGrades) {
-          for (let gradeFromPayload of interview.grades) {
+        for (const grade of interviewSkillsPrevGrades) {
+          for (const gradeFromPayload of interview.grades) {
             if (
               grade.id === gradeFromPayload.gradeId &&
               grade.value !== gradeFromPayload.value
@@ -312,34 +313,10 @@ export class EmployeeInterviewService {
           'skills.skill_id.skill_group_id',
         ],
       });
-      const tableHeader: Array<string> = ['Skill'];
-      const tableBody: Array<Array<string>> = [];
 
-      interviews.forEach((interview, index) => {
-        let tableBodyElement: Array<string> = [];
-        let currentSkillGradePosition = 0;
+      const result = formatTechAssessments(interviews);
 
-        tableHeader.push(String(interview.created));
-
-        for (let i = 0; i < interviews.length; i++) {
-          for (
-            let j = currentSkillGradePosition;
-            j < interview.skills.length;
-            j++
-          ) {
-            tableBodyElement.push(interviews[i]?.skills[j]?.skill_id?.value);
-            tableBodyElement.push(interviews[i]?.skills[j]?.value);
-            continue;
-          }
-        }
-
-        tableBody.push(tableBodyElement);
-
-        tableBodyElement = [];
-        currentSkillGradePosition += 1;
-      });
-      console.log(tableBody);
-      return interviews;
+      return result;
     } catch (error) {
       console.error('[EMPLOYEE_ASSESSMENT_COMPARISON_ERROR]', error);
       Logger.error(error);
