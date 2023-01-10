@@ -5,14 +5,15 @@ export function formatTechAssessments(assessments: InterviewEntity[]) {
     (a, b) => Number(new Date(a.created)) - Number(new Date(b.created)),
   );
 
-  const dataCollecting = {};
+  const intermediateDataStructure = {};
   const tableHead = ['Skill'];
   const tableBody = [];
   for (const el of sortedAssessments) {
     for (const skill of el.skills) {
-      const currentGroup = dataCollecting[skill.skill_id.skill_group_id.value];
+      const currentGroup =
+        intermediateDataStructure[skill.skill_id.skill_group_id.value];
       if (!currentGroup) {
-        dataCollecting[skill.skill_id.skill_group_id.value] = {
+        intermediateDataStructure[skill.skill_id.skill_group_id.value] = {
           value: skill.skill_id.skill_group_id.value,
           skills: [{ value: skill.skill_id.value, levels: [skill.value] }],
           skillHash: { [skill.skill_id.value]: skill.skill_id.value },
@@ -39,11 +40,11 @@ export function formatTechAssessments(assessments: InterviewEntity[]) {
     tableHead.push(new Date(el.created).toLocaleDateString('en-GB'));
   }
 
-  const allSkillGroups = Object.keys(dataCollecting);
+  const allSkillGroups = Object.keys(intermediateDataStructure);
   for (const group of allSkillGroups) {
     tableBody.push({
       groupName: group,
-      skills: dataCollecting[group].skills.map((skill) => [
+      skills: intermediateDataStructure[group].skills.map((skill) => [
         skill.value,
         ...skill.levels,
       ]),
