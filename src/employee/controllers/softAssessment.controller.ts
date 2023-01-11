@@ -23,6 +23,7 @@ import { EmployeeSoftAssessmentService } from 'employee/services/softAssessment.
 
 import {
   CompleteSoftInterviewsDto,
+  EditSoftInterviewDto,
   GetAllSoftInterviewsDto,
 } from '../dto/softAssessment.dto';
 import { SoftSkillMatrixGetForAssessment } from '../../users/dto/softSkillMatrix.dto';
@@ -48,17 +49,17 @@ export class EmployeeSoftAssessmentController {
     return this.SoftAssessmentService.completeAssessment(payload);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Put(':assessmentId')
-  // editAssessmentResult(
-  //   @Param('assessmentId') assessmentId: string,
-  //   @Body() editAssessmentBody: IEditSoftAssessmentBody,
-  // ): Promise<ISoftAssessmentResultResponse> {
-  //   return this.SoftAssessmentService.editAssessmentResult(
-  //     assessmentId,
-  //     editAssessmentBody,
-  //   );
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Put(':assessmentId')
+  editAssessmentResult(
+    @Param('assessmentId') assessmentId: string,
+    @Body() editAssessmentBody: EditSoftInterviewDto,
+  ) {
+    return this.SoftAssessmentService.editAssessment(
+      assessmentId,
+      editAssessmentBody,
+    );
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get(':assessmentId/result')

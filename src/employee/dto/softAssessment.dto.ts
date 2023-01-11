@@ -52,27 +52,19 @@ class SoftInterviewGrade {
   comment?: string;
 }
 
-export class EditSoftInterviewsDto {
-  @IsOptional()
-  @MaxLength(255, { message: 'Hobby is too long' })
-  hobby?: string;
-
-  @IsOptional()
-  @MaxLength(255, { message: 'Comment is too long' })
-  comment?: string;
-
+class SoftInterviewGradeEditDto extends SoftInterviewGrade {
   @IsNotEmpty({
-    message: 'EmployeeId must not be empty',
+    message: 'gradeId must not be empty',
   })
-  employeeId: string;
-
-  @IsNotEmpty({
-    message: 'Soft Skills must not be empty',
+  @Length(36)
+  @ApiProperty({
+    type: 'string',
+    required: true,
+    description: 'This is id for None, Basic...',
   })
-  @IsArray()
-  @ArrayMaxSize(256, { message: 'Array max length exceeded' })
-  softSkills: ISoftSkill[];
+  gradeId: string;
 }
+
 export class CompleteSoftInterviewsDto extends OmitType(CompleteInterviewsDto, [
   'comment',
   'grades',
@@ -89,6 +81,23 @@ export class CompleteSoftInterviewsDto extends OmitType(CompleteInterviewsDto, [
     required: true,
   })
   grades: SoftInterviewGrade[];
+}
+
+export class EditSoftInterviewDto extends OmitType(CompleteSoftInterviewsDto, [
+  'grades',
+] as const) {
+  @IsArray()
+  @ValidateNested()
+  @Type(() => SoftInterviewGradeEditDto)
+  @ArrayMinSize(1)
+  @ArrayMaxSize(1000)
+  @ApiProperty({
+    type: SoftInterviewGradeEditDto,
+    isArray: true,
+    description: 'Answers on questions',
+    required: true,
+  })
+  grades: SoftInterviewGradeEditDto[];
 }
 
 export class GetAllSoftInterviewsDto extends OmitType(GetAllInterviewsDto, [

@@ -22,7 +22,6 @@ import { SoftSkillToSoftAssessmentEntity } from '../entity/softSkillToSoftAssess
 import { PositionEntity } from 'users/entity/position.entity';
 import { CareerLevelEntity } from 'users/entity/careerLevel.entity';
 import { SoftAssessmentEntity } from '../entity/softAssessment.entity';
-import { QuestionToSoftSkillEntity } from '../entity/questionToSoftSkill.entity';
 
 import { SoftSkillMatrixService } from '../../users/services/softSkillMatrix.service';
 
@@ -42,6 +41,7 @@ import {
 import {
   CompleteSoftInterviewsDto,
   GetAllSoftInterviewsDto,
+  EditSoftInterviewDto,
 } from '../dto/softAssessment.dto';
 import { Helper } from 'utils/helpers';
 
@@ -63,7 +63,6 @@ export class EmployeeSoftAssessmentService {
     private softSkillMatrixRepository: softSkillMatrixRepository,
     @Inject(SoftSkillMatrixService)
     private readonly softSkillMatrixService: SoftSkillMatrixService,
-    private questionToSoftSkillRepository: questionToSoftSkillRepository,
   ) {}
 
   async completeAssessment(payload: CompleteSoftInterviewsDto) {
@@ -126,6 +125,69 @@ export class EmployeeSoftAssessmentService {
     }
   }
 
+  async editAssessment(assessmentId: string, assessment: EditSoftInterviewDto) {
+    try {
+      const prevResultsOfAssessment: SoftAssessmentEntity =
+        await this.softAssessmentRepository.findOne({
+          where: {
+            id: assessmentId,
+          },
+        });
+
+      if (!prevResultsOfAssessment)
+        throw new HttpException(
+          softSkillAssessmentNotFound,
+          HttpStatus.BAD_REQUEST,
+        );
+
+      const assessmentSkillsPrevGrades: SoftSkillToSoftAssessmentEntity[] =
+        await this.softSkillToSoftAssessmentRepository.find({
+          where: {
+            id: In(assessment.grades.map((grade) => grade.gradeId)),
+          },
+        });
+
+      //update selected assessment skills grades (A, B, C...)
+      if (assessmentSkillsPrevGrades.length) {
+        for (const grade of assessmentSkillsPrevGrades) {
+          for (const gradeFromPayload of assessment.grades) {
+            if (
+              grade.id === gradeFromPayload.gradeId &&
+              (grade.value !== gradeFromPayload.value ||
+                grade.comment !== gradeFromPayload.comment)
+            ) {
+              await this.softSkillToSoftAssessmentRepository.update(
+                { id: grade.id },
+                {
+                  value: gradeFromPayload.value,
+                  comment: gradeFromPayload.comment,
+                },
+              );
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.error('[EDIT_SOFT_SKILL_ASSESSMENT_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(
+        softSkillAssessmentCantEdit,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   async getAssessmentResult(assessmentId: string) {
     try {
       const helper = new Helper();
@@ -149,19 +211,7 @@ export class EmployeeSoftAssessmentService {
       );
 
       const answers = helper.getSoftAssessmentAnswers(softAssessment, matrix);
-      // const processedSkills: ISoftSkill[] = [];
-      // for (const skill of softAssessment.skills) {
-      //   const questions = await this.questionToSoftSkillRepository.find({
-      //     where: {
-      //       soft_skill_id: skill.id,
-      //     },
-      //   });
-      //   processedSkills.push({
-      //     ...skill,
-      //     questions: questions,
-      //     value: skill.soft_skill_id.value,
-      //   });
-      // }
+
       const processedAssessment = {
         id: softAssessment.id,
         position: softAssessment.position.name,
@@ -172,7 +222,6 @@ export class EmployeeSoftAssessmentService {
       };
 
       return processedAssessment;
-
     } catch (err) {
       console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
       Logger.error(err);
