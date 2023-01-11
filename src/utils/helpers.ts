@@ -2,8 +2,11 @@ import { getRepository, In } from 'typeorm';
 import {
   InterviewResultColors,
   SkillLevelsOrder,
+  SoftSkillsLevelsOrder,
 } from '../employee/utils/constants';
 import { InterviewAnswers } from '../employee/dto/interviews.dto';
+import { SoftAssessmentEntity } from 'employee/entity/softAssessment.entity';
+import { SoftSkillMatrixGetDetailsDto } from 'users/dto/softSkillMatrix.dto';
 
 export class Helper {
   private getAnswerColor(assigned: string, required: string) {
@@ -11,6 +14,19 @@ export class Helper {
       SkillLevelsOrder[assigned.replace(/\s/g, '').toLowerCase()];
     const requiredOrder =
       SkillLevelsOrder[required.replace(/\s/g, '').toLowerCase()];
+
+    return assignedOrder === requiredOrder
+      ? InterviewResultColors.WHITE
+      : assignedOrder > requiredOrder
+      ? InterviewResultColors.GREEN
+      : InterviewResultColors.RED;
+  }
+
+  private getSoftAnswerColor(assigned: string, required: string) {
+    const assignedOrder =
+      SoftSkillsLevelsOrder[assigned.replace(/\s/g, '').toLowerCase()];
+    const requiredOrder =
+      SoftSkillsLevelsOrder[required.replace(/\s/g, '').toLowerCase()];
 
     return assignedOrder === requiredOrder
       ? InterviewResultColors.WHITE
@@ -55,6 +71,32 @@ export class Helper {
         color: this.getAnswerColor(skill.value, desiredSkill.value),
       };
     });
+
+    return answers;
+  };
+
+  public getSoftAssessmentAnswers = (
+    softAssessment: SoftAssessmentEntity,
+    softMatrix: SoftSkillMatrixGetDetailsDto,
+  ): InterviewAnswers[] => {
+    const answers: InterviewAnswers[] = softAssessment.skills.map(
+      (skill: any) => {
+        const currentSkill: any = softMatrix.skills.find(
+          (item: any) => item.value === skill?.soft_skill_id.value,
+        );
+
+        const desiredLevel = currentSkill.levels.find(
+          (level) => level.level_id.id === softAssessment.level.id,
+        );
+
+        return {
+          skill: skill.soft_skill_id.value,
+          assigned: skill.value,
+          required: desiredLevel.value,
+          color: this.getSoftAnswerColor(skill.value, desiredLevel.value),
+        };
+      },
+    );
 
     return answers;
   };

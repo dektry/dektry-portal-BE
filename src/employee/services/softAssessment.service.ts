@@ -43,6 +43,7 @@ import {
   CompleteSoftInterviewsDto,
   GetAllSoftInterviewsDto,
 } from '../dto/softAssessment.dto';
+import { Helper } from 'utils/helpers';
 
 @Injectable()
 export class EmployeeSoftAssessmentService {
@@ -125,62 +126,70 @@ export class EmployeeSoftAssessmentService {
     }
   }
 
-  // async getAssessmentResult(assessmentId: string): Promise<ISoftAssessment> {
-  //   try {
-  //     const softAssessment: SoftAssessmentEntity =
-  //       await this.softAssessmentRepository.findOne({
-  //         where: {
-  //           id: assessmentId,
-  //         },
-  //         relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
-  //       });
+  async getAssessmentResult(assessmentId: string) {
+    try {
+      const helper = new Helper();
 
-  //     if (!softAssessment)
-  //       throw new HttpException(
-  //         softSkillAssessmentNotFound,
-  //         HttpStatus.BAD_REQUEST,
-  //       );
+      const softAssessment: SoftAssessmentEntity =
+        await this.softAssessmentRepository.findOne({
+          where: {
+            id: assessmentId,
+          },
+          relations: ['skills', 'skills.soft_skill_id', 'position', 'level'],
+        });
 
-  //     const processedSkills: ISoftSkill[] = [];
-  //     for (const skill of softAssessment.skills) {
-  //       const questions = await this.questionToSoftSkillRepository.find({
-  //         where: {
-  //           soft_skill_id: skill.id,
-  //         },
-  //       });
-  //       processedSkills.push({
-  //         ...skill,
-  //         questions: questions,
-  //         value: skill.soft_skill_id.value,
-  //       });
-  //     }
-  //     const processedAssessment = {
-  //       id: softAssessment.id,
-  //       position: softAssessment.position,
-  //       level: softAssessment.level,
-  //       comment: softAssessment.comment,
-  //       createdAt: softAssessment.created,
-  //       skills: processedSkills,
-  //     };
+      if (!softAssessment)
+        throw new HttpException(
+          softSkillAssessmentNotFound,
+          HttpStatus.BAD_REQUEST,
+        );
 
-  //     return processedAssessment;
-  //   } catch (err) {
-  //     console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
-  //     Logger.error(err);
+      const matrix = await this.softSkillMatrixService.getDetailsByPositionId(
+        softAssessment.position.id,
+      );
 
-  //     if (err?.response) {
-  //       throw new HttpException(
-  //         { status: err?.status, message: err?.response },
-  //         err?.status,
-  //       );
-  //     }
+      const answers = helper.getSoftAssessmentAnswers(softAssessment, matrix);
+      // const processedSkills: ISoftSkill[] = [];
+      // for (const skill of softAssessment.skills) {
+      //   const questions = await this.questionToSoftSkillRepository.find({
+      //     where: {
+      //       soft_skill_id: skill.id,
+      //     },
+      //   });
+      //   processedSkills.push({
+      //     ...skill,
+      //     questions: questions,
+      //     value: skill.soft_skill_id.value,
+      //   });
+      // }
+      const processedAssessment = {
+        id: softAssessment.id,
+        position: softAssessment.position.name,
+        level: softAssessment.level.name,
+        comment: softAssessment.comment,
+        created: softAssessment.created,
+        answers: answers,
+      };
 
-  //     throw new HttpException(
-  //       softSkillAssessmentNotFound,
-  //       HttpStatus.INTERNAL_SERVER_ERROR,
-  //     );
-  //   }
-  // }
+      return processedAssessment;
+
+    } catch (err) {
+      console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
+      Logger.error(err);
+
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
+
+      throw new HttpException(
+        softSkillAssessmentNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 
   async getAllInterviews(
     employeeId: string,
@@ -207,6 +216,7 @@ export class EmployeeSoftAssessmentService {
           id: item.id,
           position: item.position.name,
           level: item.level.name,
+          type: item.type,
         }));
       } else {
         return [];

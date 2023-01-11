@@ -70,8 +70,8 @@ export class SoftSkillMatrixService {
 
       const matrix = await this.softSkillMatrixRepository.save({ position });
 
-      for (let skill of payload.skills) {
-        let createdSkill = await this.softSkillRepository.save({
+      for (const skill of payload.skills) {
+        const createdSkill = await this.softSkillRepository.save({
           value: skill.value,
           softSkillMatrix: matrix,
         });
@@ -222,8 +222,8 @@ export class SoftSkillMatrixService {
         payload.softSkillMatrixId,
       );
 
-      for (let skill of copiedMatrix.skills) {
-        let createdSkill = await this.softSkillRepository.save({
+      for (const skill of copiedMatrix.skills) {
+        const createdSkill = await this.softSkillRepository.save({
           value: skill.value,
           softSkillMatrix: matrix,
         });
@@ -322,8 +322,8 @@ export class SoftSkillMatrixService {
 
       //add new skills
       if (newSkills.length) {
-        for (let skill of newSkills) {
-          let createdSkill = await this.softSkillRepository.save({
+        for (const skill of newSkills) {
+          const createdSkill = await this.softSkillRepository.save({
             value: skill.value,
             softSkillMatrix: { id: prevSavedMatrix.id },
           });
@@ -352,7 +352,7 @@ export class SoftSkillMatrixService {
 
       //edit old skills
       if (skillsWithoutNewAndDeleted.length) {
-        for (let oldSkill of skillsWithoutNewAndDeleted) {
+        for (const oldSkill of skillsWithoutNewAndDeleted) {
           const skillFromPayload = payload.skills.filter(
             (item) => item.id === oldSkill.id,
           );
@@ -391,7 +391,7 @@ export class SoftSkillMatrixService {
           }
           //added new skills levels
           if (newSkillLevels.length) {
-            for (let newLevel of newSkillLevels) {
+            for (const newLevel of newSkillLevels) {
               await this.softSkillsToLevelsRepository.save({
                 skill_id: { id: skillFromPayload[0].id },
                 level_id: { id: newLevel.level_id.id },
@@ -412,7 +412,7 @@ export class SoftSkillMatrixService {
 
           //update skills
           if (skillLevelsWithoutNewAndDeletedSkillLevels.length) {
-            for (let oldLevel of skillLevelsWithoutNewAndDeletedSkillLevels) {
+            for (const oldLevel of skillLevelsWithoutNewAndDeletedSkillLevels) {
               const skillLevelsFromPayload = skillFromPayload[0].levels.filter(
                 (item) => item.id === oldLevel.id,
               );
@@ -464,6 +464,44 @@ export class SoftSkillMatrixService {
       }
     } catch (error) {
       console.error('[SOFT_SKILL_MATRIX_UPDATE_ERROR]', error);
+      Logger.error(error);
+
+      if (error?.response) {
+        throw new HttpException(
+          {
+            status: error?.status,
+            message: error?.response?.message ?? error?.response,
+          },
+          error?.status,
+        );
+      }
+
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getDetailsByPositionId(
+    id: string,
+  ): Promise<SoftSkillMatrixGetDetailsDto> {
+    try {
+      const position = await this.positionRepository.findOne(id);
+      const matrix = await this.softSkillMatrixRepository.findOne({
+        where: { position },
+        relations: [
+          'position',
+          'skills',
+          'skills.levels',
+          'skills.levels.level_id',
+        ],
+      });
+
+      if (!matrix) {
+        throw new NotFoundException(`Matrix with such id '${id}' not found`);
+      }
+
+      return matrix;
+    } catch (error) {
+      console.error('[SOFT_SKILL_MATRIX_GET_DETAILS_ERROR]', error);
       Logger.error(error);
 
       if (error?.response) {

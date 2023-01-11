@@ -27,6 +27,15 @@ export const SkillLevelsOrder = {
   expert: 5,
 };
 
+export const SoftSkillsLevelsOrder = {
+  none: 0,
+  d: 1,
+  c: 2,
+  b: 3,
+  a: 4,
+  a1: 5,
+};
+
 export interface ICompletedInterviewResponse {
   interview: InterviewEntity;
   answers?: IAnswer[];

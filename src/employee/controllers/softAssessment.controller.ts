@@ -60,13 +60,11 @@ export class EmployeeSoftAssessmentController {
   //   );
   // }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Get(':assessmentId')
-  // getAssessmentResult(
-  //   @Param('assessmentId') assessmentId: string,
-  // ): Promise<ISoftAssessment> {
-  //   return this.SoftAssessmentService.getAssessmentResult(assessmentId);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get(':assessmentId/result')
+  getAssessmentResult(@Param('assessmentId') assessmentId: string) {
+    return this.SoftAssessmentService.getAssessmentResult(assessmentId);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeId/all')

@@ -26,6 +26,12 @@ export class SoftAssessmentEntity extends BaseEntity {
   @UpdateDateColumn()
   updated: Date;
 
+  @Column({ default: '' })
+  comment: string;
+
+  @Column({ default: 'Assessment' })
+  type: string;
+
   @ManyToOne(() => EmployeeEntity, (employee) => employee.interview, {
     orphanedRowAction: 'delete',
     cascade: true,
