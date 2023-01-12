@@ -25,6 +25,8 @@ import { SoftAssessmentEntity } from '../entity/softAssessment.entity';
 
 import { SoftSkillMatrixService } from '../../users/services/softSkillMatrix.service';
 
+import { formatSoftAssessments } from 'employee/utils/formatSoftAssessments';
+
 import {
   ICompleteSoftAssessmentBody,
   IEditSoftAssessmentBody,
@@ -287,128 +289,6 @@ export class EmployeeSoftAssessmentService {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-  // async editAssessmentResult(
-  //   assessmentId: string,
-  //   softAssessment: IEditSoftAssessmentBody,
-  // ): Promise<ISoftAssessmentResultResponse> {
-  //   try {
-  //     const employee: EmployeeEntity = await this.employeeRepository.findOne(
-  //       softAssessment.employeeId,
-  //     );
-  //     if (!employee)
-  //       throw new HttpException(employeeNotFound, HttpStatus.BAD_REQUEST);
-
-  //     const existingAssessment = await this.softAssessmentRepository.findOne({
-  //       where: {
-  //         id: assessmentId,
-  //       },
-  //       relations: ['skills'],
-  //     });
-
-  //     if (!existingAssessment)
-  //       throw new HttpException(
-  //         softSkillAssessmentNotFound,
-  //         HttpStatus.BAD_REQUEST,
-  //       );
-
-  //     for (const skill of existingAssessment.skills) {
-  //       const skillRemaining = softAssessment.softSkills.find(
-  //         (el) => el.id === skill.id,
-  //       );
-
-  //       if (!skillRemaining) {
-  //         await this.softSkillToSoftAssessmentRepository.delete(skill.id);
-  //       }
-
-  //       const existingQuestions = await this.questionToSoftSkillRepository.find(
-  //         {
-  //           where: {
-  //             soft_skill_id: skill.id,
-  //           },
-  //         },
-  //       );
-
-  //       for (const question of existingQuestions) {
-  //         const questionRemaining = skillRemaining.questions.find(
-  //           (el) => el.id === question.id,
-  //         );
-
-  //         if (!questionRemaining) {
-  //           await this.questionToSoftSkillRepository.delete(question.id);
-  //         }
-  //       }
-  //     }
-
-  //     await this.softAssessmentRepository.update(
-  //       { id: assessmentId },
-  //       {
-  //         comment: softAssessment.comment,
-  //       },
-  //     );
-
-  //     const softSkillsIds = softAssessment.softSkills.map((skill) => skill.id);
-
-  //     if (softAssessment.softSkills && softAssessment.softSkills.length) {
-  //       for (const activeSkillToUpdate of softAssessment.softSkills) {
-  //         await this.softSkillToSoftAssessmentRepository.update(
-  //           {
-  //             id: In(softSkillsIds),
-  //           },
-  //           {
-  //             softSkillScoreId: activeSkillToUpdate.softSkillScoreId,
-  //             comment: activeSkillToUpdate.comment,
-  //           },
-  //         );
-
-  //         if (
-  //           activeSkillToUpdate.questions &&
-  //           activeSkillToUpdate.questions.length
-  //         ) {
-  //           for (const questionToUpdate of activeSkillToUpdate.questions) {
-  //             await this.questionToSoftSkillRepository.update(
-  //               {
-  //                 id: questionToUpdate.id,
-  //               },
-  //               {
-  //                 value: questionToUpdate.value,
-  //               },
-  //             );
-  //           }
-  //         }
-  //       }
-  //     }
-
-  //     const savedSoftAssessment = await this.softAssessmentRepository.findOne({
-  //       where: {
-  //         id: existingAssessment.id,
-  //       },
-  //       relations: ['skills'],
-  //     });
-  //     const allSkillsIds = savedSoftAssessment.skills.map((skill) => skill.id);
-  //     const savedQuestions = await this.questionToSoftSkillRepository.find({
-  //       id: In(allSkillsIds),
-  //     });
-  //     return {
-  //       assessment: savedSoftAssessment,
-  //       questions: savedQuestions,
-  //     };
-  //   } catch (err) {
-  //     console.error('[EDIT_SOFT_SKILL_ASSESSMENT_ERROR]', err);
-  //     Logger.error(err);
-
-  //     if (err?.response) {
-  //       throw new HttpException(
-  //         { status: err?.status, message: err?.response },
-  //         err?.status,
-  //       );
-  //     }
-
-  //     throw new HttpException(
-  //       softSkillAssessmentCantEdit,
-  //       HttpStatus.INTERNAL_SERVER_ERROR,
-  //     );
-  //   }
-  // }
 
   async getInterviewById(interviewId: string) {
     try {
@@ -495,6 +375,42 @@ export class EmployeeSoftAssessmentService {
             }
           : 'Interview not found',
         error?.status,
+      );
+    }
+  }
+
+  async getSoftAssessmentComparison(employeeId: string) {
+    try {
+      const employee: EmployeeEntity = await this.employeeRepository.findOne(
+        employeeId,
+      );
+      if (!employee)
+        throw new HttpException('Employee not found', HttpStatus.BAD_REQUEST);
+
+      const softAssessments = await this.softAssessmentRepository.find({
+        where: {
+          employee: employee,
+        },
+        relations: ['skills', 'skills.soft_skill_id'],
+      });
+
+      const result = formatSoftAssessments(softAssessments);
+
+      return result;
+    } catch (err) {
+      console.error('[SOFT_SKILL_ASSESSMENT_RESULT_ERROR]', err);
+      Logger.error(err);
+
+      if (err?.response) {
+        throw new HttpException(
+          { status: err?.status, message: err?.response },
+          err?.status,
+        );
+      }
+
+      throw new HttpException(
+        softSkillAssessmentNotFound,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }

@@ -93,4 +93,14 @@ export class EmployeeSoftAssessmentController {
   getInterviewById(@Param('interviewId') interviewId: string) {
     return this.SoftAssessmentService.getInterviewById(interviewId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId/comparison')
+  // @ApiOkResponse({
+  //   isArray: true,
+  //   type: GetAllInterviewsDto,
+  // })
+  getSoftAssessmentComparison(@Param('employeeId') employeeId: string) {
+    return this.SoftAssessmentService.getSoftAssessmentComparison(employeeId);
+  }
 }
