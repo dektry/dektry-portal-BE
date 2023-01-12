@@ -16,6 +16,7 @@ import {
   SkillsGet,
   HardSkillMatrixGetDto,
   HardSkillMatrixCopyDto,
+  HardSkillMatrixGetForAssessment,
 } from './hardSkillMatrix.dto';
 
 class PartialCareerLevel extends OmitType(CareerLevel, ['name'] as const) {}
@@ -74,6 +75,22 @@ class SoftSkillGet extends OmitType(SkillsGet, ['levels', 'questions']) {
   levels: SoftLevelsGet[];
 }
 
+class currentSkillLevel {
+  @ApiProperty({ type: 'string' })
+  id: string;
+
+  @ApiProperty({ type: 'string', description: 'A1, B, ...' })
+  value: string;
+
+  @ApiProperty({ type: 'string' })
+  comment: string;
+}
+
+class SoftSkillGetForAssessment extends SoftSkillGet {
+  @ApiProperty({ type: currentSkillLevel })
+  currentSkillLevel: currentSkillLevel;
+}
+
 export class SoftSkillMatrixGetAllDto extends OmitType(HardSkillMatrixGetDto, [
   'id',
 ] as const) {
@@ -114,6 +131,14 @@ export class SoftSkillMatrixUpdateDto extends PartialType(
   @MaxLength(36)
   @ApiProperty({ type: 'string' })
   positionId: string;
+}
+
+export class SoftSkillMatrixGetForAssessment extends OmitType(
+  HardSkillMatrixGetForAssessment,
+  ['skillGroups', 'comment'],
+) {
+  @ApiProperty({ isArray: true, type: SoftSkillGetForAssessment })
+  skills: SoftSkillGetForAssessment[];
 }
 
 export class SoftSkillDto {

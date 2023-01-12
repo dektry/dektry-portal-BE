@@ -8,56 +8,99 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiTags,
+  ApiParam,
+  ApiResponse,
+  ApiOkResponse,
+} from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'auth/guards/jwt-auth.guard';
-import { ISoftAssessment } from '../utils/constants';
 
 import { EmployeeSoftAssessmentService } from 'employee/services/softAssessment.service';
-import {
-  ICompleteSoftAssessmentBody,
-  IEditSoftAssessmentBody,
-  ISoftAssessmentResultResponse,
-} from 'employee/utils/constants';
 
-@Controller('softassessments')
+import {
+  CompleteSoftInterviewsDto,
+  EditSoftInterviewDto,
+  GetAllSoftInterviewsDto,
+} from '../dto/softAssessment.dto';
+import { SoftSkillMatrixGetForAssessment } from '../../users/dto/softSkillMatrix.dto';
+
+@Controller('employee-soft-assessments')
+@ApiBearerAuth()
+@ApiTags('Employee-soft-assessments')
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 400,
+  description: 'Bad Request',
+})
 export class EmployeeSoftAssessmentController {
   constructor(private SoftAssessmentService: EmployeeSoftAssessmentService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  completeAssessment(
-    @Body() completeAssessmentBody: ICompleteSoftAssessmentBody,
-  ) {
-    return this.SoftAssessmentService.completeAssessment(
-      completeAssessmentBody,
-    );
+  @ApiBody({ type: CompleteSoftInterviewsDto })
+  completeAssessment(@Body() payload: CompleteSoftInterviewsDto) {
+    return this.SoftAssessmentService.completeAssessment(payload);
   }
 
   @UseGuards(JwtAuthGuard)
   @Put(':assessmentId')
   editAssessmentResult(
     @Param('assessmentId') assessmentId: string,
-    @Body() editAssessmentBody: IEditSoftAssessmentBody,
-  ): Promise<ISoftAssessmentResultResponse> {
-    return this.SoftAssessmentService.editAssessmentResult(
+    @Body() editAssessmentBody: EditSoftInterviewDto,
+  ) {
+    return this.SoftAssessmentService.editAssessment(
       assessmentId,
       editAssessmentBody,
     );
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':assessmentId')
-  getAssessmentResult(
-    @Param('assessmentId') assessmentId: string,
-  ): Promise<ISoftAssessment> {
+  @Get(':assessmentId/result')
+  getAssessmentResult(@Param('assessmentId') assessmentId: string) {
     return this.SoftAssessmentService.getAssessmentResult(assessmentId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':employeeId/all')
-  getSoftAssessments(
+  @ApiOkResponse({
+    isArray: true,
+    type: GetAllSoftInterviewsDto,
+  })
+  getAllInterviews(
     @Param('employeeId') emloyeeId: string,
-  ): Promise<ISoftAssessmentResultResponse[]> {
-    return this.SoftAssessmentService.getSoftAssessments(emloyeeId);
+  ): Promise<GetAllSoftInterviewsDto[]> {
+    return this.SoftAssessmentService.getAllInterviews(emloyeeId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':interviewId')
+  deleteInterviewResult(@Param('interviewId') interviewId: string) {
+    return this.SoftAssessmentService.deleteInterviewResult(interviewId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':interviewId')
+  @ApiOkResponse({
+    type: SoftSkillMatrixGetForAssessment,
+  })
+  getInterviewById(@Param('interviewId') interviewId: string) {
+    return this.SoftAssessmentService.getInterviewById(interviewId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':employeeId/comparison')
+  // @ApiOkResponse({
+  //   isArray: true,
+  //   type: GetAllInterviewsDto,
+  // })
+  getSoftAssessmentComparison(@Param('employeeId') employeeId: string) {
+    return this.SoftAssessmentService.getSoftAssessmentComparison(employeeId);
   }
 }
