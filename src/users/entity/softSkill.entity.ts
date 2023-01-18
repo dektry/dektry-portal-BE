@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 
 import { SoftSkillsToLevelsEntity } from './softSkillsToLevels.entity';
-import { QuestionToSoftSkillEntity } from '../../employee/entity/questionToSoftSkill.entity';
 import { SoftSkillMatrix } from './softSkillMatrix.entity';
 
 @Entity({ name: 'soft_skill' })
