@@ -149,6 +149,23 @@ export class EmployeeSoftAssessmentService {
           },
         });
 
+      const newGrades = assessment.grades.filter((el) =>
+        assessmentSkillsPrevGrades.every((grade) => grade.id !== el.gradeId),
+      );
+
+      const softAssessmentSkillsNewGrades: SoftSkillToSoftAssessmentEntity[] =
+        newGrades.map((grade) =>
+          this.softSkillToSoftAssessmentRepository.create({
+            soft_assessment_id: prevResultsOfAssessment,
+            soft_skill_id: { id: grade.skillId },
+            value: grade.value,
+          }),
+        );
+
+      await this.softSkillToSoftAssessmentRepository.save(
+        softAssessmentSkillsNewGrades,
+      );
+
       //update selected assessment skills grades (A, B, C...)
       if (assessmentSkillsPrevGrades.length) {
         for (const grade of assessmentSkillsPrevGrades) {
