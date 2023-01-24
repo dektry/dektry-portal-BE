@@ -27,7 +27,7 @@ import {
 } from '../dto/englishSkillMatrix.dto';
 
 @Injectable()
-export class HardSkillMatrixService {
+export class EnglishSkillMatrixService {
   constructor(
     @InjectRepository(englishSkillMatrixRepository)
     private englishSkillMatrixRepository: englishSkillMatrixRepository,

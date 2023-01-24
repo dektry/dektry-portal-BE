@@ -38,6 +38,7 @@ import {
 
 import { Helper } from 'utils/helpers';
 import { formatTechAssessments } from '../utils/formatTechAssessments';
+import { Grade } from 'users/dto/hardSkillMatrix.dto';
 
 @Injectable()
 export class EmployeeInterviewService {
@@ -190,6 +191,21 @@ export class EmployeeInterviewService {
             id: In(interview.grades.map((grade) => grade.gradeId)),
           },
         });
+
+      const newGrades = interview.grades.filter((el) =>
+        interviewSkillsPrevGrades.every((grade) => grade.id !== el.gradeId),
+      );
+
+      const interviewSkillsNewGrades: SkillToInterviewEntity[] = newGrades.map(
+        (grade) =>
+          this.skillToInterviewRepository.create({
+            interview_id: prevResultsOfInterview,
+            skill_id: { id: grade.skillId },
+            value: grade.value,
+          }),
+      );
+
+      await this.skillToInterviewRepository.save(interviewSkillsNewGrades);
 
       //update selected assessment skills grades (Basic, Expert...)
       if (interviewSkillsPrevGrades.length) {
