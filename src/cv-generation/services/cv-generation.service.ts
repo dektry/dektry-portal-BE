@@ -34,6 +34,7 @@ export class CVGenerationService {
     try {
       browser = await puppeteer.launch({
         // required  for heroku
+        executablePath: '/usr/bin/google-chrome',
         args: ['--no-sandbox'],
         // might be useful for debugging
         // headless: false,
