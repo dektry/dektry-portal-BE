@@ -20,6 +20,9 @@ export class SkillGroupEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @OneToMany(() => SkillEntity, (skill) => skill.skill_group_id, {
     orphanedRowAction: 'delete',
   })

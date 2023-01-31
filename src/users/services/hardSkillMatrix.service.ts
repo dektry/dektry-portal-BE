@@ -72,14 +72,16 @@ export class HardSkillMatrixService {
 
       const matrix = await this.hardSkillMatrixRepository.save({ position });
 
-      for (let skillGroup of payload.skillGroups) {
-        let createdSkillGroup = await this.skillGroupRepository.save({
+      for (const skillGroup of payload.skillGroups) {
+        const createdSkillGroup = await this.skillGroupRepository.save({
           value: skillGroup.value,
+          order: skillGroup.order,
           hardSkillMatrix: matrix,
         });
-        for (let skill of skillGroup.skills) {
-          let createdSkill = await this.skillRepository.save({
+        for (const skill of skillGroup.skills) {
+          const createdSkill = await this.skillRepository.save({
             value: skill.value,
+            order: skill.order,
             skill_group_id: createdSkillGroup,
           });
 
@@ -94,9 +96,10 @@ export class HardSkillMatrixService {
             }),
           );
 
-          for (let question of skill.questions) {
+          for (const question of skill.questions) {
             await this.questionRepository.save({
               value: question.value,
+              order: question.order,
               skill_id: createdSkill,
             });
           }
@@ -226,13 +229,13 @@ export class HardSkillMatrixService {
         payload.hardSkillMatrixId,
       );
 
-      for (let skillGroup of copiedMatrix?.skillGroups) {
-        let createdSkillGroup = await this.skillGroupRepository.save({
+      for (const skillGroup of copiedMatrix?.skillGroups) {
+        const createdSkillGroup = await this.skillGroupRepository.save({
           value: skillGroup.value,
           hardSkillMatrix: matrix,
         });
-        for (let skill of skillGroup.skills) {
-          let createdSkill = await this.skillRepository.save({
+        for (const skill of skillGroup.skills) {
+          const createdSkill = await this.skillRepository.save({
             value: skill.value,
             skill_group_id: createdSkillGroup,
           });
@@ -248,9 +251,10 @@ export class HardSkillMatrixService {
             }),
           );
 
-          for (let question of skill.questions) {
+          for (const question of skill.questions) {
             await this.questionRepository.save({
               value: question.value,
+              order: question.order,
               skill_id: createdSkill,
             });
           }
@@ -335,15 +339,17 @@ export class HardSkillMatrixService {
 
       //add new groups
       if (newSkillGroups.length) {
-        for (let newGroup of newSkillGroups) {
-          let createdSkillGroup = await this.skillGroupRepository.save({
+        for (const newGroup of newSkillGroups) {
+          const createdSkillGroup = await this.skillGroupRepository.save({
             value: newGroup.value,
+            order: newGroup.order,
             hardSkillMatrix: { id: prevSavedMatrix.id },
           });
 
-          for (let skill of newGroup.skills) {
-            let createdSkill = await this.skillRepository.save({
+          for (const skill of newGroup.skills) {
+            const createdSkill = await this.skillRepository.save({
               value: skill.value,
+              order: skill.order,
               skill_group_id: { id: createdSkillGroup.id },
             });
 
@@ -358,9 +364,10 @@ export class HardSkillMatrixService {
               }),
             );
 
-            for (let question of skill.questions) {
+            for (const question of skill.questions) {
               await this.questionRepository.save({
                 value: question.value,
+                order: question.order,
                 skill_id: { id: createdSkill.id },
               });
             }
@@ -378,7 +385,7 @@ export class HardSkillMatrixService {
 
       //edit old groups
       if (groupsWithoutNewAndDeleted.length) {
-        for (let oldGroup of groupsWithoutNewAndDeleted) {
+        for (const oldGroup of groupsWithoutNewAndDeleted) {
           const groupFromPayload = payload.skillGroups.filter(
             (item) => item.id === oldGroup.id,
           );
@@ -393,7 +400,10 @@ export class HardSkillMatrixService {
           ) {
             await this.skillGroupRepository.update(
               { id: oldGroup.id },
-              { value: groupFromPayload[0].value },
+              {
+                value: groupFromPayload[0].value,
+                order: groupFromPayload[0].order,
+              },
             );
           }
 
@@ -417,9 +427,10 @@ export class HardSkillMatrixService {
           }
           //added new skills
           if (newSkills.length) {
-            for (let newSkill of newSkills) {
-              let createdNewSkill = await this.skillRepository.save({
+            for (const newSkill of newSkills) {
+              const createdNewSkill = await this.skillRepository.save({
                 value: newSkill.value,
+                order: newSkill.order,
                 skill_group_id: { id: groupFromPayload[0].id },
               });
 
@@ -434,9 +445,10 @@ export class HardSkillMatrixService {
                 }),
               );
 
-              for (let question of newSkill.questions) {
+              for (const question of newSkill.questions) {
                 await this.questionRepository.save({
                   value: question.value,
+                  order: question.order,
                   skill_id: { id: createdNewSkill.id },
                 });
               }
@@ -454,7 +466,7 @@ export class HardSkillMatrixService {
 
           //update skills
           if (skillsWithoutNewAndDeletedSkills.length) {
-            for (let oldSkill of skillsWithoutNewAndDeletedSkills) {
+            for (const oldSkill of skillsWithoutNewAndDeletedSkills) {
               const skillFromPayload = groupFromPayload[0].skills.filter(
                 (item) => item.id === oldSkill.id,
               );
@@ -471,13 +483,16 @@ export class HardSkillMatrixService {
               ) {
                 await this.skillRepository.update(
                   { id: skillFromPayload[0].id },
-                  { value: skillFromPayload[0].value },
+                  {
+                    value: skillFromPayload[0].value,
+                    order: skillFromPayload[0].order,
+                  },
                 );
               }
 
               //update skill grade
               if (skillFromPayload.length) {
-                for (let grade of skillFromPayload[0].levels) {
+                for (const grade of skillFromPayload[0].levels) {
                   const gradeFromDb = skillFromDB[0].levels.filter(
                     (item) => item.id === grade.id,
                   );
@@ -517,9 +532,10 @@ export class HardSkillMatrixService {
 
               //add new question
               if (newQuestions.length) {
-                for (let newQuestion of newQuestions)
+                for (const newQuestion of newQuestions)
                   await this.questionRepository.save({
                     value: newQuestion.value,
+                    order: newQuestion.order,
                     skill_id: { id: skillFromPayload[0].id },
                   });
               }
@@ -535,7 +551,7 @@ export class HardSkillMatrixService {
 
               //edit questions
               if (questionsWithoutNewAndDeletedQuestions.length) {
-                for (let oldQuestion of questionsWithoutNewAndDeletedQuestions) {
+                for (const oldQuestion of questionsWithoutNewAndDeletedQuestions) {
                   const questionFromDb = skillFromDB[0].questions.filter(
                     (item) => item.id === oldQuestion.id,
                   );
@@ -546,7 +562,7 @@ export class HardSkillMatrixService {
                   ) {
                     await this.questionRepository.update(
                       { id: oldQuestion.id },
-                      { value: oldQuestion.value },
+                      { value: oldQuestion.value, order: oldQuestion.order },
                     );
                   }
                 }

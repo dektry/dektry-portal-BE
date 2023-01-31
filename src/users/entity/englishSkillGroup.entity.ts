@@ -20,6 +20,9 @@ export class EnglishSkillGroupEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @OneToMany(
     () => EnglishSkillEntity,
     (skill) => skill.english_skill_group_id,

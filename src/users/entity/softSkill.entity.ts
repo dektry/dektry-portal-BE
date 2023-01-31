@@ -19,6 +19,9 @@ export class SoftSkillEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @OneToMany(() => SoftSkillsToLevelsEntity, (stl) => stl.skill_id, {
     orphanedRowAction: 'delete',
   })

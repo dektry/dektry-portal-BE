@@ -17,6 +17,9 @@ export class SoftSkillsToLevelsEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @Column({ length: 512, default: '' })
   description: string;
 

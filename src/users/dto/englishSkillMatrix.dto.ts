@@ -65,6 +65,16 @@ class Question {
   @Length(256)
   @ApiProperty({ type: 'string', description: 'Question name', required: true })
   value: string;
+
+  @IsNotEmpty({
+    message: 'QuestionOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Question order number',
+    required: true,
+  })
+  order: number;
 }
 
 class QuestionGet extends Question {
@@ -94,6 +104,16 @@ export class Skills {
   @IsArray()
   @ValidateNested({ each: true })
   questions: Question[];
+
+  @IsNotEmpty({
+    message: 'SkillOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Skill order number',
+    required: true,
+  })
+  order: number;
 }
 
 export class SkillsGet extends OmitType(Skills, [
@@ -132,6 +152,17 @@ class EnglishSkillMatrix {
   @ArrayMaxSize(50)
   @ValidateNested({ each: true })
   english_skills: Skills[];
+
+
+  @IsNotEmpty({
+    message: 'SkillGroupOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'SkillGroup order number',
+    required: true,
+  })
+  order: number;
 }
 
 class EnglishSkillMatrixGet extends OmitType(EnglishSkillMatrix, [

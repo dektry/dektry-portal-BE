@@ -73,6 +73,7 @@ export class SoftSkillMatrixService {
       for (const skill of payload.skills) {
         const createdSkill = await this.softSkillRepository.save({
           value: skill.value,
+          order: skill.order,
           softSkillMatrix: matrix,
         });
 
@@ -83,6 +84,7 @@ export class SoftSkillMatrixService {
               skill_id: { id: createdSkill.id },
               level_id: { id: level.level_id.id },
               value: level.value,
+              order: level.order,
               description: level.description,
             });
           }),
@@ -225,6 +227,7 @@ export class SoftSkillMatrixService {
       for (const skill of copiedMatrix.skills) {
         const createdSkill = await this.softSkillRepository.save({
           value: skill.value,
+          order: skill.order,
           softSkillMatrix: matrix,
         });
 
@@ -235,6 +238,7 @@ export class SoftSkillMatrixService {
               skill_id: { id: createdSkill.id },
               level_id: { id: level.level_id.id },
               value: level.value,
+              order: level.order,
               description: level.description,
             });
           }),

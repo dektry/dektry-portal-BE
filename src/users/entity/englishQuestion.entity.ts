@@ -16,6 +16,9 @@ export class EnglishQuestionEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @ManyToOne(() => EnglishSkillEntity, {
     cascade: true,
     onDelete: 'CASCADE',
