@@ -65,6 +65,16 @@ class Question {
   @Length(256)
   @ApiProperty({ type: 'string', description: 'Question name', required: true })
   value: string;
+
+  @IsNotEmpty({
+    message: 'QuestionOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Question order number',
+    required: true,
+  })
+  order: number;
 }
 
 class QuestionGet extends Question {
@@ -84,6 +94,16 @@ export class Skills {
   @Length(64)
   @ApiProperty({ type: 'string', description: 'Skill name', required: true })
   value: string;
+
+  @IsNotEmpty({
+    message: 'SkillOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Skill order number',
+    required: true,
+  })
+  order: number;
 
   @ApiProperty({ isArray: true, type: Grade })
   @IsArray()
@@ -126,6 +146,16 @@ class HardSkillMatrix {
     required: true,
   })
   value: string;
+
+  @IsNotEmpty({
+    message: 'SkillGroupOrder must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'SkillGroup order number',
+    required: true,
+  })
+  order: number;
 
   @ApiProperty({ isArray: true, type: Skills })
   @ArrayMinSize(1)

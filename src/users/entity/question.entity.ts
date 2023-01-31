@@ -16,6 +16,9 @@ export class QuestionEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @ManyToOne(() => SkillEntity, {
     cascade: true,
     onDelete: 'CASCADE',

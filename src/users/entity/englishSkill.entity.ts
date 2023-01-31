@@ -20,6 +20,9 @@ export class EnglishSkillEntity extends BaseEntity {
   @Column({ default: '' })
   value: string;
 
+  @Column()
+  order: number;
+
   @ManyToOne(() => EnglishSkillGroupEntity, {
     cascade: true,
     onDelete: 'CASCADE',

@@ -73,11 +73,13 @@ export class EnglishSkillMatrixService {
       for (const skillGroup of payload.skillGroups) {
         const createdSkillGroup = await this.englishSkillGroupRepository.save({
           value: skillGroup.value,
+          order: skillGroup.order,
           englishSkillMatrix: matrix,
         });
         for (const skill of skillGroup.english_skills) {
           const createdSkill = await this.englishSkillRepository.save({
             value: skill.value,
+            order: skill.order,
             english_skill_group_id: createdSkillGroup,
           });
 
@@ -95,6 +97,7 @@ export class EnglishSkillMatrixService {
           for (const question of skill.questions) {
             await this.englishQuestionRepository.save({
               value: question.value,
+              order: question.order,
               english_skill_id: createdSkill,
             });
           }
@@ -226,11 +229,13 @@ export class EnglishSkillMatrixService {
       for (const skillGroup of copiedMatrix?.englishSkillGroups) {
         const createdSkillGroup = await this.englishSkillGroupRepository.save({
           value: skillGroup.value,
+          order: skillGroup.order,
           englishSkillMatrix: matrix,
         });
         for (const skill of skillGroup.english_skills) {
           const createdSkill = await this.englishSkillRepository.save({
             value: skill.value,
+            order: skill.order,
             english_skill_group_id: createdSkillGroup,
           });
 
@@ -248,6 +253,7 @@ export class EnglishSkillMatrixService {
           for (const question of skill.questions) {
             await this.englishQuestionRepository.save({
               value: question.value,
+              order: question.order,
               english_skill_id: createdSkill,
             });
           }
@@ -338,6 +344,7 @@ export class EnglishSkillMatrixService {
           const createdSkillGroup = await this.englishSkillGroupRepository.save(
             {
               value: newGroup.value,
+              order: newGroup.order,
               englishSkillMatrix: { id: prevSavedMatrix.id },
             },
           );
@@ -345,6 +352,7 @@ export class EnglishSkillMatrixService {
           for (const skill of newGroup.english_skills) {
             const createdSkill = await this.englishSkillRepository.save({
               value: skill.value,
+              order: skill.order,
               english_skill_group_id: { id: createdSkillGroup.id },
             });
 
@@ -362,6 +370,7 @@ export class EnglishSkillMatrixService {
             for (const question of skill.questions) {
               await this.englishQuestionRepository.save({
                 value: question.value,
+                order: question.order,
                 english_skill_id: { id: createdSkill.id },
               });
             }
@@ -395,7 +404,10 @@ export class EnglishSkillMatrixService {
           ) {
             await this.englishSkillGroupRepository.update(
               { id: oldGroup.id },
-              { value: groupFromPayload[0].value },
+              {
+                value: groupFromPayload[0].value,
+                order: groupFromPayload[0].order,
+              },
             );
           }
 
@@ -424,6 +436,7 @@ export class EnglishSkillMatrixService {
             for (const newSkill of newSkills) {
               const createdNewSkill = await this.englishSkillRepository.save({
                 value: newSkill.value,
+                order: newSkill.order,
                 english_skill_group_id: { id: groupFromPayload[0].id },
               });
 
@@ -441,6 +454,7 @@ export class EnglishSkillMatrixService {
               for (const question of newSkill.questions) {
                 await this.englishQuestionRepository.save({
                   value: question.value,
+                  order: question.order,
                   english_skill_id: { id: createdNewSkill.id },
                 });
               }
@@ -476,7 +490,10 @@ export class EnglishSkillMatrixService {
               ) {
                 await this.englishSkillRepository.update(
                   { id: skillFromPayload[0].id },
-                  { value: skillFromPayload[0].value },
+                  {
+                    value: skillFromPayload[0].value,
+                    order: skillFromPayload[0].order,
+                  },
                 );
               }
 
@@ -525,6 +542,7 @@ export class EnglishSkillMatrixService {
                 for (const newQuestion of newQuestions)
                   await this.englishQuestionRepository.save({
                     value: newQuestion.value,
+                    order: newQuestion.order,
                     english_skill_id: { id: skillFromPayload[0].id },
                   });
               }
@@ -551,7 +569,10 @@ export class EnglishSkillMatrixService {
                   ) {
                     await this.englishQuestionRepository.update(
                       { id: oldQuestion.id },
-                      { value: oldQuestion.value },
+                      {
+                        value: oldQuestion.value,
+                        order: oldQuestion.order,
+                      },
                     );
                   }
                 }

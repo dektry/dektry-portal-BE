@@ -34,6 +34,16 @@ class SoftLevels {
   value: string;
 
   @IsNotEmpty({
+    message: 'Soft level order must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Soft level order number',
+    required: true,
+  })
+  order: number;
+
+  @IsNotEmpty({
     message: 'Description must not be empty',
   })
   @MaxLength(512, { message: 'description is too long' })
@@ -68,6 +78,16 @@ class SoftSkill extends OmitType(Skills, ['questions', 'grades'] as const) {
   @ArrayMinSize(1)
   @ArrayMaxSize(50)
   levels: SoftLevels[];
+
+  @IsNotEmpty({
+    message: 'Soft skill order must not be empty',
+  })
+  @ApiProperty({
+    type: 'number',
+    description: 'Soft skill order number',
+    required: true,
+  })
+  order: number;
 }
 
 class SoftSkillGet extends OmitType(SkillsGet, ['levels', 'questions']) {
