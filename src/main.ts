@@ -8,15 +8,14 @@ import { urlencoded, json } from 'express';
 import { candidatesCron } from './cron/candidates';
 import { employeeCron } from './cron/employee';
 
-const corsOrigins =
-  process.env.ENABLE_CORS === 'true'
-    ? [process.env.FE_ORIGIN]
-    : [
-        /\.web\.app$/,
-        /\.herokuapp\.com$/,
-        'http://localhost:3001',
-        'http://localhost:3000',
-      ];
+let corsOrigins = [process.env.FE_ORIGIN];
+
+if (process.env.ALLOW_LOCAL_ORIGINS === 'true') {
+  corsOrigins = corsOrigins.concat([
+    'http://localhost:3001',
+    'http://localhost:3000',
+  ]);
+}
 
 async function bootstrap() {
   await dotEnv.config();
