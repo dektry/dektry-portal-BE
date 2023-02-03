@@ -9,7 +9,7 @@ import { candidatesCron } from './cron/candidates';
 import { employeeCron } from './cron/employee';
 
 const corsOrigins =
-  process.env.NODE_ENV === 'production'
+  process.env.ENABLE_CORS === 'true'
     ? [process.env.FE_ORIGIN]
     : [
         /\.web\.app$/,
