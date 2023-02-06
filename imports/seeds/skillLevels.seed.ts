@@ -1,5 +1,8 @@
 export const skillLevelsSeed = [
   {
+    name: 'None',
+  },
+  {
     name: 'Novice',
   },
   {
