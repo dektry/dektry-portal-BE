@@ -7,6 +7,8 @@ import { skillsToLevelsRepository } from '../repositories/skillsToLevels.reposit
 import { SkillGroupEntity } from '../entity/skillGroup.entity';
 
 import { sortSkillGroups } from '../utils/sortSkillGroups';
+import { skillLevelsListRepository } from 'users/repositories/skillLevelsList.repository';
+import { SkillLevelsListEntity } from 'users/entity/skillLevelsList.entity';
 
 @Injectable()
 export class SkillGroupService {
@@ -19,6 +21,8 @@ export class SkillGroupService {
     private skillRepository: skillRepository,
     @InjectRepository(skillsToLevelsRepository)
     private skillsToLevelsRepository: skillsToLevelsRepository,
+    @InjectRepository(skillLevelsListRepository)
+    private skillLevelsListRepository: skillLevelsListRepository,
   ) {}
 
   async getSkillGroups(): Promise<SkillGroupEntity[]> {
@@ -119,5 +123,9 @@ export class SkillGroupService {
     }
 
     return await this.skillGroupRepository.save(matrixTree);
+  }
+
+  async getSkillLevels(): Promise<SkillLevelsListEntity[]> {
+    return await this.skillLevelsListRepository.find();
   }
 }

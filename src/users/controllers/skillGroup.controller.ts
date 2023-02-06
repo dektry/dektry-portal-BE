@@ -14,6 +14,12 @@ export class SkillGroupController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('/levels')
+  getSkillLevels() {
+    return this.SkillGroupService.getSkillLevels();
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get(':positionId')
   getSkillGroupsById(@Param('positionId') positionId: string) {
     return this.SkillGroupService.getSkillGroupsByPositionId(positionId);
