@@ -367,7 +367,8 @@ export class SoftSkillMatrixService {
           //edit skill name
           if (
             skillFromPayload.length &&
-            skillFromPayload[0].value !== oldSkill.value
+            (skillFromPayload[0].value !== oldSkill.value ||
+              skillFromPayload[0].order !== oldSkill.order)
           ) {
             await this.softSkillRepository.update(
               { id: oldSkill.id },
@@ -427,7 +428,10 @@ export class SoftSkillMatrixService {
               //update name
               if (
                 skillLevelsFromPayload.length &&
-                skillLevelsFromDB[0].value !== skillLevelsFromPayload[0].value
+                (skillLevelsFromDB[0].value !==
+                  skillLevelsFromPayload[0].value ||
+                  skillLevelsFromDB[0].order !==
+                    skillLevelsFromPayload[0].order)
               ) {
                 await this.softSkillsToLevelsRepository.update(
                   { id: skillLevelsFromPayload[0].id },

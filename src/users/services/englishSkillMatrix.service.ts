@@ -400,7 +400,8 @@ export class EnglishSkillMatrixService {
           //edit group name
           if (
             groupFromPayload.length &&
-            groupFromPayload[0].value !== oldGroup.value
+            (groupFromPayload[0].value !== oldGroup.value ||
+              groupFromPayload[0].order !== oldGroup.order)
           ) {
             await this.englishSkillGroupRepository.update(
               { id: oldGroup.id },
@@ -486,7 +487,8 @@ export class EnglishSkillMatrixService {
 
               if (
                 skillFromPayload.length &&
-                skillFromDB[0].value !== skillFromPayload[0].value
+                (skillFromDB[0].value !== skillFromPayload[0].value ||
+                  skillFromDB[0].order !== skillFromPayload[0].order)
               ) {
                 await this.englishSkillRepository.update(
                   { id: skillFromPayload[0].id },
@@ -565,7 +567,8 @@ export class EnglishSkillMatrixService {
 
                   if (
                     questionFromDb.length &&
-                    questionFromDb[0].value !== oldQuestion.value
+                    (questionFromDb[0].value !== oldQuestion.value ||
+                      questionFromDb[0].order !== oldQuestion.order)
                   ) {
                     await this.englishQuestionRepository.update(
                       { id: oldQuestion.id },

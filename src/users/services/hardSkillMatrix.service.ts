@@ -393,10 +393,11 @@ export class HardSkillMatrixService {
             (skill) => skill.id,
           );
 
-          //edit group name
+          //edit group name and order
           if (
             groupFromPayload.length &&
-            groupFromPayload[0].value !== oldGroup.value
+            (groupFromPayload[0].value !== oldGroup.value ||
+              groupFromPayload[0].order !== oldGroup.order)
           ) {
             await this.skillGroupRepository.update(
               { id: oldGroup.id },
@@ -479,7 +480,8 @@ export class HardSkillMatrixService {
 
               if (
                 skillFromPayload.length &&
-                skillFromDB[0].value !== skillFromPayload[0].value
+                (skillFromDB[0].value !== skillFromPayload[0].value ||
+                  skillFromDB[0].order !== skillFromPayload[0].order)
               ) {
                 await this.skillRepository.update(
                   { id: skillFromPayload[0].id },
@@ -558,7 +560,8 @@ export class HardSkillMatrixService {
 
                   if (
                     questionFromDb.length &&
-                    questionFromDb[0].value !== oldQuestion.value
+                    (questionFromDb[0].value !== oldQuestion.value ||
+                      questionFromDb[0].order !== oldQuestion.order)
                   ) {
                     await this.questionRepository.update(
                       { id: oldQuestion.id },

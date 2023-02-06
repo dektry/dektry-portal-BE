@@ -14,6 +14,8 @@ export class ProjectDto {
   })
   name: string;
 
+  order?: number;
+
   @IsNotEmpty({
     message: 'Project duration must not be empty',
   })

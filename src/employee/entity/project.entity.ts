@@ -38,6 +38,9 @@ export class ProjectEntity extends BaseEntity {
   @Column('text', { array: true })
   responsibilities: string[];
 
+  @Column({ nullable: true })
+  order: number;
+
   @ManyToMany(() => TechnologyEntity, {
     eager: true,
     cascade: true,
