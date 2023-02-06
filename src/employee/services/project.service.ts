@@ -84,6 +84,7 @@ export class ProjectService {
         responsibilities: project.responsibilities,
         employee,
         technologies: techInCurrentProject,
+        order: project.order,
       };
 
       return await this.projectRepository.save(projectToSave);
@@ -168,6 +169,7 @@ export class ProjectService {
         description: project.description,
         responsibilities: project.responsibilities,
         employee,
+        order: project.order,
       };
 
       await this.projectRepository.update({ id: project.id }, projectToUpdate);
